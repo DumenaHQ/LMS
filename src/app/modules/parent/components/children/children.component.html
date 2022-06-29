@@ -1,0 +1,67 @@
+<section class="ds-head">
+  <h2 class="ds-head_title">Children</h2>
+</section>
+
+<section class="children">
+  <div class="children_body">
+    <ng-template>
+      <div class="card">
+        <div class="card_item clickable">
+          <img
+            src="../../../../../assets/img/children-avatar/child-avatar-big-1.png"
+            alt=""
+            class="avatar"
+          />
+          <h4 class="name">Alousa Jones</h4>
+          <button class="btn prim_btn">Manage Child</button>
+          <p class="body-2-medium text-secondary-color select-plan hover-2">
+            Select learning plan
+          </p>
+        </div>
+        <div class="card_item clickable">
+          <img
+            src="../../../../../assets/img/children-avatar/child-avatar-big-2.png"
+            alt=""
+            class="avatar"
+          />
+          <h4 class="name">Jack Ripper</h4>
+          <button class="btn prim_btn">Manage Child</button>
+          <p class="body-2-medium text-secondary-color select-plan hover-2">
+            Select learning plan
+          </p>
+        </div>
+        <!-- Add New Child -->
+        <div class="card_item clickable" (click)="openAddModal()">
+          <span class="add-icon">
+            <i class="bx bx-plus"></i>
+          </span>
+          <button class="btn tert_btn">Add Child</button>
+        </div>
+      </div>
+    </ng-template>
+
+    <!-- Course Blank -->
+    <ng-container #noItems>
+      <app-children-blank (addModal)="openAddModal()"></app-children-blank>
+    </ng-container>
+  </div>
+
+  <!-- Alert Message -->
+  <div class="alert-msg" [class.show]="showAlert">
+    <div class="alert-msg_content">
+      <p>You have enrolled a child successfully</p>
+    </div>
+  </div>
+</section>
+
+<div class="modal" [class.show-modal]="addModal">
+  <div class="modal_area">
+    <span class="modal_area_close" (click)="closeAddModal()">
+      <i class="bx bx-x icon clickable"></i>
+    </span>
+    <app-add-child
+      (addModal)="closeAddModal()"
+      (showAlert)="showAlertPopup()"
+    ></app-add-child>
+  </div>
+</div>

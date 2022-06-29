@@ -1,0 +1,469 @@
+<!-- Modal -->
+<div class="modal" [class.hide-modal]="!showAds">
+  <div class="modal_area">
+    <div class="modal-details">
+      <h4 class="text-primary-color">
+        Get <span class="text-secondary-color">50% off</span> on all our plans
+        for the next 90 days
+      </h4>
+      <p class="body-2-regular">
+        We are launching on the 2nd of July and we’re giving out this amazing
+        oppurtunity if you sign up today
+      </p>
+    </div>
+    <div class="modal-btns dis-flex">
+      <a
+        class="btn tert_btn"
+        href="https://www.instagram.com/hi_dumena/?upcoming_event_id=17954489977759181"
+        >Instagram Live</a
+      >
+      <a
+        class="btn prim_btn"
+        href="https://www.eventbrite.com/e/dumena-lms-product-launch-tickets-367817430837"
+        >Register</a
+      >
+    </div>
+    <!-- Close Button -->
+    <span class="close-btn clickable" (click)="showAds = false">
+      <i class="bx bx-x"></i>
+    </span>
+  </div>
+</div>
+
+<!-- Hero -->
+<section class="hero bg-border-radius">
+  <div class="container du_flex_content">
+    <div class="du_flex_details">
+      <h1 class="du_flex_details_title" [innerHTML]="heroTitle"></h1>
+      <p>
+        A learning environment for children to discover, explore and fully
+        express their potentials very early in life.
+      </p>
+      <div class="btn_area dis-flex">
+        <button class="btn prim_btn" routerLink="/signup">Get started</button>
+        <span class="btn_area_watch dis-flex">
+          <span class="icon_area clickable">
+            <!-- <img src="../../../assets/img/svg/Icon.svg" alt="" /> -->
+            <i class="bx bx-play play-icon icon"></i>
+          </span>
+          <p>Watch how it works</p>
+        </span>
+      </div>
+    </div>
+    <div class="du_flex_img">
+      <img src="../../../assets/img/hero-img.svg" alt="image" />
+    </div>
+  </div>
+</section>
+
+<!-- Partners -->
+<section class="sect partners">
+  <div class="">
+    <div class="container sect_heading">
+      <h4 class="sect_title">
+        Partnerships with over 30+ Schools and Companies worldwide
+      </h4>
+    </div>
+    <ul class="partners_list">
+      <div class="hwrap">
+        <div class="hmove">
+          <li class="partners_list_item">
+            <img src="../../../assets/img/partners/partner1.png" alt="image" />
+          </li>
+          <li class="partners_list_item">
+            <img src="../../../assets/img/partners/partner2.png" alt="image" />
+          </li>
+          <li class="partners_list_item">
+            <img src="../../../assets/img/partners/partner3.png" alt="image" />
+          </li>
+          <li class="partners_list_item">
+            <img src="../../../assets/img/partners/partner4.png" alt="image" />
+          </li>
+          <li class="partners_list_item">
+            <img src="../../../assets/img/partners/partner5.png" alt="image" />
+          </li>
+          <li class="partners_list_item">
+            <img src="../../../assets/img/partners/partner6.png" alt="image" />
+          </li>
+          <li class="partners_list_item">
+            <img src="../../../assets/img/partners/partner7.png" alt="image" />
+          </li>
+        </div>
+      </div>
+    </ul>
+  </div>
+</section>
+
+<!-- WHy Us -->
+<section class="sect why-us">
+  <div class="container">
+    <div class="sect_heading">
+      <h2 class="sect_title">All-in-One incredible learning experience</h2>
+      <p>
+        Dumena Technologies offers a Learning Management System that combines
+        all <br />
+        the tools needed to eductae your child and run a school.
+      </p>
+    </div>
+    <div class="card">
+      <div class="card_item">
+        <div class="card_item_img dis-flex">
+          <img src="../../../assets/img/svg/Lightning-alt.svg" alt="image" />
+        </div>
+        <h4 class="card_item_title">Performance tracking</h4>
+        <p>
+          Get a front-seat view of your child’s learning activities, progress
+          and performance.
+        </p>
+      </div>
+      <div class="card_item">
+        <div class="card_item_img dis-flex">
+          <img src="../../../assets/img/svg/Star.svg" alt="image" />
+        </div>
+        <h4 class="card_item_title">Safe Space for Remote Learning</h4>
+        <p>
+          We provide a safe space where your child is free to learn, explore,
+          develop and express their skills remotely..
+        </p>
+      </div>
+      <div class="card_item">
+        <div class="card_item_img dis-flex">
+          <img src="../../../assets/img/svg/Book-open.svg" alt="image" />
+        </div>
+        <h4 class="card_item_title">DIY Projects</h4>
+        <p>
+          Every class has a DIY activity that reinforces our Learn-to-Build
+          education philosophy.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonial -->
+<section class="sect testi">
+  <div class="testi_area">
+    <button
+      class="icon_area"
+      [disabled]="currentTesti === 0"
+      (click)="previousTesti()"
+    >
+      <img src="../../../assets/img/svg/arrow-left.svg" alt="" />
+    </button>
+    <div class="container du_flex_content">
+      <div class="du_flex_img">
+        <img [src]="testimonials[currentTesti]?.image" alt="image" />
+      </div>
+      <div class="du_flex_details">
+        <h3 class="du_flex_details_title">
+          “{{ testimonials[currentTesti]?.title }}”
+        </h3>
+        <p>“{{ testimonials[currentTesti]?.description }}”</p>
+        <p class="testi_name">– {{ testimonials[currentTesti]?.name }}</p>
+      </div>
+    </div>
+    <button
+      class="icon_area"
+      [disabled]="currentTesti + 1 === testimonials?.length"
+      (click)="nextTesti()"
+    >
+      <img src="../../../assets/img/svg/arrow-right.svg" alt="" />
+    </button>
+
+    <!-- Mobile view -->
+    <div class="icon_area_mobile">
+      <button [disabled]="currentTesti === 0" (click)="previousTesti()">
+        <i class="bx bx-chevron-left"></i>
+      </button>
+      <button
+        [disabled]="currentTesti + 1 === testimonials?.length"
+        (click)="nextTesti()"
+      >
+        <i class="bx bx-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Metrics -->
+<section class="metrics sect">
+  <div class="container">
+    <div class="sect_heading">
+      <h2 class="sect_title">
+        We <span class="text-secondary-color">Help Children</span> Discover
+        Their Passion & Develop Their Potential
+      </h2>
+      <p>
+        By exposing children to a wide range of learning experiences, we are
+        able to identify their areas of interest, their strengths <br />
+        and then tailor their learning towards building and developing their
+        potentials.
+      </p>
+    </div>
+    <div class="metrics_card">
+      <div class="metrics_card_item">
+        <h2 class="metrics_value">5k+</h2>
+        <p>Learners</p>
+      </div>
+      <div class="metrics_card_item">
+        <h2 class="metrics_value">200+</h2>
+        <p>Classes</p>
+      </div>
+      <div class="metrics_card_item">
+        <h2 class="metrics_value">20+</h2>
+        <p>Schools</p>
+      </div>
+      <div class="metrics_card_item">
+        <h2 class="metrics_value">100+</h2>
+        <p>Educators</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Educator -->
+<section class="sect educator">
+  <div class="container du_flex_content row-reverse">
+    <div class="du_flex_details">
+      <h3 class="du_flex_details_title">
+        Join our growing community of Educators
+      </h3>
+      <p>
+        The Education Landscape is experiencing highly unprecedented changes,
+        catalyzed by the COVID-19 Pandemic.
+      </p>
+      <ul>
+        <li>
+          <img src="../../../assets/img/svg/check-prim.svg" alt="" />
+          <p class="body-2-medium">Earn rewards through our Referral System.</p>
+        </li>
+        <li>
+          <img src="../../../assets/img/svg/check-prim.svg" alt="" />
+          <p class="body-2-medium">
+            Improve and update your knowledgebase by taking our online courses.
+          </p>
+        </li>
+        <li>
+          <img src="../../../assets/img/svg/check-prim.svg" alt="" />
+          <p class="body-2-medium">
+            Catch up with events, programs, news and happenings around the
+            world.
+          </p>
+        </li>
+        <li>
+          <img src="../../../assets/img/svg/check-prim.svg" alt="" />
+          <p class="body-2-medium">
+            Create your own learning content and become one of our virtual
+            tutors.
+          </p>
+        </li>
+      </ul>
+      <button class="btn prim_btn">Learn More</button>
+    </div>
+    <div class="du_flex_img">
+      <img src="../../../assets/img/become-tutor-img.png" alt="image" />
+    </div>
+  </div>
+</section>
+
+<!-- Parent -->
+<section class="sect parent">
+  <div class="container du_flex_content">
+    <div class="du_flex_details">
+      <h3 class="du_flex_details_title">Join our community as a parent</h3>
+      <p>
+        We believe every parent deserve to be on the front-seat in their
+        children’s learning, development and growth experience. Join this
+        community to:
+      </p>
+      <ul>
+        <li>
+          <img src="../../../assets/img/svg/check-prim.svg" alt="" />
+          <p class="body-2-medium">
+            Catch up with events, programs, news and happenings in education.
+          </p>
+        </li>
+        <li>
+          <img src="../../../assets/img/svg/check-prim.svg" alt="" />
+          <p class="body-2-medium">
+            Earn rewards through our parents’ Referral Program.
+          </p>
+        </li>
+        <li>
+          <img src="../../../assets/img/svg/check-prim.svg" alt="" />
+          <p class="body-2-medium">
+            Get equipped with the tools you need to help your children discover
+            their passion and develop their potentials.
+          </p>
+        </li>
+      </ul>
+      <button class="btn prim_btn">Learn More</button>
+    </div>
+    <div class="du_flex_img">
+      <img src="../../../assets/img/parent-img.png" alt="image" />
+    </div>
+  </div>
+</section>
+
+<!-- School -->
+<section class="sect school">
+  <div class="container du_flex_content row-reverse">
+    <div class="du_flex_details">
+      <h3 class="du_flex_details_title">
+        Host your school on our Cloud-based LMS Software
+      </h3>
+      <p>
+        Create an impactful learning experience for your children through our:
+      </p>
+      <ul>
+        <li>
+          <img src="../../../assets/img/svg/check-prim.svg" alt="" />
+          <p class="body-2-medium">Personalized hands-on learning.</p>
+        </li>
+        <li>
+          <img src="../../../assets/img/svg/check-prim.svg" alt="" />
+          <p class="body-2-medium">DIY projects, HomeWorks and Assessment.</p>
+        </li>
+        <li>
+          <img src="../../../assets/img/svg/check-prim.svg" alt="" />
+          <p class="body-2-medium">
+            Performance Tracking & Analytics Reporting Systems.
+          </p>
+        </li>
+      </ul>
+
+      <button class="btn prim_btn">Learn More</button>
+    </div>
+    <div class="du_flex_img">
+      <img src="../../../assets/img/school-img.png" alt="image" />
+    </div>
+  </div>
+</section>
+
+<!-- Online school  -->
+<section class="sect video">
+  <div class="container">
+    <div class="sect_heading">
+      <h2 class="sect_title">
+        <span class="text-secondary-color">World Class</span> Education for
+        Everyone
+      </h2>
+      <p>Everyone is welcome to learn, build and grow.</p>
+    </div>
+    <div class="video_play_area">
+      <video
+        poster="../../../assets/img/video-img.png"
+        playsinline=""
+        autoplay=""
+        muted=""
+        loop=""
+        preload="none"
+      >
+        <source src="" type="video/mp4" />
+      </video>
+      <span class="play_icon">
+        <img src="../../../assets/img/svg/white-play.svg" alt="" />
+      </span>
+    </div>
+  </div>
+</section>
+
+<section class="sect award-winning">
+  <div class="container du_flex_content">
+    <div class="du_flex_details">
+      <h3 class="du_flex_details_title">
+        Award Winning Learning Management System
+      </h3>
+      <p>
+        We enable personalized hands-on learning where children learn by
+        building things based on what they were taught.
+      </p>
+      <p>
+        We create an impactful learning experience with hundreds of DIY
+        Projects, Assessments and Home Works.
+      </p>
+    </div>
+    <div class="du_flex_img">
+      <img src="../../../assets/img/English_course_1.svg" alt="image" />
+    </div>
+  </div>
+</section>
+
+<section class="sect easy-software">
+  <div class="container du_flex_content row-reverse">
+    <div class="du_flex_details">
+      <h3 class="du_flex_details_title">Software that's easy to use</h3>
+      <p>
+        With a highly interactive user interface, the
+        <b class="text-secondary-color">DUMENA LMS</b> creates a
+        distraction-free environment and makes learning a breeze. Learners
+        navigate through the platform easily while accessing information in a
+        snap.
+      </p>
+    </div>
+    <div class="du_flex_img">
+      <img
+        src="../../../assets/img/undraw_teaching_re_g7e3 1.svg"
+        alt="image"
+      />
+    </div>
+  </div>
+</section>
+
+<section class="sect">
+  <div class="container du_flex_content">
+    <div class="du_flex_details">
+      <h3 class="du_flex_details_title">Always available on the cloud</h3>
+      <p>
+        No need to install, upgrade or backup anything. The
+        <b class="text-secondary-color">DUMENA LMS</b> is a cloud-powered
+        learning platform. Quickly create an incredible online learning
+        experience without worrying about hosting.
+      </p>
+    </div>
+    <div class="du_flex_img">
+      <img
+        src="../../../assets/img/undraw_professor_-8-lrt 1.svg"
+        alt="image"
+      />
+    </div>
+  </div>
+</section>
+
+<!-- News and Events -->
+<section class="sect news">
+  <div class="container">
+    <div class="top dis-flex">
+      <div class="sect_heading">
+        <h3 class="sect_title">
+          Our latest <span class="text-secondary-color">Updates</span>
+        </h3>
+        <p>
+          Check out the latest news and updates happening at Dumena
+          Technologies.
+        </p>
+      </div>
+      <!-- Carousel Btns -->
+      <div class="carousel dis-flex">
+        <span class="icon">
+          <i class="bx bx-chevron-left"></i>
+        </span>
+        <span class="icon active">
+          <i class="bx bx-chevron-right"></i>
+        </span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card_item" *ngFor="let i of news">
+        <img [src]="i.image" alt="" />
+        <div class="card_item_details">
+          <p class="title">{{ i.title }}</p>
+          <p class="description body-2-medium">
+            {{ i.details }} <br />
+            <a [href]="i.url" class="text-secondary-color">Read More</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

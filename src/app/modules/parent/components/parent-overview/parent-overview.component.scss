@@ -1,0 +1,100 @@
+@import '../../../../../assets/css/dashboard.scss';
+@import '../../../../../assets/css/variables.scss';
+@import '../../../../../assets/css/mixins.scss';
+
+.pricing {
+  display: grid;
+  place-items: center;
+  &_tab {
+    &_wrapper {
+      border: 1px solid $divider-color;
+      border-radius: 8px;
+      padding: $m-1;
+      display: flex;
+      align-items: center;
+      gap: $m-1;
+      .tab {
+        display: inline-block;
+        border-radius: $border-radius1;
+        padding: 0.7rem $m-2;
+        font-weight: 700;
+        font-size: 18px;
+        transition: all .2s ease;
+        cursor: pointer;
+        &.active {
+          background-color: $white-color;
+          box-shadow: $box-shadow;
+        }
+      }
+    }
+
+  }
+
+  .pricing_card {
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    gap: $m-4;
+    margin-top: $m-4;
+    &_item {
+      border-radius: $border-radius1;
+      padding: $m-5 $m-6;
+      border: 1px solid $divider-color;
+      background-color: $white-color;
+      @media only screen and (min-width: 450px) {
+        width: 300px;
+        flex-basis: auto;
+      }
+      .header {
+        margin-bottom: $m-4;
+        .icon {
+          @include icon-area(54px, transparent);
+          margin-right: $m-2;
+        }
+        .price {
+          margin-top: $m-1;
+          em {
+            color: $text-color3;
+            font-style: normal;
+          }
+        }
+      }
+      .body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        ul {
+          li {
+            .check-icon {
+              width: 18px;
+              height: 18px;
+              margin-right: $m-1;
+            }
+            &:not(:last-child) {
+              margin-bottom: $m-3;
+            }
+          }
+        }
+        .pricing_card_btn {
+          text-align: center;
+          margin-top: $m-5;
+          .btn {
+            min-width: 200px;
+            padding: $m-1 + 0.2;
+          }
+        }
+      }
+      &.standard {
+        .icon {
+          background-color: $brightyellow;
+        }
+      }
+      &.pro {
+        .icon {
+          background-color: $secondary80;
+        }
+      }
+    }
+  }
+}

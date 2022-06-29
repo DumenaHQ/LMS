@@ -1,0 +1,79 @@
+<section class="ds-head dis-flex">
+  <h2 class="ds-head_title clickable" routerLink="/learner/library">Library</h2>
+  <i class="bx bx-chevron-right icon"></i>
+  <p class="clickable" routerLink="/learner/course-info">Course Info</p>
+</section>
+
+<section class="course-info">
+  <div class="dis-flex course-info_header">
+    <h3 class="course-title">Introduction to Robotics</h3>
+    <button class="btn prim_btn" routerLink="/learner/course-lesson">
+      Start Course
+    </button>
+  </div>
+  <div class="ds-flex">
+    <main class="du-grid">
+      <div class="course-info_about">
+        <div class="ds-sect-header">
+          <h5 class="">About the course</h5>
+        </div>
+        <p class="course-info_about_descp">
+          Inventore ex repellat voluptate quisquam. Culpa omnis velit earum qui
+          expedita. Tempora qui qui rerum nesciunt perferendis atque illum.
+          Deleniti tempora harum aut necessitatibus. Natus sunt praesentium.
+        </p>
+        <div class="course-info_about_content">
+          <h5 class="course-info_about_content_title">Content</h5>
+          <ol
+            class="course-info_about_content_list"
+            *ngFor="let i of courseContent"
+          >
+            <li>
+              <b>{{ i.id }}.</b> {{ i.name }}
+            </li>
+          </ol>
+        </div>
+      </div>
+    </main>
+    <aside>
+      <div class="course-info_tutor">
+        <div class="ds-sect-header">
+          <h5 class="">Course Content</h5>
+        </div>
+        <div class="course-info_tutor_list du-grid">
+          <div class="course-info_tutor_list_item">
+            <img
+              src="../../../assets/img/library/course-tutor.svg"
+              alt="Course Tutor"
+              class="image"
+            />
+            <p class="body-1-medium name">Mikasa Ackerman</p>
+            <p class="body-1-regular details">
+              Doloremque corrupti laborum. Hic autem qui. Saepe dicta distinctio
+              recusandae laborum et. Id et tenetur quas id amet perferendis.
+            </p>
+          </div>
+          <div class="course-info_tutor_list_item">
+            <img
+              src="../../../assets/img/library/course-tutor.svg"
+              alt="Course Tutor"
+              class="image"
+            />
+            <p class="body-1-medium name">Mikasa Ackerman</p>
+            <p class="body-1-regular details">
+              Doloremque corrupti laborum. Hic autem qui. Saepe dicta distinctio
+              recusandae laborum et. Id et tenetur quas id amet perferendis.
+            </p>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="similar-course">
+  <div class="ds-sect-header">
+    <h5>Similar Courses</h5>
+  </div>
+  <!-- <app-courses-card></app-courses-card> -->
+</section>

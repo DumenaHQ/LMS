@@ -1,0 +1,16 @@
+<div class="container-dash">
+  <!-- Side Nav -->
+  <aside class="sidenav-area" [class.show-menu]="hamClick">
+    <div class="sidenav" #sideNav>
+      <app-dashboard-sidenav [navLink]="navLink"></app-dashboard-sidenav>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main [class.show-menu]="hamClick">
+    <app-dashboard-header (hamClick)="openMenu()"></app-dashboard-header>
+    <div class="main-body">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

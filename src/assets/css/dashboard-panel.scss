@@ -1,0 +1,64 @@
+@import './variables.scss';
+
+.container-dash {
+  @media only screen and (max-width: 905px) {
+    display: flex;
+    width: 100%;
+  }
+  // Side Nav starts //
+  .sidenav-area {
+    width: 15%;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    .sidenav {
+      height: 100%;
+      background-color: $white-color;
+      border: 1px solid $divider-color;
+      position: relative;
+    }
+    @media only screen and (max-width: 905px) {
+      position: fixed;
+      top: 0px;
+      left: -100%;
+      width: 40%;
+      transition: all 0.5s;
+      z-index: 100;
+      &.show-menu {
+        left: 0;
+      }
+      .sidenav {
+        width: 100%;
+      }
+    }
+  }
+  // Side Nav ends //
+
+  // Main starts //
+  main {
+    position: absolute;
+    left: 15%;
+    width: 85%;
+    min-height: 100vh;
+    overflow: hidden;
+    background-color: $grey40;
+    .main-body {
+      // display: grid;
+      // grid-gap: 2rem;
+      padding: $m-3;
+    }
+
+    @media only screen and (max-width: 905px) {
+      left: 0;
+      width: 100%;
+      transition: all 0.5s;
+      &.show-menu {
+        left: 40%;
+      }
+      .main-header .main-header-menu {
+        visibility: visible;
+      }
+    }
+  }
+  // Main ends //
+}

@@ -1,0 +1,78 @@
+@import '../../../../../assets/css/variables.scss';
+@import '../../../../../assets/css/default.scss';
+
+.newsletter {
+  position: relative;
+  background-color: $primary100;
+  &_area {
+    color: $white-color;
+    padding: 5rem 10%;
+    text-align: center;
+    @media only screen and (max-width: 665px) {
+      padding: 3rem 5%;
+    }
+    p {
+      margin: $m-2 0;
+    }
+    .input_field {
+      width: 100%;
+      display: flex;
+      padding: 0;
+      background-color: $white-color;
+      border-radius: $border-radius1;
+      border: 2px solid transparent;
+      transition: all 0.2s ease-in;
+      &:hover {
+        border: 2px solid $secondary60;
+      }
+      input {
+        width: 100%;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        padding: $m-1 $m-3;
+        color:#3D3837;
+        font-size: 18px;
+        font-weight: 400;
+        &::placeholder {
+          color:#3D3837;
+        }
+      }
+      .btn {
+        width: 180px;
+        border-radius: $border-radius1;
+      }
+      @media only screen and (max-width: 565px) {
+        input {
+          font-size: 14px;
+          padding: $m-1;
+        }
+        .btn {
+          font-size: 14px;
+          width: 160px;
+        }
+      }
+    }
+  }
+  .vector {
+    display: none;
+  }
+  @media screen and (min-width: 985px) {
+    max-width: 900px;
+    visibility: visible;
+    margin: 0 auto -3rem auto;
+    padding: 0 5%;
+    border-radius: $border-radius3;
+    .vector {
+      display: block;
+      position: absolute;
+      right: -35px;
+      top: -35px;
+      max-width: 150px;
+      max-height: 150px;
+      overflow: hidden;
+      z-index: -1;
+    }
+  }
+}
+

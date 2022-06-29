@@ -1,0 +1,23 @@
+@import '../../../../assets/css/variables.scss';
+
+// Alert Message
+.alert-msg {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  visibility: hidden;
+  opacity: 0;
+  transition: all .2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  p {
+    color: $success80;
+    padding: 0.8rem;
+    background-color: $success40;
+    border-radius: $border-radius1;
+  }
+  &.show {
+    visibility: visible;
+    opacity: 1;
+    top: 2rem;
+  }
+}

@@ -1,0 +1,109 @@
+@import './variables.scss';
+@import './mixins.scss';
+
+/* Section starts */
+.container {
+  padding: 0 5%;
+  @media screen and (min-width: 1200px) {
+    max-width: 1250px;
+    margin: 0 auto;
+  }
+}
+.sect {
+  margin: 5rem 0;
+  padding: 3% 0;
+  @media only screen and (max-width: 870px) {
+    margin: 3rem 0;
+  }
+}
+/* Section ends */
+
+h1 {
+  font-weight: 700;
+  font-size: 50px;
+  line-height: 50px;
+  @media only screen and (max-width: 670px) {
+    font-size: 40px;
+  }
+}
+.semi-bold {
+  font-weight: 600;
+  font-size: 50px;
+  line-height: 50px;
+}
+h2 {
+  font-weight: 700;
+  font-size: 42px;
+  line-height: 58px;
+  @media only screen and (max-width: 670px) {
+    font-size: 35px;
+  }
+}
+h3 {
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 43px;
+  @media only screen and (max-width: 670px) {
+    font-size: 25px;
+  }
+}
+h4 {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  @media only screen and (max-width: 670px) {
+    font-size: 20px;
+  }
+}
+p,
+.body-1 {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+}
+.body-2 {
+  font-size: 16px;
+  line-height: 19px;
+}
+.body-3 {
+  font-size: 14px;
+  line-height: 17px;
+}
+.body-1-regular,
+.body-2-regular,
+.body-3-regular {
+  font-weight: 400;
+}
+.body-1-medium,
+.body-2-medium,
+.body-3-medium {
+  font-weight: 500;
+}
+.body-1-bold,
+.body-2-bold {
+  font-weight: 700;
+}
+.body-1-regular,
+.body-1-medium,
+.body-1-bold {
+  font-size: 18px;
+  line-height: 22px;
+}
+.body-2-regular,
+.body-2-medium,
+.body-2-bold {
+  font-size: 16px;
+  line-height: 19px;
+}
+.body-3-regular,
+.body-3-medium {
+  font-size: 14px;
+  line-height: 17px;
+}
+.captions-regular {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+}
+/* Headings ends */
+

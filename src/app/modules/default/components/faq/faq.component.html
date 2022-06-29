@@ -1,0 +1,26 @@
+<!-- Faq -->
+<section class="sect faq">
+  <div class="container">
+    <div class="sect_heading">
+      <h3 class="sect_title">Frequently asked question</h3>
+    </div>
+    <ul class="faq_list">
+      <li
+        class="faq_list_item"
+        *ngFor="let i of faqs; let indexOfelement = index"
+      >
+        <div class="question dis-flex clickable" (click)="i.hide = !i.hide">
+          <p class="body-1-medium">{{ i.question }}</p>
+          <i [class]="i.hide ? 'bx bx-plus icon' : 'bx bx-minus icon'"></i>
+        </div>
+        <p class="answer" [hidden]="i.hide">
+          {{ i.answer }}
+        </p>
+      </li>
+    </ul>
+    <div class="faq_footer">
+      <p class="body-1-medium">Still have another question?</p>
+      <button class="btn prim_btn">Contact Us</button>
+    </div>
+  </div>
+</section>

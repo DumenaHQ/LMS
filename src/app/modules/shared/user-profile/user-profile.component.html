@@ -1,0 +1,162 @@
+<section class="ds-head dis-flex">
+  <h2 class="ds-head_title">Dashboard</h2>
+</section>
+
+<section class="profile">
+  <h5 class="profile_title">My Profile</h5>
+
+  <div class="profile_body">
+    <ng-container *ngIf="!isEdit">
+      <div class="dis-flex">
+        <img src="../../../../../assets/img/profile_pic.png" alt="" />
+        <div class="btns-area dis-flex">
+          <button class="btn tert_btn" (click)="isEdit = true">
+            Edit Profile
+          </button>
+        </div>
+      </div>
+
+      <form action="">
+        <div class="form-control">
+          <label for="firstName">First Name</label>
+          <div class="form-control_field">
+            <input
+              type="text"
+              name="firstname"
+              palceholder="First Name"
+              [(ngModel)]="firstname"
+            />
+          </div>
+        </div>
+        <div class="form-control">
+          <label for="lastName">Last Name</label>
+          <div class="form-control_field">
+            <input
+              type="text"
+              name="lastname"
+              placeholder="Last Name"
+              [(ngModel)]="lastname"
+            />
+          </div>
+        </div>
+        <div class="form-control">
+          <label for="email">Email Address</label>
+          <div class="form-control_field">
+            <input
+              type="email"
+              name="email"
+              placeholder="shaman@icloud.com"
+              [(ngModel)]="user.email"
+            />
+          </div>
+        </div>
+        <div class="form-control">
+          <label for="phoneNumber">Phone Number</label>
+          <div class="form-control_field">
+            <input type="tel" placeholder="09123467834" />
+          </div>
+        </div>
+        <!-- <div class="form-control">
+          <label for="gender">Gender</label>
+          <div class="form-control_field">
+            <select name="" id="">
+              <option value="Male">Male</option>
+              <option value="Male">Female</option>
+            </select>
+          </div>
+        </div> -->
+        <!-- <div class="form-control">
+          <label for="phoneNumber">Date of Birth</label>
+          <div class="form-control_field">
+            <input type="date" />
+          </div>
+        </div> -->
+        <div class="form-control col-2">
+          <label for="phoneNumber"> Address</label>
+          <div class="form-control_field">
+            <textarea name="" id="" cols="30" rows="5"></textarea>
+          </div>
+        </div>
+      </form>
+    </ng-container>
+
+    <ng-container *ngIf="isEdit">
+      <div class="dis-flex">
+        <img src="../../../../../assets/img/profile_pic.png" alt="" />
+        <div class="btns-area dis-flex">
+          <button class="btn tert_btn" (click)="isEdit = false">Cancel</button>
+          <button class="btn prim_btn" (click)="isEdit = false">
+            Save Changes
+          </button>
+        </div>
+      </div>
+      <form action="">
+        <div class="form-control">
+          <label for="firstName">First Name</label>
+          <div class="form-control_field">
+            <input
+              type="text"
+              name="firstname"
+              palceholder="First Name"
+              [(ngModel)]="firstname"
+            />
+          </div>
+        </div>
+        <div class="form-control">
+          <label for="lastName">Last Name</label>
+          <div class="form-control_field">
+            <input
+              type="text"
+              name="lastname"
+              placeholder="Last Name"
+              [(ngModel)]="lastname"
+            />
+          </div>
+        </div>
+        <div class="form-control">
+          <label for="email">Email Address</label>
+          <div class="form-control_field">
+            <input
+              type="email"
+              name="email"
+              placeholder="shaman@icloud.com"
+              [(ngModel)]="user.email"
+            />
+          </div>
+        </div>
+        <div class="form-control">
+          <label for="phoneNumber">Phone Number</label>
+          <div class="form-control_field">
+            <input type="tel" placeholder="09123467834" />
+          </div>
+        </div>
+        <!-- <div class="form-control">
+          <label for="gender">Gender</label>
+          <div class="form-control_field">
+            <select name="" id="">
+              <option value="Male">Male</option>
+              <option value="Male">Female</option>
+            </select>
+          </div>
+        </div> -->
+        <!-- <div class="form-control">
+          <label for="phoneNumber">Date of Birth</label>
+          <div class="form-control_field">
+            <input type="date" />
+          </div>
+        </div> -->
+        <div class="form-control col-2">
+          <label for="phoneNumber"> Address</label>
+          <div class="form-control_field">
+            <textarea name="" id="" cols="30" rows="5"></textarea>
+          </div>
+        </div>
+      </form>
+    </ng-container>
+  </div>
+
+  <!-- Alert message -->
+  <!-- <div class="alert-msg" [class.show]="isEdit">
+    <p>Your profile has been updated successfully</p>
+  </div> -->
+</section>

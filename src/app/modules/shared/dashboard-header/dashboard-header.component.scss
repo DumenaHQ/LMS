@@ -1,0 +1,107 @@
+@import '../../../../assets/css/variables.scss';
+@import '../../../../assets/css/mixins.scss';
+
+header {
+  background-color: $white-color;
+  border-bottom: 1px solid $divider-color;
+  padding: $m-3;
+  justify-content: space-between;
+  .search_area {
+    .hamburger {
+      display: none;
+      font-size: 40px;
+      color: $primary80;
+      @media only screen and (max-width: 905px) {
+        display: block;
+      }
+    }
+    .input_field {
+      padding: 0 $m-2;
+      background: #F7F7F7;
+      border-radius: $border-radius1;
+      border: 2px solid $white-color;
+      margin-right: $m-1;
+      // @media only screen and (max-width: 905px) {
+      //   display: none;
+      // }
+      @media only screen and (min-width: 755px) {
+        min-width: 400px;
+      }
+      img {
+        margin-right: $m-1;
+      }
+      input {
+        width: 100%;
+        padding: $m-2 0;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        font-size: 16px;
+        font-weight: 500;
+        color: rgba(45, 43, 109, 0.6);
+        &::placeholder {
+          color: rgba(45, 43, 109, 0.6);
+        }
+      }
+    }
+  }
+  .right {
+    .notifi {
+      margin-right: $m-2;
+      position: relative;
+      &_image {
+        @include icon-area(44px, $divider-color);
+        img {
+          transition: all 0.2s ease-in;
+        }
+        &:hover {
+          img {
+            transform: scale(1.2);
+          }
+        }
+      }
+      .dropdown {
+        position: absolute;
+        right: 0;
+        top: 0;
+        visibility: hidden;
+        opacity: 0;
+        transition: all .2s ease-in;
+        z-index: 10;
+        @media only screen and (min-width: 665px) {
+          left: -9rem;
+          // transform: translateX(-50%);
+        }
+        &.show {
+          visibility: visible;
+          opacity: 1;
+          top: 3rem;
+        }
+      }
+    }
+    .profile {
+      &_img {
+        width: 44px;
+        height: 44px;
+      }
+      &_details {
+        margin: 0 $m-2;
+        color: $primary80;
+        @media only screen and (max-width: 665px) {
+          display: none;
+        }
+        p {
+          float: right;
+          color: $primary40;
+        }
+      }
+      &_icon {
+        font-size: 26px;
+        color: $primary80;
+        @media only screen and (max-width: 665px) {
+          display: none;
+        }
+      }
+    }
+  }
+}

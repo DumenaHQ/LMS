@@ -1,0 +1,32 @@
+@import '../../../assets/css/variables.scss';
+@import '../../../assets/css/mixins.scss';
+
+.pnf-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  .pnf {
+    margin: auto;
+    display: grid;
+    place-items: center;
+    .oops-image {
+      max-width: 200px;
+      height: auto;
+      margin-bottom: 0.5rem;
+    }
+    span {
+      display: flex;
+      color: $primary80;
+      margin-top: 0.5rem;
+      i {
+        font-size: 24px;
+        margin-right: 0.5rem;
+        vertical-align: middle;
+        transition: all 0.2s;
+      }
+      &:hover img {
+        transform: translateX(-5px);
+      }
+    }
+  }
+}

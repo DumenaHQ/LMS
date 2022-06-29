@@ -1,0 +1,78 @@
+<div class="auth login">
+  <div class="auth_content">
+    <span class="auth_content_logo clickable" routerLink="/">
+      <img src="../../../assets/img/logo.svg" alt="" />
+    </span>
+    <div class="auth_content_header">
+      <!-- <p class="body-1-regular clickable" (click)="goBack()">Back</p> -->
+      <h3 class="title">Log in</h3>
+    </div>
+    <!-- <div class="auth_content_other">
+      <div class="auth_content_other_google dis-flex clickable">
+        <img src="../../../assets/img/svg/google-icon.svg" alt="" />
+        <p class="body-1-medium">Log in with Google</p>
+      </div>
+      <p class="body-3-regular auth_content_other_or">Or</p>
+    </div> -->
+    <form
+      class="auth_content_form"
+      (ngSubmit)="logIn(usersForm.value)"
+      #usersForm="ngForm"
+    >
+      <div class="form-field col-2">
+        <label for="email">Email Address or Username</label>
+        <div class="input-field">
+          <input type="email" name="username" ngModel required />
+          <!-- pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"
+            email="true" -->
+          <!-- <i class="bx bx-error-circle icon"></i> -->
+        </div>
+        <!-- <p class="body-3-regular warning">Invalid email address</p> -->
+      </div>
+      <div class="form-field col-2">
+        <label for="password">Password</label>
+        <div class="input-field">
+          <input
+            type="password"
+            name="password"
+            ngModel
+            [type]="hide ? 'password' : 'text'"
+          />
+          <i
+            [class]="
+              hide ? 'bx bx-show clickable icon' : 'bx bx-hide clickable icon'
+            "
+            (click)="hide = !hide"
+          ></i>
+        </div>
+      </div>
+      <!-- Forgot Password -->
+      <p
+        class="body-1-medium text-primary-color hover-1 forgot-pass col-2"
+        routerLink="/forgot-password"
+      >
+        Forgot your password?
+      </p>
+      <span class="message" *ngIf="showError">{{ errorMessage }}</span>
+      <!-- Submit Button -->
+      <div class="form-btn col-2">
+        <button class="btn prim_btn clickable" *ngIf="!loading">
+          <span>Login</span>
+        </button>
+        <span class="loading-spinner" *ngIf="loading">
+          <div class="spinner-3"></div>
+        </span>
+      </div>
+    </form>
+    <div class="auth_content_extra">
+      <p class="login">
+        Don’t have an account?
+        <span
+          class="text-primary-color body-1-bold clickable"
+          routerLink="/signup"
+          >Sign Up</span
+        >
+      </p>
+    </div>
+  </div>
+</div>

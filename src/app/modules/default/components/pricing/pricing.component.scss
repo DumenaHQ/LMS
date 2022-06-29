@@ -1,0 +1,229 @@
+@import '../../../../../assets/css/variables.scss';
+@import '../../../../../assets/css/mixins.scss';
+@import '../../../../../assets/css/default.scss';
+
+.hero {
+  text-align: center;
+  background-image: url('../../../../../assets/img/vectors/pricing-hero-bg.svg');
+  background-position: center;
+  background-size: cover;
+  .title {
+    color: $primary80;
+    margin-bottom: $m-2;
+  }
+}
+
+// Pricing Plan starts
+.pricing_plan {
+  .pricing_tab {
+    justify-content: center;
+    margin-bottom: $m-4;
+    // Switch
+    .switch {
+      position: relative;
+      display: inline-block;
+      margin: 0 $m-2;
+      &-input {
+        display: none;
+        &:checked + .switch-label::before {
+          background-color: $primary80;
+        }
+        &:checked + .switch-label::after {
+          left: 25px;
+        }
+      }
+      &-label {
+        display: block;
+        width: 50px;
+        height: 25px;
+        text-indent: -150%;
+        clip: rect(0 0 0 0);
+        color: transparent;
+        user-select: none;
+        &::before,
+        &::after {
+          content: "";
+          display: block;
+          position: absolute;
+          cursor: pointer;
+        }
+        &::before {
+          width: 100%;
+          height: 100%;
+          background: #DADEE3;
+          box-shadow: 0px 1.48718px 7.4359px #EBEEF2, inset 0px 0px 3.34615px rgba(0, 0, 0, 0.09);
+          border-radius: 14.8718px;
+          -webkit-transition: background-color 0.25s ease;
+          transition: background-color 0.25s ease;
+        }
+        &::after {
+          top: 1px;
+          left: 1px;
+          width: 23px;
+          height: 23px;
+          border-radius: 50%;
+          background-color: #fff;
+          // box-shadow: 0 0 2px rgba(0, 0, 0, 0.45);
+          -webkit-transition: left 0.25s ease;
+          transition: left 0.25s ease;
+        }
+      }
+    }
+  }
+  .pricing_card {
+    justify-content: center;
+    @media only screen and (max-width: 840px) {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-around;
+      gap: $m-4;
+    }
+    &_item {
+      border: 1px solid $grey60;
+      border-radius: $border-radius3;
+      @media only screen and (min-width: 450px) {
+        width: 300px;
+        flex-basis: auto;
+      }
+      .header {
+        padding: $m-5 0;
+        margin: 0 $m-4;
+        border-bottom: 1px solid $grey60;
+        .icon {
+          @include icon-area(54px, transparent);
+          margin-right: $m-2;
+        }
+        .price {
+          margin-top: $m-1;
+          em {
+            color: $text-color3;
+            font-style: normal;
+          }
+        }
+      }
+      .body {
+        padding: $m-5 $m-4;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        ul {
+          li {
+            .check-icon {
+              width: 18px;
+              height: 18px;
+              margin-right: $m-1;
+            }
+            &:not(:last-child) {
+              margin-bottom: $m-2;
+            }
+          }
+        }
+        .pricing_card_btn {
+          text-align: center;
+          margin-top: $m-5;
+          .btn {
+            min-width: 200px;
+            padding: $m-1 + 0.2;
+          }
+        }
+      }
+      &.standard {
+        @media only screen and (min-width: 840px) {
+          border-radius: $border-radius3 0 0 $border-radius3;
+        }
+        .icon {
+          background-color: $brightyellow;
+        }
+      }
+      &.pro {
+        border: 1px solid $primary80;
+        .icon {
+          background-color: $secondary80;
+        }
+        .label {
+          display: inline-block;
+          width: 100%;
+          padding: $m-1 - 0.3;
+          // margin-bottom: $m-4;
+          background-color: $primary80;
+          color: $white-color;
+          border-radius: $border-radius3 $border-radius3 0 0;
+          text-align: center;
+        }
+      }
+      &.school {
+        @media only screen and (min-width: 840px) {
+          border-radius: 0 $border-radius3 $border-radius3 0;
+        }
+        .icon {
+          background-color: $fushiapink;
+        }
+      }
+    }
+  }
+  @include before-after;
+  &::before {
+    content: url('../../../../../assets/img/vectors/kite.svg');
+    top: 50%;
+    left: 0;
+  }
+  &::after {
+    content: url('../../../../../assets/img/vectors/dash-curve.svg');
+    bottom: 0;
+    right: 0;
+  }
+}
+// Pricing Plan ends
+
+// More Plan Starts
+.more_plan {
+  @include sect-heading(left);
+  &_table {
+    &:not(:last-child) {
+      margin-bottom: $m-4 + 2;
+    }
+    table {
+      border-spacing: 0;
+      width: 100%;
+      td, th {
+        padding: $m-2;
+        text-align: left;
+      }
+      tr {
+        &.table-header {
+          th.option {
+            color: $primary80;
+            width: 40%;
+          }
+        }
+        &.table-body {
+          td {
+            border-bottom: 1px solid $grey60;
+            img {
+              width: 20px;
+              height: 20px;
+            }
+          }
+        }
+      }
+
+    }
+  }
+  &_btn {
+    margin-top: $m-4 + 4;
+    text-align: center;
+  }
+  @include before-after;
+  &::before {
+    content: url('../../../../../assets/img/vectors/kite.svg');
+    top: 50%;
+    left: 0;
+  }
+  &::after {
+    content: url('../../../../../assets/img/vectors/pencil.svg');
+    bottom: 0;
+    right: 0;
+  }
+}
+// More Plan ends
+

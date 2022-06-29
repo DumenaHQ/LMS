@@ -1,0 +1,47 @@
+<!-- Drop down -->
+<div class="notifi_dropdown" [class.show]="toggleNotifi">
+  <!-- Close Button -->
+  <span class="close-btn dis-flex" (click)="closeNotifiPopup()">
+    <i class="bx bx-x clickable"></i>
+  </span>
+  <ul class="notifi_dropdown_list">
+    <li class="notifi_dropdown_item dis-flex">
+      <img src="../../../assets/img/person1.png" alt="" />
+      <div class="notifi_dropdown_item_details">
+        <h6 class="title text-primary-color">Charlie Renner</h6>
+        <p class="message body-3-regular">
+          Dolor ullam in non molestias. At aut reiciendis dolor non culpa sint
+          quasi.
+        </p>
+      </div>
+    </li>
+    <li class="notifi_dropdown_item dis-flex">
+      <div class="notifi_dropdown_item_details">
+        <h6 class="title text-primary-color">You just earned 50XP!</h6>
+        <p class="message body-3-regular">
+          Sint quaerat eum esse sint numquam ea incidunt.
+        </p>
+      </div>
+    </li>
+    <li class="notifi_dropdown_item dis-flex">
+      <img src="../../../assets/img/person3.png" alt="" />
+      <div class="notifi_dropdown_item_details">
+        <h6 class="title text-primary-color">Sophia Hudson</h6>
+        <p class="message body-3-regular">
+          Laudantium consequatur eum voluptas iusto enim.
+        </p>
+      </div>
+    </li>
+    <li class="notifi_dropdown_item dis-flex">
+      <img src="../../../assets/img/person4.png" alt="" />
+      <div class="notifi_dropdown_item_details">
+        <h6 class="title text-primary-color">Luis Leannon</h6>
+        <p class="message body-3-regular">
+          How do I start a new coding course....
+        </p>
+      </div>
+    </li>
+  </ul>
+  <!-- View all -->
+  <p class="text-primary-color view-all clickable">View all</p>
+</div>

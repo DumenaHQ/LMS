@@ -1,0 +1,36 @@
+@import '../../../../../../assets/css/variables.scss';
+@import '../../../../../../assets/css/mixins.scss';
+@import '../../../../../../assets/css/auth.scss';
+
+.auth_content {
+  .auth_content_form {
+    margin-top: $m-3;
+    .avatar {
+      &_list {
+        flex-wrap: wrap;
+        gap: $m-1;
+        justify-content: space-between;
+        img {
+          width: 40px;
+          height: 40px;
+          cursor: pointer;
+          transition: all 0.2s ease-in;
+          border: 3px solid transparent;
+          &:hover {
+            border-color: $inner-border;
+            border-radius: 50%;
+          }
+          &.selected {
+            border-color: $primary80;
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+    .form-btns {
+      justify-content: center;
+      gap: $m-2;
+      margin-top: $m-4;
+    }
+  }
+}

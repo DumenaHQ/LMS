@@ -1,0 +1,83 @@
+@import '../../../../../assets/css/variables.scss';
+@import '../../../../../assets/css/mixins.scss';
+
+.card {
+  @include card(200px);
+  &_item {
+    border: 1px solid $divider-color;
+    border-radius: $border-radius2;
+    background-color: $white-color;
+    img {
+      width: 100%;
+      border-radius: $border-radius2 $border-radius2 0 0;
+    }
+    .details {
+      padding: $m-2;
+      .title {
+        margin-bottom: $m-2;
+      }
+      .icons {
+        gap: $m-2;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        span {
+          img {
+            margin-right: $m-1;
+            width: 22px;
+            height: 22px;
+          }
+          p {
+            // font-size: 14px;
+            color: $primary40;
+          }
+        }
+      }
+    }
+  }
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+  ul {
+    border: 1px solid #D0D5DD;
+    border-radius: 8px;
+    background-color: $white-color;
+    li {
+      width: 44px;
+      height: 44px;
+      color: $primary80;
+      display: inline-block;
+      font-size: 20px;
+      font-weight: 500;
+      display: grid;
+      place-items: center;
+      transition: all .2s;
+      cursor: pointer;
+      &:first-child {
+        border-radius: 8px 0 0 8px;
+      }
+      &:last-child {
+        border-radius: 0 8px 8px 0;
+      }
+      &:not(:last-child) {
+        border-right: 1px solid #D0D5DD;
+      }
+      &.active {
+        background-color: $grey40;
+      }
+      &:hover {
+        background-color: #F9FAFB;
+      }
+      &.icon {
+        i {
+          font-size: 24px;
+          color: $primary80;
+          vertical-align: middle;
+        }
+      }
+
+    }
+  }
+}

@@ -1,0 +1,36 @@
+@import '../../../../../assets/css/variables.scss';
+@import '../../../../../assets/css/mixins.scss';
+@import '../../../../../assets/css/default.scss';
+
+// Faq starts
+.faq {
+  @include sect-heading(center);
+  &_list {
+    display: grid;
+    grid-gap: $m-2;
+    &_item {
+      padding: $m-2 0;
+      border-bottom: 1px solid $text-color2;
+      .question {
+        justify-content: space-between;
+        .icon {
+          font-size: 25px;
+          color: $text-color2;
+          margin-left: $m-2;
+        }
+      }
+      .answer {
+        padding: $m-1 0;
+        transition: all 0.2s ease-in;
+      }
+    }
+  }
+  &_footer {
+    margin-top: $m-4;
+    text-align: center;
+    .btn {
+      margin-top: $m-2;
+    }
+  }
+}
+// Faq ends

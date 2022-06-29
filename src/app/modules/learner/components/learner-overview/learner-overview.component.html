@@ -1,0 +1,334 @@
+<section class="ds-head">
+  <h2 class="ds-head_title">Dashboard</h2>
+</section>
+
+<section class="ds-flex">
+  <main class="ds-grid">
+    <div class="welcome dis-flex">
+      <div class="welcome_details">
+        <h1>Good Morning, {{ user.fullname }}!</h1>
+        <p>
+          Your dashboard shows updates on your courses, assignments, and all
+          other progress
+        </p>
+      </div>
+      <div class="welcome_image">
+        <img
+          src="../../../../../assets/img/learner/undraw_real_time_sync.svg"
+          alt=""
+        />
+      </div>
+    </div>
+    <!-- Active courses -->
+    <div class="active-courses">
+      <div class="ds-sect-header dis-flex">
+        <h5>Active Courses</h5>
+        <p
+          class="caption-regular text-primary-color clickable"
+          routerLink="/learner/library"
+        >
+          View My Library
+        </p>
+      </div>
+      <div class="card">
+        <div class="card_item">
+          <picture>
+            <img
+              src="../../../../../assets/img/learner/active-course-1.png"
+              alt=""
+            />
+          </picture>
+          <div class="details">
+            <h5 class="title">Introction to Minecraft Modding</h5>
+            <label for="file">4/10 Lessons</label>
+            <progress id="file" value="40" max="100">42%</progress>
+            <div>
+              <button
+                class="btn tert_btn"
+                routerLink="/learner/library/course-info"
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card_item">
+          <picture>
+            <img
+              src="../../../../../assets/img/learner/active-course-2.png"
+              alt=""
+            />
+          </picture>
+          <div class="details">
+            <h5 class="title">Introduction to Web Development</h5>
+            <label for="file">8/10 Lessons</label>
+            <progress id="file" value="80" max="100">80%</progress>
+            <div>
+              <button
+                class="btn tert_btn"
+                routerLink="/learner/library/course-info"
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card_item">
+          <picture>
+            <img
+              src="../../../../../assets/img/learner/active-course-3.png"
+              alt=""
+            />
+          </picture>
+          <div class="details">
+            <h5 class="title">Introduction to Mobile Development</h5>
+            <label for="file">5/10 Lessons</label>
+            <progress id="file" value="50" max="100">50%</progress>
+            <div>
+              <button
+                class="btn tert_btn"
+                routerLink="/learner/library/course-info"
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Learning overview(lo) -->
+    <div class="lo">
+      <div class="ds-sect-header">
+        <h5>Learning Overview</h5>
+      </div>
+      <div class="chart">
+        <img
+          src="../../../../../assets/img/learner/NBcharts-lineChats.svg"
+          alt=""
+        />
+      </div>
+    </div>
+  </main>
+
+  <aside class="ds-grid">
+    <div class="complete-profile">
+      <div class="ds-sect-header dis-flex">
+        <h5 class="text-secondary-color">Complete your profile</h5>
+        <i class="bx bx-chevron-right"></i>
+      </div>
+      <div class="progress-bar">
+        <div class="progressbarWrapper">
+          <span id="bar"></span>
+        </div>
+      </div>
+
+      <!-- <div class="someElement" data-tooltip="This is a tooltip">Hover Me</div> -->
+    </div>
+    <div class="points">
+      <img
+        src="../../../../../assets/img/profile_pic.png"
+        alt=""
+        class="points_profile-img"
+      />
+      <ul class="points_list">
+        <li>
+          <div>
+            <img
+              src="../../../../../assets/img/learner/icomoon-free_fire.svg"
+              alt=""
+            />
+            <p class="body-1-bold">Streak</p>
+          </div>
+          <h2 class="value">53</h2>
+        </li>
+        <li>
+          <div>
+            <img
+              src="../../../../../assets/img/learner/subway_coin.svg"
+              alt=""
+            />
+            <p class="body-1-bold">DuPoints</p>
+          </div>
+          <h2 class="value">1287XP</h2>
+        </li>
+      </ul>
+    </div>
+    <!-- Learning quadrant(lq) -->
+    <div class="lq">
+      <div class="ds-sect-header dis-flex">
+        <h5>Learning Quadrant</h5>
+        <p class="caption-regular text-primary-color clickable">See Details</p>
+      </div>
+      <div class="chart">
+        <img
+          src="../../../../../assets/img/learner/learning-quadrant-chart.svg"
+          alt=""
+        />
+      </div>
+    </div>
+    <!-- Leaderboard(lb) -->
+    <div class="lb">
+      <div class="ds-sect-header dis-flex">
+        <h5>Leaderboard</h5>
+      </div>
+      <div class="lb_body">
+        <img src="../../../../../assets/img/learner/coming-soon.svg" alt="" />
+        <h3 class="text-primary-color">Coming soon</h3>
+      </div>
+    </div>
+  </aside>
+</section>
+
+<!-- Modal -->
+<div class="modal" [class.hide-modal]="!isOnboarding">
+  <div class="modal_area">
+    <ng-container>
+      <!-- Intro -->
+      <div class="intro modal_area_content" *ngIf="onboardModal == 1">
+        <img
+          src="../../../../../assets/img/undraw_begin_chat_re_v0lw 2.svg"
+          alt=""
+          class="intro_image"
+        />
+        <div class="modal-details">
+          <h2 class="text-primary-color">Welcome to DumenaLMS!</h2>
+          <p>
+            Let’s complete your profile and get you all set up for an amazing
+            learning experience
+          </p>
+        </div>
+        <div class="modal-btns dis-flex">
+          <button class="btn skip_btn" (click)="isOnboarding = false">
+            Skip
+          </button>
+          <button class="btn prim_btn" (click)="onboardModal = 2">
+            Complete profile
+          </button>
+        </div>
+
+        <!-- Close Button -->
+        <!-- <span class="close-btn clickable">
+          <i class="bx bx-x"></i>
+        </span> -->
+      </div>
+
+      <!-- Avatar -->
+      <div class="avatar modal_area_content" *ngIf="onboardModal == 2">
+        <div class="modal-details">
+          <h2 class="text-primary-color">Select an Avatar</h2>
+          <p>
+            You get to chose different avatars as your profile picture. Don’t
+            worry you can change this later
+          </p>
+        </div>
+        <div class="avatar_list dis-flex">
+          <img
+            *ngFor="let i of avatars"
+            [src]="i.image"
+            alt=""
+            class="avatar_item"
+            [class.selected]="i.selected"
+            (click)="yes(i)"
+          />
+          <!-- <label
+            for=""
+            *ngFor="let i of avatars"
+            (change)="i.selected = !i.selected"
+          >
+            <img
+              [src]="i.image"
+              alt=""
+              class="avatar_item"
+              [class.selected]="i.selected"
+              (click)="avatar.click()"
+            />
+            <input type="checkbox" [name]="i.id" id="" #avatar />
+          </label> -->
+        </div>
+        <div class="modal-btns dis-flex">
+          <button class="btn skip_btn" (click)="onboardModal = 3">Skip</button>
+          <button class="btn prim_btn" (click)="onboardModal = 3">Next</button>
+        </div>
+      </div>
+
+      <!-- Username -->
+      <div class="username modal_area_content" *ngIf="onboardModal == 3">
+        <div class="modal-details">
+          <h2 class="text-primary-color">Change your Username</h2>
+          <p>
+            You have a default username but if you would like to change it you
+            can do that now or just skip this step
+          </p>
+        </div>
+        <form #usersForm="ngForm">
+          <div class="form-field">
+            <label for="username">First Name</label>
+            <div class="input-field">
+              <input type="text" name="username" ngModel required />
+            </div>
+          </div>
+        </form>
+        <div class="modal-btns dis-flex">
+          <button class="btn skip_btn" (click)="onboardModal = 4">Skip</button>
+          <button
+            class="btn prim_btn"
+            (click)="no(usersForm.value, 3)"
+            [disabled]="usersForm.invalid"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+
+      <div class="interests" *ngIf="onboardModal == 4">
+        <div class="modal-details">
+          <h2 class="text-primary-color">Which of these interests you?</h2>
+          <p>
+            Let us tailor your dashboard specifically for you. Pick at least two
+            of these skills you like
+          </p>
+        </div>
+        <ul class="interests_list dis-flex">
+          <li
+            class="interests_list_item"
+            *ngFor="let i of interests"
+            [class.selected]="i.selected"
+            (click)="i.selected = !i.selected"
+          >
+            {{ i.value }}
+          </li>
+        </ul>
+        <div class="modal-btns dis-flex">
+          <button class="btn skip_btn" (click)="onboardModal = 5">Skip</button>
+          <button class="btn prim_btn" (click)="onboardModal = 5">
+            Finish
+          </button>
+        </div>
+      </div>
+
+      <!-- Done -->
+      <div class="completed" *ngIf="onboardModal == 5">
+        <img
+          src="../../../../../assets/img/undraw_winners_re_wr1l 1.svg"
+          alt=""
+          class="completed_image"
+        />
+        <div class="modal-details">
+          <h2 class="text-primary-color">Yay! You’re all done</h2>
+          <p>
+            You just finished setting up your profile, check out your library to
+            view courses
+          </p>
+        </div>
+        <div class="modal-btns dis-flex">
+          <button class="btn skip_btn" (click)="isOnboarding = false">
+            Cancel
+          </button>
+          <button class="btn prim_btn" routerLink="library">
+            Take me to my Library
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

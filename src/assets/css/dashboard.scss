@@ -1,0 +1,11 @@
+@import './variables.scss';
+@import './mixins.scss';
+
+section:not(:last-child) {
+  margin-bottom: $m-3;
+}
+
+.du-grid {
+  display: grid;
+  grid-gap: $m-3;
+}

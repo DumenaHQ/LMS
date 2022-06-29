@@ -1,0 +1,93 @@
+<section class="set-info" app>
+  <div class="set-info_header">
+    <h3 class="text-primary-color">Set the Course Information</h3>
+    <p>
+      This information will be displayed to the learners before they start the
+      course
+    </p>
+  </div>
+  <form>
+    <div class="form_control">
+      <label for="thumbnail">Course Thumbnail</label>
+      <div class="">
+        <div
+          class="form_control_field select-image clickable"
+          (click)="fileInput.click()"
+          appDragDrop
+          (fileDropped)="uploadFile($event)"
+        >
+          <input
+            type="file"
+            #fileInput
+            hidden
+            (change)="uploadFile($any($event).target.files)"
+          />
+          <img
+            [src]="
+              showPreviewImage
+                ? previewImage
+                : '../../../assets/img/select-Image.svg'
+            "
+            alt=""
+          />
+          <p class="body-3-regular">
+            Drag your image here or
+            <span class="text-primary-color">browse</span>
+          </p>
+          <p class="body-3-regular">Max file size 4MB</p>
+        </div>
+      </div>
+    </div>
+    <div class="form_control">
+      <label for="thumbnail">Course Title</label>
+      <div class="form_control_field">
+        <input type="text" placeholder="Type here" />
+      </div>
+    </div>
+    <div class="form_control">
+      <label for="thumbnail">Course Description</label>
+      <div class="form_control_field">
+        <textarea
+          name=""
+          id=""
+          cols="30"
+          rows="5"
+          placeholder="Type here"
+          spellcheck="true"
+        ></textarea>
+      </div>
+    </div>
+    <div class="form_control">
+      <label for="thumbnail">Difficulty Level</label>
+      <div class="form_control_field">
+        <select name="" id="">
+          <option value="">Please Select</option>
+        </select>
+      </div>
+    </div>
+    <div class="form_control">
+      <label for="thumbnail">Course Quadrant</label>
+      <div class="form_control_field">
+        <select name="" id="">
+          <option value="">Please Select</option>
+        </select>
+      </div>
+    </div>
+    <div class="form_control">
+      <label for="thumbnail">Tags</label>
+      <div class="form_control_field">
+        <textarea
+          name=""
+          id=""
+          cols="30"
+          rows="8"
+          placeholder="Type here"
+          spellcheck="true"
+        ></textarea>
+      </div>
+    </div>
+    <div>
+      <button class="btn prim_btn">Add Course</button>
+    </div>
+  </form>
+</section>

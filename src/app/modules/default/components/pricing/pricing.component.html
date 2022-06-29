@@ -1,0 +1,307 @@
+<section class="hero sect">
+  <div class="container">
+    <h1 class="title">
+      Ready to <span class="text-secondary-color">start</span> with <br />
+      DumenaLMS?
+    </h1>
+    <p>Choose the plan that’s the best fit for your kids.</p>
+  </div>
+</section>
+
+<!-- Pricing plan -->
+<section class="pricing_plan sect">
+  <div class="container">
+    <div class="pricing_tab dis-flex">
+      <h4>Monthly</h4>
+      <div class="switch">
+        <input id="switch-1" type="checkbox" class="switch-input" />
+        <label for="switch-1" class="switch-label"></label>
+      </div>
+      <h4>Yearly</h4>
+    </div>
+    <div class="pricing_card dis-flex">
+      <div class="pricing_card_item standard">
+        <div class="header dis-flex">
+          <span class="icon">
+            <img src="../../../assets/img/svg/Star.svg" alt="" />
+          </span>
+          <span>
+            <p>Standard</p>
+            <h3 class="price text-primary-color">
+              $25<em class="body-2-medium">/month</em>
+            </h3>
+          </span>
+        </div>
+        <div class="body">
+          <ul>
+            <li class="dis-flex body-2-medium">
+              <img
+                src="../../../assets/img/svg/check-prim.svg"
+                alt=""
+                class="check-icon"
+              />3 Months Subscription
+            </li>
+            <li class="dis-flex body-2-medium">
+              <img
+                src="../../../assets/img/svg/check-prim.svg"
+                alt=""
+                class="check-icon"
+              />Limited Access to courses
+            </li>
+            <li class="dis-flex body-2-medium">
+              <img
+                src="../../../assets/img/svg/check-prim.svg"
+                alt=""
+                class="check-icon"
+              />View Learning Activity
+            </li>
+            <li class="dis-flex">
+              <img
+                src="../../../assets/img/svg/check-prim.svg"
+                alt=""
+                class="check-icon"
+              />Project Tracking
+            </li>
+          </ul>
+          <div class="pricing_card_btn">
+            <button class="btn tert_btn">Go Standard</button>
+          </div>
+        </div>
+      </div>
+      <div class="pricing_card_item pro">
+        <span class="label">Most Popular</span>
+        <div class="header dis-flex">
+          <span class="icon">
+            <img src="../../../assets/img/svg/Star.svg" alt="" />
+          </span>
+          <span>
+            <p>Pro</p>
+            <h3 class="price text-primary-color">
+              $15<em class="body-2-medium">/month</em>
+            </h3>
+          </span>
+        </div>
+        <div class="body">
+          <ul>
+            <li class="dis-flex body-2-medium">
+              <img
+                src="../../../assets/img/svg/check-prim.svg"
+                alt=""
+                class="check-icon"
+              />1 year Subscription
+            </li>
+            <li class="dis-flex body-2-medium">
+              <img
+                src="../../../assets/img/svg/check-prim.svg"
+                alt=""
+                class="check-icon"
+              />Everything in Standard
+            </li>
+            <li class="dis-flex body-2-medium">
+              <img
+                src="../../../assets/img/svg/plus-prim.svg"
+                alt=""
+                class="check-icon"
+              />DIY Projects
+            </li>
+            <li class="dis-flex">
+              <img
+                src="../../../assets/img/svg/plus-prim.svg"
+                alt=""
+                class="check-icon"
+              />Live Tutoring Classes
+            </li>
+            <li class="dis-flex">
+              <img
+                src="../../../assets/img/svg/plus-prim.svg"
+                alt=""
+                class="check-icon"
+              />Certificate
+            </li>
+            <li class="dis-flex">
+              <img
+                src="../../../assets/img/svg/plus-prim.svg"
+                alt=""
+                class="check-icon"
+              />Full Access to Courses
+            </li>
+          </ul>
+          <div class="pricing_card_btn">
+            <button class="btn prim_btn">Go Pro</button>
+          </div>
+        </div>
+      </div>
+      <div class="pricing_card_item school">
+        <div class="header dis-flex">
+          <span class="icon">
+            <img src="../../../assets/img/svg/Star.svg" alt="" />
+          </span>
+          <span>
+            <p>School/Group</p>
+            <h3 class="price text-primary-color">Contact Us</h3>
+          </span>
+        </div>
+        <div class="body">
+          <ul>
+            <li class="dis-flex body-2-medium">
+              <img
+                src="../../../assets/img/svg/check-prim.svg"
+                alt=""
+                class="check-icon"
+              />School or Group Subscription
+            </li>
+            <li class="dis-flex body-2-medium">
+              <img
+                src="../../../assets/img/svg/check-prim.svg"
+                alt=""
+                class="check-icon"
+              />Everything in Pro
+            </li>
+            <li class="dis-flex body-2-medium">
+              <img
+                src="../../../assets/img/svg/plus-prim.svg"
+                alt=""
+                class="check-icon"
+              />Certificate
+            </li>
+            <li class="dis-flex">
+              <img
+                src="../../../assets/img/svg/plus-prim.svg"
+                alt=""
+                class="check-icon"
+              />Full Access to Courses
+            </li>
+          </ul>
+          <div class="pricing_card_btn">
+            <button class="btn tert_btn">Contact Us</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- More Pricing plan -->
+<section class="more_plan sect">
+  <div class="container">
+    <div class="sect_heading">
+      <h3 class="sect_title">Wanna know more? Let’s dig deeper</h3>
+    </div>
+    <div class="more_plan_table" style="overflow-x: auto">
+      <table>
+        <tr class="table-header">
+          <th class="option"><h4 class="body-1-bold">Courses</h4></th>
+          <th><h4 class="body-1-bold">Basic</h4></th>
+          <th><h4 class="body-1-bold">Pro</h4></th>
+          <th><h4 class="body-1-bold">School /Group</h4></th>
+        </tr>
+        <tr class="table-body" *ngFor="let i of courses">
+          <td>
+            <p class="body-2-regular">{{ i.name | titlecase }}</p>
+          </td>
+          <td>
+            <img
+              src="../../../assets/img/svg/check-prim.svg"
+              alt=""
+              *ngIf="i.basic"
+            />
+          </td>
+          <td>
+            <img
+              src="../../../assets/img/svg/check-prim.svg"
+              alt=""
+              *ngIf="i.pro"
+            />
+          </td>
+          <td>
+            <img
+              src="../../../assets/img/svg/check-prim.svg"
+              alt=""
+              *ngIf="i.school"
+            />
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="more_plan_table" style="overflow-x: auto">
+      <table>
+        <tr class="table-header">
+          <th class="option">
+            <h4 class="body-1-bold">Analytics and Tracking</h4>
+          </th>
+          <th><h4 class="body-1-bold">Basic</h4></th>
+          <th><h4 class="body-1-bold">Pro</h4></th>
+          <th><h4 class="body-1-bold">School /Group</h4></th>
+        </tr>
+        <tr class="table-body" *ngFor="let i of analytics">
+          <td>
+            <p class="body-2-regular">{{ i.name | titlecase }}</p>
+          </td>
+          <td>
+            <img
+              src="../../../assets/img/svg/check-prim.svg"
+              alt=""
+              *ngIf="i.basic"
+            />
+          </td>
+          <td>
+            <img
+              src="../../../assets/img/svg/check-prim.svg"
+              alt=""
+              *ngIf="i.pro"
+            />
+          </td>
+          <td>
+            <img
+              src="../../../assets/img/svg/check-prim.svg"
+              alt=""
+              *ngIf="i.school"
+            />
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="more_plan_table" style="overflow-x: auto">
+      <table>
+        <tr class="table-header">
+          <th class="option">
+            <h4 class="body-1-bold">Feedback</h4>
+          </th>
+          <th><h4 class="body-1-bold">Basic</h4></th>
+          <th><h4 class="body-1-bold">Pro</h4></th>
+          <th><h4 class="body-1-bold">School /Group</h4></th>
+        </tr>
+        <tr class="table-body" *ngFor="let i of feedback">
+          <td>
+            <p class="body-2-regular">{{ i.name | titlecase }}</p>
+          </td>
+          <td>
+            <img
+              src="../../../assets/img/svg/check-prim.svg"
+              alt=""
+              *ngIf="i.basic"
+            />
+          </td>
+          <td>
+            <img
+              src="../../../assets/img/svg/check-prim.svg"
+              alt=""
+              *ngIf="i.pro"
+            />
+          </td>
+          <td>
+            <img
+              src="../../../assets/img/svg/check-prim.svg"
+              alt=""
+              *ngIf="i.school"
+            />
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="more_plan_btn">
+      <button class="btn prim_btn">Get Started</button>
+    </div>
+  </div>
+</section>

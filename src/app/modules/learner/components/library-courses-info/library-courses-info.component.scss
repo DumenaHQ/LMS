@@ -1,0 +1,60 @@
+@import '../../../../../assets/css/variables.scss';
+@import '../../../../../assets/css/mixins.scss';
+
+section:not(:last-child) {
+  margin-bottom: $m-3;
+}
+
+.course-info {
+  &_header {
+    justify-content: space-between;
+    gap: $m-2;
+    margin-bottom: $m-3;
+  }
+  &_about {
+    @include sect-bg;
+
+    &_descp {
+      margin-bottom: $m-2;
+    }
+    &_content {
+      &_list {
+        margin-top: $m-2;
+        li {
+          padding: $m-2 $m-3;
+          border: 1px solid $inner-border;
+          border-left-width: 3px;
+          border-radius: $border-radius1;
+          cursor: pointer;
+          transition: all .2s;
+          &:not(:last-child) {
+            margin-bottom: $m-1;
+          }
+          &:hover {
+            border-left-color: $primary80;
+          }
+        }
+      }
+    }
+  }
+
+  &_tutor {
+    @include sect-bg;
+    border: 1px solid $divider-color;
+    &_list {
+      display: grid;
+      grid-gap: $m-4;
+      &_item {
+        .image {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          border: 1px solid $primary100;
+        }
+        .name {
+          margin: $m-3 0 $m-2 0;
+        }
+      }
+    }
+  }
+}

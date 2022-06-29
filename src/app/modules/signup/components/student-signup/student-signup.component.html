@@ -1,0 +1,111 @@
+<div class="auth signup">
+  <div class="auth_welcome">
+    <div class="auth_welcome_content">
+      <span class="logo clickable" routerLink="/">
+        <img src="../../../assets/img/logo-white.svg" alt="" />
+      </span>
+      <div class="details">
+        <h2 class="title">Welcome to your Future!</h2>
+        <p>
+          With over 1,000 videos, games and robotics classes and projects for
+          you, get ready to learn and build amazing things.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="auth_content">
+    <!-- Logo -->
+    <span class="auth_content_logo clickable" routerLink="/">
+      <img src="../../../assets/img/logo.svg" alt="" />
+    </span>
+    <div class="auth_content_header">
+      <p class="body-1-regular clickable go-back hover-2" (click)="goBack()">
+        Back
+      </p>
+      <h3 class="title">Sign Up</h3>
+    </div>
+    <!-- <div class="auth_content_other">
+      <div class="auth_content_other_google dis-flex clickable">
+        <img src="../../../assets/img/svg/google-icon.svg" alt="" />
+        <p class="body-1-medium">Sign up with Google</p>
+      </div>
+      <p class="body-3-regular auth_content_other_or">Or</p>
+    </div> -->
+    <form
+      class="auth_content_form"
+      (ngSubmit)="signUp(usersForm.value)"
+      #usersForm="ngForm"
+    >
+      <div class="form-field">
+        <label for="first-name">First Name</label>
+        <div class="input-field">
+          <input type="text" name="firstname" ngModel required />
+        </div>
+      </div>
+      <div class="form-field">
+        <label for="last-name">Last Name</label>
+        <div class="input-field">
+          <input type="text" name="lastname" ngModel required />
+        </div>
+      </div>
+      <div class="form-field col-2">
+        <label for="email">Parents Email Address</label>
+        <div class="input-field">
+          <input type="email" name="email" ngModel required />
+        </div>
+      </div>
+      <div class="form-field col-2">
+        <label for="password">Password</label>
+        <div class="input-field">
+          <input
+            type="password"
+            name="password"
+            ngModel
+            required
+            [type]="hide ? 'password' : 'text'"
+          />
+          <i
+            [class]="
+              hide ? 'bx bx-show clickable icon' : 'bx bx-hide clickable icon'
+            "
+            (click)="hide = !hide"
+          ></i>
+        </div>
+        <p class="body-3-regular warning">
+          Your password must be at least 6 characters
+        </p>
+      </div>
+      <!-- Terms and conditions -->
+      <p class="col-2 terms">
+        By signing up you agree to our
+        <span class="body-1-medium text-primary-color clickable"
+          >Terms and Conditions</span
+        >
+        and the
+        <span class="body-1-medium text-primary-color clickable"
+          >Privacy Policy</span
+        >.
+      </p>
+      <span class="message" *ngIf="showError">{{ errorMessage }}</span>
+      <!-- Submit Button -->
+      <div class="form-btn col-2">
+        <button class="btn prim_btn clickable" *ngIf="!loading">
+          <span>Sign Up</span>
+        </button>
+        <span class="loading-spinner" *ngIf="loading">
+          <div class="spinner-3"></div>
+        </span>
+      </div>
+    </form>
+    <div class="auth_content_extra">
+      <p class="login">
+        Already have an account?
+        <span
+          class="text-primary-color body-1-bold clickable"
+          routerLink="/login"
+          >Login</span
+        >
+      </p>
+    </div>
+  </div>
+</div>

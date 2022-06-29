@@ -1,0 +1,50 @@
+<header class="dis-flex">
+  <div class="search_area dis-flex">
+    <span class="clickable" (click)="openMenu()">
+      <i class="bx bx-menu-alt-left hamburger"></i>
+      <!-- [class]="hamClick ? 'bx-menu-alt-left' : 'bx-x'" -->
+      <!-- <i class="bx bx-x hamburger"></i> -->
+    </span>
+    <div class="input_field dis-flex">
+      <img src="../../../../assets/img/svg/Search.svg" alt="image" />
+      <input type="text" placeholder="Search for anything" />
+    </div>
+  </div>
+  <div class="right dis-flex">
+    <!-- notifi-popup -->
+    <div class="notifi">
+      <span
+        class="notifi_image dis-flex clickable"
+        (click)="showNotifi = !showNotifi"
+      >
+        <img
+          src="../../../../assets/img/svg/Notification.svg"
+          alt="image"
+          class=""
+        />
+      </span>
+      <!-- Drop down -->
+      <div class="dropdown" [class.show]="showNotifi">
+        <app-notifi-popup
+          (toggleNotifi)="closeNotifiPopup()"
+        ></app-notifi-popup>
+      </div>
+    </div>
+    <!-- Profile -->
+    <span
+      class="profile dis-flex clickable"
+      [routerLink]="['/', user.role, 'profile']"
+    >
+      <img
+        src="../../../../assets/img/profile_pic.png"
+        alt="image"
+        class="profile_img"
+      />
+      <span class="profile_details">
+        <h5>{{ user.fullname }}</h5>
+        <p>{{ user.role }}</p>
+      </span>
+      <i class="bx bx-chevron-down profile_icon"></i>
+    </span>
+  </div>
+</header>

@@ -1,0 +1,57 @@
+@import '../../../assets/css/variables.scss';
+@import '../../../assets/css/mixins.scss';
+@import '../../../assets/css/default.scss';
+
+main {
+  padding-top: 5rem;
+  height: calc(100vh - 5rem);
+  background-image: url('../../../assets/img/coming-soon-bg.svg');
+  section {
+    display: flex;
+    .container {
+      margin: auto;
+      .sect_heading {
+        text-align: center;
+        h1 {
+          margin: $m-1 0 $m-2 0;
+        }
+        @media only screen and (max-width: 660px) {
+          text-align: left;
+        }
+      }
+      .countdown {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: $m-3;
+        margin-top: $m-6;
+        &_item {
+          background-color: $grey20;
+          border-radius: $border-radius1;
+          box-shadow: $box-shadow;
+          padding: $m-2 $m-4;
+          color: $primary100;
+          text-align: center;
+          // width: 120px;
+          .value {
+            margin-bottom: $m-1;
+          }
+          @media only screen and (max-width: 560px) {
+            padding: $m-2 $m-2;
+            // width: 60px;
+            .value {
+              font-size: 20px;
+            }
+            p {
+              font-size: 14px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+

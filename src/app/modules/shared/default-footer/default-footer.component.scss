@@ -1,0 +1,67 @@
+@import '../../../../assets/css/variables.scss';
+@import '../../../../assets/css/mixins.scss';
+@import '../../../../assets/css/default.scss';
+
+@mixin colorHover {
+  transition: all 0.2s ease-in;
+  &:hover {
+    color: $secondary80;
+  }
+}
+li {
+  cursor: pointer;
+}
+
+footer {
+  background-color: $secondary20;
+  border-bottom: 2rem solid $secondary100;
+  padding: 7rem 0 3rem 0;
+  .container {
+    .footer_links {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-between;
+      gap: $m-4;
+      &_item {
+        @media only screen and (min-width: 450px) {
+          width: 200px;
+          flex-basis: auto;
+        }
+        &.about {
+          @media only screen and (min-width: 450px) {
+            width: 300px;
+          }
+          p {
+            margin: $m-2 0;
+          }
+          .social_icons {
+            li {
+              font-size: 25px;
+              display: inline-block;
+              @include colorHover;
+              &:not(:last-child) {
+                margin-right: $m-2;
+              }
+            }
+          }
+        }
+        .title {
+          margin-bottom: $m-2;
+        }
+        &.others {
+          ul {
+            display: grid;
+            grid-gap: $m-2;
+            li {
+              @include colorHover;
+              a {
+                @include colorHover;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

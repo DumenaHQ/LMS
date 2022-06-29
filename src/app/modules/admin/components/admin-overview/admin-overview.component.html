@@ -1,0 +1,182 @@
+<section class="ds-head">
+  <h2 class="ds-head_title">Dashboard</h2>
+</section>
+
+<section class="overview">
+  <main class="stats du-grid">
+    <div class="card">
+      <div class="card_item dis-flex">
+        <span class="icon dis-flex">
+          <img src="../../../../../assets/img/svg/profile-2user.svg" alt="" />
+        </span>
+        <div class="card_item_details">
+          <h5 class="title">Students</h5>
+          <h2 class="value">0</h2>
+        </div>
+      </div>
+      <div class="card_item dis-flex">
+        <span class="icon dis-flex">
+          <img src="../../../../../assets/img/svg/video-square.svg" alt="" />
+        </span>
+        <div class="card_item_details">
+          <h5 class="title">Videos</h5>
+          <h2 class="value">0</h2>
+        </div>
+      </div>
+      <div class="card_item dis-flex">
+        <span class="icon dis-flex">
+          <img src="../../../../../assets/img/svg/box.svg" alt="" />
+        </span>
+        <div class="card_item_details">
+          <h5 class="title">Live Courses</h5>
+          <h2 class="value">0</h2>
+        </div>
+      </div>
+      <div class="card_item dis-flex">
+        <span class="icon dis-flex">
+          <img src="../../../../../assets/img/svg/people.svg" alt="" />
+        </span>
+        <div class="card_item_details">
+          <h5 class="title">Parents</h5>
+          <h2 class="value">0</h2>
+        </div>
+      </div>
+      <div class="card_item dis-flex">
+        <span class="icon dis-flex">
+          <img src="../../../../../assets/img/svg/building.svg" alt="" />
+        </span>
+        <div class="card_item_details">
+          <h5 class="title">Schools</h5>
+          <h2 class="value">0</h2>
+        </div>
+      </div>
+      <div class="card_item dis-flex">
+        <span class="icon dis-flex">
+          <img src="../../../../../assets/img/svg/Bag.svg" alt="" />
+        </span>
+        <div class="card_item_details">
+          <h5 class="title">Educators</h5>
+          <h2 class="value">0</h2>
+        </div>
+      </div>
+    </div>
+    <div class="enroll">
+      <div class="enroll_title">
+        <h5>Enrollment</h5>
+      </div>
+      <div class="">
+        <img src="../../../../../assets/img/svg/chart.svg" alt="" />
+      </div>
+    </div>
+  </main>
+  <aside class="messages">
+    <div class="messages_title">
+      <h5>Messages</h5>
+      <p>Recent</p>
+    </div>
+    <ul class="messages_list">
+      <li class="messages_list_item dis-flex">
+        <img src="../../../../../assets/img/person1.png" alt="" />
+        <div class="messages_list_item_details">
+          <h6 class="name">Charlie Renner</h6>
+          <small class="message">
+            Dolor ullam in non molestias. At aut reiciendis dolor non culpa sint
+            quasi.
+          </small>
+        </div>
+      </li>
+      <li class="messages_list_item dis-flex">
+        <img src="../../../../../assets/img/person2.png" alt="" />
+        <div class="messages_list_item_details">
+          <h6 class="name">Erika Prohaska</h6>
+          <small class="message"
+            >Sint quaerat eum esse sint numquam ea incidunt.</small
+          >
+        </div>
+      </li>
+      <li class="messages_list_item dis-flex">
+        <img src="../../../../../assets/img/person3.png" alt="" />
+        <div class="messages_list_item_details">
+          <h6 class="name">Sophia Hudson</h6>
+          <small class="message"
+            >Laudantium consequatur eum voluptas iusto enim.</small
+          >
+        </div>
+      </li>
+      <li class="messages_list_item dis-flex">
+        <img src="../../../../../assets/img/person4.png" alt="" />
+        <div class="messages_list_item_details">
+          <h6 class="name">Luis Leannon</h6>
+          <small class="message">How do I start a new coding course....</small>
+        </div>
+      </li>
+      <li class="messages_list_item dis-flex">
+        <img src="../../../../../assets/img/person3.png" alt="" />
+        <div class="messages_list_item_details">
+          <h6 class="name">Sophia Hudson</h6>
+          <small class="message"
+            >Laudantium consequatur eum voluptas iusto enim.</small
+          >
+        </div>
+      </li>
+    </ul>
+  </aside>
+</section>
+
+<!-- Approved schools(ap-sch) -->
+<section class="ap-sch">
+  <div class="ap-sch_title">
+    <h5>Approve Schools</h5>
+  </div>
+  <div class="ap-sch_body">
+    <div style="overflow-x: auto">
+      <table>
+        <tr class="table-header">
+          <th>Name</th>
+          <th>Head of School</th>
+          <th>Phone Number</th>
+          <th>School Email Adress</th>
+          <th>Status</th>
+        </tr>
+        <tr class="table-body" *ngFor="let i of approvedSchools">
+          <td>{{ i.name | titlecase }}</td>
+          <td>{{ i.headOfSchool | titlecase }}</td>
+          <td>{{ i.phoneNumber }}</td>
+          <td>{{ i.schoolEmail }}</td>
+          <td class="status">
+            <!-- <span
+              class="dis-flex"
+              [class.success]="i.schoolStatus == 'approved'"
+              [class.warning]="i.schoolStatus == 'in review'"
+              [class.error]="i.schoolStatus == 'decline'"
+            >
+              {{ i.schoolStatus | titlecase }}
+              <i class="bx bx-chevron-down icon"></i>
+            </span> -->
+            <span
+              [class.success]="i.schoolStatus == 'approved'"
+              [class.warning]="i.schoolStatus == 'in review'"
+              [class.error]="i.schoolStatus == 'decline'"
+            >
+              <select name="status" id="status" [value]="i.schoolStatus">
+                <option value="approved" (click)="i.schoolStatus = 'Approved'">
+                  Approved
+                </option>
+                <option
+                  value="in review"
+                  (click)="i.schoolStatus = 'in review'"
+                >
+                  In Review
+                </option>
+                <option value="decline" (click)="i.schoolStatus = 'decline'">
+                  Decline
+                </option>
+              </select>
+            </span>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</section>
+<!-- <div class="dark"></div> -->

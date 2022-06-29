@@ -1,1 +1,389 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'assets/css/variables.scss';
+@import 'assets/css/mixins.scss';
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  font-family: 'Lato', sans-serif;
+  position: relative;
+  color: $text-color1;
+  letter-spacing: 0.01em;
+  overflow-x: hidden;
+}
+
+/* General starts */
+a {
+  color: $text-color1;
+}
+button {
+  border: none;
+  outline: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+input,
+button,
+textarea,
+select {
+  font-family: 'Lato', sans-serif;
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active{
+      -webkit-box-shadow: 0 0 0 30px white inset !important;
+  }
+}
+input::placeholder,
+textarea::placeholder {
+  font-family: 'Lato', sans-serif;
+}
+
+/* Buttons Starts */
+.btn {
+  position: relative;
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 22px;
+  text-align: center;
+  outline: none;
+  border-radius: $border-radius1;
+  transition: all 0.4s;
+  z-index: 1;
+}
+.prim_btn {
+  background-color: $secondary80;
+  color: $white-color;
+  border: 2px solid $secondary80;
+}
+.prim_btn:hover {
+  color: $secondary80;
+  background-color: $white-color;
+  border: 2px solid $secondary80;
+}
+.sec_btn {
+  color: $primary80;
+  background-color: $white-color;
+  border: 2px solid $primary80;
+}
+.sec_btn:hover {
+  background-color: $primary80;
+  color: $white-color;
+}
+.tert_btn {
+  color: $secondary80;
+  background-color: $white-color;
+  border: 2px solid $secondary80;
+}
+.tert_btn:hover {
+  background-color: $secondary80;
+  color: $white-color;
+  border: 2px solid $secondary80;
+}
+/* Buttons ends */
+
+.dis-flex {
+  display: flex;
+  align-items: center;
+}
+.clickable {
+  cursor: pointer;
+}
+.uc {
+  text-transform: uppercase;
+}
+.text-secondary-color {
+  color: $secondary80;
+}
+.text-primary-color {
+  color: $primary80;
+}
+.hover-1 {
+  transition: all 0.2s ease-in;
+  cursor: pointer;
+  &:hover {
+    color: $secondary80;
+  }
+}
+.hover-2 {
+  transition: all 0.2s ease-in;
+  cursor: pointer;
+  &:hover {
+    color: $primary80;
+  }
+}
+/* Headings starts */
+
+// I deducted 6px from each font-size from the original Figma size
+h1 {
+  font-weight: 700;
+  font-size: 50px;
+  line-height: 50px;
+  @media only screen and (max-width: 670px) {
+    font-size: 40px;
+  }
+}
+.semi-bold {
+  font-weight: 600;
+  font-size: 50px;
+  line-height: 50px;
+}
+h2 {
+  font-weight: 700;
+  font-size: 42px;
+  line-height: 58px;
+  @media only screen and (max-width: 670px) {
+    font-size: 35px;
+  }
+}
+h3 {
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 43px;
+  @media only screen and (max-width: 670px) {
+    font-size: 25px;
+  }
+}
+h4 {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  @media only screen and (max-width: 670px) {
+    font-size: 20px;
+  }
+}
+p,
+.body-1 {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+}
+.body-2 {
+  font-size: 16px;
+  line-height: 19px;
+}
+.body-3 {
+  font-size: 14px;
+  line-height: 17px;
+}
+.body-1-regular,
+.body-2-regular,
+.body-3-regular {
+  font-weight: 400;
+}
+.body-1-medium,
+.body-2-medium,
+.body-3-medium {
+  font-weight: 500;
+}
+.body-1-bold,
+.body-2-bold {
+  font-weight: 700;
+}
+.body-1-regular,
+.body-1-medium,
+.body-1-bold {
+  font-size: 18px;
+  line-height: 22px;
+}
+.body-2-regular,
+.body-2-medium,
+.body-2-bold {
+  font-size: 16px;
+  line-height: 19px;
+}
+.body-3-regular,
+.body-3-medium {
+  font-size: 14px;
+  line-height: 17px;
+}
+.captions-regular {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+}
+
+// Dashboard header starts
+h1 {
+  font-size: 34px;
+}
+h2 {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 28.8px;
+}
+h3 {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 16.8px;
+}
+h4 {
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 19.2px;
+}
+h5 {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 19.2px;
+}
+h6 {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 21.6px;
+
+}
+p {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21.6px;
+}
+small {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21.6px;
+
+}
+// Dashboard header ends
+/* Headings ends */
+
+/* nd flex starts */
+.du_flex_content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  @media only screen and (max-width: 670px) {
+    display: grid;
+    grid-gap: $m-4;
+  }
+  &.row-reverse {
+    flex-direction: row-reverse;
+  }
+  .du_flex_details {
+    flex-basis: 50%;
+    &_title {
+      margin-bottom: $m-2;
+      color: $primary80;
+    }
+    p {
+      color: $text-color2;
+      &:not(:last-child) {
+        margin-bottom: $m-1;
+      }
+    }
+    ul {
+      margin-top: $m-2;
+      li {
+        display: flex;
+        &:not(:last-child) {
+          margin-bottom: $m-2;
+        }
+        img {
+          width: 16px;
+          height: 16px;
+          margin-right: $m-1;
+        }
+      }
+    }
+    .btn {
+      margin-top: $m-4;
+    }
+  }
+  .du_flex_img {
+    flex-basis: 40%;
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+}
+/* du_flex_ends */
+
+//-- Card ends --//
+.card {
+  @include card(300px);
+  &_item {
+    // img {
+    //   margin-bottom: $m-3;
+    // }
+    // p {
+    //   margin-top: $m-2;
+    // }
+  }
+}
+//-- Card ends --//
+
+
+//-- Dashboard starts --//
+.ds-head {
+  &_title {
+    color: $primary80;
+  }
+  i {
+    font-size: 20px;
+    color: $primary80;
+    margin: 0 $m-1;
+    // vertical-align: middle;
+  }
+}
+.ds-sect-header {
+  margin-bottom: $m-3;
+  justify-content: space-between;
+  gap: $m-2;
+}
+
+.ds-flex {
+  display: grid;
+  grid-gap: $m-3;
+  @media only screen and (min-width: 850px) {
+    display: flex;
+    justify-content: space-between;
+    gap: $m-4;
+    align-items: flex-start;
+    main {
+      flex-basis: 70%;
+    }
+    aside {
+      flex-basis: 30%;
+    }
+  }
+}
+.ds-grid {
+  display: grid;
+  grid-gap: $m-4;
+}
+//-- Dashboard ends --//
+
+// Grey and green button
+.success_btn,
+.grey_btn {
+  display: inline-block;
+  border: 0.5px solid;
+  padding: $m-1 $m-2;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 18px;
+  transition: all 0.4s;
+  // cursor: pointer;
+}
+.success_btn {
+  background: $success20;
+  color: $success80;
+  // border-color: $success100;
+}
+.grey_btn {
+  background-color: $white-color;
+  color: $inner-border;
+  // border-color: $grey100;
+}

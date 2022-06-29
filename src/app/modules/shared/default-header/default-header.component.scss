@@ -1,0 +1,121 @@
+@import '../../../../assets/css/variables.scss';
+@import '../../../../assets/css/default.scss';
+
+
+header {
+  position: fixed;
+  width: 100%;
+  z-index: 150;
+  background-color: $white-color;
+  border-bottom: 1px solid #FFEFE2;
+  .container,
+  .logo,
+  .nav-list {
+    height: 5rem;
+  }
+  .container {
+    justify-content: space-between;
+    .logo {
+      display: inline-block;
+      img {
+        // height: 38.68656539916992px;
+        // width: 100px;
+
+      }
+    }
+    nav {
+      .nav_list {
+        @media only screen and (min-width: 1175px) {
+          &_item {
+            display: inline-block;
+            line-height: 5rem;
+            position: relative;
+            cursor: pointer;
+            &:not(:last-child) {
+              margin-right: $m-4;
+            }
+            &::after {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 0;
+              height: 4px;
+              border-radius: $border-radius1 $border-radius1 0 0;
+              background-color: $secondary100;
+              transition: all 0.2s ease-in;
+            }
+            &.active::after {
+              width: 100%;
+            }
+            &:hover {
+              &::after {
+                width: 100%;
+              }
+            }
+          }
+        }
+      }
+      .nav_btns {
+        @media only screen and (min-width: 1175px) {
+          margin-left: $m-6;
+          .btn {
+            &:not(:last-child) {
+              margin-right: $m-2;
+            }
+          }
+        }
+      }
+      @media only screen and (max-width: 1175px) {
+        display: none;
+        flex-direction: column;
+        text-align: center;
+        // justify-content: center;
+        gap: $m-4;
+        position: absolute;
+        left: 0;
+        top: 5rem;
+        width: 100%;
+        min-height: 100vh;
+        background-color: $white-color;
+        padding: $m-5;
+        .nav_list {
+          &_item {
+            font-size: 18px;
+            // font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            &:not(:last-child) {
+              margin-bottom: $m-4;
+            }
+            &:hover {
+              color: $secondary80;
+            }
+            &:first-child {
+              display: none;
+            }
+          }
+        }
+        &.open-menu {
+          display: flex;
+        }
+        .nav_btns {
+          display: grid;
+          grid-gap: $m-2;
+          .btn {
+            border-radius: $border-radius3;
+            &:first-child {
+              border: transparent;
+            }
+          }
+        }
+      }
+    }
+    .hamburger {
+      display: none;
+      @media only screen and (max-width: 1175px) {
+        display: block;
+      }
+    }
+  }
+}

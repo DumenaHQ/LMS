@@ -1,0 +1,30 @@
+<div class="auth_border">
+  <div class="auth_content_header center">
+    <h3 class="title">Check your mail</h3>
+    <p>We sent a password reset link to example@email.com</p>
+  </div>
+  <form class="auth_content_form">
+    <!-- <span class="message" [class.show]="showError">{{ errorMessage }}</span> -->
+    <!-- Submit Button -->
+    <div class="form-btn col-2">
+      <button class="btn prim_btn clickable" (click)="showSect('set-new')">
+        <!-- <span *ngIf="loading">Loading...</span>
+      <span *ngIf="!loading">Login</span> -->
+        Open email app
+      </button>
+    </div>
+  </form>
+  <div class="auth_content_extra">
+    <p>
+      Didn’t receive the mail?
+      <span class="text-primary-color body-1-bold clickable"
+        >Click to resend</span
+      >
+    </p>
+    <p class="login">
+      <span class="text-primary-color body-1-bold clickable" routerLink="/login"
+        >Back to Login</span
+      >
+    </p>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<!-- Header -->
+<app-default-header></app-default-header>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+<!-- Faq -->
+<app-faq></app-faq>
+
+<!-- Newsletter -->
+<app-newsletter></app-newsletter>
+
+<!-- Footer -->
+<app-default-footer></app-default-footer>
+
+<!-- Back to top -->
+<a
+  class="go-top clickable"
+  (click)="scrollToTop()"
+  [ngClass]="{ show: windowScrolled }"
+>
+  <i class="bx bx-chevron-up icon"></i>
+</a>

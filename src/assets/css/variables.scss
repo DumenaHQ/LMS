@@ -1,0 +1,78 @@
+//-- Colors starts --//
+
+// Primary starts
+$primary100: #242257;
+$primary80: #2D2B6D;
+$primary60: rgba(45, 43, 109, 0.2);
+$primary40: rgba(45, 43, 109, 0.4);
+$primary20: rgba(45, 43, 109, 0.6);
+// $primary60: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), #2D2B6D;
+// $primary40: linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), #2D2B6D;
+// $primary20: linear-gradient(0deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), #2D2B6D;
+
+// Primary ends
+
+// Secondary starts
+$secondary100: #D26715;
+$secondary80: #DF7829;
+$secondary60: #E59354;
+$secondary40: #FFE6D2;
+$secondary20: #FFF6EF;
+// Secondary ends
+
+// Error starts
+$error100: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #E92C2C;
+$error80: #e92c2c;
+$error60: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), #E92C2C;
+$error40: linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), #E92C2C;
+$error20: linear-gradient(0deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), #E92C2C;
+// Error ends
+
+// Success starts
+$success100: #054F31;
+$success80: #039855;
+$success60: #32D583;
+$success40: #D1FADF;
+$success20: #F6FFED;
+// Success ends
+
+// Warning starts
+$warning100: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #FACC15;
+$warning80: #FACC15;
+$warning60: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), #FACC15;
+$warning40: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), #FACC15;
+$warning20: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), #FACC15;
+// Warning ends
+
+$grey20: #FBFCFD;
+$grey40: #F9FAFB;
+$grey60: #EAECF0;
+$grey100: #A5A4AA;
+$inner-border: #CFCFD4;
+$divider-color: #ECEDF1;
+$divider-color2: #AFB3B8;
+$white-color: #ffffff;
+$text-color1: #232323;
+$text-color2: #52525B;
+$text-color3: #949494;
+$fushiapink: #CD1A6B;
+$brightyellow: #F3C019;
+//-- Colors ends --//
+
+$box-shadow: 0px 4px 6px -2px rgba(16, 24, 40, 0.03), 0px 12px 16px -4px rgba(16, 24, 40, 0.08);
+$box-shadow2: 4px 4px 40px rgba(112, 144, 176, 0.1);
+//-- Border starts --//
+$border-radius1: 5px;
+$border-radius2: 10px;
+$border-radius3: 20px;
+$border-radius4: 25px;
+//-- Border starts --//
+
+//-- Spacing starts --//
+$m-1: 0.5rem;
+$m-2: 1rem;
+$m-3: 1.5rem;
+$m-4: 2rem;
+$m-5: 2.5rem;
+$m-6: 3rem;
+//-- Spacing ends --//

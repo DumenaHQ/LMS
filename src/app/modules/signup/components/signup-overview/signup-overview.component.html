@@ -1,0 +1,38 @@
+<section class="signup">
+  <div class="signup_area">
+    <span class="logo clickable">
+      <img src="../../../assets/img/logo.svg" alt="" routerLink="/" />
+    </span>
+    <div class="signup_area_header">
+      <p class="body-1-regular clickable go-back hover-2" (click)="goBack()">
+        Back
+      </p>
+      <h3 class="title">Choose an account</h3>
+    </div>
+    <div class="signup_area_list">
+      <div
+        class="signup_area_list_item dis-flex clickable"
+        *ngFor="let i of signupOptions"
+        [routerLink]="i.link"
+      >
+        <span class="icon"><img [src]="i.icon" alt="image" /></span>
+        <div class="details">
+          <p class="body-1-bold title">{{ i.title }}</p>
+          <p class="body-3-regular description">
+            {{ i.description }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="signup_area_extra">
+      <p class="login">
+        Already have an account?
+        <span
+          class="text-primary-color body-1-bold clickable"
+          routerLink="/login"
+          >Login</span
+        >
+      </p>
+    </div>
+  </div>
+</section>

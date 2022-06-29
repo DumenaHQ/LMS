@@ -1,0 +1,140 @@
+<section class="ds-head">
+  <h2 class="ds-head_title">Dashboard</h2>
+</section>
+
+<section class="pricing">
+  <div class="pricing_tab">
+    <div class="pricing_tab_wrapper">
+      <span
+        class="tab"
+        [class.active]="billingId == 'monthly'"
+        (click)="tabChange('monthly')"
+        >Monthly billing
+      </span>
+      <span
+        class="tab"
+        [class.active]="billingId == 'yearly'"
+        (click)="tabChange('yearly')"
+        >Yearly billing
+      </span>
+    </div>
+  </div>
+  <div class="pricing_card">
+    <div class="pricing_card_item standard">
+      <div class="header dis-flex">
+        <span class="icon">
+          <img src="../../../assets/img/svg/Star.svg" alt="" />
+        </span>
+        <span>
+          <p class="body-1-bold">Standard</p>
+          <h3 class="price text-primary-color" *ngIf="billingId == 'monthly'">
+            $25<em class="body-2-medium">/month</em>
+          </h3>
+          <h3 class="price text-primary-color" *ngIf="billingId == 'yearly'">
+            $70
+          </h3>
+        </span>
+      </div>
+      <div class="body">
+        <ul>
+          <li class="dis-flex body-2-medium">
+            <img
+              src="../../../assets/img/svg/check-prim.svg"
+              alt=""
+              class="check-icon"
+            />3 Months Subscription
+          </li>
+          <li class="dis-flex body-2-medium">
+            <img
+              src="../../../assets/img/svg/check-prim.svg"
+              alt=""
+              class="check-icon"
+            />Limited Access to courses
+          </li>
+          <li class="dis-flex body-2-medium">
+            <img
+              src="../../../assets/img/svg/check-prim.svg"
+              alt=""
+              class="check-icon"
+            />View Learning Activity
+          </li>
+          <li class="dis-flex">
+            <img
+              src="../../../assets/img/svg/check-prim.svg"
+              alt=""
+              class="check-icon"
+            />Project Tracking
+          </li>
+        </ul>
+        <div class="pricing_card_btn">
+          <button class="btn prim_btn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+    <div class="pricing_card_item pro">
+      <div class="header dis-flex">
+        <span class="icon">
+          <img src="../../../assets/img/svg/Star.svg" alt="" />
+        </span>
+        <span>
+          <p class="body-1-bold">Pro</p>
+          <h3 class="price text-primary-color" *ngIf="billingId == 'monthly'">
+            $15<em class="body-2-medium">/month</em>
+          </h3>
+          <h3 class="price text-primary-color" *ngIf="billingId == 'yearly'">
+            $175
+          </h3>
+        </span>
+      </div>
+      <div class="body">
+        <ul>
+          <li class="dis-flex body-2-medium">
+            <img
+              src="../../../assets/img/svg/check-prim.svg"
+              alt=""
+              class="check-icon"
+            />1 year Subscription
+          </li>
+          <li class="dis-flex body-2-medium">
+            <img
+              src="../../../assets/img/svg/check-prim.svg"
+              alt=""
+              class="check-icon"
+            />Everything in Standard
+          </li>
+          <li class="dis-flex body-2-medium">
+            <img
+              src="../../../../../assets/img/svg/plus-prim.svg"
+              alt=""
+              class="check-icon"
+            />DIY Projects
+          </li>
+          <li class="dis-flex">
+            <img
+              src="../../../../../assets/img/svg/plus-prim.svg"
+              alt=""
+              class="check-icon"
+            />Live Tutoring Classes
+          </li>
+          <li class="dis-flex">
+            <img
+              src="../../../../../assets/img/svg/plus-prim.svg"
+              alt=""
+              class="check-icon"
+            />Certificate
+          </li>
+          <li class="dis-flex">
+            <img
+              src="../../../../../assets/img/svg/plus-prim.svg"
+              alt=""
+              class="check-icon"
+            />Full Access to Courses
+          </li>
+        </ul>
+        <div class="pricing_card_btn">
+          <button class="btn prim_btn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

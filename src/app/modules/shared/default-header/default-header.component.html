@@ -1,0 +1,47 @@
+<header>
+  <div class="container dis-flex">
+    <span routerLink="/" class="clickable">
+      <img src="../../../../assets/img/logo.svg" alt="image" />
+    </span>
+    <nav class="dis-flex" [class.open-menu]="hamClick">
+      <ul class="nav_list">
+        <li
+          class="nav_list_item"
+          routerLinkActive="active"
+          routerLink=""
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="hamClick = false"
+        >
+          Home
+        </li>
+        <li class="nav_list_item" (click)="hamClick = false">About Us</li>
+        <li
+          class="nav_list_item"
+          routerLinkActive="active"
+          routerLink="/pricing"
+          (click)="hamClick = false"
+        >
+          Pricing
+        </li>
+        <li class="nav_list_item" (click)="hamClick = false">Parents</li>
+        <li class="nav_list_item" (click)="hamClick = false">Educators</li>
+        <li class="nav_list_item" (click)="hamClick = false">Schools</li>
+      </ul>
+      <div class="nav_btns">
+        <button class="btn sec_btn" routerLink="/login">Login</button>
+        <button class="btn prim_btn" routerLink="/signup">Sign Up</button>
+      </div>
+    </nav>
+    <!-- Hamburger -->
+    <div class="hamburger clickable" (click)="hamClick = !hamClick">
+      <img
+        [src]="
+          hamClick
+            ? '../../../../assets/img/svg/Hamburger-close.svg'
+            : '../../../../assets/img/svg/Hamburger-open.svg'
+        "
+        alt=""
+      />
+    </div>
+  </div>
+</header>

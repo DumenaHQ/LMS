@@ -1,0 +1,24 @@
+<!-- Side Nav -->
+<div class="container">
+  <!-- Logo -->
+  <span [routerLink]="navLink[0]?.link" class="sidenav-logo clickable">
+    <img src="../../../../assets/img/logo-dashboard.svg" alt="image" />
+  </span>
+  <nav>
+    <ul class="sidenav-list">
+      <li
+        class="clickable"
+        routerLinkActive="active"
+        [routerLink]="i.link"
+        [routerLinkActiveOptions]="{ exact: true }"
+        *ngFor="let i of navLink"
+      >
+        <img [src]="i.icon" alt="image" />{{ i.name }}
+      </li>
+      <li class="logout clickable" (click)="logout()">
+        <img src="../../../../assets/img/svg/Logout.svg" alt="image" />
+        Log Out
+      </li>
+    </ul>
+  </nav>
+</div>

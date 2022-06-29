@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SeoService } from './services/seo.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'dumena-dashboard';
+  title = 'dumena';
+
+  constructor(private seoService: SeoService) {
+
+    // Update the routes Title
+    this.seoService.updateTitle();
+  }
 }
