@@ -30,7 +30,7 @@ export class ActivateAccountComponent implements OnInit {
       console.log(res)
 
       // Route User to Coming soon page
-      this.router.navigate(['/coming-soon'])
+      this.router.navigate(['/login'])
 
     }, ((error: any) => {
       console.log(error.error.message)

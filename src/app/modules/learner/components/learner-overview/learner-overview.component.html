@@ -6,7 +6,7 @@
   <main class="ds-grid">
     <div class="welcome dis-flex">
       <div class="welcome_details">
-        <h1>Good Morning, {{ user.fullname }}!</h1>
+        <h1>Good Morning, {{ user.fullname.split(" ")[0] }}!</h1>
         <p>
           Your dashboard shows updates on your courses, assignments, and all
           other progress
@@ -40,8 +40,8 @@
           </picture>
           <div class="details">
             <h5 class="title">Introction to Minecraft Modding</h5>
-            <label for="file">4/10 Lessons</label>
-            <progress id="file" value="40" max="100">42%</progress>
+            <label for="file">0/10 Lessons</label>
+            <progress id="file" value="0" max="100">0%</progress>
             <div>
               <button
                 class="btn tert_btn"
@@ -61,8 +61,8 @@
           </picture>
           <div class="details">
             <h5 class="title">Introduction to Web Development</h5>
-            <label for="file">8/10 Lessons</label>
-            <progress id="file" value="80" max="100">80%</progress>
+            <label for="file">0/10 Lessons</label>
+            <progress id="file" value="0" max="100">0%</progress>
             <div>
               <button
                 class="btn tert_btn"
@@ -82,8 +82,8 @@
           </picture>
           <div class="details">
             <h5 class="title">Introduction to Mobile Development</h5>
-            <label for="file">5/10 Lessons</label>
-            <progress id="file" value="50" max="100">50%</progress>
+            <label for="file">0/10 Lessons</label>
+            <progress id="file" value="00" max="100">0%</progress>
             <div>
               <button
                 class="btn tert_btn"
@@ -126,7 +126,7 @@
     </div>
     <div class="points">
       <img
-        src="../../../../../assets/img/profile_pic.png"
+        src="../../../../../assets/img/children-avatar/child-avatar-1.png"
         alt=""
         class="points_profile-img"
       />
@@ -139,7 +139,7 @@
             />
             <p class="body-1-bold">Streak</p>
           </div>
-          <h2 class="value">53</h2>
+          <h2 class="value">0</h2>
         </li>
         <li>
           <div>
@@ -149,7 +149,7 @@
             />
             <p class="body-1-bold">DuPoints</p>
           </div>
-          <h2 class="value">1287XP</h2>
+          <h2 class="value">0XP</h2>
         </li>
       </ul>
     </div>

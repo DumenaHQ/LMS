@@ -14,7 +14,12 @@
     <div class="pricing_tab dis-flex">
       <h4>Monthly</h4>
       <div class="switch">
-        <input id="switch-1" type="checkbox" class="switch-input" />
+        <input
+          id="switch-1"
+          type="checkbox"
+          class="switch-input"
+          (change)="monthlyPrice = !monthlyPrice"
+        />
         <label for="switch-1" class="switch-label"></label>
       </div>
       <h4>Yearly</h4>
@@ -27,8 +32,11 @@
           </span>
           <span>
             <p>Standard</p>
-            <h3 class="price text-primary-color">
-              $25<em class="body-2-medium">/month</em>
+            <h3 class="price text-primary-color" *ngIf="monthlyPrice">
+              N15,000<em class="body-2-medium">/month</em>
+            </h3>
+            <h3 class="price text-primary-color" *ngIf="!monthlyPrice">
+              N180,000<em class="body-2-medium">/year</em>
             </h3>
           </span>
         </div>
@@ -76,8 +84,11 @@
           </span>
           <span>
             <p>Pro</p>
-            <h3 class="price text-primary-color">
-              $15<em class="body-2-medium">/month</em>
+            <h3 class="price text-primary-color" *ngIf="monthlyPrice">
+              N9,000<em class="body-2-medium">/month</em>
+            </h3>
+            <h3 class="price text-primary-color" *ngIf="!monthlyPrice">
+              N108,000<em class="body-2-medium">/year</em>
             </h3>
           </span>
         </div>
@@ -173,7 +184,9 @@
             </li>
           </ul>
           <div class="pricing_card_btn">
-            <button class="btn tert_btn">Contact Us</button>
+            <a href="mailto:%20connect@dumena.com" class="btn tert_btn"
+              >Contact Us
+            </a>
           </div>
         </div>
       </div>

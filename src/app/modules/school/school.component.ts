@@ -17,19 +17,19 @@ export class SchoolComponent implements OnInit {
   navLink: any = [
     {
       name: "Dashboard",
-      link: "/parent",
+      link: "/school",
       icon: '../../../../assets/img/svg/Layout.svg',
       subLinks: []
     },
     {
-      name: "Children",
-      link: "/parent/children",
+      name: "Students",
+      link: "/school/students",
       icon: '../../../../assets/img/svg/people-blue.svg',
       subLinks: []
     },
     {
       name: "Payment",
-      link: "/parent/payment",
+      link: "/school/payment",
       icon: './../../../assets/img/svg/wallet.svg',
       subLinks: []
     },

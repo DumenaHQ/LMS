@@ -4,27 +4,15 @@
 
 <section class="children">
   <div class="children_body">
-    <ng-template>
+    <ng-container *ngIf="children?.length > 0; else noItems">
       <div class="card">
-        <div class="card_item clickable">
+        <div class="card_item clickable" *ngFor="let i of children">
           <img
             src="../../../../../assets/img/children-avatar/child-avatar-big-1.png"
             alt=""
             class="avatar"
           />
-          <h4 class="name">Alousa Jones</h4>
-          <button class="btn prim_btn">Manage Child</button>
-          <p class="body-2-medium text-secondary-color select-plan hover-2">
-            Select learning plan
-          </p>
-        </div>
-        <div class="card_item clickable">
-          <img
-            src="../../../../../assets/img/children-avatar/child-avatar-big-2.png"
-            alt=""
-            class="avatar"
-          />
-          <h4 class="name">Jack Ripper</h4>
+          <h4 class="name">{{ i.fullname }}</h4>
           <button class="btn prim_btn">Manage Child</button>
           <p class="body-2-medium text-secondary-color select-plan hover-2">
             Select learning plan
@@ -38,12 +26,12 @@
           <button class="btn tert_btn">Add Child</button>
         </div>
       </div>
-    </ng-template>
+    </ng-container>
 
     <!-- Course Blank -->
-    <ng-container #noItems>
+    <ng-template #noItems>
       <app-children-blank (addModal)="openAddModal()"></app-children-blank>
-    </ng-container>
+    </ng-template>
   </div>
 
   <!-- Alert Message -->
@@ -59,9 +47,10 @@
     <span class="modal_area_close" (click)="closeAddModal()">
       <i class="bx bx-x icon clickable"></i>
     </span>
-    <app-add-child
+    <app-enroll-learner
       (addModal)="closeAddModal()"
       (showAlert)="showAlertPopup()"
-    ></app-add-child>
+      [title]="title"
+    ></app-enroll-learner>
   </div>
 </div>

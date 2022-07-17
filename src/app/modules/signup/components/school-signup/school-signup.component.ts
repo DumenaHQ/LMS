@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-school-signup',
@@ -196,10 +195,11 @@ export class SchoolSignupComponent implements OnInit {
     this.authService.addUser(payroll).subscribe((res: any) => {
       console.log(res)
 
-      // Store user data to localstorage
-      this.authService.addUserDataToLocalStorage(res.data?.token, res.data)
 
       if (res.status == true) {
+        // Store user data to localstorage
+        this.authService.addUserDataToLocalStorage(res.data)
+
         // Navigate to Dashboard
         this.router.navigate(['/verify-email'])
       }
@@ -214,7 +214,7 @@ export class SchoolSignupComponent implements OnInit {
     }, ((error: any) => {
       console.log(error)
       // Show error message
-      error.error.error.errors[0] !== '' ? this.errorMessage = error.error.error.errors[0].message : this.errorMessage = error.error.message
+      error.error.error.code == 400 ? this.errorMessage = error.error.error.errors[0].message : this.errorMessage = error.error.message
       this.showError = true
 
       // Set loading to false

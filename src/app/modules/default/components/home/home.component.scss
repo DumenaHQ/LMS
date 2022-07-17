@@ -12,42 +12,42 @@
     opacity: 0;
   }
 }
-.modal {
-  @include modal($modal-area-width: 470px, $modal-area-padding: $m-6);
-  opacity: 1;
-  visibility: visible;
-  &.hide-modal {
-    opacity: 0;
-    visibility: hidden;
-  }
-  .btn:last-child {
-    position: relative;
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: inherit;
-      border-radius: inherit;
-      z-index: -1;
-      animation: ctabtn linear 1s infinite;
-    }
-    &:hover::after {
-      animation-play-state: paused;
-    }
-  }
-  .close-btn {
-    position: absolute;
-    top: $m-2;
-    right: $m-2;
-    i {
-      font-size: 26px;
-      color: $primary20;
-    }
-  }
-}
+// .modal {
+//   @include modal($modal-area-width: 470px, $modal-area-padding: $m-6);
+//   opacity: 1;
+//   visibility: visible;
+//   &.hide-modal {
+//     opacity: 0;
+//     visibility: hidden;
+//   }
+//   .btn:last-child {
+//     position: relative;
+//     &::after {
+//       content: '';
+//       position: absolute;
+//       top: 0;
+//       left: 0;
+//       width: 100%;
+//       height: 100%;
+//       background: inherit;
+//       border-radius: inherit;
+//       z-index: -1;
+//       animation: ctabtn linear 1s infinite;
+//     }
+//     &:hover::after {
+//       animation-play-state: paused;
+//     }
+//   }
+//   .close-btn {
+//     position: absolute;
+//     top: $m-2;
+//     right: $m-2;
+//     i {
+//       font-size: 26px;
+//       color: $primary20;
+//     }
+//   }
+// }
 
 // Hero starts
 .hero {
@@ -59,7 +59,7 @@
     margin: 0 auto;
   }
   &.bg-border-radius {
-    border-radius: 0 0 37% 37%;
+    // border-radius: 0 0 37% 37%;
     background: linear-gradient(180deg, #FFFFFF 0%, #FFEFE2 100%);
   }
   .du_flex_details {
@@ -322,30 +322,30 @@
   @include sect-heading(center);
   @include before-after;
   &_play_area {
-    display: grid;
-    place-items: center;
     margin: auto;
-    // position: relative;
     @media only screen and (min-width: 700px) {
       width: 700px;
       height: auto;
     }
-    video {
+    iframe {
       width: 100%;
-      height: 100%;
-    }
-    .play_icon {
-      @include icon-area(68px, transparent);
-      background: $error100;
-      position: absolute;
-      left: 50%;
-      top: 60%;
-      transform: translate(-50%, -50%);
-      img {
-        width: 25px;
-        height: 25px;
+      height: 400px;
+      @media only screen and (max-width: 450px) {
+        height: 250px;
       }
     }
+    // .play_icon {
+    //   @include icon-area(68px, transparent);
+    //   background: $error100;
+    //   position: absolute;
+    //   left: 50%;
+    //   top: 60%;
+    //   transform: translate(-50%, -50%);
+    //   img {
+    //     width: 25px;
+    //     height: 25px;
+    //   }
+    // }
   }
   &::before {
     content: url('../../../../../assets/img/vectors/kite.svg');

@@ -30,6 +30,7 @@ import { ConfirmEmailComponent } from './components/confirm-email/confirm-email.
     ActivateAccountComponent,
     VerifyCheckComponent,
     ConfirmEmailComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -37,7 +38,7 @@ import { ConfirmEmailComponent } from './components/confirm-email/confirm-email.
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -9,6 +9,7 @@ import { DashboardPopupAlertComponent } from './dashboard-popup-alert/dashboard-
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotifiPopupComponent } from './notifi-popup/notifi-popup.component';
+import { EnrollLearnerComponent } from './enroll-learner/enroll-learner.component';
 
 
 
@@ -20,7 +21,8 @@ import { NotifiPopupComponent } from './notifi-popup/notifi-popup.component';
     DashboardSidenavComponent,
     DashboardPopupAlertComponent,
     UserProfileComponent,
-    NotifiPopupComponent
+    NotifiPopupComponent,
+    EnrollLearnerComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,8 @@ import { NotifiPopupComponent } from './notifi-popup/notifi-popup.component';
     DefaultFooterComponent,
     DashboardHeaderComponent,
     DashboardSidenavComponent,
-    DashboardPopupAlertComponent
+    DashboardPopupAlertComponent,
+    EnrollLearnerComponent
   ]
 })
 export class SharedModule { }

@@ -13,9 +13,14 @@ export class AuthService {
   constructor(private router: Router, private http: HttpClient) { }
 
   // Set Token and save to localstorage
-  addUserDataToLocalStorage(token: string, data: any): void {
-    localStorage.setItem('token', token)
+  addUserDataToLocalStorage(data: any): void {
+    // localStorage.setItem('token', token)
     localStorage.setItem('data', JSON.stringify(data))
+  }
+
+  // Set Token to localstorage
+  setToken(token: string) {
+    localStorage.setItem('token', token)
   }
 
   // Get Token from localstorage
@@ -28,6 +33,10 @@ export class AuthService {
     this.usersData = localStorage.getItem("data")
     let data = JSON.parse(this.usersData)
     return data;
+  }
+
+  getParentChildren(userId: any) {
+    return this.http.get(this.baseUrl + 'parents/' + userId + '/learners', this.getHttpOptions())
   }
 
   allUser() {

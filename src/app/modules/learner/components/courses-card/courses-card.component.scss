@@ -3,10 +3,14 @@
 
 .card {
   @include card(200px);
+
   &_item {
     border: 1px solid $divider-color;
     border-radius: $border-radius2;
     background-color: $white-color;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     img {
       width: 100%;
       border-radius: $border-radius2 $border-radius2 0 0;

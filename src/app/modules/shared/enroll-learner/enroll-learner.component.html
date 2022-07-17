@@ -1,12 +1,12 @@
 <div class="enroll auth_content">
-  <h4 class="text-primary-color enroll_title">Enroll a child</h4>
+  <h4 class="text-primary-color enroll_title">Enroll a {{ title }}</h4>
   <form
     class="enroll_form auth_content_form"
     (ngSubmit)="signUp(usersForm.value)"
     #usersForm="ngForm"
   >
     <div class="form-field col-2 avatar">
-      <label for="avatar">Select an avatar for your child</label>
+      <label for="avatar">Select an avatar for your {{ title }}</label>
       <div class="avatar_list dis-flex">
         <img
           *ngFor="let i of avatars"

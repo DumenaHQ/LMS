@@ -30,6 +30,8 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/' + this.userType])
     }
 
+
+
   }
 
 
@@ -43,19 +45,26 @@ export class LoginComponent implements OnInit {
     this.authService.login(data).subscribe((res: any) => {
       console.log(res)
 
-      // Set token
-      this.authService.addUserDataToLocalStorage(res.data?.user.token, res.data)
 
       // If status is true, set User Type
       if (res.status == true) {
-        this.router.navigate(['/coming-soon'])
-        // this.CheckUserType(res.data.user.role)
+        // Set token
+        this.authService.setToken(res.data?.user.token)
+
+        // Set User data
+        this.authService.addUserDataToLocalStorage(res.data)
+
+        // Route user
+        // this.router.navigate(['/coming-soon'])
+        this.CheckUserType(res.data.user.role)
       }
 
     }, ((error: any) => {
       console.log(error)
       // Show error message
       this.errorMessage = error.error.message
+
+
       this.showError = true
 
       // Set loading to false

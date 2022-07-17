@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CoursesService } from 'src/app/services/courses.service';
 
 @Component({
   selector: 'app-courses-card',
@@ -42,9 +43,13 @@ export class CoursesCardComponent implements OnInit {
     },
   ]
 
-  constructor() { }
+  allCourses: any;
+
+  constructor(private coursesService: CoursesService) { }
 
   ngOnInit(): void {
+    this.coursesService.getAllCourses().subscribe((res: any) => {
+      this.allCourses = res.data.courses
+    })
   }
-
 }

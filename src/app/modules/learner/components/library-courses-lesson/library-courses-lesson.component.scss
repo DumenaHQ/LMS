@@ -1,0 +1,142 @@
+@import '../../../../../assets/css/variables.scss';
+@import '../../../../../assets/css/mixins.scss';
+
+
+section:not(:last-child) {
+  margin-bottom: $m-3;
+}
+
+
+// .body {
+//   display: grid;
+//   grid-gap: $m-3;
+//   @media only screen and (min-width: 850px) {
+//     display: flex;
+//     justify-content: space-between;
+//     gap: $m-4;
+//     main {
+//       flex-basis: 70%;
+//     }
+//     aside {
+//       flex-basis: 30%;
+//     }
+//   }
+//   .du-grid {
+//     display: grid;
+//     grid-gap: $m-4;
+//   }
+// }
+.course-header {
+  justify-content: space-between;
+  gap: $m-2;
+  margin-bottom: $m-3;
+}
+.course-video {
+  iframe {
+    width: 100%;
+    height: 384px;
+    // height: auto;
+  }
+}
+.course-descp {
+  @include sect-bg;
+  border: 1px solid $divider-color;
+  padding: 0;
+  &_header {
+    padding: 0 $m-4;
+    height: 4.5rem;
+    border-bottom: 1px solid $divider-color;
+    overflow: hidden;
+    ul {
+      // gap: $m-4;
+      // flex-wrap: wrap;
+      li {
+        line-height: 4.3rem;
+        cursor: pointer;
+        transition: all .2s;
+        padding: 0 $m-2;
+        &.active {
+          color: $primary80;
+          border-bottom: 2px solid $primary80;
+        }
+        &:hover {
+          background-color: $grey40;
+        }
+      }
+    }
+  }
+  &_body {
+    padding: $m-4;
+    display: grid;
+    grid-gap: $m-4;
+    font-weight: 500;
+    .require {
+      ol {
+        list-style-type: decimal;
+        li {
+          display: block;
+          &:not(:last-child) {
+            margin-bottom: $m-1;
+          }
+        }
+      }
+    }
+    h4 {
+      margin-bottom: $m-2;
+    }
+  }
+}
+
+aside {
+  .course-content {
+    @include sect-bg;
+    border: 1px solid $divider-color;
+    padding: $m-4 0;
+    &_header {
+      padding: 0 $m-4;
+      .total-length {
+        margin-top: $m-2;
+      }
+    }
+    &_list {
+      &_item {
+        padding: $m-2 $m-4;
+        cursor: pointer;
+        transition: all .2s;
+        &:hover {
+          background-color: $grey40;
+        }
+        .heading {
+          font-weight: 700;
+        }
+        .title {
+          margin: $m-1 0;
+        }
+        .length {
+          img {
+            width: 16px;
+            height: 16px;
+            margin-right: $m-1;
+          }
+        }
+        &.active {
+          background-color: $grey40;
+        }
+      }
+    }
+    &_tutor {
+      padding: 0 $m-4;
+      margin-top: $m-6;
+      &_profile {
+        margin-top: $m-3;
+        .image {
+          width: 60px;
+          height: 60px;
+        }
+        .name {
+          margin: $m-3 0 $m-2 0;
+        }
+      }
+    }
+  }
+}

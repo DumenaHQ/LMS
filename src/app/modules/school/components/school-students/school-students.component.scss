@@ -1,0 +1,102 @@
+@import '../../../../../assets/css/variables.scss';
+@import '../../../../../assets/css/mixins.scss';
+
+section:not(:last-child) {
+  margin-bottom: $m-3;
+}
+
+.children {
+  position: relative;
+  &_body {
+    @include sect-bg($border-color: transparent);
+    padding-top: $m-6;
+    .card {
+      &_item {
+        display: grid;
+        place-items: center;
+        border: 1px solid $divider-color;
+        border-radius: $border-radius1;
+        padding: $m-4 $m-2;
+        transition: all 0.2s;
+        &:hover {
+          border-color: $primary80;
+        }
+        .avatar {
+          margin-bottom: $m-2;
+          width: 90px;
+          height: 90px;
+        }
+        .btn {
+          margin: $m-3 0 $m-2 0;
+        }
+        // Add Child
+        .add-icon {
+          @include icon-area(64px, transparent);
+          background-color: $primary80;
+          i {
+            font-size: 30px;
+            color: $white-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+// Add Modal
+.modal {
+  @include modal($modal-area-width: 390px);
+  opacity: 0;
+  visibility: hidden;
+  &.show-modal {
+    opacity: 1;
+    visibility: visible;
+  }
+  &_area {
+    padding: $m-6 $m-3;
+    &_close {
+      position: absolute;
+      top: $m-2;
+      right: $m-3;
+      .icon {
+        font-size: 24px;
+        color: $primary20;
+        transition: all 0.2s ease-in;
+        &:hover {
+          color: $primary80;
+        }
+      }
+    }
+  }
+}
+
+// Alert Message
+.alert-msg {
+  position: absolute;
+  top: 0;
+  visibility: hidden;
+  opacity: 0;
+  width: 100%;
+  display: flex;
+  transition: all .2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  z-index: 5;
+  &.show {
+    visibility: visible;
+    opacity: 1;
+    top: 1.5rem;
+  }
+  @media only screen and (min-width: 556px) {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  &_content {
+    margin: auto;
+    padding: 0.8rem;
+    background-color: $success40;
+    border-radius: $border-radius1;
+    p {
+      color: $success80;
+    }
+  }
+}

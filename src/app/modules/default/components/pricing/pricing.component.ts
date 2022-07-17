@@ -122,7 +122,9 @@ export class PricingComponent implements OnInit {
       school: true,
     },
 
-  ]
+  ];
+
+  monthlyPrice: boolean = true;
 
   constructor() { }
 

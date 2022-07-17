@@ -1,16 +1,17 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-add-child',
-  templateUrl: './add-child.component.html',
-  styleUrls: ['./add-child.component.scss']
+  selector: 'app-enroll-learner',
+  templateUrl: './enroll-learner.component.html',
+  styleUrls: ['./enroll-learner.component.scss']
 })
-export class AddChildComponent implements OnInit {
+export class EnrollLearnerComponent implements OnInit {
 
   @Output() addModal: EventEmitter<any> = new EventEmitter();
   @Output() showAlert: EventEmitter<any> = new EventEmitter();
+  @Input() title: string = '';
 
   hide: boolean = true;
   loading: boolean = false;
@@ -84,8 +85,12 @@ export class AddChildComponent implements OnInit {
       if (res.status == true) {
         // Close Modal
         this.closeAddModal()
+
         // Show Popup
         this.showAlertPopup()
+
+        // Reload the page
+        window.location.reload()
       }
 
       // Show error message
@@ -98,7 +103,7 @@ export class AddChildComponent implements OnInit {
     }, ((error: any) => {
       console.log(error)
       // Show error message
-      error.error.error.errors[0] !== '' ? this.errorMessage = error.error.error.errors[0].message : this.errorMessage = error.error.message
+      error.error.error.code == 400 ? this.errorMessage = error.error.error.errors[0].message : this.errorMessage = error.error.message
       this.showError = true
       // Set loading to false
       this.loading = false
@@ -121,5 +126,6 @@ export class AddChildComponent implements OnInit {
   closeAddModal() {
     this.addModal.emit();
   }
+
 
 }

@@ -1,8 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,14 +9,19 @@ export class CoursesService {
 
   baseUrl: string = environment.baseUrl
 
-  constructor(private router: Router, private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient) { }
 
   getAllCourses() {
     return this.http.get(this.baseUrl + 'courses', this.getHttpOptions())
   }
 
+  getCourse(courseId: any) {
+    return this.http.get(this.baseUrl + 'courses/' + courseId, this.getHttpOptions())
+
+  }
+
   addCourse(data: any) {
-    return this.http.post(this.baseUrl + 'courses', data, this.getHttpOptions())
+    return this.http.post(this.baseUrl + 'courses', this.getHttpOptions(), data)
   }
 
   // Get HttpOptions
@@ -26,7 +29,7 @@ export class CoursesService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.authService.getToken()
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
       })
     }
     return httpOptions

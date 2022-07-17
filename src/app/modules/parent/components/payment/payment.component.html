@@ -9,7 +9,7 @@
       <div class="cart_body_list_item">
         <div class="header dis-flex">
           <p class="body-2-bold">Standard 3 months subscription</p>
-          <h4 class="text-secondary-color">$25/ Month</h4>
+          <h4 class="text-secondary-color">N15,000/ Month</h4>
         </div>
         <p class="body-2-regular">
           This plan spans for a period of three months and includes the
@@ -33,7 +33,7 @@
       <div class="cart_body_list_item">
         <div class="header dis-flex">
           <p class="body-2-bold">Pro One year subscription</p>
-          <h4 class="text-secondary-color">$15/ Month</h4>
+          <h4 class="text-secondary-color">N9,000/ Month</h4>
         </div>
         <p class="body-2-regular">
           This plan spans for a period of three months and includes the
@@ -62,16 +62,38 @@
         <p class="body-1-bold">Order details</p>
         <div class="sub-total dis-flex">
           <p class="body-2-regular">Sub total</p>
-          <p class="body-2-regular">$75.00</p>
+          <p class="body-2-regular">N24,000.00</p>
         </div>
       </div>
       <div class="cart_body_checkout_footer">
         <div class="grand-total dis-flex">
           <p class="body-1-bold">Sub total</p>
-          <p class="body-1-bold">$75.00</p>
+          <p class="body-1-bold">N24,000.00</p>
         </div>
         <button class="btn prim_btn">Proceed to Payment</button>
       </div>
     </div>
   </div>
 </section>
+
+<form id="paymentForm">
+  <div class="form-group">
+    <label for="email">Email Address</label>
+    <input type="email" id="email-address" required />
+  </div>
+  <div class="form-group">
+    <label for="amount">Amount</label>
+    <input type="tel" id="amount" required />
+  </div>
+  <div class="form-group">
+    <label for="first-name">First Name</label>
+    <input type="text" id="first-name" />
+  </div>
+  <div class="form-group">
+    <label for="last-name">Last Name</label>
+    <input type="text" id="last-name" />
+  </div>
+  <div class="form-submit">
+    <button type="submit">Pay</button>
+  </div>
+</form>

@@ -22,7 +22,7 @@
       <div class="form-field col-2">
         <label for="email">Email Address or Username</label>
         <div class="input-field">
-          <input type="email" name="username" ngModel required />
+          <input type="email" name="email" ngModel required />
           <!-- pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"
             email="true" -->
           <!-- <i class="bx bx-error-circle icon"></i> -->
@@ -53,7 +53,7 @@
       >
         Forgot your password?
       </p>
-      <span class="message" *ngIf="showError">{{ errorMessage }}</span>
+      <span class="message col-2" *ngIf="showError">{{ errorMessage }}</span>
       <!-- Submit Button -->
       <div class="form-btn col-2">
         <button class="btn prim_btn clickable" *ngIf="!loading">

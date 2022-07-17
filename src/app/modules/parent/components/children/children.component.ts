@@ -11,14 +11,20 @@ export class ChildrenComponent implements OnInit {
   addModal: boolean = false;
   showAlert: boolean = false;
   user: any;
+  title: string = 'child';
+  children: any;
 
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+    // Get User data from localstorage
+    let userData = this.authService.getUser()
+    this.user = userData.user
+
     // Get user data from localstorage
-    // this.authService.allUser().subscribe((res: any) => {
-    //   console.log(res)
-    // })
+    this.authService.getParentChildren(this.user.id).subscribe((res: any) => {
+      this.children = res.data.learners
+    })
 
   }
 

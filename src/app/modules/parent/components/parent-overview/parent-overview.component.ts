@@ -10,7 +10,7 @@ export class ParentOverviewComponent implements OnInit {
 
   billingId: string = 'monthly'
 
-  constructor(private authService: AuthService) { }
+  constructor() { }
 
   ngOnInit(): void {
   }

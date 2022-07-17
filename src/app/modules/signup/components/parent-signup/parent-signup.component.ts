@@ -30,7 +30,7 @@ export class ParentSignupComponent implements OnInit {
       fullname: data.fullname,
       email: data.email,
       user_type: "parent",
-      // password: data.password,
+      password: data.password,
       phone: data.phone,
       resident_state: data.resident_state
     }
@@ -40,7 +40,7 @@ export class ParentSignupComponent implements OnInit {
       console.log(res)
 
       // Store user data to localstorage
-      this.authService.addUserDataToLocalStorage(res.data?.token, res.data)
+      this.authService.addUserDataToLocalStorage(res.data)
 
       if (res.status == true) {
         // Navigate to Dashboard
@@ -57,7 +57,7 @@ export class ParentSignupComponent implements OnInit {
     }, ((error: any) => {
       console.log(error)
       // Show error message
-      error.error.error.errors[0] !== '' ? this.errorMessage = error.error.error.errors[0].message : this.errorMessage = error.error.message
+      error.error.error.code == 400 ? this.errorMessage = error.error.error.errors[0].message : this.errorMessage = error.error.message
       this.showError = true
 
       // Set loading to false

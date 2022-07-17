@@ -11,6 +11,7 @@ export class DashboardHeaderComponent implements OnInit {
   @Output() hamClick: EventEmitter<any> = new EventEmitter();
   showNotifi: boolean = false;
   user: any;
+  userNamePath: any
 
   constructor(private authService: AuthService) { }
 
@@ -18,6 +19,8 @@ export class DashboardHeaderComponent implements OnInit {
     // Get user data from localstorage
     let userData = this.authService.getUser()
     this.user = userData.user
+    this.userNamePath = this.user.fullname.replace(/\s/g, "-").toLowerCase()
+
   }
 
   // Open Menu

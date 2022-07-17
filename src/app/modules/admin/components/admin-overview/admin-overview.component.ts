@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-admin-overview',
@@ -49,10 +50,19 @@ export class AdminOverviewComponent implements OnInit {
       schoolStatus: 'approved'
     }
   ]
+  allUsers: any;
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.authService.allUser().subscribe((res: any) => {
+      this.allUsers = res.data.users
+      this.allUsers.forEach((element: any) => {
+        console.log(element)
+      });
+    })
   }
+  // parent token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYmM2MGYzY2U5ODM1ZGE4ZmJkMDk5MiIsImZ1bGxuYW1lIjoiRGF2ZSBwYXJlbnQiLCJyb2xlIjoicGFyZW50IiwiaWF0IjoxNjU2NjI4NzM0LCJleHAiOjE2NTY3MTUxMzR9.41HNaXR5KxrUBDeYckwYfpuZB8dEbPEja_Ipf7p1Qw4
 
+  // admin token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYmQ5ODA1Y2U5ODM1ZGE4ZmJkMGE3NyIsImZ1bGxuYW1lIjoiQXJlbXUgT2R1bmF5byBEYXZpZCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY1NjYyOTI5NiwiZXhwIjoxNjU2NzE1Njk2fQ.WYnmVa8bJU6u97J_yQrBapcClZt0kKA0PLhVn49_USg
 }

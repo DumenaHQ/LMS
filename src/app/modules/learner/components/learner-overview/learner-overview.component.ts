@@ -6,10 +6,6 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './learner-overview.component.html',
   styleUrls: ['./learner-overview.component.scss']
 })
-// export interface onBoard {
-//   image: string;
-//   username: string;
-// }
 export class LearnerOverviewComponent implements OnInit {
 
 

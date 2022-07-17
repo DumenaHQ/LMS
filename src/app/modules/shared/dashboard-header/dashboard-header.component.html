@@ -33,16 +33,19 @@
     <!-- Profile -->
     <span
       class="profile dis-flex clickable"
-      [routerLink]="['/', user.role, 'profile']"
+      [routerLink]="['/', user.role, 'profile', userNamePath]"
     >
       <img
-        src="../../../../assets/img/profile_pic.png"
+        src="../../../../assets/img/children-avatar/child-avatar-1.png"
         alt="image"
         class="profile_img"
       />
       <span class="profile_details">
-        <h5>{{ user.fullname }}</h5>
-        <p>{{ user.role }}</p>
+        <h5>
+          {{ user.fullname | titlecase }}
+        </h5>
+        <!-- (user.username === null ? user.username : user.fullname) | titlecase -->
+        <p>{{ user.role | titlecase }}</p>
       </span>
       <i class="bx bx-chevron-down profile_icon"></i>
     </span>
