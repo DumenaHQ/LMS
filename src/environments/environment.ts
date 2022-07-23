@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://dev.dumena.com/'
+  baseUrl: 'https://dev.dumena.com/',
 };
 
 /*

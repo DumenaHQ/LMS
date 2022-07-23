@@ -179,19 +179,19 @@
     </button>
     <div class="container du_flex_content">
       <div class="du_flex_img">
-        <img [src]="testimonials[currentTesti]?.image" alt="image" />
+        <img [src]="testimonials[currentTesti].image" alt="image" />
       </div>
       <div class="du_flex_details">
         <h3 class="du_flex_details_title">
-          “{{ testimonials[currentTesti]?.title }}”
+          “{{ testimonials[currentTesti].title }}”
         </h3>
-        <p>“{{ testimonials[currentTesti]?.description }}”</p>
-        <p class="testi_name">– {{ testimonials[currentTesti]?.name }}</p>
+        <p>“{{ testimonials[currentTesti].description }}”</p>
+        <p class="testi_name">– {{ testimonials[currentTesti].name }}</p>
       </div>
     </div>
     <button
       class="icon_area"
-      [disabled]="currentTesti + 1 === testimonials?.length"
+      [disabled]="currentTesti + 1 === testimonials.length"
       (click)="nextTesti()"
     >
       <img src="../../../../../assets/img/svg/arrow-right.svg" alt="" />
@@ -203,7 +203,7 @@
         <i class="bx bx-chevron-left"></i>
       </button>
       <button
-        [disabled]="currentTesti + 1 === testimonials?.length"
+        [disabled]="currentTesti + 1 === testimonials.length"
         (click)="nextTesti()"
       >
         <i class="bx bx-chevron-right"></i>

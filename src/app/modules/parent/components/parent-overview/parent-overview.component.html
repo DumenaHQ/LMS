@@ -31,7 +31,7 @@
             N15,000<em class="body-2-medium">/month</em>
           </h3>
           <h3 class="price text-primary-color" *ngIf="billingId == 'yearly'">
-            N180,000
+            N180,000<em class="body-2-medium">/yearly</em>
           </h3>
         </span>
       </div>
@@ -67,7 +67,12 @@
           </li>
         </ul>
         <div class="pricing_card_btn">
-          <button class="btn prim_btn">Add to Cart</button>
+          <button
+            class="btn prim_btn"
+            (click)="addToCart('standard-plan', 15000)"
+          >
+            Add to Cart
+          </button>
         </div>
       </div>
     </div>
@@ -82,7 +87,7 @@
             N9,000<em class="body-2-medium">/month</em>
           </h3>
           <h3 class="price text-primary-color" *ngIf="billingId == 'yearly'">
-            N108,000
+            N108,000<em class="body-2-medium">/yearly</em>
           </h3>
         </span>
       </div>
@@ -132,7 +137,9 @@
           </li>
         </ul>
         <div class="pricing_card_btn">
-          <button class="btn prim_btn">Add to Cart</button>
+          <button class="btn prim_btn" (click)="addToCart('pro-plan', 9000)">
+            Add to Cart
+          </button>
         </div>
       </div>
     </div>

@@ -11,6 +11,7 @@
         routerLinkActive="active"
         [routerLink]="i.link"
         [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closeMenu()"
         *ngFor="let i of navLink"
       >
         <img [src]="i.icon" alt="image" />{{ i.name }}

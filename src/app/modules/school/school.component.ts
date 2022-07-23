@@ -5,10 +5,9 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-school',
   templateUrl: './school.component.html',
-  styleUrls: ['./school.component.scss']
+  styleUrls: ['./school.component.scss'],
 })
 export class SchoolComponent implements OnInit {
-
   @ViewChild('sideNav') sideNav: ElementRef;
   @ViewChild('menuBtn') menuBtn: ElementRef;
 
@@ -16,42 +15,46 @@ export class SchoolComponent implements OnInit {
 
   navLink: any = [
     {
-      name: "Dashboard",
-      link: "/school",
+      name: 'Dashboard',
+      link: '/school',
       icon: '../../../../assets/img/svg/Layout.svg',
-      subLinks: []
+      subLinks: [],
     },
     {
-      name: "Students",
-      link: "/school/students",
+      name: 'Students',
+      link: '/school/students',
       icon: '../../../../assets/img/svg/people-blue.svg',
-      subLinks: []
+      subLinks: [],
     },
     {
-      name: "Payment",
-      link: "/school/payment",
+      name: 'Payment',
+      link: '/school/payment',
       icon: './../../../assets/img/svg/wallet.svg',
-      subLinks: []
+      subLinks: [],
     },
-  ]
+  ];
 
   user: any;
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
-    let userData = this.authService.getUser()
-    this.user = userData.user
+    let userData = this.authService.getUser();
+    this.user = userData.user;
 
     // Prevent Non-school from routing here
     if (this.user.role !== 'school') {
-      this.router.navigate(['/login'])
+      this.router.navigate(['/login']);
     }
   }
 
   // Open Menu
   openMenu() {
-    this.hamClick = !this.hamClick
+    this.hamClick = !this.hamClick;
   }
 
+  // Open Menu
+  closeMenu() {
+    this.hamClick = false;
+  }
 }

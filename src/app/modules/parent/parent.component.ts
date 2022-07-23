@@ -5,10 +5,9 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-parent',
   templateUrl: './parent.component.html',
-  styleUrls: ['./parent.component.scss']
+  styleUrls: ['./parent.component.scss'],
 })
 export class ParentComponent implements OnInit {
-
   @ViewChild('sideNav') sideNav: ElementRef;
   @ViewChild('menuBtn') menuBtn: ElementRef;
 
@@ -16,42 +15,46 @@ export class ParentComponent implements OnInit {
 
   navLink: any = [
     {
-      name: "Dashboard",
-      link: "/parent",
+      name: 'Dashboard',
+      link: '/parent',
       icon: '../../../../assets/img/svg/Layout.svg',
-      subLinks: []
+      subLinks: [],
     },
     {
-      name: "Children",
-      link: "/parent/children",
+      name: 'Children',
+      link: '/parent/children',
       icon: '../../../../assets/img/svg/people-blue.svg',
-      subLinks: []
+      subLinks: [],
     },
     {
-      name: "Payment",
-      link: "/parent/payment",
+      name: 'Payment',
+      link: '/parent/payment',
       icon: './../../../assets/img/svg/wallet.svg',
-      subLinks: []
+      subLinks: [],
     },
-  ]
+  ];
 
   user: any;
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
-    let userData = this.authService.getUser()
-    this.user = userData.user
+    let userData = this.authService.getUser();
+    this.user = userData.user;
 
     // Prevent Non-parent from routing here
     if (this.user.role !== 'parent') {
-      this.router.navigate(['/login'])
+      this.router.navigate(['/login']);
     }
   }
 
   // Open Menu
   openMenu() {
-    this.hamClick = !this.hamClick
+    this.hamClick = !this.hamClick;
   }
 
+  // Open Menu
+  closeMenu() {
+    this.hamClick = false;
+  }
 }

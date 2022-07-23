@@ -5,10 +5,9 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.scss']
+  styleUrls: ['./admin.component.scss'],
 })
 export class AdminComponent implements OnInit {
-
   @ViewChild('sideNav') sideNav: ElementRef;
   @ViewChild('menuBtn') menuBtn: ElementRef;
 
@@ -16,59 +15,64 @@ export class AdminComponent implements OnInit {
 
   navLink: any = [
     {
-      name: "Dashboard",
-      link: "/admin",
+      name: 'Dashboard',
+      link: '/admin',
       icon: '../../../../assets/img/svg/Layout.svg',
-      subLinks: []
+      subLinks: [],
     },
     {
-      name: "Courses",
-      link: "/admin/courses",
+      name: 'Courses',
+      link: '/admin/courses',
       icon: '../../../../assets/img/svg/University.svg',
-      subLinks: []
+      subLinks: [],
     },
     {
-      name: "Quiz",
-      link: "/all-courses",
+      name: 'Quiz',
+      link: '/all-courses',
       icon: './../../../assets/img/svg/Book-open.svg',
-      subLinks: []
+      subLinks: [],
     },
     {
-      name: "Messages",
-      link: "/all-courses",
+      name: 'Messages',
+      link: '/all-courses',
       icon: '../../../../assets/img/svg/Envelope.svg',
-      subLinks: []
+      subLinks: [],
     },
     {
-      name: "Community",
-      link: "/all-courses",
+      name: 'Community',
+      link: '/all-courses',
       icon: '../../../../assets/img/svg/profile-2user.svg',
-      subLinks: []
+      subLinks: [],
     },
     {
-      name: "Account",
-      link: "/all-courses",
+      name: 'Account',
+      link: '/all-courses',
       icon: '../../../../assets/img/svg/frame.svg',
-      subLinks: []
-    }
-  ]
+      subLinks: [],
+    },
+  ];
 
   user: any;
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
-    let userData = this.authService.getUser()
-    this.user = userData.user
+    let userData = this.authService.getUser();
+    this.user = userData.user;
 
     // Prevent Non-admin from routing here
     if (this.user.role !== 'admin') {
-      this.router.navigate(['/login'])
+      this.router.navigate(['/login']);
     }
   }
 
   // Open Menu
   openMenu() {
-    this.hamClick = !this.hamClick
+    this.hamClick = !this.hamClick;
+  }
+
+  // Close Menu
+  closeMenu() {
+    this.hamClick = false;
   }
 }

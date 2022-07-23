@@ -7,57 +7,64 @@ import { PaymentService } from 'src/app/services/payment.service';
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.component.html',
-  styleUrls: ['./payment.component.scss']
+  styleUrls: ['./payment.component.scss'],
 })
 export class PaymentComponent implements OnInit {
-
   user: any;
   // reference: any;
 
-  constructor(private orderService: OrderService, private authService: AuthService, private paymentService: PaymentService) { }
+  constructor(
+    private orderService: OrderService,
+    private authService: AuthService,
+    private paymentService: PaymentService
+  ) {}
 
   ngOnInit(): void {
     // Get user data from localstorage
-    let userData = this.authService.getUser()
-    this.user = userData.user
+    let userData = this.authService.getUser();
+    this.user = userData.user;
 
     this.orderService.getOrder().subscribe((res: any) => {
-      console.log(res)
-    })
+      console.log(res);
+    });
 
-    this.addOrder()
-
-
-
+    // this.addOrder();
   }
 
   addOrder() {
     let payload = {
-      "user_id": this.user.id,
-      "order_type": "sub",
-      "order_type_id": "62bddccbd9c9f2c740e3e4a1",
-      "slug": "standard-plan"
-    }
+      items: [
+        {
+          order_type: 'sub',
+          slug: 'standard-plan',
+          user_id: this.user.id,
+        },
+        {
+          order_type: 'sub',
+          slug: 'pro-plan',
+          user_id: this.user.id,
+        },
+      ],
+    };
+    console.log(payload);
 
     this.orderService.addOrder(payload).subscribe((res: any) => {
-      console.log(res)
+      console.log(res);
       // this.reference = res.reference
 
-      this.verifyPayment(res.data.order.reference)
-    })
+      // this.verifyPayment(res.data.order.reference);
+    });
   }
 
   verifyPayment(ref: any) {
     let payload = {
-      "reference": ref
-    }
+      reference: ref,
+    };
 
     this.paymentService.verifyPayment(payload).subscribe((res: any) => {
-      console.log(res)
-    })
+      console.log(res);
+    });
   }
-
-
 
   // payWithPaystack(e: any) {
   //   e.preventDefault();
@@ -79,7 +86,4 @@ export class PaymentComponent implements OnInit {
   //   let message = 'Payment complete! Reference: ' + response.reference;
   //   alert(message);
   // }
-
-
-
 }

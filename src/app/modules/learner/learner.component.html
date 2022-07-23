@@ -2,7 +2,10 @@
   <!-- Side Nav -->
   <aside class="sidenav-area" [class.show-menu]="hamClick">
     <div class="sidenav" #sideNav>
-      <app-dashboard-sidenav [navLink]="navLink"></app-dashboard-sidenav>
+      <app-dashboard-sidenav
+        [navLink]="navLink"
+        (hamClick)="closeMenu()"
+      ></app-dashboard-sidenav>
       <!-- <app-create-sidenav></app-create-sidenav> -->
     </div>
   </aside>

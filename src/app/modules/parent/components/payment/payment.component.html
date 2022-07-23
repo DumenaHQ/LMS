@@ -70,13 +70,15 @@
           <p class="body-1-bold">Sub total</p>
           <p class="body-1-bold">N24,000.00</p>
         </div>
-        <button class="btn prim_btn">Proceed to Payment</button>
+        <button class="btn prim_btn" (click)="addOrder()">
+          Proceed to Payment
+        </button>
       </div>
     </div>
   </div>
 </section>
 
-<form id="paymentForm">
+<!-- <form id="paymentForm">
   <div class="form-group">
     <label for="email">Email Address</label>
     <input type="email" id="email-address" required />
@@ -96,4 +98,4 @@
   <div class="form-submit">
     <button type="submit">Pay</button>
   </div>
-</form>
+</form> -->
