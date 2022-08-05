@@ -30,7 +30,6 @@ import { ConfirmEmailComponent } from './components/confirm-email/confirm-email.
     ActivateAccountComponent,
     VerifyCheckComponent,
     ConfirmEmailComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -41,6 +40,6 @@ import { ConfirmEmailComponent } from './components/confirm-email/confirm-email.
     SharedModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

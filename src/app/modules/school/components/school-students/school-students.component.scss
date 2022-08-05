@@ -5,42 +5,50 @@ section:not(:last-child) {
   margin-bottom: $m-3;
 }
 
-.children {
-  position: relative;
-  &_body {
-    @include sect-bg($border-color: transparent);
-    padding-top: $m-6;
-    .card {
-      &_item {
-        display: grid;
-        place-items: center;
+.grouping {
+  // margin-top: -$m-3; // Reduce the gap btw the Section title and this container
+  // margin-bottom: $m-3;
+  justify-content: space-between;
+  gap: $m-2;
+  // Sort and Filter
+  .s-f {
+    .title {
+      color: $primary20;
+      margin-right: 0.2rem;
+    }
+    .dropdown {
+      i {
+        font-size: 18px;
+      }
+    }
+  }
+  .right {
+    gap: $m-2;
+    .display-type {
+      span {
+        display: inline-block;
+        padding: $m-1;
         border: 1px solid $divider-color;
         border-radius: $border-radius1;
-        padding: $m-4 $m-2;
-        transition: all 0.2s;
+        transition: all .2s;
+        cursor: pointer;
         &:hover {
-          border-color: $primary80;
+          background-color: $white-color;
         }
-        .avatar {
-          margin-bottom: $m-2;
-          width: 90px;
-          height: 90px;
+        &:not(:last-child) {
+          margin-right: $m-2;
         }
-        .btn {
-          margin: $m-3 0 $m-2 0;
-        }
-        // Add Child
-        .add-icon {
-          @include icon-area(64px, transparent);
-          background-color: $primary80;
-          i {
-            font-size: 30px;
-            color: $white-color;
-          }
+        img {
+          width: 25px;
+          height: 22px;
+          vertical-align: middle;
         }
       }
     }
   }
+}
+
+.children {
 }
 
 

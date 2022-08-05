@@ -2,146 +2,146 @@
   <h2 class="ds-head_title">Dashboard</h2>
 </section>
 
-<section class="pricing">
-  <div class="pricing_tab">
-    <div class="pricing_tab_wrapper">
-      <span
-        class="tab"
-        [class.active]="billingId == 'monthly'"
-        (click)="tabChange('monthly')"
-        >Monthly billing
-      </span>
-      <span
-        class="tab"
-        [class.active]="billingId == 'yearly'"
-        (click)="tabChange('yearly')"
-        >Yearly billing
-      </span>
+<section class="ds-flex">
+  <main class="ds-grid">
+    <div class="welcome dis-flex">
+      <div class="welcome_details">
+        <h1>Good Morning, {{ user.fullname.split(" ")[0] }}!</h1>
+        <p>
+          Your dashboard shows updates on your child’s courses, news,
+          assignments, and all other progress
+        </p>
+      </div>
+      <div class="welcome_image">
+        <img
+          src="../../../../../assets/img/learner/undraw_real_time_sync.svg"
+          alt=""
+        />
+      </div>
     </div>
+    <!-- Active courses -->
+    <div class="active-children">
+      <div class="ds-sect-header dis-flex">
+        <h5>Children</h5>
+        <p
+          class="caption-regular text-primary-color clickable"
+          routerLink="/parent/children"
+        >
+          View All Children
+        </p>
+      </div>
+      <div class="card">
+        <div class="card_item clickable" *ngFor="let i of children">
+          <img
+            src="../../../../../assets/img/children-avatar/child-avatar-big-1.png"
+            alt=""
+            class="avatar"
+          />
+          <h4 class="name">{{ i.fullname }}</h4>
+          <button class="btn prim_btn">Manage Child</button>
+          <p class="body-2-medium text-secondary-color select-plan hover-2">
+            Select learning plan
+          </p>
+        </div>
+        <!-- Add New Child -->
+        <div class="card_item clickable" (click)="openAddModal()">
+          <span class="add-icon">
+            <i class="bx bx-plus"></i>
+          </span>
+          <button class="btn tert_btn">Add Child</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <aside class="ds-grid">
+    <!-- Set up profile -->
+    <div class="complete-profile">
+      <div class="ds-sect-header dis-flex">
+        <h5 class="text-secondary-color">Setup your childs account</h5>
+        <i class="bx bx-chevron-right"></i>
+      </div>
+      <div class="progress-bar">
+        <div class="progressbarWrapper">
+          <span id="bar"></span>
+        </div>
+      </div>
+      <small>20% complete</small>
+
+      <!-- <div class="someElement" data-tooltip="This is a tooltip">Hover Me</div> -->
+    </div>
+    <!-- News and Updates(nu) -->
+    <div class="nu">
+      <div class="ds-sect-header dis-flex">
+        <h5>News & Updates</h5>
+      </div>
+      <div class="nu_body_card">
+        <div class="item">
+          <img src="../../../../../assets/img/library/library1.png" alt="" />
+          <p class="body-3-regular">
+            Summer Robotics Class starts on the 4th of August
+          </p>
+        </div>
+      </div>
+    </div>
+  </aside>
+</section>
+
+<!-- Payment History(PH) -->
+<section class="ph">
+  <div class="ds-sect-header dis-flex">
+    <h5>Payment History</h5>
+    <p
+      class="caption-regular text-primary-color clickable"
+      routerLink="/parent/payment"
+    >
+      View All Payments
+    </p>
   </div>
-  <div class="pricing_card">
-    <div class="pricing_card_item standard">
-      <div class="header dis-flex">
-        <span class="icon">
-          <img src="../../../assets/img/svg/Star.svg" alt="" />
-        </span>
-        <span>
-          <p class="body-1-bold">Standard</p>
-          <h3 class="price text-primary-color" *ngIf="billingId == 'monthly'">
-            N15,000<em class="body-2-medium">/month</em>
-          </h3>
-          <h3 class="price text-primary-color" *ngIf="billingId == 'yearly'">
-            N180,000<em class="body-2-medium">/yearly</em>
-          </h3>
-        </span>
-      </div>
-      <div class="body">
-        <ul>
-          <li class="dis-flex body-2-medium">
-            <img
-              src="../../../assets/img/svg/check-prim.svg"
-              alt=""
-              class="check-icon"
-            />3 Months Subscription
-          </li>
-          <li class="dis-flex body-2-medium">
-            <img
-              src="../../../assets/img/svg/check-prim.svg"
-              alt=""
-              class="check-icon"
-            />Limited Access to courses
-          </li>
-          <li class="dis-flex body-2-medium">
-            <img
-              src="../../../assets/img/svg/check-prim.svg"
-              alt=""
-              class="check-icon"
-            />View Learning Activity
-          </li>
-          <li class="dis-flex">
-            <img
-              src="../../../assets/img/svg/check-prim.svg"
-              alt=""
-              class="check-icon"
-            />Project Tracking
-          </li>
-        </ul>
-        <div class="pricing_card_btn">
-          <button
-            class="btn prim_btn"
-            (click)="addToCart('standard-plan', 15000)"
-          >
-            Add to Cart
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="pricing_card_item pro">
-      <div class="header dis-flex">
-        <span class="icon">
-          <img src="../../../assets/img/svg/Star.svg" alt="" />
-        </span>
-        <span>
-          <p class="body-1-bold">Pro</p>
-          <h3 class="price text-primary-color" *ngIf="billingId == 'monthly'">
-            N9,000<em class="body-2-medium">/month</em>
-          </h3>
-          <h3 class="price text-primary-color" *ngIf="billingId == 'yearly'">
-            N108,000<em class="body-2-medium">/yearly</em>
-          </h3>
-        </span>
-      </div>
-      <div class="body">
-        <ul>
-          <li class="dis-flex body-2-medium">
-            <img
-              src="../../../assets/img/svg/check-prim.svg"
-              alt=""
-              class="check-icon"
-            />1 year Subscription
-          </li>
-          <li class="dis-flex body-2-medium">
-            <img
-              src="../../../assets/img/svg/check-prim.svg"
-              alt=""
-              class="check-icon"
-            />Everything in Standard
-          </li>
-          <li class="dis-flex body-2-medium">
-            <img
-              src="../../../../../assets/img/svg/plus-prim.svg"
-              alt=""
-              class="check-icon"
-            />DIY Projects
-          </li>
-          <li class="dis-flex">
-            <img
-              src="../../../../../assets/img/svg/plus-prim.svg"
-              alt=""
-              class="check-icon"
-            />Live Tutoring Classes
-          </li>
-          <li class="dis-flex">
-            <img
-              src="../../../../../assets/img/svg/plus-prim.svg"
-              alt=""
-              class="check-icon"
-            />Certificate
-          </li>
-          <li class="dis-flex">
-            <img
-              src="../../../../../assets/img/svg/plus-prim.svg"
-              alt=""
-              class="check-icon"
-            />Full Access to Courses
-          </li>
-        </ul>
-        <div class="pricing_card_btn">
-          <button class="btn prim_btn" (click)="addToCart('pro-plan', 9000)">
-            Add to Cart
-          </button>
-        </div>
-      </div>
+  <div class="ph_body">
+    <div style="overflow-x: auto">
+      <table>
+        <tr class="table-header">
+          <th>Child Name</th>
+          <th>Product</th>
+          <th>Date</th>
+          <th>Amount</th>
+          <th>Status</th>
+        </tr>
+        <ng-container>
+          <tr class="table-body" *ngFor="let i of paymentsHistory">
+            <td>{{ i.childName | titlecase }}</td>
+            <td>{{ i.Product | titlecase }}</td>
+            <td>{{ i.date }}</td>
+            <td>{{ i.amount }}NGN</td>
+            <td class="status">
+              <button
+                type="button"
+                [class.success_btn]="i.status == 'complete'"
+                [class.warning_btn]="i.status == 'pending'"
+                [class.danger_btn]="i.status == 'declined'"
+              >
+                {{ i.status | titlecase }}
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+        <ng-template>
+          <p style="text-align: center">Empty!</p>
+        </ng-template>
+      </table>
     </div>
   </div>
 </section>
+
+<div class="modal" [class.show-modal]="addModal">
+  <div class="modal_area">
+    <span class="modal_area_close" (click)="closeAddModal()">
+      <i class="bx bx-x icon clickable"></i>
+    </span>
+    <app-enroll-learner
+      (addModal)="closeAddModal()"
+      [title]="title"
+    ></app-enroll-learner>
+  </div>
+</div>

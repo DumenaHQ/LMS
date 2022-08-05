@@ -1,9 +1,127 @@
 @import '../../../../../assets/css/dashboard.scss';
 
 .du-grid {
-  display: grid;
   grid-gap: $m-6;
 }
+
+// Pricing
+.pricing {
+  &_header {
+    justify-content: space-between;
+    gap: $m-2;
+    margin-bottom: $m-5;
+    .pricing_tab {
+      &_wrapper {
+        border: 1px solid $divider-color;
+        border-radius: 8px;
+        padding: calc(0.25rem + 1px);
+        display: flex;
+        align-items: center;
+        gap: $m-1;
+        .tab {
+          display: inline-block;
+          border-radius: $border-radius1;
+          padding: calc(0.25rem + 1px) $m-2;
+          font-weight: 700;
+          font-size: 18px;
+          transition: all .2s ease;
+          cursor: pointer;
+          &.active {
+            background-color: $white-color;
+            box-shadow: $box-shadow;
+          }
+        }
+      }
+  
+    }
+  }
+  .card {
+    @include card(300px, auto-fit);
+    align-items: flex-start;
+    &_item {
+      border-radius: $border-radius1;
+      background-color: $white-color;
+      min-height: 130px;
+      .label {
+        display: inline-block;
+        width: 100%;
+        padding: $m-1 - 0.3;
+        background-color: $primary80;
+        color: $white-color;
+        border-radius: $border-radius3 $border-radius3 0 0;
+        text-align: center;
+      }
+      .header {
+        justify-content: space-between;
+        gap: $m-2;
+        padding: $m-3 $m-4;
+
+        .icon {
+          @include icon-area(54px, transparent);
+          margin-right: $m-2;
+        }
+        .price {
+          margin-top: $m-1;
+          em {
+            color: $text-color3;
+            font-style: normal;
+          }
+        }
+        .chevron-down {
+          font-size: 26px;
+        }
+      }
+      .body {
+        // display: flex;
+        // flex-direction: column;
+        // justify-content: space-between;
+        padding: $m-3 $m-4;
+        ul {
+          @include card(150px, auto-fill);
+          grid-gap: 1rem;
+          li {
+            .check-icon {
+              width: 18px;
+              height: 18px;
+              margin-right: $m-1;
+            }
+          }
+        }
+        .pricing_card_btn {
+          text-align: center;
+          margin-top: $m-5;
+          .btn {
+            min-width: 200px;
+            padding: $m-1 + 0.2;
+          }
+        }
+      }
+      &.standard {
+        .icon {
+          background-color: $brightyellow;
+        }
+      }
+      &.pro {
+        .icon {
+          background-color: $secondary80;
+        }
+      }
+    }
+  }
+}
+
+// Payment History(Ph) starts
+.ph {
+  @include sect-bg();
+  &_title {
+    @include sect-bg-title;
+  }
+  font-size: 14px;
+  &_body {
+    
+  }
+}
+// Payment History(Ph) ends
 
 .cart {
   @include sect-bg($border-color: transparent);
@@ -61,7 +179,48 @@
       &_header {
         padding: 0 $m-2;
         .sub-total {
+          margin-top: $m-3;
+        }
+        form {
+          display: flex;
+          gap: $m-1;
+          align-items: flex-end;
           margin: $m-2 0 $m-3 0;
+          .form-field {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 100%;
+            label {
+              display: inline-block;
+              font-weight: 500;
+              font-size: 18px;
+              line-height: 22px;
+              margin-bottom: $m-1;
+            }
+            .input-field {
+              display: flex;
+              align-items: center;
+              background-color: $white-color;
+              border: 1px solid $inner-border;
+              border-radius: $border-radius1;
+              transition: all 0.2s ease-in;
+              padding: 0 $m-2;
+              &:hover {
+                border-color: $primary80;
+              }
+              input {
+                width: 100%;
+                padding: 0.7rem 0;
+                font-size: 16px;
+                border: none;
+                outline: none;
+                background-color: transparent;
+                border-radius: $border-radius1;
+                color: $grey100;
+              }
+            }
+          }
         }
       }
       &_footer {

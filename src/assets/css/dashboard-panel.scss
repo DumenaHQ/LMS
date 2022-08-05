@@ -1,7 +1,7 @@
 @import './variables.scss';
 
 .container-dash {
-  @media only screen and (max-width: 905px) {
+  @media only screen and (max-width: 997px) {
     display: flex;
     width: 100%;
   }
@@ -17,11 +17,11 @@
       border: 1px solid $divider-color;
       position: relative;
     }
-    @media only screen and (max-width: 905px) {
+    @media only screen and (max-width: 997px) {
       position: fixed;
       top: 0px;
       left: -100%;
-      width: 40%;
+      width: 200px;
       transition: all 0.5s;
       z-index: 100;
       &.show-menu {
@@ -48,12 +48,12 @@
       padding: $m-3;
     }
 
-    @media only screen and (max-width: 905px) {
+    @media only screen and (max-width: 997px) {
       left: 0;
       width: 100%;
       transition: all 0.5s;
       &.show-menu {
-        left: 40%;
+        left: 200px;
       }
       .main-header .main-header-menu {
         visibility: visible;

@@ -26,6 +26,7 @@ $error80: #e92c2c;
 $error60: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), #E92C2C;
 $error40: linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), #E92C2C;
 $error20: linear-gradient(0deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), #E92C2C;
+// $error20: rgb(233, 44, 44, 0.6);
 // Error ends
 
 // Success starts
@@ -41,8 +42,10 @@ $warning100: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #FAC
 $warning80: #FACC15;
 $warning60: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), #FACC15;
 $warning40: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), #FACC15;
+// $warning20: rgb(250, 235, 175);
 $warning20: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), #FACC15;
 // Warning ends
+
 
 $grey20: #FBFCFD;
 $grey40: #F9FAFB;

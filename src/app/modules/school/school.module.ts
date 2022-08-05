@@ -8,6 +8,7 @@ import { SchoolOverviewComponent } from './components/school-overview/school-ove
 import { SchoolStudentsComponent } from './components/school-students/school-students.component';
 import { SchoolPaymentComponent } from './components/school-payment/school-payment.component';
 import { StudentBlankComponent } from './components/school-students/student-blank/student-blank.component';
+import { SchoolDisplayStudentsComponent } from './components/school-students/school-display-students/school-display-students.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { StudentBlankComponent } from './components/school-students/student-blan
     StudentBlankComponent,
     SchoolStudentsComponent,
     SchoolPaymentComponent,
+    SchoolDisplayStudentsComponent,
   ],
   imports: [
     CommonModule,

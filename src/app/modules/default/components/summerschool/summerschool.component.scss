@@ -1,0 +1,38 @@
+@import '../../../../../assets/css/variables.scss';
+@import '../../../../../assets/css/mixins.scss';
+@import '../../../../../assets/css/default.scss';
+
+.hero {
+  text-align: center;
+  background-image: url('../../../../../assets/img/summer/TV.jpg');
+  background-position: center;
+  background-size: cover;
+  height: 800px;
+
+  .title {
+    color: $primary80;
+    margin-bottom: $m-2;
+  }
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .hero {
+    text-align: center;
+    background-image: url('../../../../../assets/img/summer/Mobile.jpg');
+    background-position: center;
+    background-size: cover;
+    height: 800px;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .hero {
+    text-align: center;
+    background-image: url('../../../../../assets/img/summer/TV.jpg');
+    background-position: center;
+    background-size: cover;
+    height: 800px;
+  }
+}

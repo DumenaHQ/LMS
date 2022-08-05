@@ -12,6 +12,95 @@ import { PaymentService } from 'src/app/services/payment.service';
 export class PaymentComponent implements OnInit {
   user: any;
   // reference: any;
+  billingId: string = 'monthly';
+  isHidden: boolean = true;
+  subPlan = [
+    {
+      id: 1,
+      plan: 'standard',
+      amountPerMonth: 'N15,000',
+      amountPerYear: 'N180,000',
+      benefits: [
+        {
+          name: '3 Months Subscription',
+          icon: '../../../assets/img/svg/check-prim.svg',
+        },
+        {
+          name: 'Limited Access to courses',
+          icon: '../../../assets/img/svg/check-prim.svg',
+        },
+        {
+          name: 'View Learning Activity',
+          icon: '../../../assets/img/svg/check-prim.svg',
+        },
+        {
+          name: 'Project Tracking',
+          icon: '../../../assets/img/svg/check-prim.svg',
+        },
+      ],
+      isHidden: true,
+    },
+    {
+      id: 2,
+      plan: 'pro',
+      amountPerMonth: 'N9,000',
+      amountPerYear: 'N108,000',
+      benefits: [
+        {
+          name: '1 year Subscription',
+          icon: '../../../assets/img/svg/check-prim.svg',
+        },
+        {
+          name: 'Everything in Standard',
+          icon: '../../../assets/img/svg/check-prim.svg',
+        },
+        {
+          name: 'DIY Projects',
+          icon: '../../../assets/img/svg/plus-prim.svg',
+        },
+        {
+          name: 'Live Tutoring Classes',
+          icon: '../../../assets/img/svg/plus-prim.svg',
+        },
+        {
+          name: 'Certificate',
+          icon: '../../../assets/img/svg/plus-prim.svg',
+        },
+        {
+          name: 'Full Access to Courses',
+          icon: '../../../assets/img/svg/plus-prim.svg',
+        },
+      ],
+      isHidden: true,
+    },
+  ];
+
+  paymentsHistory = [
+    {
+      id: 1,
+      childName: 'Alousa Jones',
+      Product: 'Standard Plan',
+      date: '05 June 2022',
+      amount: '180,990',
+      status: 'complete',
+    },
+    {
+      id: 2,
+      childName: 'Alousa Jones',
+      Product: 'Standard Plan',
+      date: '05 June 2022',
+      amount: '180,990',
+      status: 'declined',
+    },
+    {
+      id: 3,
+      childName: 'Alousa Jones',
+      Product: 'Standard Plan',
+      date: '05 June 2022',
+      amount: '180,990',
+      status: 'pending',
+    },
+  ];
 
   constructor(
     private orderService: OrderService,
@@ -27,8 +116,11 @@ export class PaymentComponent implements OnInit {
     this.orderService.getOrder().subscribe((res: any) => {
       console.log(res);
     });
+  }
 
-    // this.addOrder();
+  // Tab change
+  tabChange(ids: any) {
+    this.billingId = ids;
   }
 
   addOrder() {
@@ -37,12 +129,12 @@ export class PaymentComponent implements OnInit {
         {
           order_type: 'sub',
           slug: 'standard-plan',
-          user_id: this.user.id,
+          user_id: this.user,
         },
         {
           order_type: 'sub',
           slug: 'pro-plan',
-          user_id: this.user.id,
+          user_id: this.user,
         },
       ],
     };
@@ -52,7 +144,7 @@ export class PaymentComponent implements OnInit {
       console.log(res);
       // this.reference = res.reference
 
-      // this.verifyPayment(res.data.order.reference);
+      this.verifyPayment(res.data.order.reference);
     });
   }
 

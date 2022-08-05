@@ -1,0 +1,36 @@
+<div class="courses_dislist" style="overflow-x: auto">
+  <table>
+    <tr class="table-header">
+      <th>Name</th>
+      <th>Contact Info</th>
+      <th>Gender</th>
+      <th>Date Enrolled</th>
+      <th></th>
+    </tr>
+    <tr
+      class="table-body clickable"
+      *ngFor="let i of allStudents"
+      routerLink="{{ i.id }}"
+    >
+      <td class="name">
+        <div class="dis-flex">
+          <img [src]="i.image" alt="" />
+          <p>{{ i.name | titlecase }}</p>
+        </div>
+      </td>
+      <td class="contact-info">
+        <p>{{ i.email | titlecase }}</p>
+        <p>{{ i.phoneNumber }}</p>
+      </td>
+      <td class="gender">
+        <p>{{ i.gender }}</p>
+      </td>
+      <td class="dateEnrolled">
+        <p>{{ i.dateEnrolled }}</p>
+      </td>
+      <td class="actions">
+        <img src="../../../../../../assets/img/action.svg" alt="" />
+      </td>
+    </tr>
+  </table>
+</div>

@@ -2,6 +2,115 @@
   <h2 class="ds-head_title">Payments</h2>
 </section>
 
+<section></section>
+
+<section class="pricing">
+  <div class="pricing_header dis-flex">
+    <div class="empty"></div>
+    <div class="pricing_tab">
+      <div class="pricing_tab_wrapper">
+        <span
+          class="tab"
+          [class.active]="billingId == 'monthly'"
+          (click)="tabChange('monthly')"
+          >Monthly billing
+        </span>
+        <span
+          class="tab"
+          [class.active]="billingId == 'yearly'"
+          (click)="tabChange('yearly')"
+          >Yearly billing
+        </span>
+      </div>
+    </div>
+    <button class="btn prim_btn">New Payment</button>
+  </div>
+  <div class="card">
+    <div
+      class="card_item"
+      [ngClass]="[i.plan == 'standard' ? 'standard' : 'pro']"
+      *ngFor="let i of subPlan"
+    >
+      <!-- Label -->
+      <span class="label" *ngIf="i.plan == 'pro'">Most Popular</span>
+
+      <div class="header dis-flex clickable" (click)="i.isHidden = !i.isHidden">
+        <div class="dis-flex">
+          <span class="icon">
+            <img src="../../../assets/img/svg/Star.svg" alt="" />
+          </span>
+          <span>
+            <p class="body-1-bold">{{ i.plan | titlecase }}</p>
+            <h3 class="price text-primary-color" *ngIf="billingId">
+              {{ billingId == "monthly" ? i.amountPerMonth : i.amountPerYear
+              }}<em class="body-2-medium"
+                >/{{ billingId == "monthly" ? "month" : "year" }}</em
+              >
+            </h3>
+          </span>
+        </div>
+        <i
+          class="bx chevron-down"
+          [class]="i.isHidden ? 'bx-chevron-down' : 'bx-chevron-up'"
+        ></i>
+      </div>
+      <div class="body" [hidden]="i.isHidden">
+        <ul>
+          <li
+            class="dis-flex body-2-medium"
+            *ngFor="let childItem of i.benefits"
+          >
+            <img [src]="childItem.icon" alt="" class="check-icon" />{{
+              childItem.name
+            }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Payment History(PH) -->
+<section class="ph">
+  <div class="ds-sect-header dis-flex">
+    <h5>Payment History</h5>
+  </div>
+  <div class="ph_body">
+    <div style="overflow-x: auto">
+      <table>
+        <tr class="table-header">
+          <th>Child Name</th>
+          <th>Product</th>
+          <th>Date</th>
+          <th>Amount</th>
+          <th>Status</th>
+        </tr>
+        <ng-container>
+          <tr class="table-body" *ngFor="let i of paymentsHistory">
+            <td>{{ i.childName | titlecase }}</td>
+            <td>{{ i.Product | titlecase }}</td>
+            <td>{{ i.date }}</td>
+            <td>{{ i.amount }}NGN</td>
+            <td class="status">
+              <button
+                type="button"
+                [class.success_btn]="i.status == 'complete'"
+                [class.warning_btn]="i.status == 'pending'"
+                [class.danger_btn]="i.status == 'declined'"
+              >
+                {{ i.status | titlecase }}
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+        <ng-template>
+          <p style="text-align: center">Empty!</p>
+        </ng-template>
+      </table>
+    </div>
+  </div>
+</section>
+
 <section class="cart">
   <h5>Items in your Cart</h5>
   <div class="cart_body">
@@ -56,7 +165,6 @@
         <p class="remove text-secondary-color clickable hover-2">Remove</p>
       </div>
     </div>
-    <!-- Checkout -->
     <div class="cart_body_checkout">
       <div class="cart_body_checkout_header">
         <p class="body-1-bold">Order details</p>
@@ -64,6 +172,17 @@
           <p class="body-2-regular">Sub total</p>
           <p class="body-2-regular">N24,000.00</p>
         </div>
+        <form>
+          <div class="form-field">
+            <label for="voucher">Apply a voucher</label>
+            <div class="input-field">
+              <input type="text" name="voucher" placeholder="Enter code here" />
+            </div>
+          </div>
+          <div class="form-btn">
+            <button class="btn prim_btn">Apply</button>
+          </div>
+        </form>
       </div>
       <div class="cart_body_checkout_footer">
         <div class="grand-total dis-flex">
@@ -77,25 +196,3 @@
     </div>
   </div>
 </section>
-
-<!-- <form id="paymentForm">
-  <div class="form-group">
-    <label for="email">Email Address</label>
-    <input type="email" id="email-address" required />
-  </div>
-  <div class="form-group">
-    <label for="amount">Amount</label>
-    <input type="tel" id="amount" required />
-  </div>
-  <div class="form-group">
-    <label for="first-name">First Name</label>
-    <input type="text" id="first-name" />
-  </div>
-  <div class="form-group">
-    <label for="last-name">Last Name</label>
-    <input type="text" id="last-name" />
-  </div>
-  <div class="form-submit">
-    <button type="submit">Pay</button>
-  </div>
-</form> -->

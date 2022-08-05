@@ -10,6 +10,37 @@ import { OrderService } from 'src/app/services/order.service';
 export class ParentOverviewComponent implements OnInit {
   billingId: string = 'monthly';
   user: any;
+  children: any;
+  addModal: boolean = false;
+  // showAlert: boolean = false;
+  title: string = 'child';
+
+  paymentsHistory = [
+    {
+      id: 1,
+      childName: 'Alousa Jones',
+      Product: 'Standard Plan',
+      date: '05 June 2022',
+      amount: '180,990',
+      status: 'complete',
+    },
+    {
+      id: 2,
+      childName: 'Alousa Jones',
+      Product: 'Standard Plan',
+      date: '05 June 2022',
+      amount: '180,990',
+      status: 'declined',
+    },
+    {
+      id: 3,
+      childName: 'Alousa Jones',
+      Product: 'Standard Plan',
+      date: '05 June 2022',
+      amount: '180,990',
+      status: 'pending',
+    },
+  ];
 
   constructor(
     private orderService: OrderService,
@@ -24,6 +55,11 @@ export class ParentOverviewComponent implements OnInit {
     this.orderService.getOrder().subscribe((res: any) => {
       console.log(res);
     });
+
+    // Get parent kids from localstorage
+    this.authService.getParentChildren(this.user.id).subscribe((res: any) => {
+      this.children = res.data.learners;
+    });
   }
 
   // Tab change
@@ -31,6 +67,17 @@ export class ParentOverviewComponent implements OnInit {
     this.billingId = ids;
   }
 
+  // Open Add Child Modal
+  openAddModal() {
+    this.addModal = true;
+  }
+
+  // Close Add Child Modal
+  closeAddModal() {
+    this.addModal = false;
+  }
+
+  // Add to Cart
   addToCart(title: any, amount: any) {
     let payload = {
       slug: title,
@@ -46,12 +93,3 @@ export class ParentOverviewComponent implements OnInit {
     });
   }
 }
-// amount: 9000
-// createdAt: "2022-07-23T02:15:51.328Z"
-// id: "62db59d739e0c0eac8cce9e3"
-// order_type: "sub"
-// order_type_id: "62c92a7abc9c4b8dce41026f"
-// reference: "ORD_rill469wvaafbjm"
-// status: "pending"
-// updatedAt: "2022-07-23T02:15:51.328Z"
-// user: "62db481c39e0c0eac8cce9af"

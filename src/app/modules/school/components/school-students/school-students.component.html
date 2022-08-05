@@ -4,46 +4,44 @@
 
 <section class="children">
   <div class="children_body">
-    <ng-template>
-      <div class="card">
-        <div class="card_item clickable">
-          <img
-            src="../../../../../assets/img/children-avatar/child-avatar-big-1.png"
-            alt=""
-            class="avatar"
-          />
-          <h4 class="name">Alousa Jones</h4>
-          <button class="btn prim_btn">Manage Child</button>
-          <p class="body-2-medium text-secondary-color select-plan hover-2">
-            Select learning plan
-          </p>
+    <ng-container>
+      <section class="grouping dis-flex">
+        <!-- Filter -->
+        <div class="filter s-f">
+          <div class="body-3-regular dis-flex">
+            <span class="title">Filter:</span>
+            <span class="dropdown dis-flex clickable"
+              >All Students <i class="bx bx-chevron-down"></i
+            ></span>
+          </div>
         </div>
-        <div class="card_item clickable">
-          <img
-            src="../../../../../assets/img/children-avatar/child-avatar-big-2.png"
-            alt=""
-            class="avatar"
-          />
-          <h4 class="name">Jack Ripper</h4>
-          <button class="btn prim_btn">Manage Child</button>
-          <p class="body-2-medium text-secondary-color select-plan hover-2">
-            Select learning plan
-          </p>
+
+        <div class="right dis-flex">
+          <!-- Sort -->
+          <div class="sort s-f">
+            <div class="body-3-regular dis-flex">
+              <span class="title">Sort:</span>
+              <span class="dropdown dis-flex clickable"
+                >Last viewed <i class="bx bx-chevron-down"></i
+              ></span>
+            </div>
+          </div>
+          <!-- New Course Button -->
+          <button class="btn prim_btn" (click)="openAddModal()">
+            New Student
+          </button>
         </div>
-        <!-- Add New Child -->
-        <div class="card_item clickable" (click)="openAddModal()">
-          <span class="add-icon">
-            <i class="bx bx-plus"></i>
-          </span>
-          <button class="btn tert_btn">Add Child</button>
-        </div>
-      </div>
-    </ng-template>
+      </section>
+
+      <section class="all-students">
+        <app-school-display-students></app-school-display-students>
+      </section>
+    </ng-container>
 
     <!-- Course Blank -->
-    <ng-container #noItems>
+    <ng-template #noItems>
       <app-student-blank (addModal)="openAddModal()"></app-student-blank>
-    </ng-container>
+    </ng-template>
   </div>
 
   <!-- Alert Message -->

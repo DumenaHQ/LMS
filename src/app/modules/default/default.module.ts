@@ -8,6 +8,7 @@ import { HomeComponent } from './components/home/home.component';
 import { PricingComponent } from './components/pricing/pricing.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { NewsletterComponent } from './components/newsletter/newsletter.component';
+import { SummerschoolComponent } from './components/summerschool/summerschool.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { NewsletterComponent } from './components/newsletter/newsletter.componen
     HomeComponent,
     PricingComponent,
     FaqComponent,
-    NewsletterComponent
+    NewsletterComponent,
+    SummerschoolComponent
   ],
   imports: [
     CommonModule,

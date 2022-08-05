@@ -1,0 +1,94 @@
+@import '../../../../../assets/css/variables.scss';
+@import '../../../../../assets/css/mixins.scss';
+@import '../../../../../assets/css/dashboard.scss';
+
+.overview {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: $m-3;
+  @media only screen and (max-width: 850px) {
+    display: grid;
+    grid-gap: $m-3;
+  }
+  .stats {
+    flex-basis: 70%;
+    //-- Card ends --//
+    .card {
+      display: grid;
+      grid-gap: $m-3;
+      // z-index: 20;
+      @media only screen and (min-width: 450px) {
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      }
+      &_item {
+        @include sect-bg($border-color: transparent);
+        padding: $m-3 $m-2;
+        gap: $m-2;
+        .icon {
+          background-color: $primary80;
+          @include icon-area(54px, transparent);
+          cursor: default;
+          img {
+            filter: brightness(10);
+            width: 24px;
+            height: 24px;
+          }
+        }
+        &_details {
+          .title {
+            color: $text-color2;
+          }
+          .value {
+            margin-top: $m-1;
+            font-size: 28px;
+          }
+        }
+      }
+    }
+    //-- Card ends --//
+    .enroll {
+      @include sect-bg($border-color: transparent);
+      &_title {
+        @include sect-bg-title;
+      }
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+  .messages {
+    flex-basis: 30%;
+    @include sect-bg($border-color: transparent);
+    &_title {
+      margin-bottom: $m-2;
+      @include sect-bg-title;
+      p {
+        color: $primary40;
+        margin-top: $m-1;
+      }
+    }
+    &_list {
+      display: grid;
+      grid-gap: 1rem;
+      &_item {
+        align-items: flex-start;
+        img {
+          width: 40px;
+          height: 40px;
+          margin-right: $m-2;
+        }
+        &_details {
+          .name {
+            color: $primary100;
+          }
+          .message {
+            display: inline-block;
+            margin-top: 0.3rem;
+          }
+        }
+      }
+    }
+  }
+}

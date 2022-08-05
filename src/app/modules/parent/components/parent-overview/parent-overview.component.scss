@@ -2,97 +2,213 @@
 @import '../../../../../assets/css/variables.scss';
 @import '../../../../../assets/css/mixins.scss';
 
-.pricing {
-  display: grid;
-  place-items: center;
-  &_tab {
-    &_wrapper {
-      border: 1px solid $divider-color;
-      border-radius: 8px;
-      padding: $m-1;
-      display: flex;
-      align-items: center;
-      gap: $m-1;
-      .tab {
-        display: inline-block;
-        border-radius: $border-radius1;
-        padding: 0.7rem $m-2;
-        font-weight: 700;
-        font-size: 18px;
-        transition: all .2s ease;
-        cursor: pointer;
-        &.active {
-          background-color: $white-color;
-          box-shadow: $box-shadow;
-        }
+
+
+main {
+  // Welcome
+  .welcome {
+    @include sect-bg($primary80);
+    justify-content: space-between;
+    gap: $m-6;
+    color: $white-color;
+    &_details {
+      p {
+        margin-top: $m-2;
       }
     }
+    &_image {
+      @media only screen and (max-width: 565px) {
+        display: none;
+      }
+    }
+  }
+  // Active Children
+  .active-children {
+    @include sect-bg;
+  }
+}
 
+aside {
+  // complete Profile
+  .complete-profile {
+    background-color: $secondary20;
+    padding: $m-4 $m-3;
+    border-radius: $border-radius3;
+    .progress-bar {
+      .progressbarWrapper {
+        width: 100%;
+        height: 1.3rem;
+        border-radius: $border-radius2;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.5s;
+        will-change: transform;
+        background-color: $inner-border;
+        #bar {
+          position: relative;
+          display: block;
+          height: 100%;
+          width: 0px;
+          overflow: hidden;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 1.3rem;
+          text-align: center;
+          background-color: $primary80;
+          color: $white-color;
+          border-radius: inherit;
+          transition: all 700ms ease;
+          &::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 20px;
+            height: inherit;
+            background-color: inherit;
+            border-radius: 50%;
+            border: 2px solid $white-color;
+          }
+        }
+      }
+
+    }
+    [data-tooltip] {
+      position: relative;
+
+      &::before,
+      &::after {
+        opacity: 0;
+        visibility: hidden;
+        margin-top: -0.5em;
+      }
+
+      &::before {
+        content: attr(data-tooltip);
+        display: block;
+        position: absolute;
+        top: -200%;
+        left: 50%;
+        margin-left: -4.75em;
+        width: 8em;
+        text-align: center;
+        border-radius: 4px;
+        background: black;
+        color: white;
+        font-size: 0.8em;
+        line-height: 1.1;
+        padding: 0.75em 0.95em;
+      }
+
+      &::after {
+        content: "";
+        border: 10px solid transparent;
+        border-top-color: black;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        margin-left: -10px;
+      }
+
+      &:hover {
+        cursor: help;
+      }
+
+      &:hover::before,
+      &:hover::after {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
   }
 
-  .pricing_card {
-    display: flex;
-    justify-content: center;
-    flex-flow: row wrap;
-    align-items: flex-start;
-    gap: $m-4;
-    margin-top: $m-4;
+  // News and Updates starts
+  .nu {
+    @include sect-bg;
+    border: 1px solid $divider-color;
+    &_body_card {
+      .item {
+        img {
+          width: 100%;
+          border-radius: $border-radius2;
+          margin-bottom: $m-1;
+        }
+      }
+
+    }
+  }
+  // News and Updates ends
+}
+
+
+// Children Cards
+.card {
+  @include card(200px);
     &_item {
-      border-radius: $border-radius1;
-      padding: $m-5 $m-6;
-      border: 1px solid $divider-color;
-      background-color: $white-color;
-      @media only screen and (min-width: 450px) {
-        width: 300px;
-        flex-basis: auto;
+    display: grid;
+    place-items: center;
+    align-content: space-between;
+    min-height: 250px;
+    background-color: $grey20;
+    border: 1px solid $divider-color;
+    border-radius: $border-radius2;
+    padding: $m-4 $m-2;
+    transition: all 0.2s;
+    &:hover {
+      border-color: $primary80;
+    }
+    .avatar {
+      margin-bottom: $m-2;
+      width: 90px;
+      height: 90px;
+    }
+    .btn {
+      margin: $m-3 0 $m-2 0;
+    }
+    // Add Child
+    .add-icon {
+      @include icon-area(74px, transparent);
+      background-color: $primary80;
+      i {
+        font-size: 35px;
+        color: $white-color;
       }
-      .header {
-        margin-bottom: $m-4;
-        .icon {
-          @include icon-area(54px, transparent);
-          margin-right: $m-2;
-        }
-        .price {
-          margin-top: $m-1;
-          em {
-            color: $text-color3;
-            font-style: normal;
-          }
-        }
-      }
-      .body {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        ul {
-          li {
-            .check-icon {
-              width: 18px;
-              height: 18px;
-              margin-right: $m-1;
-            }
-            &:not(:last-child) {
-              margin-bottom: $m-3;
-            }
-          }
-        }
-        .pricing_card_btn {
-          text-align: center;
-          margin-top: $m-5;
-          .btn {
-            min-width: 200px;
-            padding: $m-1 + 0.2;
-          }
-        }
-      }
-      &.standard {
-        .icon {
-          background-color: $brightyellow;
-        }
-      }
-      &.pro {
-        .icon {
-          background-color: $secondary80;
+    }
+  }
+}
+
+.ph {
+  @include sect-bg($border-color: transparent);
+  &_title {
+    @include sect-bg-title;
+  }
+  font-size: 14px;
+  &_body {
+    
+  }
+}
+
+// Add Modal
+.modal {
+  @include modal($modal-area-width: 390px);
+  opacity: 0;
+  visibility: hidden;
+  &.show-modal {
+    opacity: 1;
+    visibility: visible;
+  }
+  &_area {
+    padding: $m-6 $m-3;
+    &_close {
+      position: absolute;
+      top: $m-2;
+      right: $m-3;
+      .icon {
+        font-size: 24px;
+        color: $primary20;
+        transition: all 0.2s ease-in;
+        &:hover {
+          color: $primary80;
         }
       }
     }

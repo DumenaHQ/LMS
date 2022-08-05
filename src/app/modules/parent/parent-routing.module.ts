@@ -16,41 +16,40 @@ const routes: Routes = [
         component: ParentOverviewComponent,
         data: {
           title: 'Parent',
-          description: 'Description Meta Tag Content'
-        }
+          description: 'Description Meta Tag Content',
+        },
       },
       {
-        path: 'profile',
+        path: 'profile/:id',
         component: UserProfileComponent,
         data: {
           title: 'Profile',
-          description: 'Description Meta Tag Content'
-        }
+          description: 'Description Meta Tag Content',
+        },
       },
       {
         path: 'children',
         component: ChildrenComponent,
         data: {
           title: 'Children',
-          description: 'Description Meta Tag Content'
-        }
+          description: 'Description Meta Tag Content',
+        },
       },
       {
         path: 'payment',
         component: PaymentComponent,
         data: {
           title: 'Payment',
-          description: 'Description Meta Tag Content'
-        }
+          description: 'Description Meta Tag Content',
+        },
       },
       { path: '', redirectTo: '/parent', pathMatch: 'full' },
-
-    ]
-  }
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ParentRoutingModule { }
+export class ParentRoutingModule {}

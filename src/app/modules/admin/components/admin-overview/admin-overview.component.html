@@ -154,9 +154,9 @@
               <i class="bx bx-chevron-down icon"></i>
             </span> -->
             <span
-              [class.success]="i.schoolStatus == 'approved'"
-              [class.warning]="i.schoolStatus == 'in review'"
-              [class.error]="i.schoolStatus == 'decline'"
+              [class.success_btn]="i.schoolStatus == 'approved'"
+              [class.warning_btn]="i.schoolStatus == 'in review'"
+              [class.danger_btn]="i.schoolStatus == 'decline'"
             >
               <select name="status" id="status" [value]="i.schoolStatus">
                 <option value="approved" (click)="i.schoolStatus = 'Approved'">

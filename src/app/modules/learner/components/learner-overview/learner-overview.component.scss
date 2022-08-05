@@ -127,7 +127,7 @@ aside {
       &::before,
       &::after {
         opacity: 0;
-        visbility: hidden;
+        visibility: hidden;
         margin-top: -0.5em;
       }
 
@@ -165,7 +165,7 @@ aside {
       &:hover::before,
       &:hover::after {
         opacity: 1;
-        visiblity: visible;
+        visibility: visible;
       }
     }
   }

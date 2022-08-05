@@ -11,7 +11,7 @@ header {
       display: none;
       font-size: 40px;
       color: $primary80;
-      @media only screen and (max-width: 905px) {
+      @media only screen and (max-width: 997px) {
         display: block;
       }
     }
@@ -21,7 +21,7 @@ header {
       border-radius: $border-radius1;
       border: 2px solid $white-color;
       margin-right: $m-1;
-      // @media only screen and (max-width: 905px) {
+      // @media only screen and (max-width: 997px) {
       //   display: none;
       // }
       @media only screen and (min-width: 755px) {
