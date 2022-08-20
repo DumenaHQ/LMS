@@ -56,10 +56,6 @@ export class ParentOverviewComponent implements OnInit {
     let userData = this.authService.getUser();
     this.user = userData.user;
 
-    this.orderService.getOrder().subscribe((res: any) => {
-      console.log(res);
-    });
-
     // Get parent kids from localstorage
     this.authService.getParentChildren(this.user.id).subscribe((res: any) => {
       const result = res.data.learners;
@@ -86,7 +82,6 @@ export class ParentOverviewComponent implements OnInit {
     this.selectPlanModal = true;
 
     this.childData = childData;
-    console.log(childData);
   }
 
   // Close Select Plan Modal

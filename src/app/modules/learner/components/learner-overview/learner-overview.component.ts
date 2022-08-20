@@ -159,9 +159,6 @@ export class LearnerOverviewComponent implements OnInit {
   }
 
   no(data: any, currentModal: any) {
-    console.log(data.username);
     this.onboardModal = currentModal += 1;
-
-    console.log((currentModal += 1));
   }
 }

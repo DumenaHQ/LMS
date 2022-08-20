@@ -66,18 +66,20 @@ export class EnrollLearnerComponent implements OnInit {
     // Set loading to true
     this.loading = true;
 
-    let payroll = {
+    let payload = {
       firstname: data.firstname,
       lastname: data.lastname,
-      fullname: data.firstname + ' ' + data.lastname,
-      username: data.firstname + '_' + data.lastname,
+      // fullname: data.firstname + ' ' + data.lastname,
+      // username: data.firstname + '_' + data.lastname,
       parent: this.user.id,
       user_type: 'learner',
       password: data.password,
     };
 
+    console.log(payload);
+
     // Send users data
-    this.authService.addUser(payroll).subscribe(
+    this.authService.addUser(payload).subscribe(
       (res: any) => {
         console.log(res);
 

@@ -44,19 +44,21 @@
         </div>
         <div class="form-control">
           <label for="email">Email Address</label>
-          <div class="form-control_field">
+          <div class="form-control_field" data-disabled>
             <input
               type="email"
               name="email"
               placeholder="shaman@icloud.com"
               [(ngModel)]="user.email"
+              readonly
+              disabled
             />
           </div>
         </div>
         <div class="form-control">
           <label for="phoneNumber">Phone Number</label>
           <div class="form-control_field">
-            <input type="tel" placeholder="09123467834" />
+            <input type="tel" placeholder="" />
           </div>
         </div>
         <!-- <div class="form-control">
@@ -121,19 +123,21 @@
         </div>
         <div class="form-control">
           <label for="email">Email Address</label>
-          <div class="form-control_field">
+          <div class="form-control_field" data-disabled>
             <input
               type="email"
               name="email"
               placeholder="shaman@icloud.com"
               [(ngModel)]="user.email"
+              readonly
+              disabled=""
             />
           </div>
         </div>
         <div class="form-control">
           <label for="phoneNumber">Phone Number</label>
           <div class="form-control_field">
-            <input type="tel" placeholder="09123467834" />
+            <input type="tel" placeholder="" />
           </div>
         </div>
         <!-- <div class="form-control">

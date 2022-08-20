@@ -12,13 +12,14 @@
   </div>
   <div class="right dis-flex">
     <!-- Cart -->
-    <div class="cart" (click)="goToCart()">
+    <!-- Display Cart if user role is parent -->
+    <div class="cart" (click)="goToCart()" *ngIf="user.role == 'parent'">
       <span class="cart_image dis-flex clicakable">
         <img src="../../../../assets/img/svg/shopping-cart.svg" alt="" />
       </span>
     </div>
     <!-- notifi-popup -->
-    <div class="notifi">
+    <!-- <div class="notifi">
       <span
         class="notifi_image dis-flex clickable"
         (click)="showNotifi = !showNotifi"
@@ -29,13 +30,12 @@
           class=""
         />
       </span>
-      <!-- Drop down -->
       <div class="dropdown" [class.show]="showNotifi">
         <app-notifi-popup
           (toggleNotifi)="closeNotifiPopup()"
         ></app-notifi-popup>
       </div>
-    </div>
+    </div> -->
     <!-- Profile -->
     <span
       class="profile dis-flex clickable"

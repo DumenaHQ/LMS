@@ -9,7 +9,7 @@
       <p>
         Select a subscription plan for
         <strong class="text-primary-color">{{
-          childData?.fullname.split(" ")[0]
+          childData?.fullname.split(" ")[1]
         }}</strong>
       </p>
     </div>
@@ -58,10 +58,10 @@
           class="btn skip_btn"
           (click)="closeSelectPlanModal()"
         >
-          Pay for another child
+          Add another child
         </button>
         <button class="btn prim_btn" (click)="getSelectedPlan()">
-          Make Payment
+          Add to Cart
         </button>
       </div>
     </form>

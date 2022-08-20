@@ -90,9 +90,9 @@ export class PricingPlanComponent implements OnInit {
     let userData = this.authService.getUser();
     this.user = userData.user;
 
-    this.orderService.getOrder().subscribe((res: any) => {
-      console.log(res);
-    });
+    // this.orderService.getOrder().subscribe((res: any) => {
+    //   console.log(res);
+    // });
 
     // Get parent kids from localstorage
     this.authService.getParentChildren(this.user.id).subscribe((res: any) => {
@@ -112,53 +112,30 @@ export class PricingPlanComponent implements OnInit {
 
   // Get Selected plan
   getSelectedPlan() {
-    // this.billingId == 'monthly'
-    //   ? (this.value = plan.amountPerMonth)
-    //   : (this.value = plan.amountPerYear);
+    // Set amount base on the plan selected
+    var amount = 0;
+    this.pricingPlanForm.value.plan == 'standard-plan'
+      ? (amount = 15000)
+      : (amount = 9000);
 
+    // Set payload
     let payload = {
       name: this.childData.fullname,
       user_id: this.childData.id,
       slug: this.pricingPlanForm.value.plan,
       order_type: 'sub',
+      billing_id: this.billingId,
+      amount: this.billingId == 'monthly' ? amount : amount * 12, // If billing is monthly send original value other calculate for yearly (amount * 12)
     };
 
+    // console.log(payload);
     this.orderService.addOrderToLocalStorage(payload);
-  }
 
-  // Open Select plan Modal
-  // openSelectPlanModal() {
-  //   this.selectPlanModal = true;
-  // }
+    this.closeSelectPlanModal();
+  }
 
   // Close Select plan Modal
   closeSelectPlanModal() {
     this.selectPlanModal.emit();
-  }
-
-  // Add order to cart
-  addToCart() {
-    let payload = {
-      items: [
-        {
-          order_type: 'sub',
-          slug: 'standard-plan',
-          user_id: this.user,
-        },
-        {
-          order_type: 'sub',
-          slug: 'pro-plan',
-          user_id: this.user,
-        },
-      ],
-    };
-    console.log(payload);
-
-    // this.orderService.addOrder(payload).subscribe((res: any) => {
-    //   console.log(res);
-    //   // this.reference = res.reference
-
-    //   this.verifyPayment(res.data.order.reference);
-    // });
   }
 }

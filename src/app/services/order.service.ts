@@ -37,6 +37,15 @@ export class OrderService {
       return localStorage.setItem('cart', JSON.stringify(allData));
     }
   }
+  // Add Order to localstorage
+  removeOrderToLocalStorage(index: any): void {
+    console.log(index);
+    let allData = JSON.parse(localStorage.getItem('cart') || '[]');
+    // if (!exist) {
+    allData.splice(index, 1);
+    return localStorage.setItem('cart', JSON.stringify(allData));
+    // }
+  }
 
   // Get HttpOptions
   getHttpOptions() {

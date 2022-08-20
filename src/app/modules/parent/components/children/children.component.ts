@@ -52,7 +52,7 @@ export class ChildrenComponent implements OnInit {
     this.selectPlanModal = true;
 
     this.childData = childData;
-    console.log(childData);
+    // console.log(childData);
   }
 
   closeSelectPlanModal() {

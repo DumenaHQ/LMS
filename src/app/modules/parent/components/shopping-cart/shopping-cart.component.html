@@ -8,16 +8,68 @@
   <h5>Items in your Cart</h5>
   <div class="cart_body">
     <div class="cart_body_list du-grid">
-      <div class="cart_body_list_item">
+      <div style="overflow-x: auto; padding-right: 1.5rem">
+        <table>
+          <tr class="table-header">
+            <th>Child's Name</th>
+            <th>Plan</th>
+            <th>Amount(NGN)</th>
+            <th>Action</th>
+          </tr>
+          <ng-container>
+            <tr
+              class="table-body"
+              *ngFor="let i of allOrdersFromLS; let j = index"
+            >
+              <td>{{ i.name | titlecase }}</td>
+              <td>{{ i.slug.split("-")[0] | titlecase }}</td>
+              <td>
+                {{ i.amount }}/{{
+                  i.billing_id == "monthly" ? "month" : "year"
+                }}
+              </td>
+              <td>
+                <i
+                  class="bx bx-x clickable"
+                  style="color: #e92c2c; font-size: 20px"
+                  title="Remove"
+                  (click)="removeItemFromCart(j)"
+                ></i>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-template>
+            <div style="text-align: center">
+              <p>Empty Cart!</p>
+              <button routerLink="/parent/children"></button>
+            </div>
+          </ng-template>
+        </table>
+      </div>
+    </div>
+
+    <!-- <div class="cart_body_list du-grid">
+      <div class="cart_body_list_item" *ngFor="let i of allOrdersFromLS">
         <div class="header dis-flex">
-          <p class="body-2-bold">Standard 3 months subscription</p>
-          <h4 class="text-secondary-color">N15,000/month</h4>
+          <p class="body-2-bold">{{ i.slug | titlecase }} for {{ i.name }}</p>
+          <h4 class="text-secondary-color">
+            {{ i.amount }}/{{ i.billing_id == "monthly" ? "month" : "year" }}
+          </h4>
+          <div class="dis-flex">
+            <img
+              src="../../../../../assets/img/children-avatar/child-avatar-1.png"
+              alt=""
+            />
+            <p class="body-2-bold">{{ i.name }}</p>
+          </div>
+          
         </div>
+
         <p class="body-2-regular">
           This plan spans for a period of three months and includes the
           following coures and benefits
         </p>
-        <ul>
+      <ul>
           <li class="">
             <img src="../../../../../assets/img/svg/check-prim.svg" alt="" />
             <p>3 Months Subscription</p>
@@ -30,7 +82,6 @@
             </p>
           </li>
         </ul>
-        <p class="remove text-secondary-color clickable hover-2">Remove</p>
       </div>
       <div class="cart_body_list_item">
         <div class="header dis-flex">
@@ -57,13 +108,14 @@
         </ul>
         <p class="remove text-secondary-color clickable hover-2">Remove</p>
       </div>
-    </div>
+    </div> -->
+
     <div class="cart_body_checkout">
       <div class="cart_body_checkout_header">
         <p class="body-1-bold">Order details</p>
         <div class="sub-total dis-flex">
           <p class="body-2-regular">Sub total</p>
-          <p class="body-2-regular">N24,000.00</p>
+          <p class="body-2-regular">N{{ grandTotal }}.00</p>
         </div>
         <form>
           <div class="form-field">
@@ -73,14 +125,14 @@
             </div>
           </div>
           <div class="form-btn">
-            <button class="btn prim_btn" (click)="addOrder()">Apply</button>
+            <button class="btn prim_btn">Apply</button>
           </div>
         </form>
       </div>
       <div class="cart_body_checkout_footer">
         <div class="grand-total dis-flex">
-          <p class="body-1-bold">Sub total</p>
-          <p class="body-1-bold">N24,000.00</p>
+          <p class="body-1-bold">Total</p>
+          <p class="body-1-bold">N{{ grandTotal }}.00</p>
         </div>
         <button class="btn prim_btn" (click)="addOrder()">
           Proceed to Payment

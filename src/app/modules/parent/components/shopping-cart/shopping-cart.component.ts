@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { OrderService } from 'src/app/services/order.service';
 import { PaymentService } from 'src/app/services/payment.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -12,7 +13,10 @@ export class ShoppingCartComponent implements OnInit {
   user: any;
   allOrdersFromLS: any;
   allOrderFromLS: any;
-  key = 'pk_test_d586eb9d6d6ec62439571f56fea7c8330e4d4366';
+  key = environment.paystackKey;
+  calcTotal: number = 0;
+  grandTotal: string = '';
+  value: any;
 
   constructor(
     private orderService: OrderService,
@@ -29,7 +33,23 @@ export class ShoppingCartComponent implements OnInit {
     this.allOrdersFromLS = this.orderService.getOrderFromLocalStorage();
     this.allOrdersFromLS.forEach((element: any) => {
       this.allOrderFromLS = element;
+
+      // this.grandTotal = this.allOrderFromLS.amount
     });
+    this.findsum(this.allOrdersFromLS);
+  }
+
+  // Find
+  findsum(data: any) {
+    // debugger;
+    this.value = data;
+    for (let j = 0; j < data.length; j++) {
+      this.calcTotal += this.value[j].amount;
+      // Add commas as thousands seperaators
+      this.grandTotal = this.calcTotal
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
   }
 
   // Add Order
@@ -58,7 +78,7 @@ export class ShoppingCartComponent implements OnInit {
     // @ts-ignore
     let handler = PaystackPop.setup({
       key: this.key, // Replace with your public key
-      email: 'chibuzo@gmail.com',
+      email: this.user.email,
       amount: result.total_amount * 100,
       currency: 'NGN',
       ref: result.reference,
@@ -82,5 +102,12 @@ export class ShoppingCartComponent implements OnInit {
       },
     });
     handler.openIframe();
+  }
+
+  // Remove item from Local strorage
+  removeItemFromCart(index: any) {
+    this.orderService.removeOrderToLocalStorage(index);
+
+    this.ngOnInit();
   }
 }

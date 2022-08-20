@@ -263,7 +263,7 @@
         </div>
         <form #usersForm="ngForm">
           <div class="form-field">
-            <label for="username">First Name</label>
+            <label for="username">User Name</label>
             <div class="input-field">
               <input type="text" name="username" ngModel required />
             </div>
@@ -271,11 +271,7 @@
         </form>
         <div class="modal-btns dis-flex">
           <button class="btn skip_btn" (click)="onboardModal = 4">Skip</button>
-          <button
-            class="btn prim_btn"
-            (click)="no(usersForm.value, 3)"
-            [disabled]="usersForm.invalid"
-          >
+          <button class="btn prim_btn" (click)="no(usersForm.value, 3)">
             Next
           </button>
         </div>

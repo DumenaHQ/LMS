@@ -35,7 +35,10 @@
         border-radius: $border-radius1;
         margin-top: $m-1;
         padding: 0 $m-2;
-        transition: all 0.2s ease-in;
+        transition: all 0.2s ease-in; 
+        &[data-disabled] {
+          background-color: $divider-color;
+        }
         input,
         select,
         textarea {
