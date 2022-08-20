@@ -82,7 +82,7 @@
   &::-webkit-scrollbar {
     display: none;
   }
-  &_area {
+  .modal_area {
     background-color: $white-color;
     padding: $modal-area-padding;
     border-radius: $border-radius1;
@@ -111,6 +111,11 @@
         background-color: transparent;
         &:hover {
           border-color: $primary80;
+        }
+      }
+      @media only screen and (max-width: 550px) {
+        .btn {
+          font-size: 16px;
         }
       }
     }

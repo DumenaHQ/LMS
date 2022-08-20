@@ -4,69 +4,80 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  baseUrl: string = environment.baseUrl
-  usersData: any;
+  baseUrl: string = environment.baseUrl;
+  userData: any;
 
-  constructor(private router: Router, private http: HttpClient) { }
+  constructor(private router: Router, private http: HttpClient) {}
 
   // Set Token and save to localstorage
   addUserDataToLocalStorage(data: any): void {
     // localStorage.setItem('token', token)
-    localStorage.setItem('data', JSON.stringify(data))
+    localStorage.setItem('data', JSON.stringify(data));
   }
 
   // Set Token to localstorage
   setToken(token: string) {
-    localStorage.setItem('token', token)
+    localStorage.setItem('token', token);
   }
 
   // Get Token from localstorage
   getToken(): string | null {
-    return localStorage.getItem('token')
+    return localStorage.getItem('token');
   }
 
   // Get Users Data
   getUser() {
-    this.usersData = localStorage.getItem("data")
-    let data = JSON.parse(this.usersData)
+    this.userData = localStorage.getItem('data');
+    let data = JSON.parse(this.userData);
     return data;
   }
 
   getParentChildren(userId: any) {
-    return this.http.get(this.baseUrl + 'parents/' + userId + '/learners', this.getHttpOptions())
+    return this.http.get(
+      this.baseUrl + 'parents/' + userId + '/learners',
+      this.getHttpOptions()
+    );
   }
 
   allUser() {
-    return this.http.get(this.baseUrl + 'users', this.getHttpOptions())
+    return this.http.get(this.baseUrl + 'users', this.getHttpOptions());
   }
 
   // Is logged In
   isLoggedIn() {
-    return this.getToken() !== null
+    return this.getToken() !== null;
   }
 
   confirmEmail(model: any) {
-    return this.http.put(this.baseUrl + 'users/activate', model, this.getHttpOptions())
+    return this.http.put(
+      this.baseUrl + 'users/activate',
+      model,
+      this.getHttpOptions()
+    );
   }
 
   // Log Out
   logOut() {
     // Remove token
-    localStorage.removeItem('token')
+    localStorage.removeItem('token');
 
     // Remove User data
-    localStorage.removeItem('data')
+    localStorage.removeItem('data');
 
     // Route user back to login
-    this.router.navigate(['login'])
+    this.router.navigate(['login']);
   }
 
   // Login
   login(data: any) {
-    return this.http.post(this.baseUrl + 'users/login', data, this.getHttpOptions())
+    return this.http.post(
+      this.baseUrl + 'users/login',
+      data,
+      this.getHttpOptions()
+    );
   }
 
   // login(data: any) {
@@ -79,7 +90,7 @@ export class AuthService {
 
   // Sign Up
   addUser(data: any) {
-    return this.http.post(this.baseUrl + 'users', data, this.getHttpOptions())
+    return this.http.post(this.baseUrl + 'users', data, this.getHttpOptions());
   }
 
   // Get HttpOptions
@@ -87,10 +98,9 @@ export class AuthService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('token')
-      })
-    }
-    return httpOptions
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+    };
+    return httpOptions;
   }
-
 }

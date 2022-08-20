@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { OrderService } from 'src/app/services/order.service';
 
@@ -8,13 +9,16 @@ import { OrderService } from 'src/app/services/order.service';
   styleUrls: ['./parent-overview.component.scss'],
 })
 export class ParentOverviewComponent implements OnInit {
-  billingId: string = 'monthly';
+  pricingPlanForm: any = FormGroup;
+
   user: any;
   children: any;
+  childData: any;
   addModal: boolean = false;
-  // showAlert: boolean = false;
   title: string = 'child';
+  selectPlanModal: boolean = false;
 
+  // Payment History
   paymentsHistory = [
     {
       id: 1,
@@ -58,13 +62,13 @@ export class ParentOverviewComponent implements OnInit {
 
     // Get parent kids from localstorage
     this.authService.getParentChildren(this.user.id).subscribe((res: any) => {
-      this.children = res.data.learners;
+      const result = res.data.learners;
+      // Display only two(2) children
+      const size = 2;
+      this.children = result
+        .sort(() => Math.random() - Math.random())
+        .slice(0, size);
     });
-  }
-
-  // Tab change
-  tabChange(ids: any) {
-    this.billingId = ids;
   }
 
   // Open Add Child Modal
@@ -77,19 +81,16 @@ export class ParentOverviewComponent implements OnInit {
     this.addModal = false;
   }
 
-  // Add to Cart
-  addToCart(title: any, amount: any) {
-    let payload = {
-      slug: title,
-      amount: amount,
-      user_id: this.user.id,
-      order_type: 'sub',
-    };
-    console.log(payload);
+  // Open Select Plan Modal
+  openSelectPlanModal(childData: any) {
+    this.selectPlanModal = true;
 
-    this.orderService.addOrder(payload).subscribe((res: any) => {
-      console.log(res);
-      // this.reference = res.reference
-    });
+    this.childData = childData;
+    console.log(childData);
+  }
+
+  // Close Select Plan Modal
+  closeSelectPlanModal() {
+    this.selectPlanModal = false;
   }
 }

@@ -14,7 +14,10 @@
           />
           <h4 class="name">{{ i.fullname }}</h4>
           <button class="btn prim_btn">Manage Child</button>
-          <p class="body-2-medium text-secondary-color select-plan hover-2">
+          <p
+            class="body-2-medium text-secondary-color select-plan hover-2"
+            (click)="openSelectPlanModal(i)"
+          >
             Select learning plan
           </p>
         </div>
@@ -54,3 +57,9 @@
     ></app-enroll-learner>
   </div>
 </div>
+
+<app-pricing-plan
+  *ngIf="selectPlanModal"
+  (selectPlanModal)="closeSelectPlanModal()"
+  [childData]="childData"
+></app-pricing-plan>

@@ -46,7 +46,8 @@ header {
     }
   }
   .right {
-    .notifi {
+    .notifi,
+    .cart {
       margin-right: $m-2;
       position: relative;
       &_image {
@@ -58,6 +59,9 @@ header {
           img {
             transform: scale(1.2);
           }
+        }
+        &.active {
+          border-color: $primary80;
         }
       }
       .dropdown {

@@ -39,7 +39,10 @@
           />
           <h4 class="name">{{ i.fullname }}</h4>
           <button class="btn prim_btn">Manage Child</button>
-          <p class="body-2-medium text-secondary-color select-plan hover-2">
+          <p
+            class="body-2-medium text-secondary-color select-plan hover-2"
+            (click)="openSelectPlanModal(i)"
+          >
             Select learning plan
           </p>
         </div>
@@ -58,7 +61,7 @@
     <!-- Set up profile -->
     <div class="complete-profile">
       <div class="ds-sect-header dis-flex">
-        <h5 class="text-secondary-color">Setup your childs account</h5>
+        <h5 class="text-secondary-color">Setup your child's account</h5>
         <i class="bx bx-chevron-right"></i>
       </div>
       <div class="progress-bar">
@@ -134,7 +137,8 @@
   </div>
 </section>
 
-<div class="modal" [class.show-modal]="addModal">
+<!-- Add Child Modal -->
+<div class="modal add-modal" [class.show-modal]="addModal" *ngIf="addModal">
   <div class="modal_area">
     <span class="modal_area_close" (click)="closeAddModal()">
       <i class="bx bx-x icon clickable"></i>
@@ -145,3 +149,38 @@
     ></app-enroll-learner>
   </div>
 </div>
+
+<!-- Select plan Modal -->
+<!-- <div class="modal select-plan-modal" [class.show-modal]="selectPlanModal">
+  <div class="modal_area">
+    <span class="modal_area_close" (click)="closeSelectPlanModal()">
+      <i class="bx bx-x icon clickable"></i>
+    </span>
+    <div class="modal-details" style="text-align: left">
+      <h2 class="text-primary-color">Pricing Plans</h2>
+      <p>Select a subscription plan</p>
+    </div>
+    <form ngSubmit)="hi(pricingPlanForm.value)" #pricingPlanForm="ngForm">
+      <app-pricing-plan
+        (selectPlanModal)="closeSelectPlanModal()"
+      ></app-pricing-plan>
+
+      <div class="modal-btns dis-flex">
+        <button
+          type="button"
+          class="btn skip_btn"
+          (click)="closeSelectPlanModal()"
+        >
+          Pay for another child
+        </button>
+        <button class="btn prim_btn">Make Payment</button>
+      </div>
+    </form>
+  </div>
+</div> -->
+
+<app-pricing-plan
+  *ngIf="selectPlanModal"
+  (selectPlanModal)="closeSelectPlanModal()"
+  [childData]="childData"
+></app-pricing-plan>

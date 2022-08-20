@@ -3,23 +3,39 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OrderService {
+  baseUrl: string = environment.baseUrl;
+  userData: any;
 
-  baseUrl: string = environment.baseUrl
-
-  constructor(private http: HttpClient) { }
-
+  constructor(private http: HttpClient) {}
 
   // Get Order
   getOrder() {
-    return this.http.get(this.baseUrl + 'orders', this.getHttpOptions())
+    return this.http.get(this.baseUrl + 'orders', this.getHttpOptions());
   }
 
   // Add Order
   addOrder(data: any) {
-    return this.http.post(this.baseUrl + 'orders', data, this.getHttpOptions())
+    return this.http.post(this.baseUrl + 'orders', data, this.getHttpOptions());
+  }
+
+  // Get Order to localstorage
+  getOrderFromLocalStorage() {
+    this.userData = localStorage.getItem('cart');
+    let data = JSON.parse(this.userData);
+    return data;
+  }
+
+  // Add Order to localstorage
+  addOrderToLocalStorage(data: any): void {
+    let allData = JSON.parse(localStorage.getItem('cart') || '[]');
+    let exist = allData.some((obj: any) => obj.user_id === data.user_id);
+    if (!exist) {
+      allData.push(data);
+      return localStorage.setItem('cart', JSON.stringify(allData));
+    }
   }
 
   // Get HttpOptions
@@ -27,10 +43,9 @@ export class OrderService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('token')
-      })
-    }
-    return httpOptions
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+    };
+    return httpOptions;
   }
-
 }

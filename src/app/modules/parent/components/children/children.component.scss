@@ -12,7 +12,7 @@ section:not(:last-child) {
     padding-top: $m-6;
     .card {
       // grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); //Changed the auto-fit in style.scss to auto-fill here
-      @include card(300px, auto-fill);
+      @include card(200px, auto-fill);
       &_item {
         display: grid;
         place-items: center;

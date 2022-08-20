@@ -4,6 +4,7 @@ import { UserProfileComponent } from '../shared/user-profile/user-profile.compon
 import { ChildrenComponent } from './components/children/children.component';
 import { ParentOverviewComponent } from './components/parent-overview/parent-overview.component';
 import { PaymentComponent } from './components/payment/payment.component';
+import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { ParentComponent } from './parent.component';
 
 const routes: Routes = [
@@ -40,6 +41,14 @@ const routes: Routes = [
         component: PaymentComponent,
         data: {
           title: 'Payment',
+          description: 'Description Meta Tag Content',
+        },
+      },
+      {
+        path: 'payment/cart',
+        component: ShoppingCartComponent,
+        data: {
+          title: 'Cart',
           description: 'Description Meta Tag Content',
         },
       },

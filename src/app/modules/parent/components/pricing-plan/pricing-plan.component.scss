@@ -1,0 +1,97 @@
+@import '../../../../../assets/css/dashboard.scss';
+@import '../../../../../assets/css/variables.scss';
+@import '../../../../../assets/css/mixins.scss';
+
+@keyframes slideIn {
+  0% {
+    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, -80, 0, 1);
+    opacity: 0;
+  }
+  100% {
+    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+    opacity: 1;
+  }
+}
+// Modal
+.modal {
+  // opacity: 0;
+  // visibility: hidden;
+  // opacity: 1;
+  //   visibility: visible;
+  @include modal($modal-area-width: 500px);
+  // display: none;
+  &.select-plan-modal {
+  }
+  &.show-modal {
+    opacity: 1;
+    visibility: visible;
+  }
+  &_area {
+    animation: slideIn 0.2s;
+    padding: $m-6 $m-3;
+    // close button
+    &_close {
+      position: absolute;
+      top: $m-2;
+      right: $m-3;
+      .icon {
+        font-size: 24px;
+        color: $primary20;
+        transition: all 0.2s ease-in;
+        &:hover {
+          color: $primary80;
+        }
+      }
+    }
+  }
+}
+ // Pricing tab
+ .pricing_tab {
+    display: flex;
+    justify-content: center;
+    &_wrapper {
+      border: 1px solid $divider-color;
+      background-color: $grey40;
+      color: $grey100;
+      border-radius: 8px;
+      padding: calc(0.25rem + 1px);
+      display: flex;
+      align-items: center;
+      gap: $m-1;
+      .tab {
+        display: inline-block;
+        border-radius: $border-radius1;
+        padding: calc(0.25rem + 1px) $m-2;
+        font-weight: 500;
+        font-size: 14px;
+        transition: all .2s ease;
+        cursor: pointer;
+        &.active {
+          background-color: $white-color;
+          color: $text-color1;
+          box-shadow: $box-shadow;
+        }
+      }
+    }
+  
+  }
+  // Pricing plan
+  .pricing_plan {
+    gap: $m-2;
+    margin-top: $m-3;
+    margin-bottom: $m-3;
+    .plan {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      border: 1px solid $divider-color;
+      padding: $m-2;
+      border-radius: $border-radius1;
+      input {
+        margin-right: $m-1;
+      }
+      .title {
+        margin-bottom: $m-1;
+      }
+    }
+  }

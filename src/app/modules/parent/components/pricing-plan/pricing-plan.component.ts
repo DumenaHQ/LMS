@@ -1,24 +1,29 @@
-import { Component, OnInit, Renderer2, Inject } from '@angular/core';
-import { from } from 'rxjs';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { OrderService } from 'src/app/services/order.service';
-import { PaymentService } from 'src/app/services/payment.service';
-import { DOCUMENT } from '@angular/common';
 
 @Component({
-  selector: 'app-payment',
-  templateUrl: './payment.component.html',
-  styleUrls: ['./payment.component.scss'],
+  selector: 'app-pricing-plan',
+  templateUrl: './pricing-plan.component.html',
+  styleUrls: ['./pricing-plan.component.scss'],
 })
-export class PaymentComponent implements OnInit {
-  user: any;
-  // reference: any;
+export class PricingPlanComponent implements OnInit {
+  @Output() selectPlanModal: EventEmitter<any> = new EventEmitter();
+  // @Input() selectPlanModal: boolean = false;
+  @Input() childData: any;
+  pricingPlanForm: any = FormGroup;
+
   billingId: string = 'monthly';
-  isHidden: boolean = true;
+  value: string = '';
+  user: any;
+  children: any;
+
+  // Subscription Plan
   subPlan = [
     {
       id: 1,
-      plan: 'standard',
+      plan: 'standard-plan',
       amountPerMonth: 'N15,000',
       amountPerYear: 'N180,000',
       benefits: [
@@ -39,11 +44,10 @@ export class PaymentComponent implements OnInit {
           icon: '../../../assets/img/svg/check-prim.svg',
         },
       ],
-      isHidden: true,
     },
     {
       id: 2,
-      plan: 'pro',
+      plan: 'pro-plan',
       amountPerMonth: 'N9,000',
       amountPerYear: 'N108,000',
       benefits: [
@@ -72,41 +76,13 @@ export class PaymentComponent implements OnInit {
           icon: '../../../assets/img/svg/plus-prim.svg',
         },
       ],
-      isHidden: true,
-    },
-  ];
-
-  paymentsHistory = [
-    {
-      id: 1,
-      childName: 'Alousa Jones',
-      Product: 'Standard Plan',
-      date: '05 June 2022',
-      amount: '180,990',
-      status: 'complete',
-    },
-    {
-      id: 2,
-      childName: 'Alousa Jones',
-      Product: 'Standard Plan',
-      date: '05 June 2022',
-      amount: '180,990',
-      status: 'declined',
-    },
-    {
-      id: 3,
-      childName: 'Alousa Jones',
-      Product: 'Standard Plan',
-      date: '05 June 2022',
-      amount: '180,990',
-      status: 'pending',
     },
   ];
 
   constructor(
     private orderService: OrderService,
     private authService: AuthService,
-    private paymentService: PaymentService
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -117,6 +93,16 @@ export class PaymentComponent implements OnInit {
     this.orderService.getOrder().subscribe((res: any) => {
       console.log(res);
     });
+
+    // Get parent kids from localstorage
+    this.authService.getParentChildren(this.user.id).subscribe((res: any) => {
+      this.children = res.data.learners;
+    });
+
+    // Pricing plan Form
+    this.pricingPlanForm = this.formBuilder.group({
+      plan: ['', Validators.required],
+    });
   }
 
   // Tab change
@@ -124,7 +110,34 @@ export class PaymentComponent implements OnInit {
     this.billingId = ids;
   }
 
-  addOrder() {
+  // Get Selected plan
+  getSelectedPlan() {
+    // this.billingId == 'monthly'
+    //   ? (this.value = plan.amountPerMonth)
+    //   : (this.value = plan.amountPerYear);
+
+    let payload = {
+      name: this.childData.fullname,
+      user_id: this.childData.id,
+      slug: this.pricingPlanForm.value.plan,
+      order_type: 'sub',
+    };
+
+    this.orderService.addOrderToLocalStorage(payload);
+  }
+
+  // Open Select plan Modal
+  // openSelectPlanModal() {
+  //   this.selectPlanModal = true;
+  // }
+
+  // Close Select plan Modal
+  closeSelectPlanModal() {
+    this.selectPlanModal.emit();
+  }
+
+  // Add order to cart
+  addToCart() {
     let payload = {
       items: [
         {
@@ -141,11 +154,11 @@ export class PaymentComponent implements OnInit {
     };
     console.log(payload);
 
-    this.orderService.addOrder(payload).subscribe((res: any) => {
-      console.log(res);
-      // this.reference = res.reference
+    // this.orderService.addOrder(payload).subscribe((res: any) => {
+    //   console.log(res);
+    //   // this.reference = res.reference
 
-      // this.verifyPayment(res.data.order.reference);
-    });
+    //   this.verifyPayment(res.data.order.reference);
+    // });
   }
 }

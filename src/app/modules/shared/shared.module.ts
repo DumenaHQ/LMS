@@ -10,8 +10,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotifiPopupComponent } from './notifi-popup/notifi-popup.component';
 import { EnrollLearnerComponent } from './enroll-learner/enroll-learner.component';
-
-
+import { PricingPlanComponent } from '../parent/components/pricing-plan/pricing-plan.component';
 
 @NgModule({
   declarations: [
@@ -22,21 +21,17 @@ import { EnrollLearnerComponent } from './enroll-learner/enroll-learner.componen
     DashboardPopupAlertComponent,
     UserProfileComponent,
     NotifiPopupComponent,
-    EnrollLearnerComponent
+    EnrollLearnerComponent,
+    // PricingPlanComponent,
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    ReactiveFormsModule
-  ],
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
   exports: [
     DefaultHeaderComponent,
     DefaultFooterComponent,
     DashboardHeaderComponent,
     DashboardSidenavComponent,
     DashboardPopupAlertComponent,
-    EnrollLearnerComponent
-  ]
+    EnrollLearnerComponent,
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

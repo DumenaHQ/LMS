@@ -9,7 +9,8 @@ import { ChildrenBlankComponent } from './components/children/children-blank/chi
 import { SharedModule } from '../shared/shared.module';
 import { PaymentComponent } from './components/payment/payment.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { PricingPlanComponent } from './components/pricing-plan/pricing-plan.component';
+import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 
 @NgModule({
   declarations: [
@@ -17,14 +18,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ParentOverviewComponent,
     ChildrenComponent,
     ChildrenBlankComponent,
-    PaymentComponent
+    PaymentComponent,
+    PricingPlanComponent,
+    ShoppingCartComponent,
   ],
   imports: [
     CommonModule,
     ParentRoutingModule,
     SharedModule,
     FormsModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+  ],
 })
-export class ParentModule { }
+export class ParentModule {}

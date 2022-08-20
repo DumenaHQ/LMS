@@ -12,6 +12,8 @@ export class ChildrenComponent implements OnInit {
   user: any;
   title: string = 'child';
   children: any;
+  childData: any;
+  selectPlanModal: boolean = false;
 
   constructor(private authService: AuthService) {}
 
@@ -36,11 +38,24 @@ export class ChildrenComponent implements OnInit {
     this.addModal = false;
   }
 
+  // Show ALert Popup
   showAlertPopup() {
     this.showAlert = true;
     // Hide after some seconds
     setTimeout(() => {
       this.showAlert = false;
     }, 2000);
+  }
+
+  // Open Select Plan Modal
+  openSelectPlanModal(childData: any) {
+    this.selectPlanModal = true;
+
+    this.childData = childData;
+    console.log(childData);
+  }
+
+  closeSelectPlanModal() {
+    this.selectPlanModal = false;
   }
 }

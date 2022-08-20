@@ -1,0 +1,69 @@
+<!-- Select plan Modal -->
+<div class="modal select-plan-modal" [class.show-modal]="selectPlanModal">
+  <div class="modal_area">
+    <span class="modal_area_close" (click)="closeSelectPlanModal()">
+      <i class="bx bx-x icon clickable"></i>
+    </span>
+    <div class="modal-details" style="text-align: left">
+      <h2 class="text-primary-color">Pricing Plans</h2>
+      <p>
+        Select a subscription plan for
+        <strong class="text-primary-color">{{
+          childData?.fullname.split(" ")[0]
+        }}</strong>
+      </p>
+    </div>
+    <!-- Pricing tabs -->
+    <div class="pricing_tab">
+      <div class="pricing_tab_wrapper">
+        <span
+          class="tab"
+          [class.active]="billingId == 'monthly'"
+          (click)="tabChange('monthly')"
+          >Monthly billing
+        </span>
+        <span
+          class="tab"
+          [class.active]="billingId == 'yearly'"
+          (click)="tabChange('yearly')"
+          >Yearly billing
+        </span>
+      </div>
+    </div>
+    <form [formGroup]="pricingPlanForm">
+      <!-- Pricing plans -->
+      <div class="pricing_plan dis-flex">
+        <div class="plan" *ngFor="let i of subPlan">
+          <input
+            type="radio"
+            [id]="i.plan"
+            name="plan"
+            [value]="i.plan"
+            formControlName="plan"
+          />
+          <label [for]="i.plan">
+            <h5 class="title">{{ i.plan.split("-")[0] | titlecase }} Plan</h5>
+            <p class="text-secondary-color">
+              {{
+                billingId == "monthly" ? i.amountPerMonth : i.amountPerYear
+              }}/{{ billingId == "monthly" ? "month" : "year" }}
+            </p>
+          </label>
+        </div>
+      </div>
+      <!-- Buttons -->
+      <div class="modal-btns dis-flex">
+        <button
+          type="button"
+          class="btn skip_btn"
+          (click)="closeSelectPlanModal()"
+        >
+          Pay for another child
+        </button>
+        <button class="btn prim_btn" (click)="getSelectedPlan()">
+          Make Payment
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
