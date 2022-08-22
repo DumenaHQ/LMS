@@ -13,7 +13,9 @@
             class="avatar"
           />
           <h4 class="name">{{ i.fullname }}</h4>
-          <button class="btn prim_btn">Manage Child</button>
+          <button class="btn prim_btn" (click)="manageChild(i.id)">
+            Manage Child
+          </button>
           <p
             class="body-2-medium text-secondary-color select-plan hover-2"
             (click)="openSelectPlanModal(i)"

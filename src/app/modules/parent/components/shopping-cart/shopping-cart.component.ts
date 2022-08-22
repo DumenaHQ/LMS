@@ -10,10 +10,11 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./shopping-cart.component.scss'],
 })
 export class ShoppingCartComponent implements OnInit {
+  baseUrl: string = environment.baseUrl;
+  key = environment.paystackKey;
   user: any;
   allOrdersFromLS: any;
   allOrderFromLS: any;
-  key = environment.paystackKey;
   calcTotal: number = 0;
   grandTotal: string = '';
   value: any;
@@ -33,13 +34,12 @@ export class ShoppingCartComponent implements OnInit {
     this.allOrdersFromLS = this.orderService.getOrderFromLocalStorage();
     this.allOrdersFromLS.forEach((element: any) => {
       this.allOrderFromLS = element;
-
-      // this.grandTotal = this.allOrderFromLS.amount
     });
+    // Find Sum
     this.findsum(this.allOrdersFromLS);
   }
 
-  // Find
+  // Find Sum
   findsum(data: any) {
     // debugger;
     this.value = data;
@@ -75,9 +75,10 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   payWithPaystack(result: any) {
+    let url = this.baseUrl;
     // @ts-ignore
     let handler = PaystackPop.setup({
-      key: this.key, // Replace with your public key
+      key: this.key,
       email: this.user.email,
       amount: result.total_amount * 100,
       currency: 'NGN',
@@ -85,7 +86,7 @@ export class ShoppingCartComponent implements OnInit {
       callback: function (response: any) {
         var reference = response.reference;
         if (response.status === 'success') {
-          fetch('https://api.dumena.com/payments/verify', {
+          fetch(url + 'payments/verify', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

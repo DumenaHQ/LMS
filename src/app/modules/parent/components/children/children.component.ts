@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -15,7 +16,7 @@ export class ChildrenComponent implements OnInit {
   childData: any;
   selectPlanModal: boolean = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     // Get User data from localstorage
@@ -55,7 +56,13 @@ export class ChildrenComponent implements OnInit {
     // console.log(childData);
   }
 
+  // Close Select Plan Modal
   closeSelectPlanModal() {
     this.selectPlanModal = false;
+  }
+
+  // Manage child
+  manageChild(userId: any) {
+    this.router.navigate([`/parent/children/${userId}`]);
   }
 }

@@ -1,0 +1,77 @@
+<section class="ds-head dis-flex">
+  <h2 class="ds-head_title" routerLink="/parent/children">Children</h2>
+  <i class="bx bx-chevron-right icon"></i>
+  <p class="clickable" [routerLink]="['/parent/children/', child?.id]">
+    {{ child?.fullname }}
+  </p>
+  <i class="bx bx-chevron-right icon"></i>
+  <p class="clickable">Edit Profile</p>
+</section>
+
+<section class="profile">
+  <h5 class="profile_title">My Profile</h5>
+
+  <div class="profile_body">
+    <ng-container>
+      <div class="dis-flex">
+        <img
+          src="../../../../assets/img/children-avatar/child-avatar-1.png"
+          alt=""
+        />
+        <div class="btns-area dis-flex">
+          <button
+            class="btn tert_btn"
+            [routerLink]="['/parent/children/', child?.id]"
+          >
+            Back
+          </button>
+          <button class="btn prim_btn">Save Changes</button>
+        </div>
+      </div>
+
+      <form [formGroup]="childForm">
+        <!-- <div class="form-control">
+          <label for="firstName">First Name</label>
+          <div class="form-control_field">
+            <input type="text" name="firstname" />
+          </div>
+        </div>
+        <div class="form-control">
+          <label for="lastName">Last Name</label>
+          <div class="form-control_field">
+            <input type="text" name="lastname" />
+          </div>
+        </div> -->
+        <div class="form-control col-2">
+          <label for="fullName">Full Name</label>
+          <div class="form-control_field">
+            <input type="text" name="fullname" formControlName="fullname" />
+          </div>
+        </div>
+        <div class="form-control">
+          <label for="email">Email Address</label>
+          <div class="form-control_field" data-disabled>
+            <input type="email" name="email" readonly disabled />
+          </div>
+        </div>
+        <div class="form-control">
+          <label for="phoneNumber">Phone Number</label>
+          <div class="form-control_field">
+            <input type="tel" placeholder="" />
+          </div>
+        </div>
+        <div class="form-control col-2">
+          <label for="phoneNumber"> Address</label>
+          <div class="form-control_field">
+            <textarea name="" id="" cols="30" rows="5"></textarea>
+          </div>
+        </div>
+      </form>
+    </ng-container>
+  </div>
+
+  <!-- Alert message -->
+  <!-- <div class="alert-msg" [class.show]="isEdit">
+      <p>Your profile has been updated successfully</p>
+    </div> -->
+</section>

@@ -69,14 +69,10 @@ export class EnrollLearnerComponent implements OnInit {
     let payload = {
       firstname: data.firstname,
       lastname: data.lastname,
-      // fullname: data.firstname + ' ' + data.lastname,
-      // username: data.firstname + '_' + data.lastname,
       parent: this.user.id,
       user_type: 'learner',
       password: data.password,
     };
-
-    console.log(payload);
 
     // Send users data
     this.authService.addUser(payload).subscribe(

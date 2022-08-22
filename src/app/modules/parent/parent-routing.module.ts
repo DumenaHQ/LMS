@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserProfileComponent } from '../shared/user-profile/user-profile.component';
 import { ChildrenComponent } from './components/children/children.component';
+import { EditChildComponent } from './components/children/edit-child/edit-child.component';
+import { ManageChildComponent } from './components/children/manage-child/manage-child.component';
 import { ParentOverviewComponent } from './components/parent-overview/parent-overview.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
@@ -33,6 +35,22 @@ const routes: Routes = [
         component: ChildrenComponent,
         data: {
           title: 'Children',
+          description: 'Description Meta Tag Content',
+        },
+      },
+      {
+        path: 'children/:childId',
+        component: ManageChildComponent,
+        data: {
+          title: 'Child',
+          description: 'Description Meta Tag Content',
+        },
+      },
+      {
+        path: 'children/:childId/edit-child',
+        component: EditChildComponent,
+        data: {
+          title: ':childId',
           description: 'Description Meta Tag Content',
         },
       },

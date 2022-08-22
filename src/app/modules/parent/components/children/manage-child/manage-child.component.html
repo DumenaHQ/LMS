@@ -1,0 +1,77 @@
+<section class="ds-head dis-flex">
+  <h2 class="ds-head_title clickable" routerLink="/parent/children">
+    Children
+  </h2>
+  <i class="bx bx-chevron-right icon"></i>
+  <p class="clickable">{{ child?.fullname }}</p>
+</section>
+
+<section class="ds-flex">
+  <main class="ds-grid">
+    <div class="welcome dis-flex">
+      <div class="welcome_details dis-flex">
+        <img
+          src="../../../../../../assets/img/children-avatar/child-avatar-1.png"
+          alt=""
+        />
+        <div class="">
+          <h3>{{ child?.fullname }}</h3>
+          <p>Learner</p>
+        </div>
+      </div>
+
+      <button class="btn tert_btn" routerLink="edit-child">Edit Profile</button>
+    </div>
+    <!-- Learning overview(lo) -->
+    <div class="lo">
+      <div class="ds-sect-header">
+        <h5>Learning Overview</h5>
+      </div>
+      <div class="chart">
+        <img
+          src="../../../../../../assets/img/learner/NBcharts-lineChats.svg"
+          alt=""
+        />
+      </div>
+    </div>
+  </main>
+
+  <aside class="ds-grid">
+    <!-- Upgrade plan starts -->
+    <div class="upgrade-plan dis-flex">
+      <div class="left">
+        <h4>Subscription</h4>
+        <p>Standard Plan</p>
+      </div>
+      <button class="btn">Upgrade</button>
+    </div>
+    <!-- Upgrade plan ends -->
+    <!-- Learning quadrant(lq) -->
+    <div class="lq">
+      <div class="ds-sect-header dis-flex">
+        <h5>Learning Quadrant</h5>
+        <p class="caption-regular text-primary-color clickable">See Details</p>
+      </div>
+      <div class="chart">
+        <img
+          src="../../../../../../assets/img/learner/learning-quadrant-chart.svg"
+          alt=""
+        />
+      </div>
+    </div>
+
+    <!-- Badges -->
+    <div class="badges">
+      <div class="ds-sect-header dis-flex">
+        <h5>Badges</h5>
+      </div>
+      <div class="badges_body">
+        <img
+          src="../../../../../../assets/img/learner/coming-soon.svg"
+          alt=""
+        />
+        <h3 class="text-primary-color">Coming soon</h3>
+      </div>
+    </div>
+  </aside>
+</section>

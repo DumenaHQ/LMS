@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { OrderService } from 'src/app/services/order.service';
 
@@ -48,7 +49,8 @@ export class ParentOverviewComponent implements OnInit {
 
   constructor(
     private orderService: OrderService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -56,7 +58,7 @@ export class ParentOverviewComponent implements OnInit {
     let userData = this.authService.getUser();
     this.user = userData.user;
 
-    // Get parent kids from localstorage
+    // Get parent children from localstorage
     this.authService.getParentChildren(this.user.id).subscribe((res: any) => {
       const result = res.data.learners;
       // Display only two(2) children
@@ -87,5 +89,10 @@ export class ParentOverviewComponent implements OnInit {
   // Close Select Plan Modal
   closeSelectPlanModal() {
     this.selectPlanModal = false;
+  }
+
+  // Manage child
+  manageChild(userId: any) {
+    this.router.navigate([`/parent/children/${userId}`]);
   }
 }

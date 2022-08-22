@@ -114,38 +114,13 @@ export class PaymentComponent implements OnInit {
     let userData = this.authService.getUser();
     this.user = userData.user;
 
-    this.orderService.getOrder().subscribe((res: any) => {
-      console.log(res);
-    });
+    // this.orderService.getOrder().subscribe((res: any) => {
+    //   console.log(res);
+    // });
   }
 
   // Tab change
   tabChange(ids: any) {
     this.billingId = ids;
-  }
-
-  addOrder() {
-    let payload = {
-      items: [
-        {
-          order_type: 'sub',
-          slug: 'standard-plan',
-          user_id: this.user,
-        },
-        {
-          order_type: 'sub',
-          slug: 'pro-plan',
-          user_id: this.user,
-        },
-      ],
-    };
-    console.log(payload);
-
-    this.orderService.addOrder(payload).subscribe((res: any) => {
-      console.log(res);
-      // this.reference = res.reference
-
-      // this.verifyPayment(res.data.order.reference);
-    });
   }
 }

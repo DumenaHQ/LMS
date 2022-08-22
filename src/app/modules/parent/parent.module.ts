@@ -11,6 +11,8 @@ import { PaymentComponent } from './components/payment/payment.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PricingPlanComponent } from './components/pricing-plan/pricing-plan.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
+import { ManageChildComponent } from './components/children/manage-child/manage-child.component';
+import { EditChildComponent } from './components/children/edit-child/edit-child.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.
     PaymentComponent,
     PricingPlanComponent,
     ShoppingCartComponent,
+    ManageChildComponent,
+    EditChildComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,73 @@
+@import '../../../../../../assets/css/dashboard.scss';
+
+.chart {
+  img {
+    width: 100%
+  }
+}
+
+main {
+    .welcome {
+      @include sect-bg($border-color: transparent);
+      justify-content: space-between;
+      gap: $m-2;
+      &_details {
+        img {
+            min-width: 60px;
+            height: auto;
+            margin-right: $m-2;
+        }
+        p {
+            color: $primary40;
+            margin-top: $m-1;
+        }
+      }
+    }
+    // Learning Overview starts
+    .lo {
+        @include sect-bg;
+    }
+    // Learning Overview ends
+}
+
+aside {
+    .upgrade-plan {
+        @include sect-bg($primary80);
+        justify-content: space-between;
+        gap: $m-2;
+        color: $white-color;
+        p {
+            margin-top: $m-1;
+        }
+        .btn {
+            background-color: transparent;
+            border: 1px solid $white-color;
+            color: $white-color; 
+            transition: all 0.2s;
+            &:hover {
+              background-color: $white-color;
+              color: $primary80;
+            }
+        }
+    }
+    // Learning Quandrant starts
+    .lq {
+      @include sect-bg;
+      border: 1px solid $divider-color;
+    }
+    // Learning Quandrant ends
+  
+    // Badges starts
+    .badges {
+      @include sect-bg;
+      border: 1px solid $divider-color;
+      &_body {
+        text-align: center;
+        padding-top: $m-3;
+        img {
+          margin-bottom: $m-4;
+        }
+      }
+    }
+    // Badges ends
+  }
