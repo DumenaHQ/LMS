@@ -1,0 +1,30 @@
+<div style="overflow-x: auto">
+  <table>
+    <tr class="table-header">
+      <th>Channel</th>
+      <th>Amount (NGN)</th>
+      <th>Date</th>
+      <th>Status</th>
+    </tr>
+    <ng-container>
+      <tr class="table-body" *ngFor="let i of paymentsHistory">
+        <td>{{ i.channel | titlecase }}</td>
+        <td>{{ i.amount | number }}</td>
+        <td>{{ i.createdAt | date: "medium" }}</td>
+        <td class="status">
+          <button
+            type="button"
+            [class.success_btn]="i.status == 'success'"
+            [class.warning_btn]="i.status == 'pending'"
+            [class.danger_btn]="i.status == 'declined'"
+          >
+            {{ i.status | titlecase }}
+          </button>
+        </td>
+      </tr>
+    </ng-container>
+    <ng-template>
+      <p style="text-align: center">Empty Payment History!</p>
+    </ng-template>
+  </table>
+</div>

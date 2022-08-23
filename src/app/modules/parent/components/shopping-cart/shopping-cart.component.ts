@@ -15,14 +15,12 @@ export class ShoppingCartComponent implements OnInit {
   user: any;
   allOrdersFromLS: any;
   allOrderFromLS: any;
-  calcTotal: number = 0;
-  grandTotal: string = '';
+  grandTotal: number = 0;
   value: any;
 
   constructor(
     private orderService: OrderService,
-    private authService: AuthService,
-    private paymentService: PaymentService
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -44,11 +42,11 @@ export class ShoppingCartComponent implements OnInit {
     // debugger;
     this.value = data;
     for (let j = 0; j < data.length; j++) {
-      this.calcTotal += this.value[j].amount;
+      this.grandTotal += this.value[j].amount;
       // Add commas as thousands seperaators
-      this.grandTotal = this.calcTotal
-        .toString()
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      // this.grandTotal = this.calcTotal
+      //   .toString()
+      //   .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     }
   }
 

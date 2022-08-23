@@ -76,37 +76,6 @@
     <h5>Payment History</h5>
   </div>
   <div class="ph_body">
-    <div style="overflow-x: auto">
-      <table>
-        <tr class="table-header">
-          <th>Child Name</th>
-          <th>Product</th>
-          <th>Date</th>
-          <th>Amount</th>
-          <th>Status</th>
-        </tr>
-        <ng-container>
-          <!-- <tr class="table-body" *ngFor="let i of paymentsHistory">
-            <td>{{ i.childName | titlecase }}</td>
-            <td>{{ i.Product | titlecase }}</td>
-            <td>{{ i.date }}</td>
-            <td>{{ i.amount }}NGN</td>
-            <td class="status">
-              <button
-                type="button"
-                [class.success_btn]="i.status == 'complete'"
-                [class.warning_btn]="i.status == 'pending'"
-                [class.danger_btn]="i.status == 'declined'"
-              >
-                {{ i.status | titlecase }}
-              </button>
-            </td>
-          </tr> -->
-        </ng-container>
-        <ng-template>
-          <p style="text-align: center">Empty!</p>
-        </ng-template>
-      </table>
-    </div>
+    <app-payment-history></app-payment-history>
   </div>
 </section>

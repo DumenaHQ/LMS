@@ -1,9 +1,6 @@
-import { Component, OnInit, Renderer2, Inject } from '@angular/core';
-import { from } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { OrderService } from 'src/app/services/order.service';
 import { PaymentService } from 'src/app/services/payment.service';
-import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-payment',
@@ -76,47 +73,12 @@ export class PaymentComponent implements OnInit {
     },
   ];
 
-  paymentsHistory = [
-    {
-      id: 1,
-      childName: 'Alousa Jones',
-      Product: 'Standard Plan',
-      date: '05 June 2022',
-      amount: '180,990',
-      status: 'complete',
-    },
-    {
-      id: 2,
-      childName: 'Alousa Jones',
-      Product: 'Standard Plan',
-      date: '05 June 2022',
-      amount: '180,990',
-      status: 'declined',
-    },
-    {
-      id: 3,
-      childName: 'Alousa Jones',
-      Product: 'Standard Plan',
-      date: '05 June 2022',
-      amount: '180,990',
-      status: 'pending',
-    },
-  ];
-
-  constructor(
-    private orderService: OrderService,
-    private authService: AuthService,
-    private paymentService: PaymentService
-  ) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
     // Get user data from localstorage
     let userData = this.authService.getUser();
     this.user = userData.user;
-
-    // this.orderService.getOrder().subscribe((res: any) => {
-    //   console.log(res);
-    // });
   }
 
   // Tab change

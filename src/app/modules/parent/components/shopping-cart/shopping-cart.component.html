@@ -24,7 +24,7 @@
               <td>{{ i.name | titlecase }}</td>
               <td>{{ i.slug.split("-")[0] | titlecase }}</td>
               <td>
-                {{ i.amount }}/{{
+                {{ i.amount | number }}/{{
                   i.billing_id == "monthly" ? "month" : "year"
                 }}
               </td>
@@ -115,7 +115,7 @@
         <p class="body-1-bold">Order details</p>
         <div class="sub-total dis-flex">
           <p class="body-2-regular">Sub total</p>
-          <p class="body-2-regular">N{{ grandTotal }}.00</p>
+          <p class="body-2-regular">N{{ grandTotal | number }}.00</p>
         </div>
         <form>
           <div class="form-field">
@@ -132,7 +132,7 @@
       <div class="cart_body_checkout_footer">
         <div class="grand-total dis-flex">
           <p class="body-1-bold">Total</p>
-          <p class="body-1-bold">N{{ grandTotal }}.00</p>
+          <p class="body-1-bold">N{{ grandTotal | number }}.00</p>
         </div>
         <button class="btn prim_btn" (click)="addOrder()">
           Proceed to Payment
