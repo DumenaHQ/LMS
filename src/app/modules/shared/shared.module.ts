@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotifiPopupComponent } from './notifi-popup/notifi-popup.component';
 import { EnrollLearnerComponent } from './enroll-learner/enroll-learner.component';
 import { PricingPlanComponent } from '../parent/components/pricing-plan/pricing-plan.component';
+import { AlertPopupComponent } from './alert-popup/alert-popup.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { PricingPlanComponent } from '../parent/components/pricing-plan/pricing-
     UserProfileComponent,
     NotifiPopupComponent,
     EnrollLearnerComponent,
+    AlertPopupComponent,
     // PricingPlanComponent,
   ],
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
@@ -32,6 +34,7 @@ import { PricingPlanComponent } from '../parent/components/pricing-plan/pricing-
     DashboardSidenavComponent,
     DashboardPopupAlertComponent,
     EnrollLearnerComponent,
+    AlertPopupComponent,
   ],
 })
 export class SharedModule {}

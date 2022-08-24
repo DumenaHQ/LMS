@@ -1,0 +1,36 @@
+@import '../../../../assets/css/variables.scss';
+@import '../../../../assets/css/mixins.scss';
+
+// Alert Message
+.alert-msg {
+    position: fixed;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    transition: all .2s cubic-bezier(0.075, 0.82, 0.165, 1);
+    z-index: 10;
+    animation: slideIn 0.2s;
+    p {
+      color: $success80;
+      padding: 0.8rem;
+      background-color: $success40;
+      border-radius: 0 0 $border-radius1 $border-radius1;
+    }
+    // &.show {
+    //   visibility: visible;
+    //   opacity: 1;
+    //   top: 0;
+    // }
+  }
+
+
+  @keyframes slideIn {
+    0% {
+      transform: translate(-50%, -2rem);
+      opacity: 0;
+    }
+    100% {
+      transform: translate(-50%, 0);
+      opacity: 1;
+    }
+  }

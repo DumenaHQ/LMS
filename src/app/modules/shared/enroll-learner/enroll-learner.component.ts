@@ -9,7 +9,8 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class EnrollLearnerComponent implements OnInit {
   @Output() addModal: EventEmitter<any> = new EventEmitter();
-  @Output() showAlert: EventEmitter<any> = new EventEmitter();
+  @Output() isAlert: EventEmitter<any> = new EventEmitter();
+  @Output() alertMessaage = new EventEmitter<string>();
   @Input() title: string = '';
 
   hide: boolean = true;
@@ -52,6 +53,7 @@ export class EnrollLearnerComponent implements OnInit {
       selected: false,
     },
   ];
+  messageval: string;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -84,7 +86,7 @@ export class EnrollLearnerComponent implements OnInit {
           this.closeAddModal();
 
           // Show Popup
-          this.showAlertPopup();
+          this.showAlert();
 
           // Reload the page
           window.location.reload();
@@ -116,8 +118,12 @@ export class EnrollLearnerComponent implements OnInit {
   }
 
   // Show alert popup
-  showAlertPopup() {
-    this.showAlert.emit();
+  showAlert() {
+    this.messageval = 'You have enrolled a child successfully!';
+    // Set alert message
+    this.alertMessaage.emit(this.messageval);
+
+    this.isAlert.emit();
   }
 
   // Close Add Modal
