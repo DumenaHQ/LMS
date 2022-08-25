@@ -20,40 +20,48 @@ export class EnrollLearnerComponent implements OnInit {
   errorMessage: string = '';
   showError: boolean = false;
   user: any;
+  selectedAVatarUrl: string = '';
 
   avatars = [
     {
       id: 1,
       image: '../../../../../../assets/img/children-avatar/child-avatar-1.png',
+      name: 'avatar-1',
       selected: true,
     },
     {
       id: 2,
-      image: '../../../../../../assets/img/children-avatar/child-avatar-2.png',
+      image: 'assets/img/children-avatar/child-avatar-2.png',
+      name: 'avatar-2',
       selected: false,
     },
     {
       id: 3,
-      image: '../../../../../../assets/img/children-avatar/child-avatar-3.png',
+      image: 'assets/img/children-avatar/child-avatar-3.png',
+      name: 'avatar-3',
       selected: false,
     },
     {
       id: 4,
-      image: '../../../../../../assets/img/children-avatar/child-avatar-4.png',
+      image: 'assets/img/children-avatar/child-avatar-4.png',
+      name: 'avatar-4',
       selected: false,
     },
     {
       id: 5,
-      image: '../../../../../../assets/img/children-avatar/child-avatar-5.png',
+      image: 'assets/img/children-avatar/child-avatar-5.png',
+      name: 'avatar-5',
       selected: false,
     },
     {
       id: 6,
-      image: '../../../../../../assets/img/children-avatar/child-avatar-6.png',
+      image: 'assets/img/children-avatar/child-avatar-6.png',
+      name: 'avatar-6',
       selected: false,
     },
   ];
   messageval: string;
+  // isSelectedAVatar: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -63,12 +71,31 @@ export class EnrollLearnerComponent implements OnInit {
     this.user = userData.user;
   }
 
+  // Select Avatar
+  selectAvatar(selected: any) {
+    this.avatars.forEach((e: any) => {
+      // Set all avatar selected to false
+      e.selected = false;
+      // Check if the selected id same and is not true
+      if (e.id === selected) {
+        if (selected !== true) {
+          // Set the only selected to true
+          e.selected = true;
+
+          // Set avatar url
+          this.selectedAVatarUrl = e.image;
+        }
+      }
+    });
+  }
+
   // Sign Up
   signUp(data: any) {
     // Set loading to true
     this.loading = true;
 
     let payload = {
+      avatar: this.selectedAVatarUrl,
       firstname: data.firstname,
       lastname: data.lastname,
       parent: this.user.id,

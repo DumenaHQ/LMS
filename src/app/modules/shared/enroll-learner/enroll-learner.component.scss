@@ -2,6 +2,17 @@
 @import '../../../../assets/css/mixins.scss';
 @import '../../../../assets/css/auth.scss';
 
+
+// Modal
+.modal {
+  @include modal($modal-area-width: 500px);
+  &_area {
+    padding: $m-6 $m-3;
+    // close button
+    
+  }
+}
+
 .auth_content {
   .auth_content_form {
     margin-top: $m-3;

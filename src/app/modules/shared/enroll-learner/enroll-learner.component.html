@@ -1,68 +1,87 @@
-<div class="enroll auth_content">
-  <h4 class="text-primary-color enroll_title">Enroll a {{ title }}</h4>
-  <form
-    class="enroll_form auth_content_form"
-    (ngSubmit)="signUp(usersForm.value)"
-    #usersForm="ngForm"
-  >
-    <div class="form-field col-2 avatar">
-      <label for="avatar">Select an avatar for your {{ title }}</label>
-      <div class="avatar_list dis-flex">
-        <img
-          *ngFor="let i of avatars"
-          [src]="i.image"
-          alt=""
-          class="avatar_item"
-          [class.selected]="i.selected"
-          (click)="i.selected = !i.selected"
-        />
-      </div>
+<div class="modal">
+  <div class="modal_area">
+    <span class="modal_area_close" (click)="closeAddModal()">
+      <i class="bx bx-x icon clickable"></i>
+    </span>
+    <div class="enroll auth_content">
+      <h4 class="text-primary-color enroll_title">Enroll a {{ title }}</h4>
+      <form
+        class="enroll_form auth_content_form"
+        (ngSubmit)="signUp(usersForm.value)"
+        #usersForm="ngForm"
+      >
+        <div class="form-field col-2 avatar">
+          <label for="avatar">Select an avatar for your {{ title }}</label>
+          <div class="avatar_list dis-flex">
+            <div class="" *ngFor="let i of avatars">
+              <input
+                type="radio"
+                name="avatar"
+                [id]="i.name"
+                (change)="selectAvatar(i.id)"
+                style="display: none"
+                ngModel
+              />
+              <label [for]="i.name">
+                <img
+                  [src]="i.image"
+                  alt="avatar"
+                  class="avatar_item"
+                  [class.selected]="i.selected"
+                />
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="first-name">First Name</label>
+          <div class="input-field">
+            <input type="text" name="firstname" ngModel required />
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="last-name">Last Name</label>
+          <div class="input-field">
+            <input type="text" name="lastname" ngModel required />
+          </div>
+        </div>
+        <div class="form-field col-2">
+          <label for="password">Password</label>
+          <div class="input-field">
+            <input
+              type="password"
+              name="password"
+              ngModel
+              required
+              [type]="hide ? 'password' : 'text'"
+            />
+            <i
+              [class]="
+                hide ? 'bx bx-show clickable icon' : 'bx bx-hide clickable icon'
+              "
+              (click)="hide = !hide"
+            ></i>
+          </div>
+          <p class="body-3-regular warning">
+            Your password must be at least 6 characters
+          </p>
+        </div>
+        <span class="message col-2" *ngIf="showError">{{ errorMessage }}</span>
+        <!-- Submit Button -->
+        <div class="form-btns col-2 dis-flex">
+          <span class="grey_btn clickable" (click)="closeAddModal()"
+            >Cancel</span
+          >
+          <div class="continue">
+            <button class="btn prim_btn clickable" *ngIf="!loading">
+              <span>Continue</span>
+            </button>
+            <span class="loading-spinner" *ngIf="loading">
+              <div class="spinner-3"></div>
+            </span>
+          </div>
+        </div>
+      </form>
     </div>
-    <div class="form-field">
-      <label for="first-name">First Name</label>
-      <div class="input-field">
-        <input type="text" name="firstname" ngModel required />
-      </div>
-    </div>
-    <div class="form-field">
-      <label for="last-name">Last Name</label>
-      <div class="input-field">
-        <input type="text" name="lastname" ngModel required />
-      </div>
-    </div>
-    <div class="form-field col-2">
-      <label for="password">Password</label>
-      <div class="input-field">
-        <input
-          type="password"
-          name="password"
-          ngModel
-          required
-          [type]="hide ? 'password' : 'text'"
-        />
-        <i
-          [class]="
-            hide ? 'bx bx-show clickable icon' : 'bx bx-hide clickable icon'
-          "
-          (click)="hide = !hide"
-        ></i>
-      </div>
-      <p class="body-3-regular warning">
-        Your password must be at least 6 characters
-      </p>
-    </div>
-    <span class="message col-2" *ngIf="showError">{{ errorMessage }}</span>
-    <!-- Submit Button -->
-    <div class="form-btns col-2 dis-flex">
-      <span class="grey_btn clickable" (click)="closeAddModal()">Cancel</span>
-      <div class="continue">
-        <button class="btn prim_btn clickable" *ngIf="!loading">
-          <span>Continue</span>
-        </button>
-        <span class="loading-spinner" *ngIf="loading">
-          <div class="spinner-3"></div>
-        </span>
-      </div>
-    </div>
-  </form>
+  </div>
 </div>
