@@ -37,6 +37,59 @@ section:not(:last-child) {
     height: 384px;
     // height: auto;
   }
+  .c-video {
+    width: 100%;
+    max-width: 800px;
+    position: relative;
+    overflow: hidden;
+    margin: auto;
+    video {
+      width: 100%;
+      border-radius: $border-radius3;
+    }
+    .play_icon {
+      @include icon-area($size: 60px);
+      background: $error100;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 5;
+      // display: none;
+      img {
+        width: 30px;
+      }
+      // .show {
+      //   display: flex;
+      // }
+    }
+    .bar {
+      height: 10px;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      .juice {
+        height: 10px;
+        width: 100px;
+        background-color: $primary80;
+      }
+    }
+    .controls {
+      display: flex;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      flex-wrap: wrap;
+      background: rgba(0,0,0,0.7); 
+      .buttons {
+        button {
+          background: none;
+          border: 0;
+          outline: 0;
+        }
+      }
+    }
+  }
 }
 .course-descp {
   @include sect-bg;
@@ -121,6 +174,7 @@ aside {
         }
         &.active {
           background-color: $grey40;
+          border-left: 2px solid $primary80;
         }
       }
     }

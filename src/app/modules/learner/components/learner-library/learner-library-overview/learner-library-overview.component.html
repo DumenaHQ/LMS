@@ -6,8 +6,18 @@
   <div class="filter-container">
     <div class="tabs dis-flex">
       <button class="active">All Content</button>
-      <button>Developer</button>
-      <button>Designer</button>
+      <button
+        [class.active]="quadrant == 'Developer'"
+        (click)="tabChange('Developer')"
+      >
+        Developer
+      </button>
+      <button
+        [class.active]="quadrant == 'Designer'"
+        (click)="tabChange('Designer')"
+      >
+        Designer
+      </button>
       <button>Maker</button>
       <button>Innovator</button>
     </div>
@@ -21,7 +31,9 @@
     </div>
   </div>
   <div class="courses-container">
-    <app-courses-card></app-courses-card>
+    <!-- Courses -->
+    <app-courses-card [quadrant]="quadrant"></app-courses-card>
+    <!-- Pagination -->
     <div class="pagination">
       <ul class="dis-flex">
         <li class="icon"><i class="bx bx-chevron-left"></i></li>

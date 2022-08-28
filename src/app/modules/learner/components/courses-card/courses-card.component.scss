@@ -2,7 +2,7 @@
 @import '../../../../../assets/css/mixins.scss';
 
 .card {
-  @include card(200px);
+  @include card(250px);
 
   &_item {
     border: 1px solid $divider-color;
@@ -10,13 +10,17 @@
     background-color: $white-color;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    // justify-content: space-between;
     img {
       width: 100%;
       border-radius: $border-radius2 $border-radius2 0 0;
     }
     .details {
       padding: $m-2;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
       .title {
         margin-bottom: $m-2;
       }
@@ -27,12 +31,12 @@
         justify-content: space-between;
         span {
           img {
-            margin-right: $m-1;
-            width: 22px;
-            height: 22px;
+            margin-right: 0.2rem;
+            width: 14px;
+            height: 14px;
           }
           p {
-            // font-size: 14px;
+            font-size: 14px;
             color: $primary40;
           }
         }

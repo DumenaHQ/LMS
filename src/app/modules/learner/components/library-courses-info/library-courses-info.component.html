@@ -7,9 +7,7 @@
 <section class="course-info">
   <div class="dis-flex course-info_header">
     <h3 class="course-title">{{ currentCourse?.title }}</h3>
-    <button class="btn prim_btn" [routerLink]="currentCourse?.id">
-      Start Course
-    </button>
+    <button class="btn prim_btn" (click)="startCourse()">Start Course</button>
   </div>
   <div class="ds-flex">
     <main class="du-grid">
@@ -28,6 +26,7 @@
                 let childItem of currentCourse?.lessons;
                 let indexOfelement = index
               "
+              [routerLink]="childItem?.id"
             >
               <b>{{ indexOfelement + 1 }}.</b> {{ childItem.title }}
             </li>
@@ -38,7 +37,7 @@
     <aside>
       <div class="course-info_tutor">
         <div class="ds-sect-header">
-          <h5 class="">Course Content</h5>
+          <h5 class="">Course Tutor</h5>
         </div>
         <div class="course-info_tutor_list du-grid">
           <div class="course-info_tutor_list_item">

@@ -7,38 +7,40 @@ import { LearnerLibraryComponent } from './learner-library.component';
 
 const routes: Routes = [
   {
-    path: '', component: LearnerLibraryComponent, children: [
+    path: '',
+    component: LearnerLibraryComponent,
+    children: [
       {
         path: '',
         component: LearnerLibraryOverviewComponent,
         data: {
           title: 'Library',
-          description: 'Description Meta Tag Content'
-        }
+          description: 'Description Meta Tag Content',
+        },
       },
       {
-        path: ':id',
+        path: ':courseId',
         component: LibraryCoursesInfoComponent,
         data: {
           title: 'Library',
-          description: 'Description Meta Tag Content'
-        }
+          description: 'Description Meta Tag Content',
+        },
       },
       {
-        path: ':id/:id',
+        path: ':courseId/:lessonId',
         component: LibraryCoursesLessonComponent,
         data: {
           title: 'Library',
-          description: 'Description Meta Tag Content'
-        }
+          description: 'Description Meta Tag Content',
+        },
       },
       { path: '', redirectTo: 'library', pathMatch: 'full' },
-    ]
-  }
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class LearnerLibraryRoutingModule { }
+export class LearnerLibraryRoutingModule {}

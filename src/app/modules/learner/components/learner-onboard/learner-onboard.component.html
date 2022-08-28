@@ -1,0 +1,156 @@
+<div class="modal">
+  <div class="modal_area">
+    <ng-container>
+      <!-- Intro -->
+      <div class="intro modal_area_content" *ngIf="onboardModal == 1">
+        <img
+          src="../../../../../assets/img/undraw_begin_chat_re_v0lw 2.svg"
+          alt=""
+          class="intro_image"
+        />
+        <div class="modal-details">
+          <h2 class="text-primary-color">Welcome to DumenaLMS!</h2>
+          <p>
+            Let’s complete your profile and get you all set up for an amazing
+            learning experience
+          </p>
+        </div>
+        <div class="modal-btns dis-flex">
+          <button class="btn skip_btn" (click)="closeModal()">Skip</button>
+          <button class="btn prim_btn" (click)="onboardModal = 2">
+            Complete profile
+          </button>
+        </div>
+
+        <!-- Close Button -->
+        <!-- <span class="close-btn clickable">
+            <i class="bx bx-x"></i>
+          </span> -->
+      </div>
+
+      <!-- Avatar -->
+      <div class="avatar modal_area_content" *ngIf="onboardModal == 2">
+        <div class="modal-details">
+          <h2 class="text-primary-color">Select an Avatar</h2>
+          <p>
+            You get to chose different avatars as your profile picture. Don’t
+            worry you can change this later
+          </p>
+        </div>
+        <div class="avatar_list dis-flex">
+          <div class="" *ngFor="let i of avatars">
+            <input
+              type="radio"
+              name="avatar"
+              [id]="i.name"
+              (change)="selectAvatar(i.id)"
+              style="display: none"
+              ngModel
+            />
+            <label [for]="i.name">
+              <img
+                [src]="i.image"
+                alt="avatar"
+                class="avatar_item"
+                [class.selected]="i.selected"
+              />
+            </label>
+          </div>
+        </div>
+        <div class="modal-btns dis-flex">
+          <button class="btn skip_btn" (click)="onboardModal = 3">Skip</button>
+          <button class="btn prim_btn" (click)="onboardModal = 3">Next</button>
+        </div>
+      </div>
+
+      <!-- Username -->
+      <div class="username modal_area_content" *ngIf="onboardModal == 3">
+        <div class="modal-details">
+          <h2 class="text-primary-color">Change your Username</h2>
+          <p>
+            You have a default username but if you would like to change it you
+            can do that now or just skip this step
+          </p>
+        </div>
+        <form #usersForm="ngForm">
+          <div class="form-field">
+            <label for="username">User Name</label>
+            <div class="input-field">
+              <input type="text" name="username" ngModel required />
+            </div>
+          </div>
+        </form>
+        <div class="modal-btns dis-flex">
+          <button class="btn skip_btn" (click)="onboardModal = 4">Skip</button>
+          <button
+            class="btn prim_btn"
+            (click)="setUsername(usersForm.value, 3)"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+
+      <!-- Interests -->
+      <div class="interests" *ngIf="onboardModal == 4">
+        <div class="modal-details">
+          <h2 class="text-primary-color">Which of these interests you?</h2>
+          <p>
+            Let us tailor your dashboard specifically for you. Pick at least two
+            of these skills you like
+          </p>
+        </div>
+        <ul class="interests_list dis-flex">
+          <li
+            *ngFor="let i of interests"
+            class="interests_list_item clickable"
+            [class.selected]="i.selected"
+          >
+            <input
+              type="checkbox"
+              name="avatar"
+              [id]="i.value"
+              (click)="selectInterest(i)"
+              style="display: none"
+              [value]="i.value"
+              ngModel
+            />
+            <label [for]="i.value" class="clickable">
+              <div>
+                {{ i.value }}
+              </div>
+            </label>
+          </li>
+        </ul>
+        <div class="modal-btns dis-flex">
+          <button class="btn skip_btn" (click)="onboardModal = 5">Skip</button>
+          <button class="btn prim_btn" (click)="completeProfileSetup(4)">
+            Finish
+          </button>
+        </div>
+      </div>
+
+      <!-- Done -->
+      <div class="completed" *ngIf="onboardModal == 5">
+        <img
+          src="../../../../../assets/img/undraw_winners_re_wr1l 1.svg"
+          alt=""
+          class="completed_image"
+        />
+        <div class="modal-details">
+          <h2 class="text-primary-color">Yay! You’re all done</h2>
+          <p>
+            You just finished setting up your profile, check out your library to
+            view courses
+          </p>
+        </div>
+        <div class="modal-btns dis-flex">
+          <button class="btn skip_btn" (click)="closeModal()">Cancel</button>
+          <button class="btn prim_btn" routerLink="library">
+            Take me to my Library
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

@@ -1,8 +1,8 @@
 <section class="ds-head dis-flex">
   <h2 class="ds-head_title clickable" routerLink="/learner/library">Library</h2>
   <i class="bx bx-chevron-right icon"></i>
-  <p class="clickable" [routerLink]="['/learner/library', currentCourse?.id]">
-    {{ currentCourse?.title | titlecase }}
+  <p class="clickable" [routerLink]="['/learner/library', course?.id]">
+    {{ course?.title | titlecase }}
   </p>
   <i class="bx bx-chevron-right icon"></i>
   <p>{{ currentCourseLesson?.title | titlecase }}</p>
@@ -10,29 +10,37 @@
 
 <section class="">
   <div class="dis-flex course-header">
-    <h3 class="course-title">{{ currentCourse?.title }}</h3>
+    <h3 class="course-title">{{ course?.title }}</h3>
   </div>
   <div class="ds-flex">
     <main class="ds-grid">
       <div class="course-video">
-        <!-- <video
-          poster="../../../assets/img/library/video-img.png"
-          playsinline=""
-          autoplay=""
-          muted=""
-          loop=""
-          preload="none"
-        >
-          <source src="" type="video/mp4" />
-        </video> -->
-        <iframe
-          src="https://s3.amazonaws.com/lms.prod.static/lessons/MODULE+1+-+Introduction+to+S+T+E+A+M.mp4"
+        <div class="c-video">
+          <video
+            class="video"
+            [src]="currentCourseLesson?.video_url"
+            controls
+            controlsList="nodownload"
+            #videoPlayer
+          ></video>
+          <!-- <div class="controls">
+            <div class="bar">
+              <div class="juice"></div>
+            </div>
+            <div class="buttons">
+              <button id="play-pause"></button>
+            </div>
+          </div> -->
+          <span class="play_icon" (click)="startVideo()" *ngIf="!videoClicked">
+            <img src="../../../assets/img/svg/white-play.svg" alt="" />
+          </span>
+        </div>
+        <!-- <iframe
+          [src]="currentCourseLesson?.video_url"
+          [title]="currentCourseLesson?.title"
           autoplay="0"
           allowfullscreen
-        ></iframe>
-        <!-- <span class="play_icon">
-            <img src="../../../assets/img/svg/white-play.svg" alt="" />
-          </span> -->
+        ></iframe> -->
       </div>
       <div class="course-descp">
         <div class="course-descp_header">
@@ -43,7 +51,7 @@
         </div>
         <div class="course-descp_body">
           <p>
-            {{ currentCourse?.description }}
+            {{ course?.description }}
           </p>
           <div class="require">
             <h4>Requirements</h4>
@@ -73,18 +81,17 @@
       <div class="course-content">
         <div class="course-content_header ds-sect-header">
           <h5>Course Content</h5>
-          <p class="total-length">
-            Lessons ({{ currentCourse?.lessons.length }})
-          </p>
+          <p class="total-length">Lessons ({{ course?.lessons.length }})</p>
         </div>
         <div class="course-content_list">
           <div
             class="course-content_list_item"
             *ngFor="
-              let childItem of currentCourse?.lessons;
+              let childItem of course?.lessons;
               let indexOfelement = index
             "
-            [class.active]="indexOfelement + 1"
+            [class.active]="currentCourseId.lessonId == childItem.id"
+            (click)="changeLesson(childItem?.id)"
           >
             <h5 class="heading">Lesson {{ indexOfelement + 1 }}</h5>
             <p
@@ -93,13 +100,13 @@
             >
               {{ childItem.title | titlecase }}
             </p>
-            <!-- <span class="dis-flex length">
+            <span class="dis-flex length">
               <img
                 src="../../../assets/img/library/video-play-black.svg"
                 alt=""
               />
-              <p class="body-3-regular">{{ i.length }}</p>
-            </span> -->
+              <p class="body-3-regular">{{ childItem.duration }}</p>
+            </span>
           </div>
         </div>
         <!-- <div class="course-content_tutor">
