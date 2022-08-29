@@ -192,12 +192,7 @@ aside {
 .modal {
   opacity: 0;
   visibility: hidden;
-  &.add-modal {
-    @include modal($modal-area-width: 390px);
-  }
-  &.select-plan-modal {
-    @include modal($modal-area-width: 500px);
-  }
+  @include modal($modal-area-width: 390px);
   &.show-modal {
     opacity: 1;
     visibility: visible;

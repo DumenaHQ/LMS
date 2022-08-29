@@ -11,12 +11,23 @@ export class PaymentService {
 
   constructor(private http: HttpClient) {}
 
-  // Get Order (for Admin)
+  // Get All Payments (for Admin)
   getPayments() {
-    return this.http.get(this.baseUrl + 'payments', this.getHttpOptions());
+    return this.http.get(
+      this.baseUrl + 'users/:user_id/payments',
+      this.getHttpOptions()
+    );
   }
 
-  // Add Order
+  // Get payments by user id
+  getPaymentsByUserId(userId: any) {
+    return this.http.get(
+      `${this.baseUrl}users/${userId}/payments`,
+      this.getHttpOptions()
+    );
+  }
+
+  // Verify Payment
   verifyPayment(data: any) {
     console.log(data);
     return this.http.post(
@@ -25,36 +36,6 @@ export class PaymentService {
       this.getHttpOptions()
     );
   }
-
-  // payWithPaystack(result: any) {
-  //   // @ts-ignore
-  //   let handler = PaystackPop.setup({
-  //     key: this.key, // Replace with your public key
-  //     email: 'chibuzo@gmail.com',
-  //     amount: result.total_amount * 100,
-  //     currency: 'NGN',
-  //     ref: result.reference,
-  //     callback: function (response: any) {
-  //       var reference = response.reference;
-  //       if (response.status === 'success') {
-  //         fetch('https://api.dumena.com/payments/verify', {
-  //           method: 'POST',
-  //           headers: {
-  //             'Content-Type': 'application/json',
-  //             Authorization: `bearer ${localStorage.getItem('token')}`,
-  //           },
-  //           body: JSON.stringify({ reference }),
-  //         })
-  //           .then((res) => res.json())
-  //           .then((data) => console.log({ data }));
-  //       }
-  //     },
-  //     onClose: function () {
-  //       alert('Transaction was not completed, window closed.');
-  //     },
-  //   });
-  //   handler.openIframe();
-  // }
 
   // Get HttpOptions
   getHttpOptions() {

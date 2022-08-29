@@ -109,20 +109,24 @@
 </section>
 
 <!-- Add Child Modal -->
-<div class="modal add-modal" [class.show-modal]="addModal" *ngIf="addModal">
-  <div class="modal_area">
-    <span class="modal_area_close" (click)="closeAddModal()">
-      <i class="bx bx-x icon clickable"></i>
-    </span>
-    <app-enroll-learner
-      (addModal)="closeAddModal()"
-      [title]="title"
-    ></app-enroll-learner>
-  </div>
-</div>
+<app-enroll-learner
+  *ngIf="addModal"
+  (addModal)="closeAddModal()"
+  (isAlert)="showAlert()"
+  (alertMessaage)="setAlertMessage($event)"
+  [title]="title"
+></app-enroll-learner>
 
 <app-pricing-plan
   *ngIf="selectPlanModal"
   (selectPlanModal)="closeSelectPlanModal()"
   [childData]="childData"
+  (isAlert)="showAlert()"
+  (alertMessaage)="setAlertMessage($event)"
 ></app-pricing-plan>
+
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+></app-alert-popup>

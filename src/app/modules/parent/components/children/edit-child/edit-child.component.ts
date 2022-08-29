@@ -20,6 +20,7 @@ export class EditChildComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {}
 
+  // Child form
   childForm = this.formBuilder.group({
     fullname: ['', Validators.required],
   });

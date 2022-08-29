@@ -7,12 +7,14 @@ import { LibraryCoursesLessonComponent } from './components/library-courses-less
 import { LearnerComponent } from './learner.component';
 import { LearnerOverviewComponent } from './components/learner-overview/learner-overview.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LearnerOnboardComponent } from './components/learner-onboard/learner-onboard.component';
 
 
 @NgModule({
   declarations: [
     LearnerComponent,
     LearnerOverviewComponent,
+    LearnerOnboardComponent,
   ],
   imports: [
     CommonModule,

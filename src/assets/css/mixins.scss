@@ -35,7 +35,7 @@
   }
 }
 
-@mixin icon-area($size, $color) {
+@mixin icon-area($size, $color: transparent) {
   display: grid;
   place-items: center;
   min-width: $size;
@@ -83,6 +83,7 @@
     display: none;
   }
   .modal_area {
+    animation: slideIn 0.2s;
     background-color: $white-color;
     padding: $modal-area-padding;
     border-radius: $border-radius1;
@@ -119,5 +120,31 @@
         }
       }
     }
+    &_close {
+      position: absolute;
+      top: $m-2;
+      right: $m-3;
+      .icon {
+        font-size: 24px;
+        color: $primary20;
+        transition: all 0.2s ease-in;
+        &:hover {
+          color: $primary80;
+        }
+      }
+    }
+  }
+}
+
+
+// Key frames
+@keyframes slideIn {
+  0% {
+    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, -80, 0, 1);
+    opacity: 0;
+  }
+  100% {
+    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+    opacity: 1;
   }
 }

@@ -33,13 +33,13 @@ export class ShoppingCartComponent implements OnInit {
     this.allOrdersFromLS.forEach((element: any) => {
       this.allOrderFromLS = element;
     });
+
     // Find Sum
-    this.findsum(this.allOrdersFromLS);
+    this.addAmounts(this.allOrdersFromLS);
   }
 
   // Find Sum
-  findsum(data: any) {
-    // debugger;
+  addAmounts(data: any) {
     this.value = data;
     for (let j = 0; j < data.length; j++) {
       this.grandTotal += this.value[j].amount;
@@ -49,6 +49,12 @@ export class ShoppingCartComponent implements OnInit {
       //   .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     }
   }
+  // substractAmount(data: any) {
+  //   this.value = data;
+  //   for (let j = 0; j < data.length; j++) {
+  //     this.grandTotal -= this.value[j].amount;
+  //   }
+  // }
 
   // Add Order
   addOrder() {
@@ -72,6 +78,7 @@ export class ShoppingCartComponent implements OnInit {
     });
   }
 
+  // Pay with Paystack
   payWithPaystack(result: any) {
     let url = this.baseUrl;
     // @ts-ignore
@@ -105,6 +112,7 @@ export class ShoppingCartComponent implements OnInit {
 
   // Remove item from Local strorage
   removeItemFromCart(index: any) {
+    // remove from LS
     this.orderService.removeOrderToLocalStorage(index);
 
     this.ngOnInit();

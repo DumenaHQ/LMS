@@ -38,30 +38,24 @@
       <app-children-blank (addModal)="openAddModal()"></app-children-blank>
     </ng-template>
   </div>
-
-  <!-- Alert Message -->
-  <div class="alert-msg" [class.show]="showAlert">
-    <div class="alert-msg_content">
-      <p>You have enrolled a child successfully</p>
-    </div>
-  </div>
 </section>
 
-<div class="modal" [class.show-modal]="addModal">
-  <div class="modal_area">
-    <span class="modal_area_close" (click)="closeAddModal()">
-      <i class="bx bx-x icon clickable"></i>
-    </span>
-    <app-enroll-learner
-      (addModal)="closeAddModal()"
-      (showAlert)="showAlertPopup()"
-      [title]="title"
-    ></app-enroll-learner>
-  </div>
-</div>
+<app-enroll-learner
+  *ngIf="addModal"
+  (addModal)="closeAddModal()"
+  (isAlert)="showAlert()"
+  (alertMessaage)="setAlertMessage($event)"
+  [title]="title"
+></app-enroll-learner>
 
 <app-pricing-plan
   *ngIf="selectPlanModal"
   (selectPlanModal)="closeSelectPlanModal()"
   [childData]="childData"
 ></app-pricing-plan>
+
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+></app-alert-popup>

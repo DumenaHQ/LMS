@@ -39,7 +39,6 @@ export class OrderService {
   }
   // Add Order to localstorage
   removeOrderToLocalStorage(index: any): void {
-    console.log(index);
     let allData = JSON.parse(localStorage.getItem('cart') || '[]');
     // if (!exist) {
     allData.splice(index, 1);

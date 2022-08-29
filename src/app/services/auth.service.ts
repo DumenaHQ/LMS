@@ -12,6 +12,11 @@ export class AuthService {
 
   constructor(private router: Router, private http: HttpClient) {}
 
+  // Is logged In
+  isLoggedIn() {
+    return this.getToken() !== null;
+  }
+
   // Set Token and save to localstorage
   addUserDataToLocalStorage(data: any): void {
     // localStorage.setItem('token', token)
@@ -28,35 +33,69 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  // Get Users Data
+  // Get Users Data from Local storage
   getUser() {
     this.userData = localStorage.getItem('data');
     let data = JSON.parse(this.userData);
     return data;
   }
 
-  getParentChildren(userId: any) {
+  // Get all users
+  allUser() {
+    return this.http.get(`${this.baseUrl}users`, this.getHttpOptions());
+  }
+
+  // Get users by id
+  getUserById(userId: any) {
     return this.http.get(
-      this.baseUrl + 'parents/' + userId + '/learners',
+      `${this.baseUrl}users/${userId}`,
       this.getHttpOptions()
     );
   }
 
-  allUser() {
-    return this.http.get(this.baseUrl + 'users', this.getHttpOptions());
+  // Get Parent Children
+  getParentChildren(userId: any) {
+    return this.http.get(
+      `${this.baseUrl}parents/${userId}/learners`,
+      this.getHttpOptions()
+    );
   }
 
-  // Is logged In
-  isLoggedIn() {
-    return this.getToken() !== null;
+  // Sign Up
+  addUser(data: any) {
+    return this.http.post(`${this.baseUrl}users`, data, this.getHttpOptions());
   }
 
+  // Login
+  login(data: any) {
+    return this.http.post(
+      `${this.baseUrl}users/login`,
+      data,
+      this.getHttpOptions()
+    );
+  }
+
+  // Enroll child
+  enrollChild(data: any) {
+    return this.http.post(
+      `${this.baseUrl}learners/enroll`,
+      data,
+      this.getHttpOptions()
+    );
+  }
+
+  // Activate email
   confirmEmail(model: any) {
     return this.http.put(
-      this.baseUrl + 'users/activate',
+      `${this.baseUrl}users/activate`,
       model,
       this.getHttpOptions()
     );
+  }
+
+  // Update user
+  updateUser(data: any) {
+    return this.http.put(`${this.baseUrl}users`, data, this.getHttpOptions());
   }
 
   // Log Out
@@ -71,10 +110,28 @@ export class AuthService {
     this.router.navigate(['login']);
   }
 
-  // Login
-  login(data: any) {
+  // Send password reset email
+  sendResetEmail(email: string) {
     return this.http.post(
-      this.baseUrl + 'users/login',
+      `${this.baseUrl}users/send-password-reset-email`,
+      email,
+      this.getHttpOptions()
+    );
+  }
+
+  // Resend Verification email
+  resendVerificationEmail(email: string) {
+    return this.http.post(
+      `${this.baseUrl}users/resend-verification-email`,
+      email,
+      this.getHttpOptions()
+    );
+  }
+
+  // Resend Verification email
+  resetPassword(data: any) {
+    return this.http.post(
+      `${this.baseUrl}users/reset-password`,
       data,
       this.getHttpOptions()
     );
@@ -87,11 +144,6 @@ export class AuthService {
   //     })
   //   )
   // }
-
-  // Sign Up
-  addUser(data: any) {
-    return this.http.post(this.baseUrl + 'users', data, this.getHttpOptions());
-  }
 
   // Get HttpOptions
   getHttpOptions() {

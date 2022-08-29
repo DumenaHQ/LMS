@@ -2,47 +2,13 @@
 @import '../../../../../assets/css/variables.scss';
 @import '../../../../../assets/css/mixins.scss';
 
-@keyframes slideIn {
-  0% {
-    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, -80, 0, 1);
-    opacity: 0;
-  }
-  100% {
-    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    opacity: 1;
-  }
-}
 // Modal
 .modal {
-  // opacity: 0;
-  // visibility: hidden;
-  // opacity: 1;
-  //   visibility: visible;
   @include modal($modal-area-width: 500px);
-  // display: none;
-  &.select-plan-modal {
-  }
-  &.show-modal {
-    opacity: 1;
-    visibility: visible;
-  }
   &_area {
-    animation: slideIn 0.2s;
     padding: $m-6 $m-3;
     // close button
-    &_close {
-      position: absolute;
-      top: $m-2;
-      right: $m-3;
-      .icon {
-        font-size: 24px;
-        color: $primary20;
-        transition: all 0.2s ease-in;
-        &:hover {
-          color: $primary80;
-        }
-      }
-    }
+    
   }
 }
  // Pricing tab

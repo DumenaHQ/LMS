@@ -13,7 +13,7 @@
   <div class="right dis-flex">
     <!-- Cart -->
     <!-- Display Cart if user role is parent -->
-    <div class="cart" (click)="goToCart()" *ngIf="user.role == 'parent'">
+    <div class="cart" (click)="goToCart()" *ngIf="user?.role == 'parent'">
       <span class="cart_image dis-flex clicakable">
         <img src="../../../../assets/img/svg/shopping-cart.svg" alt="" />
       </span>
@@ -39,7 +39,7 @@
     <!-- Profile -->
     <span
       class="profile dis-flex clickable"
-      [routerLink]="['/', user.role, 'profile', userNamePath]"
+      [routerLink]="['/', user?.role, 'profile', userNamePath]"
     >
       <img
         src="../../../../assets/img/children-avatar/child-avatar-1.png"
@@ -48,10 +48,10 @@
       />
       <span class="profile_details">
         <h5>
-          {{ user.fullname | titlecase }}
+          {{ user?.fullname | titlecase }}
         </h5>
         <!-- (user.username === null ? user.username : user.fullname) | titlecase -->
-        <p>{{ user.role | titlecase }}</p>
+        <p>{{ user?.role | titlecase }}</p>
       </span>
       <i class="bx bx-chevron-down profile_icon"></i>
     </span>

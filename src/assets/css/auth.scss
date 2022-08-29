@@ -223,9 +223,19 @@ button:disabled {
     }
     .auth_content {
       flex-basis: 55%;
-      padding: 3rem 9rem;
+      padding: 3rem 7rem;
     }
   }
+  // @media only screen and (min-width: 870px) {
+  //   .auth_welcome {
+  //     flex-basis: 45%;
+  //     display: flex;
+  //   }
+  //   .auth_content {
+  //     flex-basis: 55%;
+  //     padding: 3rem 9rem;
+  //   }
+  // }
 }
 // Auth Signup ends
 

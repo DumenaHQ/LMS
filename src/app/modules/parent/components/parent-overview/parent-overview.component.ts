@@ -18,6 +18,9 @@ export class ParentOverviewComponent implements OnInit {
   addModal: boolean = false;
   title: string = 'child';
   selectPlanModal: boolean = false;
+  isAlert: boolean = false;
+  elem: any;
+  stepValue = 40;
 
   // Payment History
   paymentsHistory = [
@@ -46,6 +49,7 @@ export class ParentOverviewComponent implements OnInit {
       status: 'pending',
     },
   ];
+  alertMessage: any;
 
   constructor(
     private orderService: OrderService,
@@ -67,6 +71,18 @@ export class ParentOverviewComponent implements OnInit {
         .sort(() => Math.random() - Math.random())
         .slice(0, size);
     });
+
+    // Progress bar
+    this.progressBar();
+  }
+
+  // Progress Bar
+  progressBar() {
+    this.elem = document.getElementById('bar');
+
+    this.elem.style.width = this.stepValue + '%';
+    // this.elem.innerHTML = this.stepValue + '%' + ' complete';
+    this.stepValue = this.stepValue + 10;
   }
 
   // Open Add Child Modal
@@ -89,6 +105,22 @@ export class ParentOverviewComponent implements OnInit {
   // Close Select Plan Modal
   closeSelectPlanModal() {
     this.selectPlanModal = false;
+  }
+
+  // Show alert
+  showAlert() {
+    // Show Alert
+    this.isAlert = true;
+
+    // Hide Alert
+    setTimeout(() => {
+      this.isAlert = false;
+    }, 2000);
+  }
+
+  // Set alert message
+  setAlertMessage(message: any) {
+    this.alertMessage = message;
   }
 
   // Manage child

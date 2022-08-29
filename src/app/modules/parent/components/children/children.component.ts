@@ -9,12 +9,13 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ChildrenComponent implements OnInit {
   addModal: boolean = false;
-  showAlert: boolean = false;
+  isAlert: boolean = false;
   user: any;
   title: string = 'child';
   children: any;
   childData: any;
   selectPlanModal: boolean = false;
+  alertMessage: any;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -39,13 +40,20 @@ export class ChildrenComponent implements OnInit {
     this.addModal = false;
   }
 
-  // Show ALert Popup
-  showAlertPopup() {
-    this.showAlert = true;
-    // Hide after some seconds
+  // Show alert
+  showAlert() {
+    // Show Alert
+    this.isAlert = true;
+
+    // Hide Alert
     setTimeout(() => {
-      this.showAlert = false;
+      this.isAlert = false;
     }, 2000);
+  }
+
+  // Set alert message
+  setAlertMessage(message: any) {
+    this.alertMessage = message;
   }
 
   // Open Select Plan Modal

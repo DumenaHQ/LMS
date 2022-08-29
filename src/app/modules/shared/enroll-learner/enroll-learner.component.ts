@@ -98,13 +98,13 @@ export class EnrollLearnerComponent implements OnInit {
       avatar: this.selectedAVatarUrl,
       firstname: data.firstname,
       lastname: data.lastname,
-      parent: this.user.id,
-      user_type: 'learner',
+      // parent: this.user.id,
+      // user_type: 'learner',
       password: data.password,
     };
 
     // Send users data
-    this.authService.addUser(payload).subscribe(
+    this.authService.enrollChild(payload).subscribe(
       (res: any) => {
         console.log(res);
 

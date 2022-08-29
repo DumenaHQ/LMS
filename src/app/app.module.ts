@@ -15,7 +15,6 @@ import { SetNewPasswordComponent } from './components/set-new-password/set-new-p
 import { PasswordResetComponent } from './components/password-reset/password-reset.component';
 import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
 import { VerifyCheckComponent } from './components/verify-check/verify-check.component';
-import { ConfirmEmailComponent } from './components/confirm-email/confirm-email.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +28,6 @@ import { ConfirmEmailComponent } from './components/confirm-email/confirm-email.
     PasswordResetComponent,
     ActivateAccountComponent,
     VerifyCheckComponent,
-    ConfirmEmailComponent,
   ],
   imports: [
     BrowserModule,

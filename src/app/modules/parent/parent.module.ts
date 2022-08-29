@@ -13,6 +13,7 @@ import { PricingPlanComponent } from './components/pricing-plan/pricing-plan.com
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { ManageChildComponent } from './components/children/manage-child/manage-child.component';
 import { EditChildComponent } from './components/children/edit-child/edit-child.component';
+import { PaymentHistoryComponent } from './components/payment-history/payment-history.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { EditChildComponent } from './components/children/edit-child/edit-child.
     ShoppingCartComponent,
     ManageChildComponent,
     EditChildComponent,
+    PaymentHistoryComponent,
   ],
   imports: [
     CommonModule,

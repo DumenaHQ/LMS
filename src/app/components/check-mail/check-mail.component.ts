@@ -1,24 +1,16 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-check-mail',
   templateUrl: './check-mail.component.html',
-  styleUrls: ['./check-mail.component.scss']
+  styleUrls: ['./check-mail.component.scss'],
 })
 export class CheckMailComponent implements OnInit {
-
-  @Output() pageId = new EventEmitter<string>();
-
   hide: boolean = true;
 
-  constructor() { }
+  @Input() email: string = 'me@email.com';
 
-  ngOnInit(): void {
-  }
+  constructor() {}
 
-  // Close Add Modal
-  showSect(value: string) {
-    this.pageId.emit(value);
-  }
-
+  ngOnInit(): void {}
 }

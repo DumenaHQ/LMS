@@ -10,7 +10,9 @@ import { OrderService } from 'src/app/services/order.service';
 })
 export class PricingPlanComponent implements OnInit {
   @Output() selectPlanModal: EventEmitter<any> = new EventEmitter();
+  @Output() isAlert: EventEmitter<any> = new EventEmitter();
   // @Input() selectPlanModal: boolean = false;
+  @Output() alertMessaage = new EventEmitter<string>();
   @Input() childData: any;
   pricingPlanForm: any = FormGroup;
 
@@ -78,6 +80,7 @@ export class PricingPlanComponent implements OnInit {
       ],
     },
   ];
+  messageval: string;
 
   constructor(
     private orderService: OrderService,
@@ -132,10 +135,21 @@ export class PricingPlanComponent implements OnInit {
     this.orderService.addOrderToLocalStorage(payload);
 
     this.closeSelectPlanModal();
+
+    // Show Alert popup
+    this.showAlert();
   }
 
   // Close Select plan Modal
   closeSelectPlanModal() {
     this.selectPlanModal.emit();
+  }
+
+  showAlert() {
+    this.messageval = 'Added to cart successfully!';
+    // Set alert message
+    this.alertMessaage.emit(this.messageval);
+
+    this.isAlert.emit();
   }
 }
