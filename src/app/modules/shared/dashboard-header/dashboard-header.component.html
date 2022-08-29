@@ -17,6 +17,10 @@
       <span class="cart_image dis-flex clicakable">
         <img src="../../../../assets/img/svg/shopping-cart.svg" alt="" />
       </span>
+      <span class="bubble" *ngIf="allOrdersFromLS.length > 0"
+        >{{ allOrdersFromLS.length }}
+        <!-- <small>10</small> -->
+      </span>
     </div>
     <!-- notifi-popup -->
     <!-- <div class="notifi">

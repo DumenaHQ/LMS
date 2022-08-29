@@ -10,10 +10,7 @@
   <main class="ds-grid">
     <div class="welcome dis-flex">
       <div class="welcome_details dis-flex">
-        <img
-          src="../../../../../../assets/img/children-avatar/child-avatar-1.png"
-          alt=""
-        />
+        <img [src]="child.avatar" alt="" />
         <div class="">
           <h3>{{ child?.fullname }}</h3>
           <p>Learner</p>
@@ -43,7 +40,7 @@
         <h4>Subscription</h4>
         <p>Standard Plan</p>
       </div>
-      <button class="btn">Upgrade</button>
+      <button class="btn" (click)="openSelectPlanModal()">Upgrade</button>
     </div>
     <!-- Upgrade plan ends -->
     <!-- Learning quadrant(lq) -->
@@ -75,3 +72,18 @@
     </div>
   </aside>
 </section>
+
+<!-- Subscription plan -->
+<app-pricing-plan
+  *ngIf="selectPlanModal"
+  (selectPlanModal)="closeSelectPlanModal()"
+  [childData]="child"
+  (isAlert)="showAlert()"
+  (alertMessaage)="setAlertMessage($event)"
+></app-pricing-plan>
+
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+></app-alert-popup>

@@ -17,37 +17,37 @@ export class AdminComponent implements OnInit {
     {
       name: 'Dashboard',
       link: '/admin',
-      icon: '../../../../assets/img/svg/Layout.svg',
+      icon: 'assets/img/svg/Layout.svg',
       subLinks: [],
     },
     {
       name: 'Courses',
       link: '/admin/courses',
-      icon: '../../../../assets/img/svg/University.svg',
+      icon: 'assets/img/svg/University.svg',
       subLinks: [],
     },
     {
       name: 'Quiz',
       link: '/all-courses',
-      icon: './../../../assets/img/svg/Book-open.svg',
+      icon: 'assets/img/svg/Book-open.svg',
       subLinks: [],
     },
     {
       name: 'Messages',
       link: '/all-courses',
-      icon: '../../../../assets/img/svg/Envelope.svg',
+      icon: 'assets/img/svg/Envelope.svg',
       subLinks: [],
     },
     {
       name: 'Community',
       link: '/all-courses',
-      icon: '../../../../assets/img/svg/profile-2user.svg',
+      icon: 'assets/img/svg/profile-2user.svg',
       subLinks: [],
     },
     {
       name: 'Account',
       link: '/all-courses',
-      icon: '../../../../assets/img/svg/frame.svg',
+      icon: 'assets/img/svg/frame.svg',
       subLinks: [],
     },
   ];

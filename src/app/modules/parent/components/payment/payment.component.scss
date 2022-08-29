@@ -7,107 +7,107 @@
 // Pricing
 .pricing {
   &_header {
-    justify-content: space-between;
+    justify-content: flex-end;
     gap: $m-2;
     margin-bottom: $m-5;
-    .pricing_tab {
-      &_wrapper {
-        border: 1px solid $divider-color;
-        border-radius: 8px;
-        padding: calc(0.25rem + 1px);
-        display: flex;
-        align-items: center;
-        gap: $m-1;
-        .tab {
-          display: inline-block;
-          border-radius: $border-radius1;
-          padding: calc(0.25rem + 1px) $m-2;
-          font-weight: 700;
-          font-size: 18px;
-          transition: all .2s ease;
-          cursor: pointer;
-          &.active {
-            background-color: $white-color;
-            box-shadow: $box-shadow;
-          }
-        }
-      }
+    // .pricing_tab {
+    //   &_wrapper {
+    //     border: 1px solid $divider-color;
+    //     border-radius: 8px;
+    //     padding: calc(0.25rem + 1px);
+    //     display: flex;
+    //     align-items: center;
+    //     gap: $m-1;
+    //     .tab {
+    //       display: inline-block;
+    //       border-radius: $border-radius1;
+    //       padding: calc(0.25rem + 1px) $m-2;
+    //       font-weight: 700;
+    //       font-size: 18px;
+    //       transition: all .2s ease;
+    //       cursor: pointer;
+    //       &.active {
+    //         background-color: $white-color;
+    //         box-shadow: $box-shadow;
+    //       }
+    //     }
+    //   }
   
-    }
+    // }
   }
-  .card {
-    @include card(300px, auto-fit);
-    align-items: flex-start;
-    &_item {
-      border-radius: $border-radius1;
-      background-color: $white-color;
-      min-height: 130px;
-      .label {
-        display: inline-block;
-        width: 100%;
-        padding: $m-1 - 0.3;
-        background-color: $primary80;
-        color: $white-color;
-        border-radius: $border-radius3 $border-radius3 0 0;
-        text-align: center;
-      }
-      .header {
-        justify-content: space-between;
-        gap: $m-2;
-        padding: $m-3 $m-4;
+  // .card {
+  //   @include card(300px, auto-fit);
+  //   align-items: flex-start;
+  //   &_item {
+  //     border-radius: $border-radius1;
+  //     background-color: $white-color;
+  //     min-height: 130px;
+  //     .label {
+  //       display: inline-block;
+  //       width: 100%;
+  //       padding: $m-1 - 0.3;
+  //       background-color: $primary80;
+  //       color: $white-color;
+  //       border-radius: $border-radius3 $border-radius3 0 0;
+  //       text-align: center;
+  //     }
+  //     .header {
+  //       justify-content: space-between;
+  //       gap: $m-2;
+  //       padding: $m-3 $m-4;
 
-        .icon {
-          @include icon-area(54px, transparent);
-          margin-right: $m-2;
-        }
-        .price {
-          margin-top: $m-1;
-          em {
-            color: $text-color3;
-            font-style: normal;
-          }
-        }
-        .chevron-down {
-          font-size: 26px;
-        }
-      }
-      .body {
-        // display: flex;
-        // flex-direction: column;
-        // justify-content: space-between;
-        padding: $m-3 $m-4;
-        ul {
-          @include card(150px, auto-fill);
-          grid-gap: 1rem;
-          li {
-            .check-icon {
-              width: 18px;
-              height: 18px;
-              margin-right: $m-1;
-            }
-          }
-        }
-        .pricing_card_btn {
-          text-align: center;
-          margin-top: $m-5;
-          .btn {
-            min-width: 200px;
-            padding: $m-1 + 0.2;
-          }
-        }
-      }
-      &.standard {
-        .icon {
-          background-color: $brightyellow;
-        }
-      }
-      &.pro {
-        .icon {
-          background-color: $secondary80;
-        }
-      }
-    }
-  }
+  //       .icon {
+  //         @include icon-area(54px, transparent);
+  //         margin-right: $m-2;
+  //       }
+  //       .price {
+  //         margin-top: $m-1;
+  //         em {
+  //           color: $text-color3;
+  //           font-style: normal;
+  //         }
+  //       }
+  //       .chevron-down {
+  //         font-size: 26px;
+  //       }
+  //     }
+  //     .body {
+  //       // display: flex;
+  //       // flex-direction: column;
+  //       // justify-content: space-between;
+  //       padding: $m-3 $m-4;
+  //       ul {
+  //         @include card(150px, auto-fill);
+  //         grid-gap: 1rem;
+  //         li {
+  //           .check-icon {
+  //             width: 18px;
+  //             height: 18px;
+  //             margin-right: $m-1;
+  //           }
+  //         }
+  //       }
+  //       .pricing_card_btn {
+  //         text-align: center;
+  //         margin-top: $m-5;
+  //         .btn {
+  //           min-width: 200px;
+  //           padding: $m-1 + 0.2;
+  //         }
+  //       }
+  //     }
+  //     &.standard {
+  //       .icon {
+  //         background-color: $brightyellow;
+  //       }
+  //     }
+  //     &.pro {
+  //       .icon {
+  //         background-color: $secondary80;
+  //       }
+  //     }
+  //   }
+  // }
 }
 
 // Payment History(Ph) starts

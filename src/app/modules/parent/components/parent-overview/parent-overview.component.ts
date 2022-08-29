@@ -49,7 +49,7 @@ export class ParentOverviewComponent implements OnInit {
       status: 'pending',
     },
   ];
-  alertMessage: any;
+  alertMessage: string = '';
 
   constructor(
     private orderService: OrderService,

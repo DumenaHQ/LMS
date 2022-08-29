@@ -7,11 +7,7 @@
     <ng-container *ngIf="children?.length > 0; else noItems">
       <div class="card">
         <div class="card_item clickable" *ngFor="let i of children">
-          <img
-            src="../../../../../assets/img/children-avatar/child-avatar-big-1.png"
-            alt=""
-            class="avatar"
-          />
+          <img [src]="i.avatar" alt="" class="avatar" />
           <h4 class="name">{{ i.fullname }}</h4>
           <button class="btn prim_btn" (click)="manageChild(i.id)">
             Manage Child
@@ -40,6 +36,7 @@
   </div>
 </section>
 
+<!-- Enrol Learner -->
 <app-enroll-learner
   *ngIf="addModal"
   (addModal)="closeAddModal()"
@@ -48,10 +45,13 @@
   [title]="title"
 ></app-enroll-learner>
 
+<!-- Pricing plan -->
 <app-pricing-plan
   *ngIf="selectPlanModal"
   (selectPlanModal)="closeSelectPlanModal()"
   [childData]="childData"
+  (isAlert)="showAlert()"
+  (alertMessaage)="setAlertMessage($event)"
 ></app-pricing-plan>
 
 <!-- Alert message -->

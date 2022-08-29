@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { OrderService } from 'src/app/services/order.service';
 import { PaymentService } from 'src/app/services/payment.service';
@@ -20,7 +21,9 @@ export class ShoppingCartComponent implements OnInit {
 
   constructor(
     private orderService: OrderService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router,
+    private ngZOne: NgZone
   ) {}
 
   ngOnInit(): void {
@@ -30,12 +33,13 @@ export class ShoppingCartComponent implements OnInit {
 
     // Get Order from localstorge
     this.allOrdersFromLS = this.orderService.getOrderFromLocalStorage();
-    this.allOrdersFromLS.forEach((element: any) => {
-      this.allOrderFromLS = element;
-    });
-
-    // Find Sum
-    this.addAmounts(this.allOrdersFromLS);
+    if (this.allOrdersFromLS !== []) {
+      this.allOrdersFromLS.forEach((element: any) => {
+        this.allOrderFromLS = element;
+      });
+      // Find Sum
+      this.addAmounts(this.allOrdersFromLS);
+    }
   }
 
   // Find Sum
@@ -81,6 +85,9 @@ export class ShoppingCartComponent implements OnInit {
   // Pay with Paystack
   payWithPaystack(result: any) {
     let url = this.baseUrl;
+    let router = this.router;
+    let userRole = this.user.role;
+    let zone = this.ngZOne;
     // @ts-ignore
     let handler = PaystackPop.setup({
       key: this.key,
@@ -100,11 +107,19 @@ export class ShoppingCartComponent implements OnInit {
             body: JSON.stringify({ reference }),
           })
             .then((res) => res.json())
-            .then((data) => console.log({ data }));
+            .then((data) => {
+              console.log({ data });
+              // if payment is successful, route user to children page
+              if (data.status == true) {
+                zone.run(() => {
+                  router.navigate([userRole + '/children']);
+                });
+              }
+            });
         }
       },
       onClose: function () {
-        alert('Transaction was not completed, window closed.');
+        alert('Transaction was not completed!');
       },
     });
     handler.openIframe();

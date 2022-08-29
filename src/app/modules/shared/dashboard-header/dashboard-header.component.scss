@@ -83,6 +83,20 @@ header {
         }
       }
     }
+    // Cart
+    .cart {
+      position: relative;
+      .bubble {
+        position: absolute;
+        top: -0.2rem;
+        right: 0;
+        background: $error100;
+        color: $white-color;
+        font-size: 10px;
+        padding-bottom: 2px;
+        @include icon-area($size: 15px)
+      }
+    }
     .profile {
       &_img {
         width: 44px;

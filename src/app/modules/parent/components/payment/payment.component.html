@@ -6,7 +6,7 @@
 
 <section class="pricing">
   <div class="pricing_header dis-flex">
-    <div class="empty"></div>
+    <!-- <div class="empty"></div>
     <div class="pricing_tab">
       <div class="pricing_tab_wrapper">
         <span
@@ -22,16 +22,15 @@
           >Yearly billing
         </span>
       </div>
-    </div>
+    </div> -->
     <button class="btn prim_btn">New Payment</button>
   </div>
-  <div class="card">
+  <!-- <div class="card">
     <div
       class="card_item"
       [ngClass]="[i.plan == 'standard' ? 'standard' : 'pro']"
       *ngFor="let i of subPlan"
     >
-      <!-- Label -->
       <span class="label" *ngIf="i.plan == 'pro'">Most Popular</span>
 
       <div class="header dis-flex clickable" (click)="i.isHidden = !i.isHidden">
@@ -67,7 +66,7 @@
         </ul>
       </div>
     </div>
-  </div>
+  </div> -->
 </section>
 
 <!-- Payment History(PH) -->

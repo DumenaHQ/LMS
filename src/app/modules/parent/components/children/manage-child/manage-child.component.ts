@@ -11,6 +11,9 @@ export class ManageChildComponent implements OnInit {
   currentItem: any;
   child: any;
   user: any;
+  selectPlanModal: boolean = false;
+  isAlert: boolean = false;
+  alertMessage: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -34,5 +37,31 @@ export class ManageChildComponent implements OnInit {
         }
       });
     });
+  }
+
+  // Open Select Plan Modal
+  openSelectPlanModal() {
+    this.selectPlanModal = true;
+  }
+
+  // Close Select Plan Modal
+  closeSelectPlanModal() {
+    this.selectPlanModal = false;
+  }
+
+  // Show alert
+  showAlert() {
+    // Show Alert
+    this.isAlert = true;
+
+    // Hide Alert
+    setTimeout(() => {
+      this.isAlert = false;
+    }, 2000);
+  }
+
+  // Set alert message
+  setAlertMessage(message: any) {
+    this.alertMessage = message;
   }
 }

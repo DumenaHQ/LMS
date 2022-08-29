@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { OrderService } from 'src/app/services/order.service';
 
 @Component({
   selector: 'app-dashboard-header',
@@ -12,14 +13,22 @@ export class DashboardHeaderComponent implements OnInit {
   showNotifi: boolean = false;
   user: any;
   userNamePath: any;
+  allOrdersFromLS: any;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private orderService: OrderService
+  ) {}
 
   ngOnInit(): void {
     // Get user data from localstorage
     let userData = this.authService.getUser();
     this.user = userData.user;
     this.userNamePath = this.user.fullname.replace(/\s/g, '-').toLowerCase();
+
+    // Get Order from localstorge
+    this.allOrdersFromLS = this.orderService.getOrderFromLocalStorage();
   }
 
   // Open Menu

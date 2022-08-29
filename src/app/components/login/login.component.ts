@@ -1,82 +1,88 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-
   hide: boolean = true;
   loading: boolean = false;
   returnUrl = '';
   isSignedin: boolean = false;
-  errorMessage: string = "";
+  errorMessage: string = '';
   showError: boolean = false;
   userType: any;
+  userForm: any = FormGroup;
+  alertMessage: string = '';
+  isAlert: boolean = false;
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private formBuilder: FormBuilder
+  ) {}
+
   ngOnInit(): void {
-
     // Prevent logged in users from routing to this page
     if (this.authService.isLoggedIn()) {
       // Get user role type
-      let userData = this.authService.getUser()
-      this.userType = userData.user.role
+      let userData = this.authService.getUser();
+      this.userType = userData.user.role;
 
       // Route user to his/her dashboard
-      this.router.navigate(['/' + this.userType])
+      this.router.navigate(['/' + this.userType]);
     }
 
-
-
+    // User form
+    this.userForm = this.formBuilder.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+    });
   }
 
-
-
   // Log In
-  logIn(data: any) {
+  login() {
     // Set loading to true
-    this.loading = true
+    this.loading = true;
 
     // Send users data
-    this.authService.login(data).subscribe((res: any) => {
-      console.log(res)
+    this.authService.login(this.userForm.value).subscribe(
+      (res: any) => {
+        console.log(res);
 
+        // If status is true, set User Type
+        if (res.status == true) {
+          // Set token
+          this.authService.setToken(res.data?.user.token);
 
-      // If status is true, set User Type
-      if (res.status == true) {
-        // Set token
-        this.authService.setToken(res.data?.user.token)
+          // Set User data
+          this.authService.addUserDataToLocalStorage(res.data);
 
-        // Set User data
-        this.authService.addUserDataToLocalStorage(res.data)
+          // Route user
+          // this.router.navigate(['/coming-soon'])
+          this.CheckUserType(res.data.user.role);
+        }
+      },
+      (error: any) => {
+        console.log(error);
+        // Show error message
+        this.errorMessage = error.error.message;
 
-        // Route user
-        // this.router.navigate(['/coming-soon'])
-        this.CheckUserType(res.data.user.role)
+        this.showError = true;
+
+        // Set loading to false
+        this.loading = false;
+
+        // Set Timeout
+        // setTimeout(() => {
+        //   this.showError = false
+        // }, 3000);
       }
-
-    }, ((error: any) => {
-      console.log(error)
-      // Show error message
-      this.errorMessage = error.error.message
-
-
-      this.showError = true
-
-      // Set loading to false
-      this.loading = false
-
-      // Set Timeout
-      // setTimeout(() => {
-      //   this.showError = false
-      // }, 3000);
-
-
-    }))
+    );
   }
 
   // Check User Role
@@ -85,24 +91,52 @@ export class LoginComponent implements OnInit {
       // If Admin
       case 'admin':
         // Navigate to Admin Dashboard
-        this.router.navigate(['/admin'])
+        this.router.navigate(['/admin']);
         break;
       // If Learner
       case 'learner':
         // Navigate to Learner Dashboard
-        this.router.navigate(['/learner'])
+        this.router.navigate(['/learner']);
         break;
       // If Parent
       case 'parent':
         // Navigate to Parent Dashboard
-        this.router.navigate(['/parent'])
+        this.router.navigate(['/parent']);
         break;
       // If School
       case 'school':
         // Navigate to School Dashboard
-        this.router.navigate(['/school'])
+        this.router.navigate(['/school']);
         break;
     }
+  }
+
+  // Resend verification email
+  reVerifyEmail() {
+    let payload = {
+      email: this.userForm?.value?.email,
+    };
+    // david.aremu@st.fut.minna.edu.ng
+    this.authService
+      .resendVerificationEmail(this.userForm.value.email)
+      .subscribe((res: any) => {
+        console.log(res);
+        if (res.status === true) {
+          this.alertMessage = res.message;
+          this.showAlert();
+        }
+      });
+  }
+
+  // Show alert
+  showAlert() {
+    // Show Alert
+    this.isAlert = true;
+
+    // Hide Alert
+    setTimeout(() => {
+      this.isAlert = false;
+    }, 2000);
   }
 
   // Go Back to the previous page
@@ -110,5 +144,4 @@ export class LoginComponent implements OnInit {
     window.history.go(-1);
     return false;
   }
-
 }

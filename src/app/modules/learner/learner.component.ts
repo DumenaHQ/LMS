@@ -11,53 +11,64 @@ export class LearnerComponent implements OnInit {
   @ViewChild('sideNav') sideNav: ElementRef;
   @ViewChild('menuBtn') menuBtn: ElementRef;
 
-  navLink: any = [
-    {
-      name: 'Dashboard',
-      link: '/learner',
-      icon: '../../../../assets/img/svg/Layout.svg',
-      subLinks: [],
-    },
-    {
-      name: 'Library',
-      link: '/learner/library',
-      icon: '../../../../assets/img/svg/University.svg',
-      subLinks: [],
-    },
-    {
-      name: 'Insights',
-      link: '/',
-      icon: './../../../assets/img/svg/Book-open.svg',
-      subLinks: [],
-    },
-    {
-      name: 'Messages',
-      link: '/',
-      icon: '../../../../assets/img/svg/Envelope.svg',
-      subLinks: [],
-    },
-    {
-      name: 'Community',
-      link: '/',
-      icon: '../../../../assets/img/svg/profile-2user.svg',
-      subLinks: [],
-    },
-    {
-      name: 'Store',
-      link: '/',
-      icon: '../../../../assets/img/svg/shop.svg',
-      subLinks: [],
-    },
-  ];
+  navLink: any[];
 
   hamClick: any;
   user: any;
+  userNamePath: string;
 
   constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
     let userData = this.authService.getUser();
     this.user = userData.user;
+    this.userNamePath = this.user.fullname.replace(/\s/g, '-').toLowerCase();
+
+    // Set Nav Links
+    this.navLink = [
+      {
+        name: 'Dashboard',
+        link: '/learner',
+        icon: 'assets/img/svg/Layout.svg',
+        subLinks: [],
+      },
+      {
+        name: 'Library',
+        link: '/learner/library',
+        icon: 'assets/img/svg/University.svg',
+        subLinks: [],
+      },
+      {
+        name: 'Profile',
+        link: `/${this.user.role}/profile/${this.userNamePath}`,
+        icon: 'assets/img/svg/frame.svg',
+        subLinks: [],
+      },
+      // {
+      //   name: 'Insights',
+      //   link: '/',
+      //   icon: 'assets/img/svg/Book-open.svg',
+      //   subLinks: [],
+      // },
+      // {
+      //   name: 'Messages',
+      //   link: '/',
+      //   icon: 'assets/img/svg/Envelope.svg',
+      //   subLinks: [],
+      // },
+      // {
+      //   name: 'Community',
+      //   link: '/',
+      //   icon: 'assets/img/svg/profile-2user.svg',
+      //   subLinks: [],
+      // },
+      // {
+      //   name: 'Store',
+      //   link: '/',
+      //   icon: 'assets/img/svg/shop.svg',
+      //   subLinks: [],
+      // },
+    ];
 
     // Prevent Non-learner from routing here
     if (this.user.role !== 'learner') {

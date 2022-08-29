@@ -14,15 +14,11 @@
       </div>
       <p class="body-3-regular auth_content_other_or">Or</p>
     </div> -->
-    <form
-      class="auth_content_form"
-      (ngSubmit)="logIn(usersForm.value)"
-      #usersForm="ngForm"
-    >
+    <form class="auth_content_form" [formGroup]="userForm">
       <div class="form-field col-2">
         <label for="email">Email Address or Username</label>
         <div class="input-field">
-          <input type="email" name="email" ngModel required />
+          <input type="email" name="email" formControlName="email" required />
           <!-- pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"
             email="true" -->
           <!-- <i class="bx bx-error-circle icon"></i> -->
@@ -35,7 +31,7 @@
           <input
             type="password"
             name="password"
-            ngModel
+            formControlName="password"
             [type]="hide ? 'password' : 'text'"
           />
           <i
@@ -54,9 +50,24 @@
         Forgot your password?
       </p>
       <span class="message col-2" *ngIf="showError">{{ errorMessage }}</span>
+
+      <!-- re-Verify email -->
+      <p
+        class="col-2"
+        (click)="reVerifyEmail()"
+        *ngIf="errorMessage === 'User account is inactive.'"
+      >
+        <span class="text-primary-color body-1-bold clickable"
+          >Click here to verify your email</span
+        >
+      </p>
       <!-- Submit Button -->
       <div class="form-btn col-2">
-        <button class="btn prim_btn clickable" *ngIf="!loading">
+        <button
+          class="btn prim_btn clickable"
+          *ngIf="!loading"
+          (click)="login()"
+        >
           <span>Login</span>
         </button>
         <span class="loading-spinner" *ngIf="loading">
@@ -76,3 +87,9 @@
     </div>
   </div>
 </div>
+
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+></app-alert-popup>

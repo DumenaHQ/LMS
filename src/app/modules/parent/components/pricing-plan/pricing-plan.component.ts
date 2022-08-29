@@ -125,7 +125,7 @@ export class PricingPlanComponent implements OnInit {
     let payload = {
       name: this.childData.fullname,
       user_id: this.childData.id,
-      slug: this.pricingPlanForm.value.plan,
+      slug: this.pricingPlanForm.value.plan || 'standard-plan',
       order_type: 'sub',
       billing_id: this.billingId,
       amount: this.billingId == 'monthly' ? amount : amount * 12, // If billing is monthly send original value other calculate for yearly (amount * 12)
@@ -133,6 +133,8 @@ export class PricingPlanComponent implements OnInit {
 
     // console.log(payload);
     this.orderService.addOrderToLocalStorage(payload);
+
+    this.ngOnInit();
 
     this.closeSelectPlanModal();
 

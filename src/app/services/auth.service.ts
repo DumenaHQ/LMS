@@ -121,9 +121,12 @@ export class AuthService {
 
   // Resend Verification email
   resendVerificationEmail(email: string) {
+    let payload = {
+      email: email,
+    };
     return this.http.post(
       `${this.baseUrl}users/resend-verification-email`,
-      email,
+      payload,
       this.getHttpOptions()
     );
   }
