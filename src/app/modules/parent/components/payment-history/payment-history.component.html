@@ -9,7 +9,7 @@
     <ng-container>
       <tr class="table-body" *ngFor="let i of paymentsHistory">
         <td>{{ i.channel | titlecase }}</td>
-        <td>{{ i.amount | number }}</td>
+        <td>{{ i.amount / 100 | number }}</td>
         <td>{{ i.createdAt | date: "medium" }}</td>
         <td class="status">
           <button
