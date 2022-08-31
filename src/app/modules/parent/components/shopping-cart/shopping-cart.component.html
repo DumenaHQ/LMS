@@ -119,13 +119,25 @@
         </div>
         <form>
           <div class="form-field">
-            <label for="voucher">Apply a voucher</label>
-            <div class="input-field">
-              <input type="text" name="voucher" placeholder="Enter code here" />
+            <label for="voucher" (click)="isVoucher = !isVoucher"
+              >Apply a voucher?
+              <strong class="text-primary-color clickable"
+                >Click here!</strong
+              ></label
+            >
+            <div class="input-voucher" [class.show]="isVoucher">
+              <div class="input-field">
+                <input
+                  type="text"
+                  id="voucher"
+                  name="voucher"
+                  placeholder="Enter code here"
+                />
+              </div>
+              <div class="form-btn">
+                <button class="btn prim_btn">Apply</button>
+              </div>
             </div>
-          </div>
-          <div class="form-btn">
-            <button class="btn prim_btn">Apply</button>
           </div>
         </form>
       </div>
@@ -134,8 +146,13 @@
           <p class="body-1-bold">Total</p>
           <p class="body-1-bold">N{{ grandTotal | number }}.00</p>
         </div>
-        <button class="btn prim_btn" (click)="addOrder()">
-          Proceed to Payment
+        <button
+          class="btn prim_btn clickable"
+          (click)="addOrder()"
+          [disabled]="loading"
+        >
+          <span *ngIf="!loading">Proceed to Payment</span>
+          <span *ngIf="loading">Processing...</span>
         </button>
       </div>
     </div>

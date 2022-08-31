@@ -348,12 +348,6 @@ small {
 .card {
   @include card(300px);
   &_item {
-    // img {
-    //   margin-bottom: $m-3;
-    // }
-    // p {
-    //   margin-top: $m-2;
-    // }
   }
 }
 //-- Card ends --//
@@ -368,7 +362,6 @@ small {
     font-size: 20px;
     color: $primary80;
     margin: 0 $m-1;
-    // vertical-align: middle;
   }
 }
 .ds-sect-header {
@@ -398,6 +391,56 @@ small {
   grid-gap: $m-4;
 }
 //-- Dashboard ends --//
+
+
+//-- Loader starts --//
+.loader_container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.loader {
+  width: 3em;
+  height: 3em;
+  box-sizing: border-box;
+  border-top: 0.2em solid $fushiapink;
+  border-radius: 50%;
+  position: relative;
+  animation: rotating 2s ease-in-out infinite;
+  --direction: 1;
+}
+
+.loader::before,
+.loader::after {
+  content: '';
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  border-radius: 50%;
+  box-sizing: border-box;
+  top: -0.2em;
+}
+
+.loader::before {
+  border-top: 0.2em solid $primary80;
+  transform: rotate(120deg);
+}
+
+.loader::after {
+  border-top: 0.2em solid $warning80;
+  transform: rotate(240deg);
+}
+
+@keyframes rotating {
+  50% {
+      transform: rotate(calc(180deg * var(--direction)));
+    }
+    
+    100% {
+      transform: rotate(calc(360deg * var(--direction)));
+    }
+}
+//-- Loader starts --//
 
 
 

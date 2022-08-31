@@ -124,8 +124,13 @@
         </ul>
         <div class="modal-btns dis-flex">
           <button class="btn skip_btn" (click)="onboardModal = 5">Skip</button>
-          <button class="btn prim_btn" (click)="completeProfileSetup(4)">
-            Finish
+          <button
+            class="btn prim_btn"
+            (click)="completeProfileSetup(4)"
+            [disabled]="loading"
+          >
+            <span *ngIf="!loading">Finish</span>
+            <span *ngIf="loading">Processing...</span>
           </button>
         </div>
       </div>

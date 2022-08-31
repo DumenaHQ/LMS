@@ -73,12 +73,10 @@
             >Cancel</span
           >
           <div class="continue">
-            <button class="btn prim_btn clickable" *ngIf="!loading">
-              <span>Continue</span>
+            <button class="btn prim_btn clickable" [disabled]="loading">
+              <span *ngIf="!loading">Continue</span>
+              <span *ngIf="loading">Processing...</span>
             </button>
-            <span class="loading-spinner" *ngIf="loading">
-              <div class="spinner-3"></div>
-            </span>
           </div>
         </div>
       </form>

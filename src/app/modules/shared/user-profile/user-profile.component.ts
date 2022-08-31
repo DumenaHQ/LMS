@@ -14,6 +14,7 @@ export class UserProfileComponent implements OnInit {
   fullname: string = '';
   @Output() isAlert: boolean = false;
   alertMessage: string;
+  loading: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -49,6 +50,9 @@ export class UserProfileComponent implements OnInit {
 
   // Edit user profile
   editProfile() {
+    // Start loading
+    this.loading = true;
+
     let payload = {
       fullname: this.userForm.value.fullname,
       phone: this.userForm.value.phone,

@@ -18,6 +18,8 @@ export class ShoppingCartComponent implements OnInit {
   allOrderFromLS: any;
   grandTotal: number = 0;
   value: any;
+  isVoucher: boolean = false;
+  loading: boolean = false;
 
   constructor(
     private orderService: OrderService,
@@ -62,6 +64,9 @@ export class ShoppingCartComponent implements OnInit {
 
   // Add Order
   addOrder() {
+    // Start loading
+    this.loading = true;
+
     let payload = {
       items: new Array(),
     };

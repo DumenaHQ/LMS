@@ -4,7 +4,10 @@
 
 <section class="children">
   <div class="children_body">
-    <ng-container *ngIf="children?.length > 0; else noItems">
+    <div class="loader_container" *ngIf="dataLoading">
+      <div class="loader"></div>
+    </div>
+    <ng-container *ngIf="children?.length > 0">
       <div class="card">
         <div class="card_item clickable" *ngFor="let i of children">
           <img [src]="i.avatar" alt="" class="avatar" />
@@ -30,9 +33,9 @@
     </ng-container>
 
     <!-- Course Blank -->
-    <ng-template #noItems>
+    <ng-container *ngIf="children?.length == 0">
       <app-children-blank (addModal)="openAddModal()"></app-children-blank>
-    </ng-template>
+    </ng-container>
   </div>
 </section>
 

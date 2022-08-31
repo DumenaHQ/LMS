@@ -137,6 +137,7 @@ export class LearnerOnboardComponent implements OnInit {
   selectedAvatarUrl: string = '';
   selectedInterest: any[] = [];
   username: string = '';
+  loading: boolean = false;
 
   constructor(private authService: AuthService) {}
 
@@ -191,6 +192,9 @@ export class LearnerOnboardComponent implements OnInit {
 
   // Complete Profile
   completeProfileSetup(currentModal: any) {
+    // Start loading
+    this.loading = true;
+
     let payload = {
       avatar: this.selectedAvatarUrl,
       username: this.username,

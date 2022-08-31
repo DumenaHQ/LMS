@@ -65,14 +65,15 @@
       <div class="form-btn col-2">
         <button
           class="btn prim_btn clickable"
-          *ngIf="!loading"
           (click)="login()"
+          [disabled]="loading"
         >
-          <span>Login</span>
+          <span *ngIf="!loading">Login</span>
+          <span *ngIf="loading">Processing...</span>
         </button>
-        <span class="loading-spinner" *ngIf="loading">
+        <!-- <span class="loading-spinner" *ngIf="loading">
           <div class="spinner-3"></div>
-        </span>
+        </span> -->
       </div>
     </form>
     <div class="auth_content_extra">

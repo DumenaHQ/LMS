@@ -84,12 +84,10 @@
       <span class="message" *ngIf="showError">{{ errorMessage }}</span>
       <!-- Submit Button -->
       <div class="form-btn col-2">
-        <button class="btn prim_btn clickable" *ngIf="!loading">
-          <span>Sign Up</span>
+        <button class="btn prim_btn clickable" [disabled]="loading">
+          <span *ngIf="!loading">Sign Up</span>
+          <span *ngIf="loading">Processing...</span>
         </button>
-        <span class="loading-spinner" *ngIf="loading">
-          <div class="spinner-3"></div>
-        </span>
       </div>
     </form>
     <div class="auth_content_extra">
