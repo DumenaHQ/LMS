@@ -10,10 +10,10 @@
   <main class="ds-grid">
     <div class="welcome dis-flex">
       <div class="welcome_details dis-flex">
-        <img [src]="child.avatar" alt="" />
+        <img [src]="child?.avatar" alt="" />
         <div class="">
           <h3>{{ child?.fullname }}</h3>
-          <p>Learner</p>
+          <p>{{ child?.username }}</p>
         </div>
       </div>
 

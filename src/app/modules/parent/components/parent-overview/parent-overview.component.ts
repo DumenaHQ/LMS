@@ -50,6 +50,7 @@ export class ParentOverviewComponent implements OnInit {
     },
   ];
   alertMessage: string = '';
+  isOnboarding: boolean = true;
 
   constructor(
     private orderService: OrderService,
@@ -93,6 +94,11 @@ export class ParentOverviewComponent implements OnInit {
   // Close Add Child Modal
   closeAddModal() {
     this.addModal = false;
+  }
+
+  // close Onboarding modal
+  closeOnboardModal() {
+    this.isOnboarding = false;
   }
 
   // Open Select Plan Modal

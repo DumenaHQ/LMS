@@ -28,11 +28,7 @@ export class ChildrenComponent implements OnInit {
     // Get parent kids from localstorage
     this.authService.getParentChildren(this.user.id).subscribe({
       next: (res: any) => {
-        // console.log(`Server Response Result: ${res.responseMessage}`);
         this.children = res.data.learners;
-        // this.customerRelationshipDesks.forEach((c: any) => {
-        //   this.customerRelationshipDesk = c;
-        // });
       },
       error: (e) => console.error(e),
       complete: () => {
