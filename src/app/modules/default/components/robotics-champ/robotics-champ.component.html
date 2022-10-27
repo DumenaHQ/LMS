@@ -1,0 +1,93 @@
+<!-- Hero -->
+<section class="hero bg-border-radius">
+  <div class="container du_flex_content">
+    <div class="du_flex_details">
+      <h1 class="du_flex_details_title">
+        <span class="text-secondary-color">AI Robotics</span> Championship
+      </h1>
+      <p>
+        Our main objective is to expose children aged 10 - 18 years to the field
+        of Artificial Intelligence and Robotics towards solving real life
+        problems. It is aimed at Private Primary and Secondary schools in Abuja.
+      </p>
+      <div class="btn_area dis-flex">
+        <button class="btn prim_btn" routerLink="/signup">Sign Up</button>
+      </div>
+    </div>
+    <div class="du_flex_img">
+      <img
+        src="../../../../../assets/img/robotics-champ/rob-hero-img.svg"
+        alt="image"
+      />
+    </div>
+  </div>
+</section>
+
+<!-- Prizes -->
+<section class="sect prizes">
+  <div class="container">
+    <div class="sect_heading">
+      <p class="text-primary-color">What do you stand to gain?</p>
+      <h3>Prizes and Awards</h3>
+    </div>
+    <div class="card dis-flex">
+      <div
+        class="card_item"
+        *ngFor="let prize of prizesList"
+        [ngStyle]="{ background: prize.bgColor }"
+      >
+        <div class="card_item_img dis-flex">
+          <img [src]="prize.icon" alt="image" />
+        </div>
+        <h3 class="card_item_amount">{{ prize.amount }}</h3>
+        <div class="benefits">
+          <div class="benefits_item">
+            <h5 class="text-primary-color title">For Students</h5>
+            <ul>
+              <li *ngFor="let benefit of prize.benefitsForStudents">
+                <p class="body-2-bold">{{ benefit.name }}</p>
+              </li>
+            </ul>
+          </div>
+          <div class="benefits_item">
+            <h5 class="text-primary-color title">For School</h5>
+            <ul>
+              <li *ngFor="let benefit of prize.benefitsForSchool">
+                <p class="body-2-bold">{{ benefit.name }}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="prizes_info">
+      <small
+        >*The main cash prizes are shared between the student and the
+        school</small
+      >
+    </div>
+  </div>
+</section>
+
+<!-- Stages -->
+<section class="sect stages">
+  <div class="container">
+    <div class="sect_heading">
+      <p class="text-primary-color">Structure and timeline</p>
+      <h3>Competition Stages</h3>
+      <p class="body-2-medium sect_heading_info">
+        This program will run through October 2022 till April 2023 when the
+        respective schools and students would be crowned winners
+      </p>
+    </div>
+    <div class="card">
+      <div class="card_item" *ngFor="let stage of stages">
+        <div class="card_item_number dis-flex">
+          <span>{{ stage.id }}</span>
+        </div>
+        <p class="card_item_title body-1-medium">{{ stage.title }}</p>
+        <p class="card_item_date body-3-medium">{{ stage.date }}</p>
+      </div>
+    </div>
+  </div>
+</section>

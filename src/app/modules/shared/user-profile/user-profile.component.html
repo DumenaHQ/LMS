@@ -9,8 +9,12 @@
     <ng-container>
       <div class="dis-flex">
         <img
-          src="../../../../assets/img/children-avatar/child-avatar-1.png"
-          alt=""
+          [src]="
+            user.avatar !== undefined
+              ? user.avatar
+              : '../../../../assets/img/children-avatar/child-avatar-1.png'
+          "
+          alt="Avatar"
         />
         <div class="btns-area dis-flex" *ngIf="isEdit">
           <button class="btn tert_btn" (click)="isEdit = false">Cancel</button>

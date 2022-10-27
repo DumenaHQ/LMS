@@ -73,13 +73,13 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     loadChildren: () =>
       import('./modules/admin/admin.module').then((m: any) => m.AdminModule),
   },
   {
     path: 'learner',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     loadChildren: () =>
       import('./modules/learner/learner.module').then(
         (m: any) => m.LearnerModule
@@ -87,13 +87,13 @@ const routes: Routes = [
   },
   {
     path: 'parent',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     loadChildren: () =>
       import('./modules/parent/parent.module').then((m: any) => m.ParentModule),
   },
   {
     path: 'school',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     loadChildren: () =>
       import('./modules/school/school.module').then((m: any) => m.SchoolModule),
   },

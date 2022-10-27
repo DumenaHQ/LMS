@@ -3,7 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { UserProfileComponent } from '../shared/user-profile/user-profile.component';
 import { AdminComponent } from './admin.component';
 import { AdminOverviewComponent } from './components/admin-overview/admin-overview.component';
+import { AddLessonComponent } from './components/courses/add-lesson/add-lesson.component';
 import { CreateCourseComponent } from './components/courses/create-course/create-course.component';
+import { TransactionsComponent } from './components/transactions/transactions.component';
 
 const routes: Routes = [
   {
@@ -15,34 +17,46 @@ const routes: Routes = [
         component: AdminOverviewComponent,
         data: {
           title: 'Admin',
-          description: 'Description Meta Tag Content'
-        }
+          description: 'Description Meta Tag Content',
+        },
       },
       {
         path: 'profile',
         component: UserProfileComponent,
         data: {
           title: 'Profile',
-          description: 'Description Meta Tag Content'
-        }
+          description: 'Description Meta Tag Content',
+        },
       },
-      { path: 'courses', loadChildren: () => import('./components/courses/courses.module').then(m => m.CoursesModule) },
       {
-        path: 'create-course',
-        component: CreateCourseComponent,
+        path: 'transactions',
+        component: TransactionsComponent,
         data: {
-          title: 'Create Course',
-          description: 'Description Meta Tag Content'
-        }
+          title: 'Transactions',
+          description: 'Description Meta Tag Content',
+        },
+      },
+      {
+        path: 'courses',
+        loadChildren: () =>
+          import('./components/courses/courses.module').then(
+            (m) => m.CoursesModule
+          ),
+      },
+      {
+        path: 'programs',
+        loadChildren: () =>
+          import('./components/programs/programs.module').then(
+            (m) => m.ProgramsModule
+          ),
       },
       { path: '', redirectTo: '/admin', pathMatch: 'full' },
-
-    ]
-  }
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AdminRoutingModule { }
+export class AdminRoutingModule {}

@@ -1,0 +1,37 @@
+@import '../../../../../../assets/css/variables.scss';
+@import '../../../../../../assets/css/mixins.scss';
+@import '../../../../../../assets/css/dashboard.scss';
+
+main {
+    flex-basis: 70%;
+    padding: $m-4;
+    .header {
+        h5 {
+        color: $primary20;
+        }
+        p {
+        border: 1px solid $inner-border;
+        border-radius: $border-radius1;
+        padding: $m-2;
+        }
+
+    }
+    ul {
+        margin-top: $m-6;
+        li {
+        width: 100%;
+        &:not(:last-child) {
+            margin-bottom: $m-2;
+        }
+        p {
+            span {
+            display: inline-block;
+            border: 1px solid $inner-border;
+            border-radius: $border-radius1;
+            padding: $m-1 $m-2;
+            margin-left: $m-2;
+            }
+        }
+        }
+    }
+}

@@ -199,64 +199,91 @@
 // Testimonial starts
 .testi {
   background-color: #F9F9F9;
-  &_area {
-    padding: 0 5%;
-    display: grid;
-    grid-template-columns: repeat(3, auto);
-    align-items: center;
-    .testi_name {
-      margin-top: $m-2;
-      font-weight: 700;
+  @include sect-heading(center);
+  .video_play_area {
+    margin: auto;
+    @media only screen and (min-width: 700px) {
+      width: 700px;
+      height: auto;
     }
-    .icon_area {
-      @include icon-area(44px, $white-color);
-      background-color: $white-color;
-      transition: all 0.2s ease-in;
-      &:not(:disabled):hover {
-        border: 1px solid $primary80;
-      }
-      &:disabled {
-        cursor: default;
-      }
-      img {
-        width: 22px;
-        height: 22px;
+    iframe {
+      width: 100%;
+      height: 400px;
+      @media only screen and (max-width: 450px) {
+        height: 250px;
       }
     }
-    .icon_area_mobile {
-      margin-top: $m-2;
-      display: none;
-      button {
-        @include icon-area(34px, $white-color);
-        background-color: $primary80;
-        transition: all .2s;
-        &:disabled {
-          background-color: $inner-border;
-          i {
-            color: $text-color1;
-          }
-        }
-        i {
-          color: $white-color;
-        }
-      }
-      button:disabled {
-        cursor: default;
-      }
-    }
-    @media only screen and (max-width: 500px) {
-      display: block;
-      .icon_area {
-        display: none
-      }
-      .icon_area_mobile {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: $m-2;
-      }
-    }
+    // .play_icon {
+    //   @include icon-area(68px, transparent);
+    //   background: $error100;
+    //   position: absolute;
+    //   left: 50%;
+    //   top: 60%;
+    //   transform: translate(-50%, -50%);
+    //   img {
+    //     width: 25px;
+    //     height: 25px;
+    //   }
+    // }
   }
+  // &_area {
+  //   padding: 0 5%;
+  //   display: grid;
+  //   grid-template-columns: repeat(3, auto);
+  //   align-items: center;
+  //   .testi_name {
+  //     margin-top: $m-2;
+  //     font-weight: 700;
+  //   }
+  //   .icon_area {
+  //     @include icon-area(44px, $white-color);
+  //     background-color: $white-color;
+  //     transition: all 0.2s ease-in;
+  //     &:not(:disabled):hover {
+  //       border: 1px solid $primary80;
+  //     }
+  //     &:disabled {
+  //       cursor: default;
+  //     }
+  //     img {
+  //       width: 22px;
+  //       height: 22px;
+  //     }
+  //   }
+  //   .icon_area_mobile {
+  //     margin-top: $m-2;
+  //     display: none;
+  //     button {
+  //       @include icon-area(34px, $white-color);
+  //       background-color: $primary80;
+  //       transition: all .2s;
+  //       &:disabled {
+  //         background-color: $inner-border;
+  //         i {
+  //           color: $text-color1;
+  //         }
+  //       }
+  //       i {
+  //         color: $white-color;
+  //       }
+  //     }
+  //     button:disabled {
+  //       cursor: default;
+  //     }
+  //   }
+  //   @media only screen and (max-width: 500px) {
+  //     display: block;
+  //     .icon_area {
+  //       display: none
+  //     }
+  //     .icon_area_mobile {
+  //       display: flex;
+  //       align-items: center;
+  //       justify-content: center;
+  //       gap: $m-2;
+  //     }
+  //   }
+  // }
 }
 // Testimonial ends
 

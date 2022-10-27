@@ -15,8 +15,8 @@
       <td class="thumbnail">
         <img [src]="i.thumbnail" alt="" />
       </td>
-      <td class="name">{{ i.name | titlecase }}</td>
-      <td class="quadrant">{{ i.quadrant | titlecase }}</td>
+      <td class="name">{{ i.title | titlecase }}</td>
+      <td class="quadrant">{{ i.course_quadrant | titlecase }}</td>
       <td class="status">
         <span [ngClass]="i.status ? 'success_btn' : 'grey_btn'">{{
           i.status ? "Published" : "Draft"

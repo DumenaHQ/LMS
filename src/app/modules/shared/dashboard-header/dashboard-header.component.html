@@ -17,8 +17,8 @@
       <span class="cart_image dis-flex clicakable">
         <img src="../../../../assets/img/svg/shopping-cart.svg" alt="" />
       </span>
-      <span class="bubble" *ngIf="allOrdersFromLS.length > 0"
-        >{{ allOrdersFromLS.length }}
+      <span class="bubble" *ngIf="allOrdersFromLS?.length > 0"
+        >{{ allOrdersFromLS?.length }}
         <!-- <small>10</small> -->
       </span>
     </div>
@@ -46,8 +46,12 @@
       [routerLink]="['/', user?.role, 'profile', userNamePath]"
     >
       <img
-        src="../../../../assets/img/children-avatar/child-avatar-1.png"
-        alt="image"
+        [src]="
+          user?.avatar !== undefined
+            ? user?.avatar
+            : 'assets/img/children-avatar/child-avatar-1.png'
+        "
+        alt="Avatar"
         class="profile_img"
       />
       <span class="profile_details">

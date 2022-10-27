@@ -8,7 +8,7 @@ import { RouterModule } from '@angular/router';
 import { CoursesCardComponent } from '../courses-card/courses-card.component';
 import { LibraryCoursesInfoComponent } from '../library-courses-info/library-courses-info.component';
 import { LibraryCoursesLessonComponent } from '../library-courses-lesson/library-courses-lesson.component';
-
+import { SharedModule } from 'src/app/modules/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -16,12 +16,13 @@ import { LibraryCoursesLessonComponent } from '../library-courses-lesson/library
     LearnerLibraryOverviewComponent,
     LibraryCoursesInfoComponent,
     LibraryCoursesLessonComponent,
-    CoursesCardComponent
+    CoursesCardComponent,
   ],
   imports: [
     CommonModule,
     LearnerLibraryRoutingModule,
-    RouterModule
-  ]
+    RouterModule,
+    SharedModule,
+  ],
 })
-export class LearnerLibraryModule { }
+export class LearnerLibraryModule {}

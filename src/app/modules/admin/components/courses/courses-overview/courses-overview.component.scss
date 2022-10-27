@@ -1,9 +1,7 @@
 @import '../../../../../../assets/css/variables.scss';
 @import '../../../../../../assets/css/mixins.scss';
+@import '../../../../../../assets/css/dashboard.scss';
 
-section:not(:last-child) {
-  margin-bottom: $m-3;
-}
 
 .grouping {
   // margin-top: -$m-3; // Reduce the gap btw the Section title and this container
@@ -32,7 +30,8 @@ section:not(:last-child) {
         border-radius: $border-radius1;
         transition: all .2s;
         cursor: pointer;
-        &:hover {
+        &:hover,
+        &.active {
           background-color: $white-color;
         }
         &:not(:last-child) {

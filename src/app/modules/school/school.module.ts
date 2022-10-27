@@ -9,7 +9,8 @@ import { SchoolStudentsComponent } from './components/school-students/school-stu
 import { SchoolPaymentComponent } from './components/school-payment/school-payment.component';
 import { StudentBlankComponent } from './components/school-students/student-blank/student-blank.component';
 import { SchoolDisplayStudentsComponent } from './components/school-students/school-display-students/school-display-students.component';
-
+import { SchoolProgramsOverviewComponent } from './components/school-programs/school-programs-overview/school-programs-overview.component';
+import { SchoolProgramsDetailsComponent } from './components/school-programs/school-programs-details/school-programs-details.component';
 
 @NgModule({
   declarations: [
@@ -19,11 +20,9 @@ import { SchoolDisplayStudentsComponent } from './components/school-students/sch
     SchoolStudentsComponent,
     SchoolPaymentComponent,
     SchoolDisplayStudentsComponent,
+    SchoolProgramsOverviewComponent,
+    SchoolProgramsDetailsComponent,
   ],
-  imports: [
-    CommonModule,
-    SchoolRoutingModule,
-    SharedModule
-  ]
+  imports: [CommonModule, SchoolRoutingModule, SharedModule],
 })
-export class SchoolModule { }
+export class SchoolModule {}

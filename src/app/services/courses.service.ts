@@ -12,13 +12,13 @@ export class CoursesService {
 
   // Get all Courses
   getAllCourses() {
-    return this.http.get(this.baseUrl + 'courses', this.getHttpOptions());
+    return this.http.get(`${this.baseUrl}courses`, this.getHttpOptions());
   }
 
   // Get course by course id
   getCourse(courseId: any) {
     return this.http.get(
-      this.baseUrl + 'courses/' + courseId,
+      `${this.baseUrl}courses/${courseId}`,
       this.getHttpOptions()
     );
   }
@@ -26,9 +26,18 @@ export class CoursesService {
   // Add Course
   addCourse(data: any) {
     return this.http.post(
-      this.baseUrl + 'courses',
-      this.getHttpOptions(),
-      data
+      `${this.baseUrl}courses`,
+      data,
+      this.getHttpOptions()
+    );
+  }
+
+  // Add Lesson to Course
+  addLessonToCourse(courseId: any, data: any) {
+    return this.http.post(
+      `${this.baseUrl}courses/${courseId}/lessons`,
+      data,
+      this.getHttpOptionsForMultipart()
     );
   }
 
@@ -37,6 +46,17 @@ export class CoursesService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+    };
+    return httpOptions;
+  }
+
+  // Get HttpOptions for multipart
+  getHttpOptionsForMultipart() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'multipart/form-data',
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       }),
     };

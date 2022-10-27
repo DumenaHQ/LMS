@@ -61,7 +61,7 @@ export class EnrollLearnerComponent implements OnInit {
     },
   ];
   messageval: string;
-  // isSelectedAVatar: boolean = false;
+  billingId: string = 'monthly';
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -69,6 +69,11 @@ export class EnrollLearnerComponent implements OnInit {
     // Get User data from localstorage
     let userData = this.authService.getUser();
     this.user = userData.user;
+  }
+
+  // Tab change
+  tabChange(ids: any) {
+    this.billingId = ids;
   }
 
   // Select Avatar

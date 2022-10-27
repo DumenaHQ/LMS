@@ -1,57 +1,62 @@
-<div class="card">
-  <!-- <div
-    class="card_item clickable"
-    *ngFor="let i of courses"
-    routerLink="/learner/course-info"
-  >
-    <picture>
-      <img [src]="i.image" alt="" />
-    </picture>
-    <div class="details">
-      <h4 class="title">{{ i.title }}</h4>
-      <div class="icons">
-        <span class="dis-flex"
-          ><img src="../../../assets/img/library/Bag.svg" alt="" />
-          <p>{{ i.level }}</p></span
-        >
-        <span class="dis-flex"
-          ><img src="../../../assets/img/library/video-square.svg" alt="" />
-          <p>{{ i.lessonNumber }}</p></span
-        >
-        <span class="dis-flex"
-          ><img src="../../../assets/img/library/clock.svg" alt="" />
-          <p>{{ i.duration }}</p></span
-        >
-      </div>
-    </div>
-  </div> -->
+<!-- Loader -->
+<app-loader *ngIf="dataLoading"></app-loader>
 
-  <div
-    class="card_item clickable"
-    *ngFor="let i of allCourses"
-    [routerLink]="i.id"
-    [title]="i.title"
-  >
-    <picture>
-      <img src="../../../assets/img/library/library1.png" alt="" />
-    </picture>
-    <div class="details">
-      <h6 class="title">{{ i.title }}</h6>
-      <div class="icons">
-        <span class="dis-flex"
-          ><img src="../../../assets/img/library/Bag.svg" alt="" />
-          <p>{{ i.difficulty_level }}</p></span
-        >
-        <span class="dis-flex"
-          ><img src="../../../assets/img/library/video-square.svg" alt="" />
-          <p>{{ i.lesson_count }} Lessons</p></span
-        >
-        <span class="dis-flex"
-          ><img src="../../../assets/img/library/clock.svg" alt="" />
-          <p>1 hr</p></span
-        >
-        <!-- {{ i.duration }} -->
+<ng-container>
+  <div class="card">
+    <!-- <div
+      class="card_item clickable"
+      *ngFor="let i of courses"
+      routerLink="/learner/course-info"
+    >
+      <picture>
+        <img [src]="i.image" alt="" />
+      </picture>
+      <div class="details">
+        <h4 class="title">{{ i.title }}</h4>
+        <div class="icons">
+          <span class="dis-flex"
+            ><img src="../../../assets/img/library/Bag.svg" alt="" />
+            <p>{{ i.level }}</p></span
+          >
+          <span class="dis-flex"
+            ><img src="../../../assets/img/library/video-square.svg" alt="" />
+            <p>{{ i.lessonNumber }}</p></span
+          >
+          <span class="dis-flex"
+            ><img src="../../../assets/img/library/clock.svg" alt="" />
+            <p>{{ i.duration }}</p></span
+          >
+        </div>
+      </div>
+    </div> -->
+
+    <div
+      class="card_item clickable"
+      *ngFor="let i of allCourses"
+      [routerLink]="i.id"
+      [title]="i.title"
+    >
+      <picture>
+        <img src="../../../assets/img/library/library1.png" alt="" />
+      </picture>
+      <div class="details">
+        <h6 class="title">{{ i.title }}</h6>
+        <div class="icons">
+          <span class="dis-flex"
+            ><img src="../../../assets/img/library/Bag.svg" alt="" />
+            <p>{{ i.difficulty_level }}</p></span
+          >
+          <span class="dis-flex"
+            ><img src="../../../assets/img/library/video-square.svg" alt="" />
+            <p>{{ i.lesson_count }} Lessons</p></span
+          >
+          <span class="dis-flex"
+            ><img src="../../../assets/img/library/clock.svg" alt="" />
+            <p>1 hr</p></span
+          >
+          <!-- {{ i.duration }} -->
+        </div>
       </div>
     </div>
   </div>
-</div>
+</ng-container>

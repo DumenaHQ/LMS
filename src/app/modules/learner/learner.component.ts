@@ -20,6 +20,7 @@ export class LearnerComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
+    // Get user details
     let userData = this.authService.getUser();
     this.user = userData.user;
     this.userNamePath = this.user.fullname.replace(/\s/g, '-').toLowerCase();

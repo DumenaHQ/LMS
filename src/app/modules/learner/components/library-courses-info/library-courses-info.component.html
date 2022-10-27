@@ -7,7 +7,13 @@
 <section class="course-info">
   <div class="dis-flex course-info_header">
     <h3 class="course-title">{{ currentCourse?.title }}</h3>
-    <button class="btn prim_btn" (click)="startCourse()">Start Course</button>
+    <button
+      class="btn prim_btn"
+      (click)="startCourse()"
+      [disabled]="currentCourse?.lessons?.length === 0"
+    >
+      Start Course
+    </button>
   </div>
   <div class="ds-flex">
     <main class="du-grid">

@@ -46,14 +46,20 @@ export class CoursesCardComponent implements OnInit {
   @Input() quadrant: string = '';
   // private subject = new Subject<any>();
   allCourses: any;
+  dataLoading: boolean = true;
 
   constructor(private coursesService: CoursesService) {}
 
   ngOnInit(): void {
-    this.coursesService.getAllCourses().subscribe((res: any) => {
-      this.allCourses = res.data.courses;
-      console.log(this.allCourses);
-      this.filterCourseQuadrant(this.quadrant);
+    this.coursesService.getAllCourses().subscribe({
+      next: (res: any) => {
+        this.allCourses = res.data.courses;
+        this.filterCourseQuadrant(this.quadrant);
+      },
+      error: (e) => console.error(e),
+      complete: () => {
+        this.dataLoading = false;
+      },
     });
 
     // this.subject.next(this.quadrant);

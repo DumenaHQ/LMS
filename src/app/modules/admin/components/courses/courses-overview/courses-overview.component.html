@@ -26,23 +26,30 @@
     <!-- Display type -->
     <div class="display-type">
       <span (click)="isDisplayGrid = true">
-        <img src="../../../assets/img/grid.svg" alt="" />
+        <img
+          src="../../../assets/img/grid.svg"
+          alt=""
+          [class.active]="isDisplayGrid"
+        />
       </span>
       <span (click)="isDisplayGrid = false">
-        <img src="../../../assets/img/list.svg" alt="" />
+        <img
+          src="../../../assets/img/list.svg"
+          alt=""
+          [class.active]="!isDisplayGrid"
+        />
       </span>
     </div>
     <!-- New Course Button -->
-    <button class="btn prim_btn" routerLink="/admin/create-course">
-      New Course
-    </button>
+    <button class="btn prim_btn" routerLink="create-course">New Course</button>
   </div>
 </section>
 
 <section class="courses">
   <div class="courses_body">
+    <app-loader *ngIf="dataLoading"></app-loader>
     <!-- *ngIf="allCourses?.length > 0; else noItems" -->
-    <ng-container>
+    <ng-container *ngIf="allCourses?.length > 0">
       <!-- Display List (dislist) -->
       <app-courses-list
         *ngIf="!isDisplayGrid"
@@ -57,8 +64,8 @@
     </ng-container>
 
     <!-- Course Blank -->
-    <ng-template #noItems>
+    <ng-container *ngIf="allCourses?.length == 0">
       <app-courses-blank></app-courses-blank>
-    </ng-template>
+    </ng-container>
   </div>
 </section>

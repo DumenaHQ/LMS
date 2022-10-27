@@ -39,16 +39,15 @@
         A learning environment for children to discover, explore and fully
         express their potentials very early in life.
       </p>
-      <div class="btn_area dis-flex">
+      <!-- <div class="btn_area dis-flex">
         <button class="btn prim_btn" routerLink="/signup">Get started</button>
         <span class="btn_area_watch dis-flex">
           <span class="icon_area clickable">
-            <!-- <img src="../../../../../assets/img/svg/Icon.svg" alt="" /> -->
             <i class="bx bx-play play-icon icon"></i>
           </span>
           <p>Watch how it works</p>
         </span>
-      </div>
+      </div> -->
     </div>
     <div class="du_flex_img">
       <img src="../../../../../assets/img/hero-img.svg" alt="image" />
@@ -169,7 +168,22 @@
 
 <!-- Testimonial -->
 <section class="sect testi">
-  <div class="testi_area">
+  <div class="container">
+    <div class="sect_heading">
+      <h2 class="sect_title">Testimonials</h2>
+      <p>Hear what the kids have to say.</p>
+    </div>
+    <div class="video_play_area">
+      <iframe
+        src="https://drive.google.com/file/d/1ly39iGdmzk8KKKRWQztY8TocPTWFSLYo/preview"
+        allow="autoplay"
+      ></iframe>
+      <!-- <span class="play_icon">
+        <img src="../../../../../assets/img/svg/white-play.svg" alt="" />
+      </span> -->
+    </div>
+  </div>
+  <!-- <div class="testi_area">
     <button
       class="icon_area"
       [disabled]="currentTesti === 0"
@@ -196,8 +210,6 @@
     >
       <img src="../../../../../assets/img/svg/arrow-right.svg" alt="" />
     </button>
-
-    <!-- Mobile view -->
     <div class="icon_area_mobile">
       <button [disabled]="currentTesti === 0" (click)="previousTesti()">
         <i class="bx bx-chevron-left"></i>
@@ -209,7 +221,7 @@
         <i class="bx bx-chevron-right"></i>
       </button>
     </div>
-  </div>
+  </div> -->
 </section>
 
 <!-- Metrics -->
@@ -248,51 +260,6 @@
   </div>
 </section>
 
-<!-- Educator -->
-<section class="sect educator">
-  <div class="container du_flex_content row-reverse">
-    <div class="du_flex_details">
-      <h3 class="du_flex_details_title">
-        Join our growing community of Educators
-      </h3>
-      <p>
-        The Education Landscape is experiencing highly unprecedented changes,
-        catalyzed by the COVID-19 Pandemic.
-      </p>
-      <ul>
-        <li>
-          <img src="../../../../../assets/img/svg/check-prim.svg" alt="" />
-          <p class="body-2-medium">Earn rewards through our Referral System.</p>
-        </li>
-        <li>
-          <img src="../../../../../assets/img/svg/check-prim.svg" alt="" />
-          <p class="body-2-medium">
-            Improve and update your knowledgebase by taking our online courses.
-          </p>
-        </li>
-        <li>
-          <img src="../../../../../assets/img/svg/check-prim.svg" alt="" />
-          <p class="body-2-medium">
-            Catch up with events, programs, news and happenings around the
-            world.
-          </p>
-        </li>
-        <li>
-          <img src="../../../../../assets/img/svg/check-prim.svg" alt="" />
-          <p class="body-2-medium">
-            Create your own learning content and become one of our virtual
-            tutors.
-          </p>
-        </li>
-      </ul>
-      <button class="btn prim_btn">Learn More</button>
-    </div>
-    <div class="du_flex_img">
-      <img src="../../../../../assets/img/become-tutor-img.png" alt="image" />
-    </div>
-  </div>
-</section>
-
 <!-- Parent -->
 <section class="sect parent">
   <div class="container du_flex_content">
@@ -324,7 +291,7 @@
           </p>
         </li>
       </ul>
-      <button class="btn prim_btn">Learn More</button>
+      <!-- <button class="btn prim_btn">Learn More</button> -->
     </div>
     <div class="du_flex_img">
       <img src="../../../../../assets/img/parent-img.png" alt="image" />
@@ -367,6 +334,51 @@
   </div>
 </section>
 
+<!-- Educator -->
+<section class="sect educator">
+  <div class="container du_flex_content row-reverse">
+    <div class="du_flex_details">
+      <h3 class="du_flex_details_title">
+        Join our growing community of Educators
+      </h3>
+      <p>
+        The Education Landscape is experiencing highly unprecedented changes,
+        catalyzed by the COVID-19 Pandemic.
+      </p>
+      <ul>
+        <li>
+          <img src="../../../../../assets/img/svg/check-prim.svg" alt="" />
+          <p class="body-2-medium">Earn rewards through our Referral System.</p>
+        </li>
+        <li>
+          <img src="../../../../../assets/img/svg/check-prim.svg" alt="" />
+          <p class="body-2-medium">
+            Improve and update your knowledgebase by taking our online courses.
+          </p>
+        </li>
+        <li>
+          <img src="../../../../../assets/img/svg/check-prim.svg" alt="" />
+          <p class="body-2-medium">
+            Catch up with events, programs, news and happenings around the
+            world.
+          </p>
+        </li>
+        <li>
+          <img src="../../../../../assets/img/svg/check-prim.svg" alt="" />
+          <p class="body-2-medium">
+            Create your own learning content and become one of our virtual
+            tutors.
+          </p>
+        </li>
+      </ul>
+      <!-- <button class="btn prim_btn">Learn More</button> -->
+    </div>
+    <div class="du_flex_img">
+      <img src="../../../../../assets/img/become-tutor-img.png" alt="image" />
+    </div>
+  </div>
+</section>
+
 <!-- Online school  -->
 <section class="sect video">
   <div class="container">
@@ -389,7 +401,7 @@
   </div>
 </section>
 
-<section class="sect award-winning">
+<!-- <section class="sect award-winning">
   <div class="container du_flex_content">
     <div class="du_flex_details">
       <h3 class="du_flex_details_title">
@@ -449,10 +461,10 @@
       />
     </div>
   </div>
-</section>
+</section> -->
 
 <!-- News and Events -->
-<section class="sect news">
+<!-- <section class="sect news">
   <div class="container">
     <div class="top dis-flex">
       <div class="sect_heading">
@@ -464,7 +476,6 @@
           Technologies.
         </p>
       </div>
-      <!-- Carousel Btns -->
       <div class="carousel dis-flex">
         <span class="icon">
           <i class="bx bx-chevron-left"></i>
@@ -487,4 +498,4 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->

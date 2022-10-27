@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { OrderService } from 'src/app/services/order.service';
 import { PaymentService } from 'src/app/services/payment.service';
 
 @Component({
@@ -10,10 +9,9 @@ import { PaymentService } from 'src/app/services/payment.service';
 })
 export class SchoolPaymentComponent implements OnInit {
   user: any;
-  // reference: any;
+  paymentsHistory: any;
 
   constructor(
-    private orderService: OrderService,
     private authService: AuthService,
     private paymentService: PaymentService
   ) {}
@@ -23,43 +21,11 @@ export class SchoolPaymentComponent implements OnInit {
     let userData = this.authService.getUser();
     this.user = userData.user;
 
-    this.orderService.getOrder().subscribe((res: any) => {
-      console.log(res);
-    });
-  }
-
-  addOrder() {
-    let payload = {
-      items: [
-        {
-          order_type: 'sub',
-          slug: 'standard-plan',
-          user_id: this.user,
-        },
-        {
-          order_type: 'sub',
-          slug: 'pro-plan',
-          user_id: this.user,
-        },
-      ],
-    };
-    console.log(payload);
-
-    this.orderService.addOrder(payload).subscribe((res: any) => {
-      console.log(res);
-      // this.reference = res.reference
-
-      // this.verifyPayment(res.data.order.reference);
-    });
-  }
-
-  verifyPayment(ref: any) {
-    let payload = {
-      reference: ref,
-    };
-
-    this.paymentService.verifyPayment(payload).subscribe((res: any) => {
-      console.log(res);
-    });
+    // Get all payments by user id
+    this.paymentService
+      .getPaymentsByUserId(this.user.id)
+      .subscribe((res: any) => {
+        this.paymentsHistory = res.data.payments;
+      });
   }
 }

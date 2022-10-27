@@ -17,9 +17,12 @@
         </div>
       </div>
 
-      <button class="btn tert_btn" routerLink="edit-child">
-        Update Profile
-      </button>
+      <div class="welcome_btns">
+        <button class="btn tert_btn" routerLink="edit-child">
+          Update Profile
+        </button>
+        <a class="remove clickable" (click)="openDeleteModal()">Remove Child</a>
+      </div>
     </div>
     <!-- Learning overview(lo) -->
     <div class="lo">
@@ -74,6 +77,29 @@
     </div>
   </aside>
 </section>
+
+<!-- Delete confirmation -->
+<div class="modal confirm-delete-modal" *ngIf="deleteModal">
+  <div class="modal_area">
+    <h5></h5>
+
+    <div class="modal-details" style="text-align: left">
+      <h2 class="text-primary-color">Delete Child</h2>
+      <p>
+        Are you sure you want to remove
+        <strong class="text-primary-color">{{ child?.username }}</strong
+        >?
+      </p>
+    </div>
+    <!-- Buttons -->
+    <div class="modal-btns dis-flex">
+      <button type="button" class="btn skip_btn" (click)="closeDeleteModal()">
+        Cancel
+      </button>
+      <button class="btn prim_btn" (click)="removeChild()">Remove</button>
+    </div>
+  </div>
+</div>
 
 <!-- Subscription plan -->
 <app-pricing-plan

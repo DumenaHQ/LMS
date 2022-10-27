@@ -12,6 +12,8 @@ import { NotifiPopupComponent } from './notifi-popup/notifi-popup.component';
 import { EnrollLearnerComponent } from './enroll-learner/enroll-learner.component';
 import { PricingPlanComponent } from '../parent/components/pricing-plan/pricing-plan.component';
 import { AlertPopupComponent } from './alert-popup/alert-popup.component';
+import { LoaderComponent } from './loader/loader.component';
+import { DisplayPaymentHistoryComponent } from './display-payment-history/display-payment-history.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { AlertPopupComponent } from './alert-popup/alert-popup.component';
     NotifiPopupComponent,
     EnrollLearnerComponent,
     AlertPopupComponent,
+    LoaderComponent,
+    DisplayPaymentHistoryComponent,
     // PricingPlanComponent,
   ],
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
@@ -35,6 +39,7 @@ import { AlertPopupComponent } from './alert-popup/alert-popup.component';
     DashboardPopupAlertComponent,
     EnrollLearnerComponent,
     AlertPopupComponent,
+    LoaderComponent,
   ],
 })
 export class SharedModule {}

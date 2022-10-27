@@ -3,6 +3,7 @@
     <span class="modal_area_close" (click)="closeAddModal()">
       <i class="bx bx-x icon clickable"></i>
     </span>
+
     <div class="enroll auth_content">
       <h4 class="text-primary-color enroll_title">Enroll a {{ title }}</h4>
       <form
@@ -10,6 +11,26 @@
         (ngSubmit)="signUp(usersForm.value)"
         #usersForm="ngForm"
       >
+        <div class="form-field col-2">
+          <label for="">Select an enrollment method</label>
+          <!-- Pricing tabs -->
+          <div class="pricing_tab">
+            <div class="pricing_tab_wrapper">
+              <span
+                class="tab"
+                [class.active]="billingId == 'monthly'"
+                (click)="tabChange('monthly')"
+                >Single enrollement
+              </span>
+              <span
+                class="tab"
+                [class.active]="billingId == 'yearly'"
+                (click)="tabChange('yearly')"
+                >Batch enrollement
+              </span>
+            </div>
+          </div>
+        </div>
         <div class="form-field col-2 avatar">
           <label for="avatar">Select an avatar for your {{ title }}</label>
           <div class="avatar_list dis-flex">

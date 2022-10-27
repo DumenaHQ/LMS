@@ -19,9 +19,28 @@ section:not(:last-child) {
     padding: 0 $m-3;
     margin-top: $m-2;
     &_top {
-      justify-content: space-between;
+      display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
       gap: $m-2;
       margin-bottom: $m-2;
+      .left {
+          &_bottom {
+            gap: $m-2;
+            margin-top: $m-2;
+            .icons {
+                gap: $m-2;
+                flex-flow: row wrap;
+                justify-content: space-between;
+                color: $primary40;
+                img {
+                    margin-right: $m-1;
+                    width: 14px;
+                    height: 14px;
+                }
+            }
+        }
+      }
       .right {
         gap: $m-2;
         .status-btn.settings {
@@ -69,7 +88,7 @@ section:not(:last-child) {
           line-height: 3.3rem;
           cursor: pointer;
           transition: all .2s;
-          padding: 0 $m-4;
+          padding: 0 $m-3;
           &.active {
             color: $primary80;
             border-bottom: 2px solid $primary80;
@@ -83,7 +102,7 @@ section:not(:last-child) {
     &_content {
       display: flex;
       aside {
-        flex-basis: 30%;
+        flex-basis:25%;
         border-right: 1px solid $divider-color;
         ul {
           li {
@@ -106,7 +125,7 @@ section:not(:last-child) {
         }
       }
       main {
-        flex-basis: 70%;
+        // flex-basis: 70%;
         padding: $m-4;
         .header {
           h5 {

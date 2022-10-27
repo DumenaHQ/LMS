@@ -138,10 +138,15 @@ export class LearnerOnboardComponent implements OnInit {
   selectedInterest: any[] = [];
   username: string = '';
   loading: boolean = false;
+  user: any;
 
   constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Get user details
+    let userData = this.authService.getUser();
+    this.user = userData.user;
+  }
 
   // Close Modal
   closeModal() {
@@ -204,7 +209,6 @@ export class LearnerOnboardComponent implements OnInit {
     // update user profile
     this.authService.updateUser(payload).subscribe((res: any) => {
       console.log(res);
-
       if (res.status == true) {
         // Set User data
         this.authService.addUserDataToLocalStorage(res.data);

@@ -9,7 +9,6 @@ import { LearnerOverviewComponent } from './components/learner-overview/learner-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LearnerOnboardComponent } from './components/learner-onboard/learner-onboard.component';
 
-
 @NgModule({
   declarations: [
     LearnerComponent,
@@ -21,7 +20,7 @@ import { LearnerOnboardComponent } from './components/learner-onboard/learner-on
     LearnerRoutingModule,
     SharedModule,
     FormsModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+  ],
 })
-export class LearnerModule { }
+export class LearnerModule {}

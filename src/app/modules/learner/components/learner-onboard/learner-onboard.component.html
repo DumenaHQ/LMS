@@ -76,7 +76,12 @@
           <div class="form-field">
             <label for="username">User Name</label>
             <div class="input-field">
-              <input type="text" name="username" ngModel required />
+              <input
+                type="text"
+                name="username"
+                [(ngModel)]="user.username"
+                required
+              />
             </div>
           </div>
         </form>

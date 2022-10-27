@@ -58,7 +58,7 @@ export class AdminOverviewComponent implements OnInit {
     this.authService.allUser().subscribe((res: any) => {
       this.allUsers = res.data.users;
       this.allUsers.forEach((element: any) => {
-        console.log(element);
+        // console.log(element);
       });
     });
   }

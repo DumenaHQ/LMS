@@ -12,7 +12,6 @@ export class LoginComponent implements OnInit {
   hide: boolean = true;
   loading: boolean = false;
   returnUrl = '';
-  isSignedin: boolean = false;
   errorMessage: string = '';
   showError: boolean = false;
   userType: any;

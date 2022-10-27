@@ -9,6 +9,7 @@ import { PricingComponent } from './components/pricing/pricing.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { NewsletterComponent } from './components/newsletter/newsletter.component';
 import { SummerschoolComponent } from './components/summerschool/summerschool.component';
+import { RoboticsChampComponent } from './components/robotics-champ/robotics-champ.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { SummerschoolComponent } from './components/summerschool/summerschool.co
     PricingComponent,
     FaqComponent,
     NewsletterComponent,
-    SummerschoolComponent
+    SummerschoolComponent,
+    RoboticsChampComponent
   ],
   imports: [
     CommonModule,

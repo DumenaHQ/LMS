@@ -1,0 +1,97 @@
+<section class="set-info" app>
+  <div class="set-info_header">
+    <!-- <h3 class="text-primary-color">Set the Course Information</h3>
+    <p>
+      This information will be displayed to the learners before they start the
+      course
+    </p> -->
+    <button class="btn prim_btn" (click)="addLesson()">Save</button>
+  </div>
+  <form [formGroup]="courseForm">
+    <div class="form_control">
+      <label for="lesson_video">Lesson Video</label>
+      <div class="">
+        <div
+          class="form_control_field select-image clickable"
+          (click)="fileInput.click()"
+          appDragDrop
+          (fileDropped)="uploadFile($event)"
+        >
+          <input
+            type="file"
+            id="lesson_video"
+            #fileInput
+            hidden
+            (change)="uploadFile($any($event).target.files)"
+          />
+          <img
+            [src]="
+              showPreviewImage
+                ? previewImage
+                : '../../../assets/img/select-Image.svg'
+            "
+            alt=""
+          />
+          <p class="body-3-regular">
+            Drag your image here or
+            <span class="text-primary-color">browse</span>
+          </p>
+          <p class="body-3-regular">Max file size 4MB</p>
+        </div>
+      </div>
+    </div>
+    <div class="form_control">
+      <label for="title">Lesson Title</label>
+      <div class="form_control_field">
+        <input
+          type="text"
+          id="title"
+          placeholder="Type here"
+          formControlName="title"
+        />
+      </div>
+    </div>
+    <div class="form_control">
+      <label for="further_reading">Further Reading</label>
+      <div class="form_control_field">
+        <textarea
+          name=""
+          id="further_reading"
+          cols="30"
+          rows="5"
+          placeholder="Type here"
+          spellcheck="true"
+          formControlName="further_reading"
+        ></textarea>
+      </div>
+    </div>
+    <div class="form_control">
+      <label for="class_activity">Class Activity</label>
+      <div class="form_control_field">
+        <textarea
+          name=""
+          id="class_activity"
+          cols="30"
+          rows="8"
+          placeholder="Type here"
+          spellcheck="true"
+          formControlName="class_activity"
+        ></textarea>
+      </div>
+    </div>
+    <div class="form_control code_example">
+      <label for="code_example">Code Example</label>
+      <div class="form_control_field">
+        <textarea
+          name=""
+          id="code_example"
+          cols="30"
+          rows="8"
+          placeholder="Type here"
+          spellcheck="true"
+          formControlName="code_example"
+        ></textarea>
+      </div>
+    </div>
+  </form>
+</section>

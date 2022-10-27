@@ -1,5 +1,12 @@
 <section class="set-info" app>
   <div class="set-info_header">
+    <button class="btn prim_btn" (click)="addCourse()">Add Course</button>
+    <button class="btn sec_btn" style="margin: 0 1rem" routerLink="add-lesson">
+      Add Lesson
+    </button>
+    <button class="btn sec_btn" style="margin: 0 1rem" routerLink="quiz">
+      Add Quiz
+    </button>
     <h3 class="text-primary-color">Set the Course Information</h3>
     <p>
       This information will be displayed to the learners before they start the
@@ -62,6 +69,9 @@
       <div class="form_control_field">
         <select name="" id="">
           <option value="">Please Select</option>
+          <option value="Beginner">Beginner</option>
+          <option value="Intermediate">Intermediate</option>
+          <option value="Advanced">Advanced</option>
         </select>
       </div>
     </div>
@@ -85,9 +95,6 @@
           spellcheck="true"
         ></textarea>
       </div>
-    </div>
-    <div>
-      <button class="btn prim_btn">Add Course</button>
     </div>
   </form>
 </section>

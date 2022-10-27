@@ -1,0 +1,42 @@
+<section class="set-info" app>
+  <div class="set-info_header">
+    <button class="btn prim_btn" (click)="addQuiz()">Add Course</button>
+    <button class="btn prim_btn" routerLink="add-question">Add Question</button>
+    <h3 class="text-primary-color">Set the Quiz Information</h3>
+    <p>
+      This information will be displayed to the learners before they take the
+      quiz
+    </p>
+  </div>
+  <form>
+    <div class="form_control">
+      <label for="title">Quiz Title</label>
+      <div class="form_control_field">
+        <input type="text" id="title" placeholder="Type here" />
+      </div>
+    </div>
+    <div class="form_control tags">
+      <label for="tags">Tags</label>
+      <div class="form_control_field">
+        <textarea
+          name=""
+          id="tags"
+          cols="30"
+          rows="5"
+          placeholder="Type here"
+          spellcheck="true"
+        ></textarea>
+      </div>
+    </div>
+    <div class="form_setting">
+      <div class="">
+        <h3 class="text-primary-color">Quiz Settings</h3>
+        <p>Configure your quiz settings</p>
+      </div>
+      <label class="">
+        <input type="checkbox" id="" />
+        Show the correct answer
+      </label>
+    </div>
+  </form>
+</section>

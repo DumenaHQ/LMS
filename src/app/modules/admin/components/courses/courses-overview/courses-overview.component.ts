@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { CoursesService } from 'src/app/services/courses.service';
 
 @Component({
   selector: 'app-courses-overview',
   templateUrl: './courses-overview.component.html',
-  styleUrls: ['./courses-overview.component.scss']
+  styleUrls: ['./courses-overview.component.scss'],
 })
 export class CoursesOverviewComponent implements OnInit {
-
-  allCourses = [
+  allCourses2 = [
     {
       id: 1,
       thumbnail: '../../../assets/img/thumbnail-1.png',
@@ -16,7 +16,7 @@ export class CoursesOverviewComponent implements OnInit {
       lessonNumber: 9,
       duration: '12 hrs',
       status: true,
-      isDeleted: false
+      isDeleted: false,
     },
     {
       id: 2,
@@ -26,7 +26,7 @@ export class CoursesOverviewComponent implements OnInit {
       lessonNumber: 9,
       duration: '12 hrs',
       status: false,
-      isDeleted: false
+      isDeleted: false,
     },
     {
       id: 3,
@@ -36,15 +36,26 @@ export class CoursesOverviewComponent implements OnInit {
       lessonNumber: 9,
       duration: '12 hrs',
       status: false,
-      isDeleted: false
+      isDeleted: false,
     },
-  ]
+  ];
 
   isDisplayGrid: boolean = true;
+  allCourses: any;
+  dataLoading: boolean = true;
 
-  constructor() { }
+  constructor(private coursesService: CoursesService) {}
 
   ngOnInit(): void {
+    this.coursesService.getAllCourses().subscribe({
+      next: (res: any) => {
+        this.allCourses = res.data.courses;
+        console.log(this.allCourses);
+      },
+      error: (e) => console.error(e),
+      complete: () => {
+        this.dataLoading = false;
+      },
+    });
   }
-
 }

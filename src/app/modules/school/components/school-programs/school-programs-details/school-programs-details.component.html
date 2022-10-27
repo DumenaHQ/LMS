@@ -1,0 +1,147 @@
+<!-- Enrol Learner -->
+<app-enroll-learner
+  *ngIf="addModal"
+  (addModal)="closeAddModal()"
+  (isAlert)="showAlert()"
+  (alertMessaage)="setAlertMessage($event)"
+  [title]="title"
+></app-enroll-learner>
+
+<section class="ds-head dis-flex">
+  <h2 class="ds-head_title clickable" routerLink="/admin/courses">Programs</h2>
+  <i class="bx bx-chevron-right icon"></i>
+  <p class="clickable">Program Info</p>
+</section>
+
+<section class="course-details">
+  <div class="course-details_image">
+    <img src="../../../assets/img/thumbnail-1.png" alt="" />
+  </div>
+  <div class="course-details_header">
+    <div class="course-details_header_top">
+      <div class="left">
+        <h2>AI Robotics Championship</h2>
+        <div class="dis-flex left_bottom">
+          <button class="success_btn">Ongoing</button>
+          <div class="icons dis-flex">
+            <span class="dis-flex"
+              ><img src="../../../assets/img/svg/calendar-2.svg" alt="" />
+              <p class="body-2-regular">Created May 12.2022</p></span
+            >
+            <span class="dis-flex"
+              ><img src="../../../assets/img/svg/medal.svg" alt="" />
+              <p class="body-2-regular">3 Sections</p></span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="right dis-flex">
+        <button class="btn prim_btn" (click)="openAddModal()">Add Child</button>
+      </div>
+    </div>
+    <div class="course-details_header_bottom">
+      <p class="descript">
+        Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
+        sint. Velit officia consequat duis enim velit mollit. Exercitation
+        veniam consequat sunt nostrud amet.Amet minim mollit non deserunt
+        ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis
+        enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
+      </p>
+      <ul class="numbers dis-flex">
+        <li>
+          <p class="body-2-bold">2</p>
+          <p class="body-3-regular">Courses</p>
+        </li>
+        <li>
+          <p class="body-2-bold">4</p>
+          <p class="body-3-regular">Quizzes</p>
+        </li>
+      </ul>
+      <div class="completion">
+        <p class="body-2-bold title">Timeframe</p>
+        <p class="body-2-medium text-primary-color">50 Days</p>
+      </div>
+      <div class="students">
+        <p class="body-2-bold title">Total Students</p>
+        <ul class="students_list dis-flex">
+          <li>
+            <img
+              src="../../../../../../assets/img/svg/orange-circle.svg"
+              alt=""
+            />
+          </li>
+          <li>
+            <img
+              src="../../../../../../assets/img/svg/orange-circle.svg"
+              alt=""
+            />
+          </li>
+          <li>
+            <img
+              src="../../../../../../assets/img/svg/orange-circle.svg"
+              alt=""
+            />
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="course-details_body">
+    <div class="course-details_body_header">
+      <ul class="dis-flex">
+        <li
+          class="body-2-medium active"
+          [class.active]="contentId === 'content'"
+          (click)="tabChange('content')"
+        >
+          Program Content
+        </li>
+        <li
+          class="body-2-medium"
+          [class.active]="contentId === 'schools'"
+          (click)="tabChange('schools')"
+        >
+          Schools
+        </li>
+        <li
+          class="body-2-medium"
+          [class.active]="contentId === 'learners'"
+          (click)="tabChange('learners')"
+        >
+          Learners
+        </li>
+      </ul>
+    </div>
+    <div class="course-details_body_content">
+      <ng-container *ngIf="contentId === 'content'">
+        <div class="courses">
+          <p class="body-3-medium">2 Courses</p>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="contentId === 'schools'">
+        <div class="table-container" style="overflow-x: auto">
+          <table>
+            <tr class="table-header">
+              <th>Name</th>
+              <th>Head of School</th>
+              <th>Phone Number</th>
+              <th>Number of students</th>
+            </tr>
+            <ng-container>
+              <tr class="table-body">
+                <td>FUNTAG College</td>
+                <td>Leslie Alexander</td>
+                <td>(629) 555-0129</td>
+                <td>4</td>
+              </tr>
+            </ng-container>
+            <ng-template>
+              <p style="text-align: center">Empty School list!</p>
+            </ng-template>
+          </table>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</section>

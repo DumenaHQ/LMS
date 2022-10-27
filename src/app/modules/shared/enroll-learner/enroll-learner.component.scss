@@ -13,6 +13,37 @@
   }
 }
 
+// Pricing tab
+.pricing_tab {
+  display: flex;
+  justify-content: center;
+  &_wrapper {
+    border: 1px solid $divider-color;
+    background-color: $grey40;
+    color: $grey100;
+    border-radius: 8px;
+    padding: calc(0.25rem + 1px);
+    display: flex;
+    align-items: center;
+    gap: $m-1;
+    .tab {
+      display: inline-block;
+      border-radius: $border-radius1;
+      padding: calc(0.25rem + 1px) $m-2;
+      font-weight: 500;
+      font-size: 14px;
+      transition: all .2s ease;
+      cursor: pointer;
+      &.active {
+        background-color: $white-color;
+        color: $text-color1;
+        box-shadow: $box-shadow;
+      }
+    }
+  }
+
+}
+
 .auth_content {
   .auth_content_form {
     margin-top: $m-3;

@@ -1,0 +1,138 @@
+@import '../../../../../../assets/css/variables.scss';
+@import '../../../../../../assets/css/mixins.scss';
+@import '../../../../../../assets/css/dashboard.scss';
+
+.course-details {
+  @include sect-bg($border-color: transparent);
+  padding: $m-4 0;
+  &_image {
+    padding: 0 $m-3;
+    img {
+      width: 100%;
+      max-height: 300px;
+    }
+  }
+  &_header {
+    padding: 0 $m-3;
+    margin-top: $m-2;
+    &_top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: $m-2;
+      margin-bottom: $m-3;
+      .left {
+          &_bottom {
+            gap: $m-2;
+            margin-top: $m-2;
+            .icons {
+                gap: $m-2;
+                flex-flow: row wrap;
+                justify-content: space-between;
+                color: $primary40;
+                img {
+                    margin-right: $m-1;
+                    width: 14px;
+                    height: 14px;
+                }
+            }
+        }
+      }
+      .right {
+        gap: $m-2;
+      }
+    }
+    &_bottom {
+        display: flex;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: $m-4;
+        .descript {
+            width: 100%;
+        }
+        .numbers {
+            gap: $m-1;
+            li {
+                display: grid;
+                place-items: center;
+                padding: $m-1;
+                border: 1px solid $divider-color;
+                border-radius: $border-radius1;
+            }
+        }
+        .students {
+            &_list {
+                margin-top: $m-1;
+                li {
+                    &:not(:first-child) {
+                        margin-left: -15px;
+                    }
+                    img {
+                        width: 25px;
+                        height: 25px;
+                        border: 1px solid $white-color;
+                        border-radius: 50%;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+        .completion {
+            p:last-child {
+                margin-top: $m-1;
+            }
+        }
+
+    }
+  }
+  &_body {
+    margin-top: $m-4;
+    &_header {
+      padding: 0 $m-4;
+      height: 3.5rem;
+      border-bottom: 1px solid $divider-color;
+      overflow: hidden;
+      ul {
+        li {
+          line-height: 3.3rem;
+          cursor: pointer;
+          transition: all .2s;
+          padding: 0 $m-3;
+          border-bottom: 2px solid transparent;
+          &.active {
+            color: $primary80;
+            border-bottom: 2px solid $primary80;
+          }
+          &:hover {
+            background-color: $grey40;
+          }
+        }
+      }
+    }
+    &_content {
+        display: flex;
+        .courses {
+            padding: $m-4;
+            width: 100%;
+            p  {
+                color: $primary20;
+            }
+        }
+      .table-container {
+        padding: $m-4;
+        width: 100%;
+        table {
+            tr {
+                &.table-header {
+                  background: linear-gradient(0deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), #2D2B6D;
+                  color: $text-color1;
+                }
+            }
+        }
+      }
+    }
+  }
+}
+
+

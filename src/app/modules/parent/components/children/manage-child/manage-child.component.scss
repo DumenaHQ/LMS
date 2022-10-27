@@ -22,6 +22,19 @@ main {
             margin-top: $m-1;
         }
       }
+      &_btns {
+        display: grid;
+        grid-gap: $m-2;
+        text-align: center;
+        .remove {
+          color: $error80;
+          text-decoration: underline;
+          transition: all 0.2s;
+          &:hover {
+            text-decoration: none;
+          }
+        }
+      }
     }
     // Learning Overview starts
     .lo {
@@ -71,3 +84,14 @@ aside {
     }
     // Badges ends
   }
+
+
+  // Confirm delete modal
+.modal {
+  @include modal($modal-area-width: 500px);
+  &_area {
+    padding: $m-6 $m-3;
+    
+    
+  }
+}

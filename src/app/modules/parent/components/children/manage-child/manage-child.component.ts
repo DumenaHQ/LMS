@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -14,10 +14,12 @@ export class ManageChildComponent implements OnInit {
   selectPlanModal: boolean = false;
   isAlert: boolean = false;
   alertMessage: any;
+  deleteModal: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +41,33 @@ export class ManageChildComponent implements OnInit {
     });
   }
 
+  // Remove child
+  removeChild() {
+    this.authService
+      .deleteEnrolledChild(this.user.id, this.child.id)
+      .subscribe((res: any) => {
+        console.log(res);
+        if (res.status === true) {
+          this.showAlert();
+        }
+      });
+  }
+
+  // Show alert
+  showAlert() {
+    // Set message
+    this.alertMessage = 'Child removed successfully!';
+
+    // Show Alert
+    this.isAlert = true;
+
+    // Hide Alert
+    setTimeout(() => {
+      this.isAlert = false;
+      this.router.navigate(['/parent/children']);
+    }, 2000);
+  }
+
   // Open Select Plan Modal
   openSelectPlanModal() {
     this.selectPlanModal = true;
@@ -49,16 +78,26 @@ export class ManageChildComponent implements OnInit {
     this.selectPlanModal = false;
   }
 
-  // Show alert
-  showAlert() {
-    // Show Alert
-    this.isAlert = true;
-
-    // Hide Alert
-    setTimeout(() => {
-      this.isAlert = false;
-    }, 2000);
+  // Open Confirm Delete Modal
+  openDeleteModal() {
+    this.deleteModal = true;
   }
+
+  // Close Confirm Delete Modal
+  closeDeleteModal() {
+    this.deleteModal = false;
+  }
+
+  // Show alert
+  // showAlert() {
+  //   // Show Alert
+  //   this.isAlert = true;
+
+  //   // Hide Alert
+  //   setTimeout(() => {
+  //     this.isAlert = false;
+  //   }, 2000);
+  // }
 
   // Set alert message
   setAlertMessage(message: any) {

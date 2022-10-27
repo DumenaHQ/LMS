@@ -14,6 +14,7 @@ import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.
 import { ManageChildComponent } from './components/children/manage-child/manage-child.component';
 import { EditChildComponent } from './components/children/edit-child/edit-child.component';
 import { PaymentHistoryComponent } from './components/payment-history/payment-history.component';
+import { ParentOnboardComponent } from './components/parent-onboard/parent-onboard.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { PaymentHistoryComponent } from './components/payment-history/payment-hi
     ManageChildComponent,
     EditChildComponent,
     PaymentHistoryComponent,
+    ParentOnboardComponent,
   ],
   imports: [
     CommonModule,

@@ -4,9 +4,9 @@
 
 <section class="children">
   <div class="children_body">
-    <div class="loader_container" *ngIf="dataLoading">
-      <div class="loader"></div>
-    </div>
+    <!-- Loader -->
+    <app-loader *ngIf="dataLoading"></app-loader>
+
     <ng-container *ngIf="children?.length > 0">
       <div class="card">
         <div class="card_item clickable" *ngFor="let i of children">
