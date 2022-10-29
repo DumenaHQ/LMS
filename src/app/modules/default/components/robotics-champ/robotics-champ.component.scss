@@ -182,6 +182,9 @@
                 top: -118px;
                 right: -150px;
                 z-index: 2;
+                @media only screen and (max-width: 667px) {
+                    display: none;
+                }
             }
             &:last-child {
                 &::after {
