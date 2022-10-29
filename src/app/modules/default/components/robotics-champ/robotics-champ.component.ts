@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-robotics-champ',
@@ -116,7 +117,17 @@ export class RoboticsChampComponent implements OnInit {
     },
   ];
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
+
+  // Route user to Sign up page and pass event as property
+  signUp() {
+    let payload = {
+      event: 'championship',
+    };
+    localStorage.setItem('event', JSON.stringify(payload));
+
+    this.router.navigate(['/signup']);
+  }
 }

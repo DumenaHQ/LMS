@@ -14,34 +14,42 @@ export class ParentSignupComponent implements OnInit {
   isSignedin: boolean = false;
   errorMessage: string = '';
   showError: boolean = false;
+  userEvent: any;
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Get user event
+    this.userEvent = JSON.parse(localStorage.getItem('event') || '[]');
+  }
 
   // Sign Up
   signUp(data: any) {
     // Set loading to true
     this.loading = true;
 
-    let payroll = {
+    let payload = {
       fullname: data.fullname,
       email: data.email,
       user_type: 'parent',
       password: data.password,
       phone: data.phone,
       resident_state: data.resident_state,
+      event: this.userEvent.event,
     };
 
     // Send users data
-    this.authService.addUser(payroll).subscribe(
+    this.authService.addUser(payload).subscribe(
       (res: any) => {
         console.log(res);
 
-        // Store user data to localstorage
-        this.authService.addUserDataToLocalStorage(res.data);
-
         if (res.status == true) {
+          // Store user data to localstorage
+          this.authService.addUserDataToLocalStorage(res.data);
+
+          // Remove event from localstorage
+          localStorage.removeItem('event');
+
           // Navigate to Dashboard
           this.router.navigate(['/verify-email']);
         }
