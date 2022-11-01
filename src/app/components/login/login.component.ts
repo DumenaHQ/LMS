@@ -27,14 +27,14 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     // Prevent logged in users from routing to this page
-    if (this.authService.isLoggedIn()) {
-      // Get user role type
-      let userData = this.authService.getUser();
-      this.userType = userData.user.role;
+    // if (this.authService.isLoggedIn()) {
+    //   // Get user role type
+    //   let userData = this.authService.getUser();
+    //   this.userType = userData.user.role;
 
-      // Route user to his/her dashboard
-      this.router.navigate(['/' + this.userType]);
-    }
+    //   // Route user to his/her dashboard
+    //   this.router.navigate(['/' + this.userType]);
+    // }
 
     // User form
     this.userForm = this.formBuilder.group({

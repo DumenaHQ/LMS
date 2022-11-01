@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -168,33 +169,61 @@ export class SchoolSignupComponent implements OnInit {
 
   projects: any;
   userEvent: any;
+  userForm: FormGroup;
+  isFormSubmitted: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     // Get user event
     this.userEvent = JSON.parse(localStorage.getItem('event') || '[]');
+
+    // User form
+    this.userForm = this.formBuilder.group({
+      school: ['', [Validators.required]],
+      fullname: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      address: ['', [Validators.required]],
+      resident_state: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      phone: ['', [Validators.required, Validators.minLength(11)]],
+    });
   }
 
   // Sign Up
-  signUp(data: any) {
+  signUp() {
     // Set loading to true
     this.loading = true;
 
-    let payroll = {
-      fullname: data.full_name,
-      email: data.email,
+    // Set submitted to true
+    this.isFormSubmitted = true;
+
+    // If Form is invalid
+    if (this.userForm.invalid) {
+      this.loading = false;
+
+      return;
+    }
+
+    // Set payload
+    let payload = {
+      fullname: this.userForm.value.fullname,
+      email: this.userForm.value.email,
       user_type: 'school',
-      password: data.password,
-      phone: data.phone,
-      resident_state: data.resident_state,
-      school: data.school,
-      address: data.address,
+      password: this.userForm.value.password,
+      phone: this.userForm.value.phone,
+      resident_state: this.userForm.value.resident_state,
+      school: this.userForm.value.school,
+      address: this.userForm.value.address,
       event: this.userEvent.event,
     };
 
     // Send users data
-    this.authService.addUser(payroll).subscribe(
+    this.authService.addUser(payload).subscribe(
       (res: any) => {
         console.log(res);
 

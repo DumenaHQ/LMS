@@ -33,60 +33,168 @@
       </div>
       <p class="body-3-regular auth_content_other_or">Or</p>
     </div> -->
-    <form
-      class="auth_content_form"
-      (ngSubmit)="signUp(usersForm.value)"
-      #usersForm="ngForm"
-    >
-      <div class="form-field col-2">
+    <form class="auth_content_form" [formGroup]="userForm">
+      <div
+        class="form-field col-2"
+        [ngClass]="{
+          'is-invalid': isFormSubmitted && userForm.controls.school.errors
+        }"
+      >
         <label for="school">Name of School</label>
         <div class="input-field">
-          <input type="text" name="school" ngModel />
+          <input type="text" name="school" formControlName="school" />
+          <i class="bx bx-error-circle icon info-icon"></i>
+        </div>
+        <!-- Error -->
+        <div *ngIf="isFormSubmitted && userForm.controls.school.errors">
+          <p
+            class="body-3-regular error-msg"
+            *ngIf="userForm.controls.school.errors.required"
+          >
+            School is required
+          </p>
         </div>
       </div>
-      <div class="form-field col-2">
+      <div
+        class="form-field col-2"
+        [ngClass]="{
+          'is-invalid': isFormSubmitted && userForm.controls.fullname.errors
+        }"
+      >
         <label for="full_name">Full Name</label>
         <div class="input-field">
-          <input type="text" name="full_name" ngModel />
+          <input type="text" name="full_name" formControlName="fullname" />
+          <i class="bx bx-error-circle icon info-icon"></i>
+        </div>
+        <!-- Error -->
+        <div *ngIf="isFormSubmitted && userForm.controls.fullname.errors">
+          <p
+            class="body-3-regular error-msg"
+            *ngIf="userForm.controls.fullname.errors.required"
+          >
+            Fullname is required
+          </p>
         </div>
       </div>
-      <div class="form-field col-2">
+      <div
+        class="form-field col-2"
+        [ngClass]="{
+          'is-invalid': isFormSubmitted && userForm.controls.email.errors
+        }"
+      >
         <label for="email">School Email Address</label>
         <div class="input-field">
-          <input type="email" name="email" ngModel />
+          <input type="email" name="email" formControlName="email" />
+          <i class="bx bx-error-circle icon info-icon"></i>
+        </div>
+        <!-- Error -->
+        <div *ngIf="isFormSubmitted && userForm.controls.email.errors">
+          <p
+            class="body-3-regular error-msg"
+            *ngIf="userForm.controls.email.errors.required"
+          >
+            Email is required
+          </p>
+          <p
+            class="body-3-regular error-msg"
+            *ngIf="userForm.controls.email.errors.email"
+          >
+            Invalid email address
+          </p>
         </div>
       </div>
-      <div class="form-field">
+      <div
+        class="form-field"
+        [ngClass]="{
+          'is-invalid': isFormSubmitted && userForm.controls.phone.errors
+        }"
+      >
         <label for="phone">Contact Number</label>
         <div class="input-field">
-          <input type="tel" name="phone" ngModel />
+          <input type="tel" name="phone" formControlName="phone" />
+          <i class="bx bx-error-circle icon info-icon"></i>
+        </div>
+        <!-- Error -->
+        <div *ngIf="isFormSubmitted && userForm.controls.phone.errors">
+          <p
+            class="body-3-regular error-msg"
+            *ngIf="userForm.controls.phone.errors.required"
+          >
+            Phone number is required
+          </p>
+          <p
+            class="body-3-regular error-msg"
+            *ngIf="userForm.controls.phone.errors.minLength"
+          >
+            Phone Number is less than 11 digits
+          </p>
         </div>
       </div>
-      <div class="form-field">
+      <div
+        class="form-field"
+        [ngClass]="{
+          'is-invalid':
+            isFormSubmitted && userForm.controls.resident_state.errors
+        }"
+      >
         <label for="resident_state">State</label>
         <div class="input-field">
-          <!-- <input type="text" name="resident_state" ngModel /> -->
-          <select name="" id="" name="resident_state" ngModel>
+          <select
+            name=""
+            id=""
+            name="resident_state"
+            formControlName="resident_state"
+          >
             <option value="" selected disabled hidden>-- Your State --</option>
             <option [value]="i.name" *ngFor="let i of statesInNigeria">
               {{ i.name }}
             </option>
           </select>
+          <i class="bx bx-error-circle icon info-icon"></i>
+        </div>
+        <!-- Error -->
+        <div *ngIf="isFormSubmitted && userForm.controls.resident_state.errors">
+          <p
+            class="body-3-regular error-msg"
+            *ngIf="userForm.controls.resident_state.errors.required"
+          >
+            State is required
+          </p>
         </div>
       </div>
-      <div class="form-field col-2">
+      <div
+        class="form-field col-2"
+        [ngClass]="{
+          'is-invalid': isFormSubmitted && userForm.controls.address.errors
+        }"
+      >
         <label for="address">Address</label>
         <div class="input-field">
-          <input type="text" name="address" ngModel />
+          <input type="text" name="address" formControlName="address" />
+          <i class="bx bx-error-circle icon info-icon"></i>
+        </div>
+        <!-- Error -->
+        <div *ngIf="isFormSubmitted && userForm.controls.address.errors">
+          <p
+            class="body-3-regular error-msg"
+            *ngIf="userForm.controls.address.errors.required"
+          >
+            Address is required
+          </p>
         </div>
       </div>
-      <div class="form-field col-2">
+      <div
+        class="form-field col-2"
+        [ngClass]="{
+          'is-invalid': isFormSubmitted && userForm.controls.password.errors
+        }"
+      >
         <label for="password">Password</label>
         <div class="input-field">
           <input
             type="password"
             name="password"
-            ngModel
+            formControlName="password"
             [type]="hide ? 'password' : 'text'"
           />
           <i
@@ -96,9 +204,22 @@
             (click)="hide = !hide"
           ></i>
         </div>
-        <p class="body-3-regular warning">
-          Your password must be at least 6 characters
-        </p>
+        <!-- Error -->
+        <div *ngIf="isFormSubmitted && userForm.controls.password.errors">
+          <p
+            class="body-3-regular error-msg"
+            *ngIf="userForm.controls.password.errors.required"
+          >
+            Password is required
+          </p>
+          <p
+            class="body-3-regular error-msg"
+            *ngIf="userForm.controls.password.errors.minLength"
+          >
+            Your password must be at least 6 characters
+          </p>
+        </div>
+        <p class="body-3-regular warning"></p>
       </div>
       <!-- Terms and conditions -->
       <p class="col-2 terms">
@@ -114,7 +235,11 @@
       <span class="message" *ngIf="showError">{{ errorMessage }}</span>
       <!-- Submit Button -->
       <div class="form-btn col-2">
-        <button class="btn prim_btn clickable" [disabled]="loading">
+        <button
+          class="btn prim_btn clickable"
+          [disabled]="loading"
+          (click)="signUp()"
+        >
           <span *ngIf="!loading">Sign Up</span>
           <span *ngIf="loading">Processing...</span>
         </button>
