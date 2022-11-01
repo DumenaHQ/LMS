@@ -168,26 +168,46 @@ export class SchoolSignupComponent implements OnInit {
   ];
 
   projects: any;
+  userEvent: any;
+  userForm: FormGroup;
+  isFormSubmitted: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private formBuilder: FormBuilder
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Get user event
+    this.userEvent = JSON.parse(localStorage.getItem('event') || '[]');
+
+    // User form
+    this.userForm = this.formBuilder.group({
+      school: ['', [Validators.required]],
+      fullname: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      address: ['', [Validators.required]],
+      resident_state: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      phone: ['', [Validators.required, Validators.minLength(11)]],
+    });
+  }
 
   // Sign Up
   signUp() {
     // Set loading to true
     this.loading = true;
 
-    let payroll = {
-      fullname: data.full_name,
-      email: data.email,
-      user_type: 'school',
-      password: data.password,
-      phone: data.phone,
-      resident_state: data.resident_state,
-      school: data.school,
-      address: data.address,
-    };
+    // Set submitted to true
+    this.isFormSubmitted = true;
+
+    // If Form is invalid
+    if (this.userForm.invalid) {
+      this.loading = false;
+
+      return;
+    }
 
     // Set payload
     let payload = {
@@ -203,13 +223,16 @@ export class SchoolSignupComponent implements OnInit {
     };
 
     // Send users data
-    this.authService.addUser(payroll).subscribe(
+    this.authService.addUser(payload).subscribe(
       (res: any) => {
         console.log(res);
 
         if (res.status == true) {
           // Store user data to localstorage
           this.authService.addUserDataToLocalStorage(res.data);
+
+          // Remove event from localstorage
+          localStorage.removeItem('event');
 
           // Navigate to Dashboard
           this.router.navigate(['/verify-email']);
