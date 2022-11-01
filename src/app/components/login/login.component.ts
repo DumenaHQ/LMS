@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   userForm: any = FormGroup;
   alertMessage: string = '';
   isAlert: boolean = false;
+  isFormSubmitted: boolean = false;
 
   constructor(
     private router: Router,
@@ -38,8 +39,8 @@ export class LoginComponent implements OnInit {
 
     // User form
     this.userForm = this.formBuilder.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
@@ -47,6 +48,16 @@ export class LoginComponent implements OnInit {
   login() {
     // Set loading to true
     this.loading = true;
+
+    // Set submitted to true
+    this.isFormSubmitted = true;
+
+    // If Form is invalid
+    if (this.userForm.invalid) {
+      this.loading = false;
+
+      return;
+    }
 
     // Send users data
     this.authService.login(this.userForm.value).subscribe(
