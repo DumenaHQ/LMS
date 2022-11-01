@@ -15,17 +15,39 @@
       <p class="body-3-regular auth_content_other_or">Or</p>
     </div> -->
     <form class="auth_content_form" [formGroup]="userForm">
-      <div class="form-field col-2">
+      <div
+        class="form-field col-2"
+        [ngClass]="{
+          'is-invalid': isFormSubmitted && userForm.controls.email.errors
+        }"
+      >
         <label for="email">Email Address or Username</label>
         <div class="input-field">
           <input type="email" name="email" formControlName="email" required />
-          <!-- pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"
-            email="true" -->
-          <!-- <i class="bx bx-error-circle icon"></i> -->
+          <i class="bx bx-error-circle icon info-icon"></i>
         </div>
-        <!-- <p class="body-3-regular warning">Invalid email address</p> -->
+        <!-- Error -->
+        <div *ngIf="isFormSubmitted && userForm.controls.email.errors">
+          <p
+            class="body-3-regular error-msg"
+            *ngIf="userForm.controls.email.errors.required"
+          >
+            Email is required
+          </p>
+          <p
+            class="body-3-regular error-msg"
+            *ngIf="userForm.controls.email.errors.email"
+          >
+            Invalid email address
+          </p>
+        </div>
       </div>
-      <div class="form-field col-2">
+      <div
+        class="form-field col-2"
+        [ngClass]="{
+          'is-invalid': isFormSubmitted && userForm.controls.password.errors
+        }"
+      >
         <label for="password">Password</label>
         <div class="input-field">
           <input
@@ -40,6 +62,21 @@
             "
             (click)="hide = !hide"
           ></i>
+        </div>
+        <!-- Error -->
+        <div *ngIf="isFormSubmitted && userForm.controls.password.errors">
+          <p
+            class="body-3-regular error-msg"
+            *ngIf="userForm.controls.password.errors.required"
+          >
+            Password is required
+          </p>
+          <p
+            class="body-3-regular error-msg"
+            *ngIf="userForm.controls.password.errors.minLength"
+          >
+            Your password must be at least 6 characters
+          </p>
         </div>
       </div>
       <!-- Forgot Password -->
