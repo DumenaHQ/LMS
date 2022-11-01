@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  baseUrl: 'https://api.dumena.com/',
-  paystackKey: 'pk_live_651e4ffb3b25a40cec00a89618ff55c62d5cfae6',
+  baseUrl: 'https://dev.dumena.com/',
+  paystackKey: 'pk_test_d586eb9d6d6ec62439571f56fea7c8330e4d4366',
   // livePaystackKey: 'pk_live_651e4ffb3b25a40cec00a89618ff55c62d5cfae6',
 };
