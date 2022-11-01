@@ -121,12 +121,10 @@ export class RoboticsChampComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // Route user to signup and pass event value
   signUp() {
     let payload = {
       event: 'championship',
     };
-
     localStorage.setItem('event', JSON.stringify(payload));
 
     this.router.navigate(['/signup']);

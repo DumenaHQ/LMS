@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -14,42 +15,38 @@ export class ParentSignupComponent implements OnInit {
   isSignedin: boolean = false;
   errorMessage: string = '';
   showError: boolean = false;
-  userEvent: any;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private formBuilder: FormBuilder
+  ) {}
 
-  ngOnInit(): void {
-    // Get user Event
-    this.userEvent = JSON.parse(localStorage.getItem('event') || '[]');
-  }
+  ngOnInit(): void {}
 
   // Sign Up
-  signUp(data: any) {
+  signUp() {
     // Set loading to true
     this.loading = true;
 
-    let payload = {
+    let payroll = {
       fullname: data.fullname,
       email: data.email,
       user_type: 'parent',
       password: data.password,
       phone: data.phone,
       resident_state: data.resident_state,
-      event: this.userEvent.event,
     };
 
     // Send users data
-    this.authService.addUser(payload).subscribe(
+    this.authService.addUser(payroll).subscribe(
       (res: any) => {
         console.log(res);
 
+        // Store user data to localstorage
+        this.authService.addUserDataToLocalStorage(res.data);
+
         if (res.status == true) {
-          // Store user data to localstorage
-          this.authService.addUserDataToLocalStorage(res.data);
-
-          // Remove event from localstorage
-          localStorage.removeItem('event');
-
           // Navigate to Dashboard
           this.router.navigate(['/verify-email']);
         }

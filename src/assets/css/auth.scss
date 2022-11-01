@@ -76,9 +76,6 @@
       }
     }
     .form-field {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
       label {
         display: inline-block;
         font-weight: 500;
@@ -107,28 +104,30 @@
           background-color: transparent;
           border-radius: $border-radius2;
         }
+        select {
+          padding: 0.9rem 0;
+        }
         .icon {
           color: #D1D1E0;
           font-size: 20px;
-          padding: $m-2 0;
+        }
+        .info-icon {
+          display: none;
         }
       }
       // Error
-      &.error {
+      &.is-invalid {
         .input-field {
           border: 1px solid $error80;
         }
-        .icon {
-          color: $error80;
+        .info-icon {
+          display: block !important;
+          color: $error80 !important;
         }
-        .warning {
+        .error-msg {
           color: $error80;
+          margin-top: $m-1;
         }
-      }
-      .warning {
-        color: $text-color2;
-        margin-top: $m-1;
-
       }
     }
     .terms {

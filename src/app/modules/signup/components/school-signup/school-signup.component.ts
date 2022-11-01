@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -167,17 +168,13 @@ export class SchoolSignupComponent implements OnInit {
   ];
 
   projects: any;
-  userEvent: any;
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit(): void {
-    // Get user Event
-    this.userEvent = JSON.parse(localStorage.getItem('event') || '[]');
-  }
+  ngOnInit(): void {}
 
   // Sign Up
-  signUp(data: any) {
+  signUp() {
     // Set loading to true
     this.loading = true;
 
@@ -190,6 +187,18 @@ export class SchoolSignupComponent implements OnInit {
       resident_state: data.resident_state,
       school: data.school,
       address: data.address,
+    };
+
+    // Set payload
+    let payload = {
+      fullname: this.userForm.value.fullname,
+      email: this.userForm.value.email,
+      user_type: 'school',
+      password: this.userForm.value.password,
+      phone: this.userForm.value.phone,
+      resident_state: this.userForm.value.resident_state,
+      school: this.userForm.value.school,
+      address: this.userForm.value.address,
       event: this.userEvent.event,
     };
 
@@ -201,9 +210,6 @@ export class SchoolSignupComponent implements OnInit {
         if (res.status == true) {
           // Store user data to localstorage
           this.authService.addUserDataToLocalStorage(res.data);
-
-          // Remove event from localstorage
-          localStorage.removeItem('event');
 
           // Navigate to Dashboard
           this.router.navigate(['/verify-email']);
