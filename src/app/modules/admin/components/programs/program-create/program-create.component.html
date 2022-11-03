@@ -1,3 +1,9 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+></app-alert-popup>
+
 <section class="set-info" app>
   <div class="set-info_header">
     <h3 class="text-primary-color">Set the Program Information</h3>
@@ -6,23 +12,31 @@
       program
     </p>
   </div>
-  <form>
+  <button class="btn prim_btn" (click)="createProgram()">Save</button>
+  <form [formGroup]="programForm">
     <div class="form_control">
-      <label for="title">Program Title</label>
+      <label for="name">Program Title</label>
       <div class="form_control_field">
-        <input type="text" id="title" placeholder="Type here" />
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Type here"
+          formControlName="name"
+        />
       </div>
     </div>
-    <div class="form_control details">
-      <label for="details">Program Details</label>
+    <div class="form_control description">
+      <label for="description">Program Details</label>
       <div class="form_control_field">
         <textarea
-          name=""
-          id="details"
+          name="description"
+          id="description"
           cols="30"
           rows="5"
           placeholder="Type here"
           spellcheck="true"
+          formControlName="description"
         ></textarea>
       </div>
     </div>
@@ -31,11 +45,27 @@
         <h3 class="text-primary-color">Program Timeframe</h3>
         <p>Confugure the start and end date of the program</p>
       </div>
-      <label class="">
-        <input type="date" id="" />
-      </label>
+      <div class="set-date-area">
+        <label for="start_date" class="date start_date">
+          <input
+            type="date"
+            id="start_date"
+            name="start_date"
+            formControlName="start_date"
+          />
+        </label>
+        <i class="bx bx-minus icon"></i>
+        <label for="end_date" class="date end_date">
+          <input
+            type="date"
+            id="end_date"
+            name="end_date"
+            formControlName="end_date"
+          />
+        </label>
+      </div>
     </div>
   </form>
 </section>
 
-<app-add-course-modal></app-add-course-modal>
+<!-- <app-add-course-modal></app-add-course-modal> -->

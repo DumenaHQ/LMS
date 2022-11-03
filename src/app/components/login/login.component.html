@@ -1,3 +1,9 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+></app-alert-popup>
+
 <div class="auth login">
   <div class="auth_content">
     <span class="auth_content_logo clickable" routerLink="/">
@@ -125,9 +131,3 @@
     </div>
   </div>
 </div>
-
-<!-- Alert message -->
-<app-alert-popup
-  *ngIf="isAlert"
-  [alertMessage]="alertMessage"
-></app-alert-popup>

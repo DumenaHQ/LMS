@@ -19,87 +19,144 @@
               <span
                 class="tab"
                 [class.active]="billingId == 'monthly'"
-                (click)="tabChange('monthly')"
+                (click)="tabChange('single')"
                 >Single enrollement
               </span>
               <span
                 class="tab"
                 [class.active]="billingId == 'yearly'"
-                (click)="tabChange('yearly')"
+                (click)="tabChange('batch')"
                 >Batch enrollement
               </span>
             </div>
           </div>
         </div>
-        <div class="form-field col-2 avatar">
-          <label for="avatar">Select an avatar for your {{ title }}</label>
-          <div class="avatar_list dis-flex">
-            <div class="" *ngFor="let i of avatars">
-              <input
-                type="radio"
-                name="avatar"
-                [id]="i.name"
-                (change)="selectAvatar(i.id)"
-                style="display: none"
-                ngModel
-              />
-              <label [for]="i.name">
-                <img
-                  [src]="i.image"
-                  alt="avatar"
-                  class="avatar_item"
-                  [class.selected]="i.selected"
+        <!-- Single enrollment starts *ngIf="billingId == 'single'" -->
+        <div class="single-enroll col-2">
+          <div class="form-field col-2 avatar">
+            <label for="avatar">Select an avatar for your {{ title }}</label>
+            <div class="avatar_list dis-flex">
+              <div class="" *ngFor="let i of avatars">
+                <input
+                  type="radio"
+                  name="avatar"
+                  [id]="i.name"
+                  (change)="selectAvatar(i.id)"
+                  style="display: none"
+                  ngModel
                 />
-              </label>
+                <label [for]="i.name">
+                  <img
+                    [src]="i.image"
+                    alt="avatar"
+                    class="avatar_item"
+                    [class.selected]="i.selected"
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="first-name">First Name</label>
+            <div class="input-field">
+              <input type="text" name="firstname" ngModel required />
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="last-name">Last Name</label>
+            <div class="input-field">
+              <input type="text" name="lastname" ngModel required />
+            </div>
+          </div>
+          <div class="form-field col-2">
+            <label for="password">Password</label>
+            <div class="input-field">
+              <input
+                type="password"
+                name="password"
+                ngModel
+                required
+                [type]="hide ? 'password' : 'text'"
+              />
+              <i
+                [class]="
+                  hide
+                    ? 'bx bx-show clickable icon'
+                    : 'bx bx-hide clickable icon'
+                "
+                (click)="hide = !hide"
+              ></i>
+            </div>
+            <p class="body-3-regular warning">
+              Your password must be at least 6 characters
+            </p>
+          </div>
+          <span class="message col-2" *ngIf="showError">{{
+            errorMessage
+          }}</span>
+          <!-- Submit Button -->
+          <div class="form-btns col-2 dis-flex">
+            <span class="grey_btn clickable" (click)="closeAddModal()"
+              >Cancel</span
+            >
+            <div class="continue">
+              <button class="btn prim_btn clickable" [disabled]="loading">
+                <span *ngIf="!loading">Continue</span>
+                <span *ngIf="loading">Processing...</span>
+              </button>
             </div>
           </div>
         </div>
-        <div class="form-field">
-          <label for="first-name">First Name</label>
-          <div class="input-field">
-            <input type="text" name="firstname" ngModel required />
+        <!-- Single enrollment ends -->
+
+        <!-- Batch enrollment starts *ngIf="billingId == 'batch'" -->
+        <div class="batch-enroll col-2">
+          <div class="form-field col-2">
+            <label for=""
+              >Upload an excel sheet containing the child's first name, last
+              name, gender, parent email, and parent phone number.</label
+            >
+            <div
+              class="form-field select-image clickable"
+              (click)="fileInput.click()"
+              appDragDrop
+              (fileDropped)="uploadFile($event)"
+            >
+              <input
+                type="file"
+                #fileInput
+                hidden
+                (change)="uploadFile($any($event).target.files)"
+              />
+              <img
+                [src]="
+                  showPreviewImage
+                    ? previewImage
+                    : '../../../assets/img/select-Image.svg'
+                "
+                alt=""
+              />
+              <p class="body-3-regular">
+                Drag your image here or
+                <span class="text-primary-color">browse</span>
+              </p>
+              <p class="body-3-regular">Max file size 4MB</p>
+            </div>
+          </div>
+          <!-- Submit Button -->
+          <div class="form-btns col-2 dis-flex">
+            <span class="grey_btn clickable" (click)="closeAddModal()"
+              >Cancel</span
+            >
+            <div class="continue">
+              <button class="btn prim_btn clickable" [disabled]="loading">
+                <span *ngIf="!loading">Continue</span>
+                <span *ngIf="loading">Processing...</span>
+              </button>
+            </div>
           </div>
         </div>
-        <div class="form-field">
-          <label for="last-name">Last Name</label>
-          <div class="input-field">
-            <input type="text" name="lastname" ngModel required />
-          </div>
-        </div>
-        <div class="form-field col-2">
-          <label for="password">Password</label>
-          <div class="input-field">
-            <input
-              type="password"
-              name="password"
-              ngModel
-              required
-              [type]="hide ? 'password' : 'text'"
-            />
-            <i
-              [class]="
-                hide ? 'bx bx-show clickable icon' : 'bx bx-hide clickable icon'
-              "
-              (click)="hide = !hide"
-            ></i>
-          </div>
-          <p class="body-3-regular warning">
-            Your password must be at least 6 characters
-          </p>
-        </div>
-        <span class="message col-2" *ngIf="showError">{{ errorMessage }}</span>
-        <!-- Submit Button -->
-        <div class="form-btns col-2 dis-flex">
-          <span class="grey_btn clickable" (click)="closeAddModal()"
-            >Cancel</span
-          >
-          <div class="continue">
-            <button class="btn prim_btn clickable" [disabled]="loading">
-              <span *ngIf="!loading">Continue</span>
-              <span *ngIf="loading">Processing...</span>
-            </button>
-          </div>
-        </div>
+        <!-- Batch enrollment ends -->
       </form>
     </div>
   </div>

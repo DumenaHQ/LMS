@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProgramsService } from 'src/app/services/programs.service';
 
 @Component({
   selector: 'app-school-programs-overview',
@@ -7,8 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SchoolProgramsOverviewComponent implements OnInit {
   dataLoading: boolean = true;
+  programs: any;
 
-  constructor() {}
+  constructor(private programsService: ProgramsService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Get programs
+    this.programsService.getAllPrograms().subscribe({
+      next: (res: any) => {
+        this.programs = res.data.programs;
+      },
+      error: (e) => console.error(e),
+      complete: () => {
+        this.dataLoading = false;
+      },
+    });
+  }
 }

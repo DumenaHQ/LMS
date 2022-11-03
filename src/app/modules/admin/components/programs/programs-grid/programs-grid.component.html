@@ -1,39 +1,44 @@
 <div class="programs_disgrid">
-  <div class="card">
-    <div
-      class="card_item clickable"
-      routerLink="programs-details/id"
-      title="i.title"
-    >
+  <div class="program_card">
+    <div class="program_card_item" *ngFor="let program of programs">
       <img
-        src="../../../../../../assets/img/library/library1.png"
+        src="../../../../../../assets/img/program-thumbnail-patterns.svg"
         alt="image"
-        class="card_item_image"
+        class="program_card_item_image clickable"
+        (click)="displayProgram(program.id)"
       />
 
-      <div class="card_item_details">
-        <div class="card_item_details_right">
-          <div class="card_item_details_right_header">
-            <h5 class="title">AI Robotics Championship</h5>
+      <div class="program_card_item_details">
+        <div class="program_card_item_details_right">
+          <div class="program_card_item_details_right_header">
+            <h5
+              class="title clickable"
+              [title]="program.name"
+              (click)="displayProgram(program.id)"
+            >
+              {{
+                program?.name.length > 20
+                  ? program?.name.slice(0, 20) + "..."
+                  : program?.name
+              }}
+            </h5>
             <p>
-              Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-              amet sint. Velit officia consequat duis enim velit mollit.
-              Exercitation veniam consequat sunt nostrud amet.
+              {{ program.description }}
             </p>
           </div>
           <ul class="dis-flex">
             <li>
-              <p class="body-2-bold">2</p>
+              <p class="body-2-bold">{{ program.courses.length }}</p>
               <p class="body-3-regular">Courses</p>
             </li>
             <li>
-              <p class="body-2-bold">4</p>
-              <p class="body-3-regular">Quizzes</p>
+              <p class="body-2-bold">{{ program.schools.length }}</p>
+              <p class="body-3-regular">Schools</p>
             </li>
           </ul>
         </div>
 
-        <div class="card_item_details_left">
+        <div class="program_card_item_details_left">
           <div class="students">
             <p class="body-2-regular title">Total Students</p>
             <ul class="students_list dis-flex">
@@ -58,20 +63,44 @@
             </ul>
           </div>
           <div class="completion">
-            <p class="body-2-regular title">Completion rate</p>
-            <p class="body-2-medium">80%</p>
+            <p class="body-2-regular title">Start date</p>
+            <p class="body-2-medium">
+              {{ program.start_date | date: "mediumDate" }}
+            </p>
+            <!-- {{ days > 1 ? days : "0" }} day{{ days < 2 ? "" : "s" }} -->
           </div>
           <div class="status">
-            <span class="success_btn"> Published </span>
-            <!-- <span [ngClass]="i.status ? 'success_btn' : 'grey_btn'">{{
-                    i.status ? "Published" : "Draft"
-                  }}</span> -->
+            <span
+              [ngClass]="
+                program.status === 'active' ? 'success_btn' : 'grey_btn'
+              "
+              >{{ program.status === "active" ? "Published" : "Draft" }}</span
+            >
           </div>
         </div>
       </div>
 
       <div class="actions">
-        <img src="../../../../../../assets/img/action.svg" alt="image" />
+        <img
+          src="../../../../../../assets/img/action.svg"
+          class="clickable"
+          alt="image"
+          (click)="actionBtn.click()"
+        />
+        <input
+          type="checkbox"
+          name="action-btn"
+          id="action-btn"
+          style="display: none"
+          #actionBtn
+        />
+        <div class="dropdown">
+          <small
+            class="body-3-regular delete clickable"
+            (click)="deleteProgram(program)"
+            >Delete</small
+          >
+        </div>
       </div>
     </div>
   </div>

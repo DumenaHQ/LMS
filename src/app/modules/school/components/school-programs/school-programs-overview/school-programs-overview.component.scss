@@ -43,12 +43,13 @@
     }
   }
 }
+
 .programs {
     .programs_disgrid {
         width: 100%;
-        .card {
-            // @include card(200px);
-            display: block;
+        .program_card {
+            display: grid;
+            grid-gap: $m-2;
             &_item {
                 border: 1px solid $divider-color;
                 border-radius: $border-radius1;
@@ -69,6 +70,7 @@
                     }      
                 }
                 &_details {
+                    width: 100%;
                     display: flex;  
                     gap: $m-2;
                     @media only screen and (max-width: 997px) {

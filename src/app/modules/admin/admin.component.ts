@@ -67,9 +67,9 @@ export class AdminComponent implements OnInit {
     this.user = userData.user;
 
     // Prevent Non-admin from routing here
-    if (this.user.role !== 'admin') {
-      this.router.navigate(['/login']);
-    }
+    // if (this.user.role !== 'admin') {
+    //   this.router.navigate(['/login']);
+    // }
   }
 
   // Open Menu

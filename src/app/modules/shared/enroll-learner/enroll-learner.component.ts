@@ -21,6 +21,9 @@ export class EnrollLearnerComponent implements OnInit {
   showError: boolean = false;
   user: any;
   selectedAVatarUrl: string = '';
+  selectedFile: File;
+  previewImage: any;
+  showPreviewImage: boolean = false;
 
   avatars = [
     {
@@ -61,7 +64,7 @@ export class EnrollLearnerComponent implements OnInit {
     },
   ];
   messageval: string;
-  billingId: string = 'monthly';
+  billingId: string = 'single';
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -156,6 +159,30 @@ export class EnrollLearnerComponent implements OnInit {
     this.alertMessaage.emit(this.messageval);
 
     this.isAlert.emit();
+  }
+
+  // Upload File
+  uploadFile(event: any) {
+    // for (let index = 0; index < event.length; index++) {
+    //   const element = event[index];
+    //   this.files.push(element.name)
+    // }
+
+    // Preview File Selected
+    this.selectedFile = event[0];
+
+    if (this.selectedFile) {
+      let reader = new FileReader();
+      reader.readAsDataURL(this.selectedFile);
+      reader.onload = (e: any) => {
+        this.previewImage = e.target.result;
+        if (this.previewImage !== '') {
+          this.showPreviewImage = true;
+        } else {
+          this.showPreviewImage = false;
+        }
+      };
+    }
   }
 
   // Close Add Modal
