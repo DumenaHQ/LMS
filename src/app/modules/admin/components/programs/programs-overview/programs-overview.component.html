@@ -34,12 +34,12 @@
 <section class="programs">
   <app-loader *ngIf="dataLoading"></app-loader>
 
-  <ng-container *ngIf="allPrograms !== []">
-    <app-programs-grid *ngIf="isDisplayGrid"></app-programs-grid>
+  <ng-container *ngIf="programs?.length > 0">
+    <app-programs-grid [programs]="programs" [days]="days"></app-programs-grid>
   </ng-container>
 
   <!-- Course Blank -->
-  <ng-container *ngIf="allPrograms === []">
+  <ng-container *ngIf="programs?.length === 0">
     <app-programs-blank></app-programs-blank>
   </ng-container>
 </section>

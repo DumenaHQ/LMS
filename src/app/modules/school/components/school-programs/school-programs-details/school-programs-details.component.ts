@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ProgramsService } from 'src/app/services/programs.service';
 
 @Component({
   selector: 'app-school-programs-details',
@@ -7,27 +9,48 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SchoolProgramsDetailsComponent implements OnInit {
   contentId: any = 'content';
-  addModal: boolean = false;
+  addChildToProgramModal: boolean = false;
   title: string = 'child';
   isAlert: boolean = false;
   alertMessage: string = '';
+  currentProgramId: any;
+  program: any;
 
-  constructor() {}
+  constructor(
+    private programsService: ProgramsService,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Get Current Program
+    this.currentProgramId = this.activatedRoute.snapshot.params;
+
+    // Get programs
+    this.programsService
+      .getProgramsById(this.currentProgramId.programId)
+      .subscribe({
+        next: (res: any) => {
+          this.program = res.data.program;
+        },
+        error: (e) => console.error(e),
+        // complete: () => {
+        //   this.dataLoading = false;
+        // },
+      });
+  }
 
   // Tab change
   tabChange(ids: any) {
     this.contentId = ids;
   }
   // Open Add Child Modal
-  openAddModal() {
-    this.addModal = true;
+  openAddChildToProgramModal() {
+    this.addChildToProgramModal = true;
   }
 
   // Close Add Child Modal
-  closeAddModal() {
-    this.addModal = false;
+  closeAddChildToProgramModal() {
+    this.addChildToProgramModal = false;
   }
 
   // Show alert

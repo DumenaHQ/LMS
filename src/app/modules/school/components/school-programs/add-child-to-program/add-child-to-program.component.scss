@@ -1,6 +1,6 @@
-@import '../../../../assets/css/variables.scss';
-@import '../../../../assets/css/mixins.scss';
-@import '../../../../assets/css/auth.scss';
+@import '../../../../../../assets/css/variables.scss';
+@import '../../../../../../assets/css/mixins.scss';
+@import '../../../../../../assets/css/auth.scss';
 
 
 @mixin hover {
@@ -92,17 +92,6 @@
       }
     }
     .batch-enroll {
-      // .select-image {
-      //   padding: $m-2 0;
-      //   width: 100%;
-      //   background-color: transparent;
-      //   border: none;
-      //   outline: none;
-      //   height: 100%;
-      //   &::placeholder {
-      //     font-size: 16px;
-      //   }
-      // }
       .select-image {
         padding:  0;
         display: grid;

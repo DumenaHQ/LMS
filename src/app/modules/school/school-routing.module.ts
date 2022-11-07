@@ -54,7 +54,7 @@ const routes: Routes = [
         },
       },
       {
-        path: 'programs/programs-details/:programId',
+        path: 'programs/:programId',
         component: SchoolProgramsDetailsComponent,
         data: {
           title: 'Programs',

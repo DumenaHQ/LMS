@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProgramsService } from 'src/app/services/programs.service';
 
 @Component({
   selector: 'app-programs-overview',
@@ -38,23 +39,35 @@ export class ProgramsOverviewComponent implements OnInit {
       isDeleted: false,
     },
   ];
-
-  isDisplayGrid: boolean = true;
   allCourses: any;
   dataLoading: boolean = true;
+  programs: any;
+  days: number = 0;
 
-  constructor() {}
+  constructor(private programsService: ProgramsService) {}
 
   ngOnInit(): void {
-    //   this.programsService.getAllPrograms().subscribe({
-    //     next: (res: any) => {
-    //       this.allCourses = res.data.courses;
-    //       console.log(this.allCourses);
-    //     },
-    //     error: (e) => console.error(e),
-    //     complete: () => {
-    //       this.dataLoading = false;
-    //     },
-    //   });
+    // Get programs
+    this.programsService.getAllPrograms().subscribe({
+      next: (res: any) => {
+        this.programs = res.data.programs;
+        this.programs.forEach((p: any) => {
+          // this.setTimeframe(p.start_date);
+        });
+      },
+      error: (e) => console.error(e),
+      complete: () => {
+        this.dataLoading = false;
+      },
+    });
   }
+
+  // Set timeframe
+  // setTimeframe(date: string) {
+  //   var futureDate = new Date(date).getTime();
+  //   var currentDate = new Date().getTime();
+  //   var timeLeft = futureDate - currentDate;
+
+  //   this.days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+  // }
 }

@@ -152,9 +152,9 @@
         }
       }
       &.school {
-        @media only screen and (min-width: 840px) {
-          border-radius: 0 $border-radius3 $border-radius3 0;
-        }
+        // @media only screen and (min-width: 840px) {
+        //   border-radius: 0 $border-radius3 $border-radius3 0;
+        // }
         .icon {
           background-color: $fushiapink;
         }

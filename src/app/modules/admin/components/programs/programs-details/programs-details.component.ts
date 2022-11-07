@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ProgramsService } from 'src/app/services/programs.service';
 
 @Component({
   selector: 'app-programs-details',
@@ -7,10 +9,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProgramsDetailsComponent implements OnInit {
   contentId: any = 'content';
+  currentProgramId: any;
+  program: any;
 
-  constructor() {}
+  constructor(
+    private programsService: ProgramsService,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Get Current Program
+    this.currentProgramId = this.activatedRoute.snapshot.params;
+
+    // Get programs
+    this.programsService
+      .getProgramsById(this.currentProgramId.programId)
+      .subscribe({
+        next: (res: any) => {
+          this.program = res.data.program;
+        },
+        error: (e) => console.error(e),
+        // complete: () => {
+        //   this.dataLoading = false;
+        // },
+      });
+  }
 
   // Tab change
   tabChange(ids: any) {

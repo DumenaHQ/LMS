@@ -5,33 +5,37 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class PaymentService {
+export class ProgramsService {
   baseUrl: string = environment.baseUrl;
-  paystackKey: string = environment.paystackKey;
 
   constructor(private http: HttpClient) {}
 
-  // Get All Payments (for Admin)
-  getPayments() {
+  // Get All Programs
+  getAllPrograms() {
+    return this.http.get(`${this.baseUrl}programs`, this.getHttpOptions());
+  }
+
+  // Get Programs by id
+  getProgramsById(programId: any) {
     return this.http.get(
-      this.baseUrl + 'users/:user_id/payments',
+      `${this.baseUrl}programs/${programId}`,
       this.getHttpOptions()
     );
   }
 
-  // Get payments by user id
-  getPaymentsByUserId(userId: any) {
-    return this.http.get(
-      `${this.baseUrl}users/${userId}/payments`,
-      this.getHttpOptions()
-    );
-  }
-
-  // Verify Payment
-  verifyPayment(data: any) {
+  // Add program
+  addProgram(data: any) {
     return this.http.post(
-      this.baseUrl + 'payments/verify',
+      `${this.baseUrl}programs`,
       data,
+      this.getHttpOptions()
+    );
+  }
+
+  // Delete program
+  deleteProgram(programId: any) {
+    return this.http.delete(
+      `${this.baseUrl}programs/${programId}`,
       this.getHttpOptions()
     );
   }

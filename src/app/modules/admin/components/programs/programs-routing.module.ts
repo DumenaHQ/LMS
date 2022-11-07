@@ -19,7 +19,7 @@ const routes: Routes = [
         },
       },
       {
-        path: 'programs-details/:programId',
+        path: ':programId',
         component: ProgramsDetailsComponent,
         data: {
           title: 'Programs',

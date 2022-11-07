@@ -3,9 +3,9 @@
 
 .programs_disgrid {
     width: 100%;
-    .card {
-        // @include card(200px);
-        display: block;
+    .program_card {
+        display: grid;
+        grid-gap: $m-2;
         &_item {
             border: 1px solid $divider-color;
             border-radius: $border-radius1;
@@ -19,6 +19,7 @@
             }
             &_image {
                 max-width: 280px;
+                height: 173px;
                 width: 100%;  
                 @media only screen and (max-width: 997px) {
                     max-width: 100%;
@@ -26,6 +27,7 @@
                 }      
             }
             &_details {
+                width: 100%;
                 display: flex;  
                 gap: $m-2;
                 @media only screen and (max-width: 997px) {
@@ -85,6 +87,27 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+            // Actions
+            .actions {
+                position: relative;
+                input:checked + .dropdown {
+                    display: block;
+                }
+                .dropdown {
+                    display: none;
+                    position: absolute;
+                    top: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: $white-color;
+                    box-shadow: $box-shadow;
+                    padding: $m-1;
+                    border-radius: 2.5px;
+                    .delete {
+                        color: $error80;
                     }
                 }
             }
