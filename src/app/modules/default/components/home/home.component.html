@@ -66,47 +66,8 @@
     <ul class="partners_list">
       <div class="hwrap">
         <div class="hmove">
-          <li class="partners_list_item">
-            <img
-              src="../../../../../assets/img/partners/partner1.png"
-              alt="image"
-            />
-          </li>
-          <li class="partners_list_item">
-            <img
-              src="../../../../../assets/img/partners/partner2.png"
-              alt="image"
-            />
-          </li>
-          <li class="partners_list_item">
-            <img
-              src="../../../../../assets/img/partners/partner3.png"
-              alt="image"
-            />
-          </li>
-          <li class="partners_list_item">
-            <img
-              src="../../../../../assets/img/partners/partner4.png"
-              alt="image"
-            />
-          </li>
-          <li class="partners_list_item">
-            <img
-              src="../../../../../assets/img/partners/partner5.png"
-              alt="image"
-            />
-          </li>
-          <li class="partners_list_item">
-            <img
-              src="../../../../../assets/img/partners/partner6.png"
-              alt="image"
-            />
-          </li>
-          <li class="partners_list_item">
-            <img
-              src="../../../../../assets/img/partners/partner7.png"
-              alt="image"
-            />
+          <li class="partners_list_item" *ngFor="let partner of partners">
+            <img [src]="partner.image" alt="partner" />
           </li>
         </div>
       </div>
@@ -117,12 +78,24 @@
 <!-- WHy Us -->
 <section class="sect why-us">
   <div class="container">
-    <div class="sect_heading">
+    <!-- <div class="sect_heading">
       <h2 class="sect_title">All-in-One incredible learning experience</h2>
       <p>
         Dumena Technologies offers a Learning Management System that combines
         all <br />
         the tools needed to eductae your child and run a school.
+      </p>
+    </div> -->
+    <div class="sect_heading">
+      <h2 class="sect_title">
+        We <span class="text-secondary-color">Help Children</span> Discover
+        Their Passion & Develop Their Potential
+      </h2>
+      <p>
+        By exposing children to a wide range of learning experiences, we are
+        able to identify their areas of interest, their strengths <br />
+        and then tailor their learning towards building and developing their
+        potentials.
       </p>
     </div>
     <div class="card">
@@ -146,7 +119,7 @@
         <h4 class="card_item_title">Safe Space for Remote Learning</h4>
         <p>
           We provide a safe space where your child is free to learn, explore,
-          develop and express their skills remotely..
+          develop and express their skills remotely.
         </p>
       </div>
       <div class="card_item">
@@ -227,25 +200,13 @@
 <!-- Metrics -->
 <section class="metrics sect">
   <div class="container">
-    <div class="sect_heading">
-      <h2 class="sect_title">
-        We <span class="text-secondary-color">Help Children</span> Discover
-        Their Passion & Develop Their Potential
-      </h2>
-      <p>
-        By exposing children to a wide range of learning experiences, we are
-        able to identify their areas of interest, their strengths <br />
-        and then tailor their learning towards building and developing their
-        potentials.
-      </p>
-    </div>
     <div class="metrics_card">
       <div class="metrics_card_item">
-        <h2 class="metrics_value">5k+</h2>
+        <h2 class="metrics_value">3k+</h2>
         <p>Learners</p>
       </div>
       <div class="metrics_card_item">
-        <h2 class="metrics_value">200+</h2>
+        <h2 class="metrics_value">500+</h2>
         <p>Classes</p>
       </div>
       <div class="metrics_card_item">
@@ -253,7 +214,7 @@
         <p>Schools</p>
       </div>
       <div class="metrics_card_item">
-        <h2 class="metrics_value">100+</h2>
+        <h2 class="metrics_value">50+</h2>
         <p>Educators</p>
       </div>
     </div>
@@ -266,7 +227,7 @@
     <div class="du_flex_details">
       <h3 class="du_flex_details_title">Join our community as a parent</h3>
       <p>
-        We believe every parent deserve to be on the front-seat in their
+        We believe every parent deserves to be on the front-seat in their
         children’s learning, development and growth experience. Join this
         community to:
       </p>
@@ -280,21 +241,21 @@
         <li>
           <img src="../../../../../assets/img/svg/check-prim.svg" alt="" />
           <p class="body-2-medium">
-            Earn rewards through our parents’ Referral Program.
+            Earn rewards through our Parents’ Referral Program.
           </p>
         </li>
         <li>
           <img src="../../../../../assets/img/svg/check-prim.svg" alt="" />
           <p class="body-2-medium">
             Get equipped with the tools you need to help your children discover
-            their passion and develop their potentials.
+            their passion and develop their potential.
           </p>
         </li>
       </ul>
       <!-- <button class="btn prim_btn">Learn More</button> -->
     </div>
     <div class="du_flex_img">
-      <img src="../../../../../assets/img/parent-img.png" alt="image" />
+      <img src="../../../../../assets/img/parent-img.svg" alt="image" />
     </div>
   </div>
 </section>
@@ -304,7 +265,7 @@
   <div class="container du_flex_content row-reverse">
     <div class="du_flex_details">
       <h3 class="du_flex_details_title">
-        Host your school on our Cloud-based LMS Software
+        Run your school’s Robotics and Coding Clubs from any PC or Tablet
       </h3>
       <p>
         Create an impactful learning experience for your children through our:
@@ -326,10 +287,10 @@
         </li>
       </ul>
 
-      <button class="btn prim_btn">Learn More</button>
+      <!-- <button class="btn prim_btn">Learn More</button> -->
     </div>
     <div class="du_flex_img">
-      <img src="../../../../../assets/img/school-img.png" alt="image" />
+      <img src="../../../../../assets/img/classroom-img.svg" alt="image" />
     </div>
   </div>
 </section>
@@ -342,8 +303,8 @@
         Join our growing community of Educators
       </h3>
       <p>
-        The Education Landscape is experiencing highly unprecedented changes,
-        catalyzed by the COVID-19 Pandemic.
+        Fire up and accelerate your Educator Career with all the resources we
+        have made available for you
       </p>
       <ul>
         <li>

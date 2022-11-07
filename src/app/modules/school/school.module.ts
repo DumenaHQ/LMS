@@ -11,6 +11,8 @@ import { StudentBlankComponent } from './components/school-students/student-blan
 import { SchoolDisplayStudentsComponent } from './components/school-students/school-display-students/school-display-students.component';
 import { SchoolProgramsOverviewComponent } from './components/school-programs/school-programs-overview/school-programs-overview.component';
 import { SchoolProgramsDetailsComponent } from './components/school-programs/school-programs-details/school-programs-details.component';
+import { AddChildToProgramComponent } from './components/school-programs/add-child-to-program/add-child-to-program.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,14 @@ import { SchoolProgramsDetailsComponent } from './components/school-programs/sch
     SchoolDisplayStudentsComponent,
     SchoolProgramsOverviewComponent,
     SchoolProgramsDetailsComponent,
+    AddChildToProgramComponent,
   ],
-  imports: [CommonModule, SchoolRoutingModule, SharedModule],
+  imports: [
+    CommonModule,
+    SchoolRoutingModule,
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
 })
 export class SchoolModule {}

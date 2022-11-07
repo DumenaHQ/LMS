@@ -33,7 +33,7 @@
     </ng-container>
 
     <!-- Course Blank -->
-    <ng-container *ngIf="children?.length == 0">
+    <ng-container *ngIf="children?.length === 0">
       <app-children-blank (addModal)="openAddModal()"></app-children-blank>
     </ng-container>
   </div>

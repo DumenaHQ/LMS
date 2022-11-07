@@ -1,23 +1,37 @@
 <section class="ds-head dis-flex">
-  <h2 class="ds-head_title clickable" routerLink="/admin/courses">Programs</h2>
+  <h2 class="ds-head_title clickable" routerLink="/admin/programs">Programs</h2>
   <i class="bx bx-chevron-right icon"></i>
-  <p class="clickable">Program Info</p>
+  <p class="clickable" [title]="program?.name">
+    {{
+      program?.name.length > 20
+        ? program?.name.slice(0, 20) + "..."
+        : program?.name
+    }}
+  </p>
 </section>
 
 <section class="course-details">
   <div class="course-details_image">
-    <img src="../../../assets/img/thumbnail-1.png" alt="" />
+    <img src="../../../../../../assets/img/program-thumbnail.svg" alt="" />
   </div>
   <div class="course-details_header">
     <div class="course-details_header_top">
       <div class="left">
-        <h2>AI Robotics Championship</h2>
+        <h2>{{ program?.name }}</h2>
         <div class="dis-flex left_bottom">
-          <button class="success_btn">Published</button>
+          <button
+            [ngClass]="
+              program?.status === 'active' ? 'success_btn' : 'grey_btn'
+            "
+          >
+            {{ program?.status === "active" ? "Published" : "Draft" }}
+          </button>
           <div class="icons dis-flex">
             <span class="dis-flex"
               ><img src="../../../assets/img/svg/calendar-2.svg" alt="" />
-              <p class="body-2-regular">Created May 12.2022</p></span
+              <p class="body-2-regular">
+                Created {{ program?.createdAt | date: "mediumDate" }}
+              </p></span
             >
             <span class="dis-flex"
               ><img src="../../../assets/img/svg/medal.svg" alt="" />
@@ -36,12 +50,12 @@
     <div class="course-details_header_bottom">
       <ul class="hh dis-flex">
         <li>
-          <p class="body-2-bold">2</p>
+          <p class="body-2-bold">{{ program?.courses.length }}</p>
           <p class="body-3-regular">Courses</p>
         </li>
         <li>
-          <p class="body-2-bold">4</p>
-          <p class="body-3-regular">Quizzes</p>
+          <p class="body-2-bold">{{ program?.schools.length }}</p>
+          <p class="body-3-regular">Schools</p>
         </li>
       </ul>
       <div class="students">

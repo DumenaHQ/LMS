@@ -3,15 +3,14 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-enroll-learner',
-  templateUrl: './enroll-learner.component.html',
-  styleUrls: ['./enroll-learner.component.scss'],
+  selector: 'app-add-child-to-program',
+  templateUrl: './add-child-to-program.component.html',
+  styleUrls: ['./add-child-to-program.component.scss'],
 })
-export class EnrollLearnerComponent implements OnInit {
-  @Output() addModal: EventEmitter<any> = new EventEmitter();
+export class AddChildToProgramComponent implements OnInit {
+  @Output() addChildToProgramModal: EventEmitter<any> = new EventEmitter();
   @Output() isAlert: EventEmitter<any> = new EventEmitter();
   @Output() alertMessaage = new EventEmitter<string>();
-  @Input() title: string = '';
 
   hide: boolean = true;
   loading: boolean = false;
@@ -108,49 +107,48 @@ export class EnrollLearnerComponent implements OnInit {
       lastname: data.lastname,
       // parent: this.user.id,
       // user_type: 'learner',
-      phone: '',
       password: data.password,
     };
 
     // Send users data
-    this.authService.enrollChild(payload).subscribe(
-      (res: any) => {
-        console.log(res);
+    // this.authService.enrollChild(payload).subscribe(
+    //   (res: any) => {
+    //     console.log(res);
 
-        if (res.status == true) {
-          // Close Modal
-          this.closeAddModal();
+    //     if (res.status == true) {
+    //       // Close Modal
+    //       this.closeAddChildToProgramModal();
 
-          // Show Popup
-          this.showAlert();
+    //       // Show Popup
+    //       this.showAlert();
 
-          // Reload the page
-          window.location.reload();
-        }
+    //       // Reload the page
+    //       window.location.reload();
+    //     }
 
-        // Show error message
-        this.errorMessage = res.message;
-        this.showError = true;
+    //     // Show error message
+    //     this.errorMessage = res.message;
+    //     this.showError = true;
 
-        // Set loading to false
-        this.loading = false;
-      },
-      (error: any) => {
-        console.log(error);
-        // Show error message
-        error.error.error.code == 400
-          ? (this.errorMessage = error.error.error.errors[0].message)
-          : (this.errorMessage = error.error.message);
-        this.showError = true;
-        // Set loading to false
-        this.loading = false;
+    //     // Set loading to false
+    //     this.loading = false;
+    //   },
+    //   (error: any) => {
+    //     console.log(error);
+    //     // Show error message
+    //     error.error.error.code == 400
+    //       ? (this.errorMessage = error.error.error.errors[0].message)
+    //       : (this.errorMessage = error.error.message);
+    //     this.showError = true;
+    //     // Set loading to false
+    //     this.loading = false;
 
-        // Set Timeout
-        // setTimeout(() => {
-        //   this.showError = false
-        // }, 3000);
-      }
-    );
+    //     // Set Timeout
+    //     // setTimeout(() => {
+    //     //   this.showError = false
+    //     // }, 3000);
+    //   }
+    // );
   }
 
   // Show alert popup
@@ -164,11 +162,6 @@ export class EnrollLearnerComponent implements OnInit {
 
   // Upload File
   uploadFile(event: any) {
-    // for (let index = 0; index < event.length; index++) {
-    //   const element = event[index];
-    //   this.files.push(element.name)
-    // }
-
     // Preview File Selected
     this.selectedFile = event[0];
 
@@ -187,7 +180,7 @@ export class EnrollLearnerComponent implements OnInit {
   }
 
   // Close Add Modal
-  closeAddModal() {
-    this.addModal.emit();
+  closeAddChildToProgramModal() {
+    this.addChildToProgramModal.emit();
   }
 }
