@@ -56,7 +56,7 @@ export class UserProfileComponent implements OnInit {
     let payload = {
       fullname: this.userForm.value.fullname,
       phone: this.userForm.value.phone,
-      resident_state: 'Kwara State',
+      resident_state: '',
     };
 
     this.authService.updateUser(payload).subscribe((res: any) => {

@@ -1,11 +1,13 @@
 <div class="modal">
   <div class="modal_area">
-    <span class="modal_area_close" (click)="closeAddModal()">
+    <span class="modal_area_close" (click)="closeAddChildToProgramModal()">
       <i class="bx bx-x icon clickable"></i>
     </span>
 
     <div class="enroll auth_content">
-      <h4 class="text-primary-color enroll_title">Enroll a {{ title }}</h4>
+      <h4 class="text-primary-color enroll_title">
+        Add a child to this program
+      </h4>
       <form
         class="enroll_form auth_content_form"
         (ngSubmit)="signUp(usersForm.value)"
@@ -34,7 +36,7 @@
         <!-- Single enrollment starts *ngIf="billingId == 'single'" -->
         <div class="single-enroll col-2" *ngIf="billingId == 'single'">
           <div class="form-field col-2 avatar">
-            <label for="avatar">Select an avatar for your {{ title }}</label>
+            <label for="avatar">Select an avatar for your child</label>
             <div class="avatar_list dis-flex">
               <div class="" *ngFor="let i of avatars">
                 <input
@@ -68,35 +70,14 @@
               <input type="text" name="lastname" ngModel required />
             </div>
           </div>
-          <div class="form-field col-2">
-            <label for="password">Password</label>
-            <div class="input-field">
-              <input
-                type="password"
-                name="password"
-                ngModel
-                required
-                [type]="hide ? 'password' : 'text'"
-              />
-              <i
-                [class]="
-                  hide
-                    ? 'bx bx-show clickable icon'
-                    : 'bx bx-hide clickable icon'
-                "
-                (click)="hide = !hide"
-              ></i>
-            </div>
-            <p class="body-3-regular warning">
-              Your password must be at least 6 characters
-            </p>
-          </div>
           <span class="message col-2" *ngIf="showError">{{
             errorMessage
           }}</span>
           <!-- Submit Button -->
           <div class="form-btns col-2 dis-flex">
-            <span class="grey_btn clickable" (click)="closeAddModal()"
+            <span
+              class="grey_btn clickable"
+              (click)="closeAddChildToProgramModal()"
               >Cancel</span
             >
             <div class="continue">
@@ -145,7 +126,9 @@
           </div>
           <!-- Submit Button -->
           <div class="form-btns col-2 dis-flex">
-            <span class="grey_btn clickable" (click)="closeAddModal()"
+            <span
+              class="grey_btn clickable"
+              (click)="closeAddChildToProgramModal()"
               >Cancel</span
             >
             <div class="continue">

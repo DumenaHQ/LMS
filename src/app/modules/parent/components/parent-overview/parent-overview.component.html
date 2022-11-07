@@ -105,7 +105,13 @@
 </section>
 
 <!-- Add Child Modal -->
-<app-enroll-learner></app-enroll-learner>
+<app-enroll-learner
+  *ngIf="addModal"
+  (addModal)="closeAddModal()"
+  (isAlert)="showAlert()"
+  (alertMessaage)="setAlertMessage($event)"
+  [title]="title"
+></app-enroll-learner>
 
 <!-- Subscription plan -->
 <app-pricing-plan

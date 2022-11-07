@@ -1,60 +1,70 @@
 <!-- Enrol Learner -->
-<app-enroll-learner
-  *ngIf="addModal"
-  (addModal)="closeAddModal()"
+<app-add-child-to-program
+  *ngIf="addChildToProgramModal"
+  (addChildToProgramModal)="closeAddChildToProgramModal()"
   (isAlert)="showAlert()"
   (alertMessaage)="setAlertMessage($event)"
-  [title]="title"
-></app-enroll-learner>
+></app-add-child-to-program>
 
 <section class="ds-head dis-flex">
-  <h2 class="ds-head_title clickable" routerLink="/admin/courses">Programs</h2>
+  <h2 class="ds-head_title clickable" routerLink="/school/programs">
+    Programs
+  </h2>
   <i class="bx bx-chevron-right icon"></i>
-  <p class="clickable">Program Info</p>
+  <p class="clickable" [title]="program?.name">
+    {{
+      program?.name.length > 20
+        ? program?.name.slice(0, 20) + "..."
+        : program?.name
+    }}
+  </p>
 </section>
 
 <section class="course-details">
   <div class="course-details_image">
-    <img src="../../../assets/img/thumbnail-1.png" alt="" />
+    <img src="../../../../../../assets/img/program-thumbnail.svg" alt="" />
   </div>
   <div class="course-details_header">
     <div class="course-details_header_top">
       <div class="left">
-        <h2>AI Robotics Championship</h2>
+        <h2>{{ program?.name }}</h2>
         <div class="dis-flex left_bottom">
           <button class="success_btn">Ongoing</button>
           <div class="icons dis-flex">
             <span class="dis-flex"
-              ><img src="../../../assets/img/svg/calendar-2.svg" alt="" />
-              <p class="body-2-regular">Created May 12.2022</p></span
+              ><img
+                src="../../../../../../assets/img/svg/calendar-2.svg"
+                alt=""
+              />
+              <p class="body-2-regular">
+                Created {{ program?.createdAt | date: "mediumDate" }}
+              </p></span
             >
             <span class="dis-flex"
-              ><img src="../../../assets/img/svg/medal.svg" alt="" />
+              ><img src="../../../../../../assets/img/svg/medal.svg" alt="" />
               <p class="body-2-regular">3 Sections</p></span
             >
           </div>
         </div>
       </div>
       <div class="right dis-flex">
-        <button class="btn prim_btn" (click)="openAddModal()">Add Child</button>
+        <button class="btn prim_btn" (click)="openAddChildToProgramModal()">
+          Add Child
+        </button>
       </div>
     </div>
     <div class="course-details_header_bottom">
       <p class="descript">
-        Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-        sint. Velit officia consequat duis enim velit mollit. Exercitation
-        veniam consequat sunt nostrud amet.Amet minim mollit non deserunt
-        ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis
-        enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
+        {{ program?.description }}
       </p>
       <ul class="numbers dis-flex">
         <li>
-          <p class="body-2-bold">2</p>
+          <p class="body-2-bold">{{ program?.courses.length }}</p>
           <p class="body-3-regular">Courses</p>
         </li>
         <li>
-          <p class="body-2-bold">4</p>
-          <p class="body-3-regular">Quizzes</p>
+          <p class="body-2-bold">{{ program?.schools.length }}</p>
+          <p class="body-3-regular">Schools</p>
         </li>
       </ul>
       <div class="completion">
@@ -66,19 +76,19 @@
         <ul class="students_list dis-flex">
           <li>
             <img
-              src="../../../../../../assets/img/svg/orange-circle.svg"
+              src="../../../../../../../../../../../../assets/img/svg/orange-circle.svg"
               alt=""
             />
           </li>
           <li>
             <img
-              src="../../../../../../assets/img/svg/orange-circle.svg"
+              src="../../../../../../../../../../../../assets/img/svg/orange-circle.svg"
               alt=""
             />
           </li>
           <li>
             <img
-              src="../../../../../../assets/img/svg/orange-circle.svg"
+              src="../../../../../../../../../../../../assets/img/svg/orange-circle.svg"
               alt=""
             />
           </li>

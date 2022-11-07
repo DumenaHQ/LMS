@@ -49,9 +49,9 @@ export class SchoolComponent implements OnInit {
     this.user = userData.user;
 
     // Prevent Non-school from routing here
-    // if (this.user.role !== 'school') {
-    //   this.router.navigate(['/login']);
-    // }
+    if (this.user.role !== 'school') {
+      this.router.navigate(['/login']);
+    }
   }
 
   // Open Menu

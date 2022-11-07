@@ -30,22 +30,28 @@
   <app-loader *ngIf="dataLoading"></app-loader>
   <div class="programs_disgrid" *ngIf="programs?.length > 0">
     <div class="program_card">
-      <div
-        class="program_card_item clickable"
-        routerLink="programs-details/id"
-        title="i.title"
-        *ngFor="let program of programs"
-      >
+      <div class="program_card_item" *ngFor="let program of programs">
         <img
-          src="../../../../../../assets/img/program-thumbnail.svg"
+          src="../../../../../../assets/img/program-thumbnail-patterns.svg"
           alt="image"
-          class="program_card_item_image"
+          class="program_card_item_image clickable"
+          (click)="displayProgram(program.id)"
         />
 
         <div class="program_card_item_details">
           <div class="program_card_item_details_right">
             <div class="program_card_item_details_right_header">
-              <h5 class="title">{{ program.name }}</h5>
+              <h5
+                class="title clickable"
+                [title]="program.name"
+                (click)="displayProgram(program.id)"
+              >
+                {{
+                  program?.name.length > 20
+                    ? program?.name.slice(0, 20) + "..."
+                    : program?.name
+                }}
+              </h5>
               <p>
                 {{ program.description }}
               </p>
@@ -56,8 +62,8 @@
                 <p class="body-3-regular">Courses</p>
               </li>
               <li>
-                <p class="body-2-bold">{{ program.learners.length }}</p>
-                <p class="body-3-regular">learners</p>
+                <p class="body-2-bold">{{ program.schools.length }}</p>
+                <p class="body-3-regular">Schools</p>
               </li>
             </ul>
           </div>
@@ -105,7 +111,26 @@
         </div>
 
         <div class="actions">
-          <img src="../../../../../../assets/img/action.svg" alt="image" />
+          <img
+            src="../../../../../../assets/img/action.svg"
+            class="clickable"
+            alt="image"
+            (click)="actionBtn.click()"
+          />
+          <input
+            type="checkbox"
+            name="action-btn"
+            id="action-btn"
+            style="display: none"
+            #actionBtn
+          />
+          <div class="dropdown">
+            <small
+              class="body-3-regular delete clickable"
+              (click)="deleteProgram(program)"
+              >Delete</small
+            >
+          </div>
         </div>
       </div>
     </div>
