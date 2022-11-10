@@ -64,47 +64,53 @@ export class SchoolEnrollLearnersComponent implements OnInit {
       return;
     }
 
-    console.log(this.userForm.value);
+    let payload = {
+      learners: [this.userForm.value],
+    };
+
+    console.log(payload);
 
     // Send users data
-    // this.authService.enrollChild(payload).subscribe(
-    //   (res: any) => {
-    //     console.log(res);
+    // this.authService
+    //   .enrollLearner(payload, `schools/${this.user.id}/learners`)
+    //   .subscribe(
+    //     (res: any) => {
+    //       console.log(res);
 
-    //     if (res.status == true) {
-    //       // Close Modal
-    //       this.closeaddLearnerModal();
+    //       if (res.status == true) {
+    //         // Close Modal
+    //         this.closeAddLearnerModal();
 
-    //       // Show Popup
-    //       this.showAlert();
+    //         // Show Popup
+    //         this.showAlert();
 
-    //       // Reload the page
-    //       window.location.reload();
+    //         // Reload the page
+    //         // window.location.reload();
+    //       }
+
+    //       // Show error message
+    //       this.errorMessage = res.message;
+    //       this.showError = true;
+
+    //       // Set loading to false
+    //       this.loading = false;
+    //     },
+    //     (error: any) => {
+    //       console.log(error);
+    //       // Show error message
+    //       error.error.error.code == 400
+    //         ? (this.errorMessage = error.error.error.errors[0].message)
+    //         : (this.errorMessage = error.error.message);
+    //       this.showError = true;
+    //       // Set loading to false
+    //       this.loading = false;
+
+    //       // Set Timeout
+    //       // setTimeout(() => {
+    //       //   this.showError = false
+    //       // }, 3000);
     //     }
-
-    //     // Show error message
-    //     this.errorMessage = res.message;
-    //     this.showError = true;
-
-    //     // Set loading to false
-    //     this.loading = false;
-    //   },
-    //   (error: any) => {
-    //     console.log(error);
-    //     // Show error message
-    //     error.error.error.code == 400
-    //       ? (this.errorMessage = error.error.error.errors[0].message)
-    //       : (this.errorMessage = error.error.message);
-    //     this.showError = true;
-    //     // Set loading to false
-    //     this.loading = false;
-
-    //     // Set Timeout
-    //     // setTimeout(() => {
-    //     //   this.showError = false
-    //     // }, 3000);
-    //   }
-    // );
+    //   );
   }
 
   // Show alert popup

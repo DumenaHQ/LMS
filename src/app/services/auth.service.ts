@@ -75,13 +75,9 @@ export class AuthService {
     );
   }
 
-  // Enroll child
-  enrollChild(data: any) {
-    return this.http.post(
-      `${this.baseUrl}learners/enroll`,
-      data,
-      this.getHttpOptions()
-    );
+  // Enroll Learner
+  enrollLearner(data: any, url: string) {
+    return this.http.post(`${this.baseUrl}${url}`, data, this.getHttpOptions());
   }
 
   // Activate email
