@@ -13,6 +13,7 @@ import { SchoolProgramsOverviewComponent } from './components/school-programs/sc
 import { SchoolProgramsDetailsComponent } from './components/school-programs/school-programs-details/school-programs-details.component';
 import { AddChildToProgramComponent } from './components/school-programs/add-child-to-program/add-child-to-program.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SchoolEnrollLearnersComponent } from './components/school-enroll-learners/school-enroll-learners.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SchoolProgramsOverviewComponent,
     SchoolProgramsDetailsComponent,
     AddChildToProgramComponent,
+    SchoolEnrollLearnersComponent,
   ],
   imports: [
     CommonModule,

@@ -11,7 +11,6 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit {
   hide: boolean = true;
   loading: boolean = false;
-  returnUrl = '';
   errorMessage: string = '';
   showError: boolean = false;
   userType: any;

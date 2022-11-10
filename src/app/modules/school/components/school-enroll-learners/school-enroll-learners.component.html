@@ -1,18 +1,15 @@
 <div class="modal">
   <div class="modal_area">
-    <span class="modal_area_close" (click)="closeAddChildToProgramModal()">
+    <span class="modal_area_close" (click)="closeAddLearnerModal()">
       <i class="bx bx-x icon clickable"></i>
     </span>
 
     <div class="enroll auth_content">
       <h4 class="text-primary-color enroll_title">
-        Add a child to this program
+        <span *ngIf="billingId == 'single'">Enroll a student</span>
+        <span *ngIf="billingId == 'batch'">Enroll students</span>
       </h4>
-      <form
-        class="enroll_form auth_content_form"
-        [formGroup]="userForm"
-        #usersForm="ngForm"
-      >
+      <form class="enroll_form auth_content_form" [formGroup]="userForm">
         <div class="form-field col-2">
           <label for="">Select an enrollment method</label>
           <!-- enroll-mtd tabs -->
@@ -129,16 +126,14 @@
           }}</span>
           <!-- Submit Button -->
           <div class="form-btns col-2 dis-flex">
-            <span
-              class="grey_btn clickable"
-              (click)="closeAddChildToProgramModal()"
+            <span class="grey_btn clickable" (click)="closeAddLearnerModal()"
               >Cancel</span
             >
             <div class="continue">
               <button
                 class="btn prim_btn clickable"
                 [disabled]="loading"
-                (click)="signup()"
+                (click)="signUp()"
               >
                 <span *ngIf="!loading">Continue</span>
                 <span *ngIf="loading">Processing...</span>
@@ -181,9 +176,7 @@
           </div>
           <!-- Submit Button -->
           <div class="form-btns col-2 dis-flex">
-            <span
-              class="grey_btn clickable"
-              (click)="closeAddChildToProgramModal()"
+            <span class="grey_btn clickable" (click)="closeAddLearnerModal()"
               >Cancel</span
             >
             <div class="continue">

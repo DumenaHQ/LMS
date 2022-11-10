@@ -9,7 +9,6 @@ import { DashboardPopupAlertComponent } from './dashboard-popup-alert/dashboard-
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotifiPopupComponent } from './notifi-popup/notifi-popup.component';
-import { EnrollLearnerComponent } from './enroll-learner/enroll-learner.component';
 import { PricingPlanComponent } from '../parent/components/pricing-plan/pricing-plan.component';
 import { AlertPopupComponent } from './alert-popup/alert-popup.component';
 import { LoaderComponent } from './loader/loader.component';
@@ -24,7 +23,6 @@ import { DisplayPaymentHistoryComponent } from './display-payment-history/displa
     DashboardPopupAlertComponent,
     UserProfileComponent,
     NotifiPopupComponent,
-    EnrollLearnerComponent,
     AlertPopupComponent,
     LoaderComponent,
     DisplayPaymentHistoryComponent,
@@ -37,7 +35,6 @@ import { DisplayPaymentHistoryComponent } from './display-payment-history/displa
     DashboardHeaderComponent,
     DashboardSidenavComponent,
     DashboardPopupAlertComponent,
-    EnrollLearnerComponent,
     AlertPopupComponent,
     LoaderComponent,
   ],

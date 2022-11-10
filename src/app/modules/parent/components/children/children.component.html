@@ -23,7 +23,7 @@
           </p>
         </div>
         <!-- Add New Child -->
-        <div class="card_item clickable" (click)="openAddModal()">
+        <div class="card_item clickable" (click)="openAddLearnerModal()">
           <span class="add-icon">
             <i class="bx bx-plus"></i>
           </span>
@@ -34,19 +34,21 @@
 
     <!-- Course Blank -->
     <ng-container *ngIf="children?.length === 0">
-      <app-children-blank (addModal)="openAddModal()"></app-children-blank>
+      <app-children-blank
+        (addModal)="openAddLearnerModal()"
+      ></app-children-blank>
     </ng-container>
   </div>
 </section>
 
 <!-- Enrol Learner -->
-<app-enroll-learner
-  *ngIf="addModal"
-  (addModal)="closeAddModal()"
+<app-parent-enroll-learners
+  *ngIf="addLearnerModal"
+  (addLearnerModal)="closeAddLearnerModal()"
   (isAlert)="showAlert()"
   (alertMessaage)="setAlertMessage($event)"
   [title]="title"
-></app-enroll-learner>
+></app-parent-enroll-learners>
 
 <!-- Pricing plan -->
 <app-pricing-plan
