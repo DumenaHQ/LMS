@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./children.component.scss'],
 })
 export class ChildrenComponent implements OnInit {
-  addModal: boolean = false;
+  addLearnerModal: boolean = false;
   isAlert: boolean = false;
   user: any;
   title: string = 'child';
@@ -38,13 +38,13 @@ export class ChildrenComponent implements OnInit {
   }
 
   // Open Add Child Modal
-  openAddModal() {
-    this.addModal = true;
+  openAddLearnerModal() {
+    this.addLearnerModal = true;
   }
 
   // Close Add Child Modal
-  closeAddModal() {
-    this.addModal = false;
+  closeAddLearnerModal() {
+    this.addLearnerModal = false;
   }
 
   // Show alert

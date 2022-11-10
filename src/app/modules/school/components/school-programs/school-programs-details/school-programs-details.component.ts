@@ -54,7 +54,7 @@ export class SchoolProgramsDetailsComponent implements OnInit {
   }
 
   // Show alert
-  showAlert() {
+  showAlertPopup() {
     // Show Alert
     this.isAlert = true;
 

@@ -1,26 +1,24 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-add-child-to-program',
-  templateUrl: './add-child-to-program.component.html',
-  styleUrls: ['./add-child-to-program.component.scss'],
+  selector: 'app-school-enroll-learners',
+  templateUrl: './school-enroll-learners.component.html',
+  styleUrls: ['./school-enroll-learners.component.scss'],
 })
-export class AddChildToProgramComponent implements OnInit {
-  @Output() addChildToProgramModal: EventEmitter<any> = new EventEmitter();
+export class SchoolEnrollLearnersComponent implements OnInit {
+  @Output() addLearnerModal: EventEmitter<any> = new EventEmitter();
   @Output() isAlert: EventEmitter<any> = new EventEmitter();
   @Output() alertMessaage = new EventEmitter<string>();
-
   loading: boolean = false;
   errorMessage: string = '';
   showError: boolean = false;
   user: any;
-  selectedAVatarUrl: string = '';
+  selectedFileName: any;
   messageval: string;
   billingId: string = 'single';
-  selectedFileName: any;
   userForm: any = FormGroup;
   isFormSubmitted: boolean = false;
 
@@ -48,7 +46,7 @@ export class AddChildToProgramComponent implements OnInit {
   }
 
   // Sign Up
-  signup() {
+  signUp() {
     // Set loading to true
     this.loading = true;
 
@@ -71,7 +69,7 @@ export class AddChildToProgramComponent implements OnInit {
 
     //     if (res.status == true) {
     //       // Close Modal
-    //       this.closeAddChildToProgramModal();
+    //       this.closeaddLearnerModal();
 
     //       // Show Popup
     //       this.showAlert();
@@ -120,7 +118,7 @@ export class AddChildToProgramComponent implements OnInit {
   }
 
   // Close Add Modal
-  closeAddChildToProgramModal() {
-    this.addChildToProgramModal.emit();
+  closeAddLearnerModal() {
+    this.addLearnerModal.emit();
   }
 }

@@ -45,7 +45,7 @@
           </p>
         </div>
         <!-- Add New Child -->
-        <div class="card_item clickable" (click)="openAddModal()">
+        <div class="card_item clickable" (click)="openAddLearnerModal()">
           <span class="add-icon">
             <i class="bx bx-plus"></i>
           </span>
@@ -105,13 +105,13 @@
 </section>
 
 <!-- Add Child Modal -->
-<app-enroll-learner
-  *ngIf="addModal"
-  (addModal)="closeAddModal()"
+<app-parent-enroll-learners
+  *ngIf="addLearnerModal"
+  (addLearnerModal)="closeAddLearnerModal()"
   (isAlert)="showAlert()"
   (alertMessaage)="setAlertMessage($event)"
   [title]="title"
-></app-enroll-learner>
+></app-parent-enroll-learners>
 
 <!-- Subscription plan -->
 <app-pricing-plan

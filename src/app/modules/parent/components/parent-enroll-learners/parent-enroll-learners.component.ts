@@ -1,28 +1,68 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-add-child-to-program',
-  templateUrl: './add-child-to-program.component.html',
-  styleUrls: ['./add-child-to-program.component.scss'],
+  selector: 'app-parent-enroll-learners',
+  templateUrl: './parent-enroll-learners.component.html',
+  styleUrls: ['./parent-enroll-learners.component.scss'],
 })
-export class AddChildToProgramComponent implements OnInit {
-  @Output() addChildToProgramModal: EventEmitter<any> = new EventEmitter();
+export class ParentEnrollLearnersComponent implements OnInit {
+  @Output() addLearnerModal: EventEmitter<any> = new EventEmitter();
   @Output() isAlert: EventEmitter<any> = new EventEmitter();
   @Output() alertMessaage = new EventEmitter<string>();
 
+  hide: boolean = true;
   loading: boolean = false;
   errorMessage: string = '';
   showError: boolean = false;
   user: any;
-  selectedAVatarUrl: string = '';
+  selectedFileName: any;
   messageval: string;
   billingId: string = 'single';
-  selectedFileName: any;
   userForm: any = FormGroup;
   isFormSubmitted: boolean = false;
+
+  selectedAVatarUrl: string = '';
+  avatars = [
+    {
+      id: 1,
+      image: 'assets/img/children-avatar/child-avatar-1.png',
+      name: 'avatar-1',
+      selected: true,
+    },
+    {
+      id: 2,
+      image: 'assets/img/children-avatar/child-avatar-2.png',
+      name: 'avatar-2',
+      selected: false,
+    },
+    {
+      id: 3,
+      image: 'assets/img/children-avatar/child-avatar-3.png',
+      name: 'avatar-3',
+      selected: false,
+    },
+    {
+      id: 4,
+      image: 'assets/img/children-avatar/child-avatar-4.png',
+      name: 'avatar-4',
+      selected: false,
+    },
+    {
+      id: 5,
+      image: 'assets/img/children-avatar/child-avatar-5.png',
+      name: 'avatar-5',
+      selected: false,
+    },
+    {
+      id: 6,
+      image: 'assets/img/children-avatar/child-avatar-6.png',
+      name: 'avatar-6',
+      selected: false,
+    },
+  ];
 
   constructor(
     private authService: AuthService,
@@ -36,15 +76,28 @@ export class AddChildToProgramComponent implements OnInit {
     this.user = userData.user;
 
     this.userForm = this.formBuilder.group({
-      fullname: ['', Validators.required],
-      parent_email: ['', [Validators.required, Validators.email]],
-      grade: ['', Validators.required],
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
-  // Tab change
-  tabChange(ids: any) {
-    this.billingId = ids;
+  // Select Avatar
+  selectAvatar(selected: any) {
+    this.avatars.forEach((e: any) => {
+      // Set all avatar selected to false
+      e.selected = false;
+      // Check if the selected id same and is not true
+      if (e.id === selected) {
+        if (selected !== true) {
+          // Set the only selected to true
+          e.selected = true;
+
+          // Set avatar url
+          this.selectedAVatarUrl = e.image;
+        }
+      }
+    });
   }
 
   // Sign Up
@@ -62,7 +115,14 @@ export class AddChildToProgramComponent implements OnInit {
       return;
     }
 
-    console.log(this.userForm.value);
+    let payload = {
+      avatar: this.selectedAVatarUrl,
+      irstname: this.userForm.value.firstname,
+      lastname: this.userForm.value.lastname,
+      password: this.userForm.value.password,
+    };
+
+    console.log(payload);
 
     // Send users data
     // this.authService.enrollChild(payload).subscribe(
@@ -71,7 +131,7 @@ export class AddChildToProgramComponent implements OnInit {
 
     //     if (res.status == true) {
     //       // Close Modal
-    //       this.closeAddChildToProgramModal();
+    //       this.closeaddLearnerModal();
 
     //       // Show Popup
     //       this.showAlert();
@@ -114,13 +174,8 @@ export class AddChildToProgramComponent implements OnInit {
     this.isAlert.emit();
   }
 
-  // Upload File
-  uploadFile(event: any) {
-    this.selectedFileName = event.target.files[0].name;
-  }
-
   // Close Add Modal
-  closeAddChildToProgramModal() {
-    this.addChildToProgramModal.emit();
+  closeAddLearnerModal() {
+    this.addLearnerModal.emit();
   }
 }

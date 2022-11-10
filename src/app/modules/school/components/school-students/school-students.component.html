@@ -27,7 +27,7 @@
             </div>
           </div>
           <!-- New Course Button -->
-          <button class="btn prim_btn" (click)="openAddModal()">
+          <button class="btn prim_btn" (click)="openAddLearnerModal()">
             New Student
           </button>
         </div>
@@ -40,27 +40,14 @@
 
     <!-- Course Blank -->
     <ng-template #noItems>
-      <app-student-blank (addModal)="openAddModal()"></app-student-blank>
+      <app-student-blank (addModal)="openAddLearnerModal()"></app-student-blank>
     </ng-template>
-  </div>
-
-  <!-- Alert Message -->
-  <div class="alert-msg" [class.show]="showAlert">
-    <div class="alert-msg_content">
-      <p>You have enrolled a child successfully</p>
-    </div>
   </div>
 </section>
 
-<div class="modal" [class.show-modal]="addModal">
-  <div class="modal_area">
-    <span class="modal_area_close" (click)="closeAddModal()">
-      <i class="bx bx-x icon clickable"></i>
-    </span>
-    <app-enroll-learner
-      (addModal)="closeAddModal()"
-      (showAlert)="showAlertPopup()"
-      [title]="title"
-    ></app-enroll-learner>
-  </div>
-</div>
+<app-school-enroll-learners
+  *ngIf="addLearnerModal"
+  (addLearnerModal)="closeAddLearnerModal()"
+  (isAlert)="showAlertPopup()"
+  (alertMessaage)="setAlertMessage($event)"
+></app-school-enroll-learners>

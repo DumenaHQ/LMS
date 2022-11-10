@@ -15,6 +15,7 @@ import { ManageChildComponent } from './components/children/manage-child/manage-
 import { EditChildComponent } from './components/children/edit-child/edit-child.component';
 import { PaymentHistoryComponent } from './components/payment-history/payment-history.component';
 import { ParentOnboardComponent } from './components/parent-onboard/parent-onboard.component';
+import { ParentEnrollLearnersComponent } from './components/parent-enroll-learners/parent-enroll-learners.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { ParentOnboardComponent } from './components/parent-onboard/parent-onboa
     EditChildComponent,
     PaymentHistoryComponent,
     ParentOnboardComponent,
+    ParentEnrollLearnersComponent,
   ],
   imports: [
     CommonModule,
