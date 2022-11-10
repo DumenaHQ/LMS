@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-school-enroll-learners',
@@ -21,6 +22,9 @@ export class SchoolEnrollLearnersComponent implements OnInit {
   billingId: string = 'single';
   userForm: any = FormGroup;
   isFormSubmitted: boolean = false;
+  file: File;
+  arrayBuffer: any;
+  learnersList: any;
 
   constructor(
     private authService: AuthService,
@@ -114,7 +118,34 @@ export class SchoolEnrollLearnersComponent implements OnInit {
 
   // Upload File
   uploadFile(event: any) {
-    this.selectedFileName = event.target.files[0].name;
+    this.file = event.target.files[0];
+    // Set file name
+    this.selectedFileName = this.file.name;
+
+    // Extract emails from xlxs sheet
+    let fileReader = new FileReader();
+    fileReader.onload = (e: any) => {
+      this.arrayBuffer = fileReader.result;
+      var data = new Uint8Array(this.arrayBuffer);
+      var arr = new Array();
+      for (var i = 0; i != data.length; ++i)
+        arr[i] = String.fromCharCode(data[i]);
+      var bstr = arr.join('');
+      var workbook = XLSX.read(bstr, { type: 'binary' });
+      var first_sheet_name = workbook.SheetNames[0];
+      var worksheet = workbook.Sheets[first_sheet_name];
+      let learners = XLSX.utils.sheet_to_json(worksheet, { raw: true });
+      console.log(learners);
+
+      // Get each email address
+      // learners.forEach((email: any) => {
+      //   if (email.__EMPTY.includes('.com')) {
+      //     this.learnersList.push(email.__EMPTY);
+      //   } else {
+      //   }
+      // });
+    };
+    fileReader.readAsArrayBuffer(this.file);
   }
 
   // Close Add Modal
