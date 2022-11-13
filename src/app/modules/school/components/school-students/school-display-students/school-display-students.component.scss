@@ -1,43 +1,15 @@
 @import '../../../../../../assets/css/variables.scss';
 @import '../../../../../../assets/css/mixins.scss';
+@import '../../../../../../assets/css/dashboard.scss';
 
 
  // Courses Display List
  .courses_dislist {
   width: 100%;
   table {
-    border-spacing: 0;
-    width: 100%;
-    min-width: max-content;
-    border: 0.5px solid $divider-color;
-    border-radius: $border-radius2 $border-radius2 0px 0px;
-    td, th {
-      padding: $m-2;
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 17px;
-      letter-spacing: 0.01em;
-      text-align: left;
-    }
     tr {
-      &.table-header {
-        background-color: $primary80;
-        color: $white-color;
-        border-radius: $border-radius2 $border-radius2 0px 0px;
-        th:last-child {
-          border-radius: 0 $border-radius2 0px 0px;
-        }
-        th:first-child {
-          border-radius: $border-radius2 0 0px 0px;
-        }
-      }
       &.table-body {
-        transition: all .2s;
-        &:hover {
-          background-color: $grey40;
-        }
         td {
-          border-bottom: 0.5px solid $divider-color;
           &.name {
             img {
               width: 45px;
@@ -46,15 +18,11 @@
               margin-right: $m-2;
             }
           }
-          &.contact-info {
+          &.contact-info,
+          &.name {
             p:nth-child(1) {
-                margin-bottom: $m-1;
+                margin-bottom: 0.2rem;
             }
-          }
-        }
-        &:not(:last-child) {
-          td {
-            border-bottom: 0.5px solid $divider-color;
           }
         }
       }

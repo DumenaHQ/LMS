@@ -19,7 +19,7 @@ const routes: Routes = [
         },
       },
       {
-        path: ':programId',
+        path: ':programId/view-program',
         component: ProgramsDetailsComponent,
         data: {
           title: 'Programs',

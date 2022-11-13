@@ -40,6 +40,7 @@ export class SchoolEnrollLearnersComponent implements OnInit {
     this.userForm = this.formBuilder.group({
       fullname: ['', Validators.required],
       parent_email: ['', [Validators.required, Validators.email]],
+      phone: ['00000000000'],
       grade: ['', Validators.required],
     });
   }
@@ -50,7 +51,7 @@ export class SchoolEnrollLearnersComponent implements OnInit {
   }
 
   // Sign Up
-  signUp() {
+  signup() {
     // Set loading to true
     this.loading = true;
 
@@ -64,53 +65,103 @@ export class SchoolEnrollLearnersComponent implements OnInit {
       return;
     }
 
+    // Payload
     let payload = {
       learners: [this.userForm.value],
     };
 
-    console.log(payload);
+    // Send users data
+    this.authService
+      .enrollLearner(payload, `schools/${this.user.id}/learners`)
+      .subscribe(
+        (res: any) => {
+          console.log(res);
+
+          if (res.status == true) {
+            // Close Modal
+            this.closeAddLearnerModal();
+
+            // Show Popup
+            this.showAlert();
+
+            this.ngOnInit();
+          }
+
+          // Show error message
+          this.errorMessage = res.message;
+          this.showError = true;
+
+          // Set loading to false
+          this.loading = false;
+        },
+        (error: any) => {
+          console.log(error);
+          // Show error message
+          error.error.error.code == 400
+            ? (this.errorMessage = error.error.error.errors[0].message)
+            : (this.errorMessage = error.error.message);
+          this.showError = true;
+          // Set loading to false
+          this.loading = false;
+
+          // Set Timeout
+          // setTimeout(() => {
+          //   this.showError = false
+          // }, 3000);
+        }
+      );
+  }
+
+  // Sign Up
+  batchSignup() {
+    // Set loading to true
+    this.loading = true;
+
+    // Payload
+    let payload = {
+      learners: this.learnersList,
+    };
 
     // Send users data
-    // this.authService
-    //   .enrollLearner(payload, `schools/${this.user.id}/learners`)
-    //   .subscribe(
-    //     (res: any) => {
-    //       console.log(res);
+    this.authService
+      .enrollLearner(payload, `schools/${this.user.id}/learners`)
+      .subscribe(
+        (res: any) => {
+          console.log(res);
 
-    //       if (res.status == true) {
-    //         // Close Modal
-    //         this.closeAddLearnerModal();
+          if (res.status == true) {
+            // Close Modal
+            this.closeAddLearnerModal();
 
-    //         // Show Popup
-    //         this.showAlert();
+            // Show Popup
+            this.showAlert();
 
-    //         // Reload the page
-    //         // window.location.reload();
-    //       }
+            this.ngOnInit();
+          }
 
-    //       // Show error message
-    //       this.errorMessage = res.message;
-    //       this.showError = true;
+          // Show error message
+          this.errorMessage = res.message;
+          this.showError = true;
 
-    //       // Set loading to false
-    //       this.loading = false;
-    //     },
-    //     (error: any) => {
-    //       console.log(error);
-    //       // Show error message
-    //       error.error.error.code == 400
-    //         ? (this.errorMessage = error.error.error.errors[0].message)
-    //         : (this.errorMessage = error.error.message);
-    //       this.showError = true;
-    //       // Set loading to false
-    //       this.loading = false;
+          // Set loading to false
+          this.loading = false;
+        },
+        (error: any) => {
+          console.log(error);
+          // Show error message
+          error.error.error.code == 400
+            ? (this.errorMessage = error.error.error.errors[0].message)
+            : (this.errorMessage = error.error.message);
+          this.showError = true;
+          // Set loading to false
+          this.loading = false;
 
-    //       // Set Timeout
-    //       // setTimeout(() => {
-    //       //   this.showError = false
-    //       // }, 3000);
-    //     }
-    //   );
+          // Set Timeout
+          // setTimeout(() => {
+          //   this.showError = false
+          // }, 3000);
+        }
+      );
   }
 
   // Show alert popup
@@ -141,15 +192,12 @@ export class SchoolEnrollLearnersComponent implements OnInit {
       var first_sheet_name = workbook.SheetNames[0];
       var worksheet = workbook.Sheets[first_sheet_name];
       let learners = XLSX.utils.sheet_to_json(worksheet, { raw: true });
-      console.log(learners);
 
-      // Get each email address
-      // learners.forEach((email: any) => {
-      //   if (email.__EMPTY.includes('.com')) {
-      //     this.learnersList.push(email.__EMPTY);
-      //   } else {
-      //   }
-      // });
+      this.learnersList = learners.map((learner: any) => ({
+        fullname: learner.__EMPTY,
+        parent_email: learner.__EMPTY_1,
+        grade: learner.__EMPTY_2,
+      }));
     };
     fileReader.readAsArrayBuffer(this.file);
   }

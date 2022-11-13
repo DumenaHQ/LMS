@@ -136,7 +136,9 @@
 
       <ng-container *ngIf="contentId === 'schools'">
         <div class="table-container" style="overflow-x: auto">
-          <table>
+          <app-loader *ngIf="dataLoading"></app-loader>
+
+          <table *ngIf="schools?.length > 0">
             <tr class="table-header">
               <th>Name</th>
               <th>Head of School</th>
@@ -155,6 +157,10 @@
               <p style="text-align: center">Empty School list!</p>
             </ng-template>
           </table>
+
+          <p style="text-align: center" *ngIf="schools?.length === 0">
+            No school available
+          </p>
         </div>
       </ng-container>
     </div>

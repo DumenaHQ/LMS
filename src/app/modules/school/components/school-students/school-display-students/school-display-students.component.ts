@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
+import { SchoolService } from 'src/app/services/school.service';
 
 @Component({
   selector: 'app-school-display-students',
@@ -35,8 +37,29 @@ export class SchoolDisplayStudentsComponent implements OnInit {
       dateEnrolled: 'July 2nd, 2022',
     },
   ];
+  user: any;
+  students: any;
+  dataLoading: boolean = true;
+  constructor(
+    private authService: AuthService,
+    private schoolService: SchoolService
+  ) {}
 
-  constructor() {}
+  ngOnInit(): void {
+    // Get User data from localstorage
+    let userData = this.authService.getUser();
+    this.user = userData.user;
 
-  ngOnInit(): void {}
+    // Get parent kids from localstorage
+    this.schoolService.getSchoolLearners(this.user.id).subscribe({
+      next: (res: any) => {
+        this.students = res.data.students;
+        console.log(this.students);
+      },
+      error: (e) => console.error(e),
+      complete: () => {
+        this.dataLoading = false;
+      },
+    });
+  }
 }
