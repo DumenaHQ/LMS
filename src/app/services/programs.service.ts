@@ -23,6 +23,14 @@ export class ProgramsService {
     );
   }
 
+  // Get Programs by id
+  getSchools(programId: any) {
+    return this.http.get(
+      `${this.baseUrl}programs/${programId}/schools`,
+      this.getHttpOptions()
+    );
+  }
+
   // Add program
   addProgram(data: any) {
     return this.http.post(

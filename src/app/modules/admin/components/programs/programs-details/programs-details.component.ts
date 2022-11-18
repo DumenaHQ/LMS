@@ -11,6 +11,8 @@ export class ProgramsDetailsComponent implements OnInit {
   contentId: any = 'content';
   currentProgramId: any;
   program: any;
+  schools: any;
+  dataLoading: boolean = true;
 
   constructor(
     private programsService: ProgramsService,
@@ -33,6 +35,18 @@ export class ProgramsDetailsComponent implements OnInit {
         //   this.dataLoading = false;
         // },
       });
+
+    // Get programs schools
+    this.programsService.getSchools(this.currentProgramId.programId).subscribe({
+      next: (res: any) => {
+        this.schools = res.data.schools;
+        console.log(this.schools);
+      },
+      error: (e) => console.error(e),
+      complete: () => {
+        this.dataLoading = false;
+      },
+    });
   }
 
   // Tab change
