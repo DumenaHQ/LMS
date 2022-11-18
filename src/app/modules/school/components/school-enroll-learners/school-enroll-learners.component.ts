@@ -12,7 +12,7 @@ import * as XLSX from 'xlsx';
 export class SchoolEnrollLearnersComponent implements OnInit {
   @Output() addLearnerModal: EventEmitter<any> = new EventEmitter();
   @Output() isAlert: EventEmitter<any> = new EventEmitter();
-  @Output() alertMessaage = new EventEmitter<string>();
+  @Output() alertMessage = new EventEmitter<string>();
   loading: boolean = false;
   errorMessage: string = '';
   showError: boolean = false;
@@ -82,7 +82,7 @@ export class SchoolEnrollLearnersComponent implements OnInit {
             this.closeAddLearnerModal();
 
             // Show Popup
-            this.showAlert();
+            this.showAlert('You have enrolled a student successfully!');
 
             this.ngOnInit();
           }
@@ -129,22 +129,22 @@ export class SchoolEnrollLearnersComponent implements OnInit {
         (res: any) => {
           console.log(res);
 
-          if (res.status == true) {
+          if (res.status === true) {
             // Close Modal
             this.closeAddLearnerModal();
 
             // Show Popup
-            this.showAlert();
+            this.showAlert('Students enrolled successfully!');
 
-            this.ngOnInit();
+            window.location.reload();
           }
 
           // Show error message
-          this.errorMessage = res.message;
-          this.showError = true;
+          // this.errorMessage = res.message;
+          // this.showError = true;
 
-          // Set loading to false
-          this.loading = false;
+          // // Set loading to false
+          // this.loading = false;
         },
         (error: any) => {
           console.log(error);
@@ -165,11 +165,10 @@ export class SchoolEnrollLearnersComponent implements OnInit {
   }
 
   // Show alert popup
-  showAlert() {
-    this.messageval = 'You have enrolled a child successfully!';
+  showAlert(messageval: string) {
+    this.messageval = messageval;
     // Set alert message
-    this.alertMessaage.emit(this.messageval);
-
+    this.alertMessage.emit(this.messageval);
     this.isAlert.emit();
   }
 
@@ -192,7 +191,12 @@ export class SchoolEnrollLearnersComponent implements OnInit {
       var first_sheet_name = workbook.SheetNames[0];
       var worksheet = workbook.Sheets[first_sheet_name];
       let learners = XLSX.utils.sheet_to_json(worksheet, { raw: true });
-
+      // learners.forEach((email: any) => {
+      //   if (email.__EMPTY_1.includes('.com')) {
+      //     // console.log(learners);
+      //   }
+      // });
+      let newLearners = learners.shift();
       this.learnersList = learners.map((learner: any) => ({
         fullname: learner.__EMPTY,
         parent_email: learner.__EMPTY_1,

@@ -26,10 +26,12 @@ export class SchoolStudentsComponent implements OnInit {
     // })
   }
 
+  // Open Learner Modal
   openAddLearnerModal() {
     this.addLearnerModal = true;
   }
 
+  // Close Learner modal
   closeAddLearnerModal() {
     this.addLearnerModal = false;
   }
@@ -45,5 +47,6 @@ export class SchoolStudentsComponent implements OnInit {
   // Set alert message
   setAlertMessage(message: any) {
     this.alertMessage = message;
+    this.ngOnInit();
   }
 }

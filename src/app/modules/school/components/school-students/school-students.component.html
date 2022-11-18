@@ -49,5 +49,11 @@
   *ngIf="addLearnerModal"
   (addLearnerModal)="closeAddLearnerModal()"
   (isAlert)="showAlertPopup()"
-  (alertMessaage)="setAlertMessage($event)"
+  (alertMessage)="setAlertMessage($event)"
 ></app-school-enroll-learners>
+
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+></app-alert-popup>
