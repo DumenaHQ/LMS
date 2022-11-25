@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { ProgramsService } from 'src/app/services/programs.service';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -13,6 +14,7 @@ export class AddChildToProgramComponent implements OnInit {
   @Output() addChildToProgramModal: EventEmitter<any> = new EventEmitter();
   @Output() isAlert: EventEmitter<any> = new EventEmitter();
   @Output() alertMessaage = new EventEmitter<string>();
+  @Input() programId: string;
 
   loading: boolean = false;
   errorMessage: string = '';
@@ -30,6 +32,7 @@ export class AddChildToProgramComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private programsService: ProgramsService,
     private router: Router,
     private formBuilder: FormBuilder
   ) {}
@@ -51,8 +54,8 @@ export class AddChildToProgramComponent implements OnInit {
     this.billingId = ids;
   }
 
-  // Sign Up
-  signup() {
+  // Add Learner(s)
+  addLearner() {
     // Set loading to true
     this.loading = true;
 
@@ -66,52 +69,65 @@ export class AddChildToProgramComponent implements OnInit {
       return;
     }
 
-    console.log(this.userForm.value);
+    let payload = {
+      learners: [
+        {
+          id: '6298dc927aa3eebca67f26ff',
+          name: 'Jeffery Bassey',
+        },
+      ],
+    };
+    console.log(this.programId);
 
-    // Send users data
-    // this.authService.enrollChild(payload).subscribe(
-    //   (res: any) => {
-    //     console.log(res);
+    this.programsService
+      .addLearnerToProgram(payload, this.programId)
+      .subscribe({
+        next: (res: any) => {
+          console.log(res);
 
-    //     if (res.status == true) {
-    //       // Close Modal
-    //       this.closeAddChildToProgramModal();
+          if (res.status === true) {
+            this.showAlertPopup(res.message);
+          }
+        },
+        error: (e) => console.error(e),
+        // complete: () => {
+        //   this.dataLoading = false;
+        // },
+      });
+  }
 
-    //       // Show Popup
-    //       this.showAlert();
+  // Batch Add Learner(s)
+  batchAddLearners() {
+    // Set loading to true
+    this.loading = true;
 
-    //       // Reload the page
-    //       window.location.reload();
-    //     }
+    // Payload
+    let payload = {
+      learners: this.learnersList,
+    };
 
-    //     // Show error message
-    //     this.errorMessage = res.message;
-    //     this.showError = true;
+    console.log(payload);
 
-    //     // Set loading to false
-    //     this.loading = false;
-    //   },
-    //   (error: any) => {
-    //     console.log(error);
-    //     // Show error message
-    //     error.error.error.code == 400
-    //       ? (this.errorMessage = error.error.error.errors[0].message)
-    //       : (this.errorMessage = error.error.message);
-    //     this.showError = true;
-    //     // Set loading to false
-    //     this.loading = false;
+    this.programsService
+      .addLearnerToProgram(payload, this.programId)
+      .subscribe({
+        next: (res: any) => {
+          console.log(res);
 
-    //     // Set Timeout
-    //     // setTimeout(() => {
-    //     //   this.showError = false
-    //     // }, 3000);
-    //   }
-    // );
+          if (res.status === true) {
+            this.showAlertPopup(res.message);
+          }
+        },
+        error: (e) => console.error(e),
+        // complete: () => {
+        //   this.dataLoading = false;
+        // },
+      });
   }
 
   // Show alert popup
-  showAlert() {
-    this.messageval = 'You have enrolled a child successfully!';
+  showAlertPopup(message: string) {
+    this.messageval = message;
     // Set alert message
     this.alertMessaage.emit(this.messageval);
 
@@ -139,13 +155,12 @@ export class AddChildToProgramComponent implements OnInit {
       let learners = XLSX.utils.sheet_to_json(worksheet, { raw: true });
       console.log(learners);
 
-      // Get each email address
-      // learners.forEach((email: any) => {
-      //   if (email.__EMPTY.includes('.com')) {
-      //     this.learnersList.push(email.__EMPTY);
-      //   } else {
-      //   }
-      // });
+      let newLearners = learners.shift();
+      this.learnersList = learners.map((learner: any) => ({
+        fullname: learner.__EMPTY,
+        parent_email: learner.__EMPTY_1,
+        grade: learner.__EMPTY_2,
+      }));
     };
     fileReader.readAsArrayBuffer(this.file);
   }

@@ -40,7 +40,6 @@ export class SchoolEnrollLearnersComponent implements OnInit {
     this.userForm = this.formBuilder.group({
       fullname: ['', Validators.required],
       parent_email: ['', [Validators.required, Validators.email]],
-      phone: ['00000000000'],
       grade: ['', Validators.required],
     });
   }
@@ -82,7 +81,7 @@ export class SchoolEnrollLearnersComponent implements OnInit {
             this.closeAddLearnerModal();
 
             // Show Popup
-            this.showAlert('You have enrolled a student successfully!');
+            this.showAlert(res.message);
 
             this.ngOnInit();
           }
@@ -134,7 +133,7 @@ export class SchoolEnrollLearnersComponent implements OnInit {
             this.closeAddLearnerModal();
 
             // Show Popup
-            this.showAlert('Students enrolled successfully!');
+            this.showAlert(res.message);
 
             window.location.reload();
           }
