@@ -4,6 +4,7 @@
   (addChildToProgramModal)="closeAddChildToProgramModal()"
   (isAlert)="showAlertPopup()"
   (alertMessaage)="setAlertMessage($event)"
+  [programId]="programId"
 ></app-add-child-to-program>
 
 <section class="ds-head dis-flex">
@@ -29,7 +30,13 @@
       <div class="left">
         <h2>{{ program?.name }}</h2>
         <div class="dis-flex left_bottom">
-          <button class="success_btn">Ongoing</button>
+          <button
+            [ngClass]="
+              program?.status === 'active' ? 'success_btn' : 'grey_btn'
+            "
+          >
+            {{ program?.status === "active" ? "Ongoing" : "Ended" }}
+          </button>
           <div class="icons dis-flex">
             <span class="dis-flex"
               ><img
@@ -125,7 +132,8 @@
     <div class="course-details_body_content">
       <ng-container *ngIf="contentId === 'content'">
         <div class="courses">
-          <p class="body-3-medium">2 Courses</p>
+          <!-- *ngFor="let course of programCourses" -->
+          <p class="body-3-medium">{{ programCourses?.length }} Course(s)</p>
         </div>
       </ng-container>
 

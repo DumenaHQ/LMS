@@ -138,7 +138,7 @@
               <button
                 class="btn prim_btn clickable"
                 [disabled]="loading"
-                (click)="signup()"
+                (click)="addLearner()"
               >
                 <span *ngIf="!loading">Continue</span>
                 <span *ngIf="loading">Processing...</span>
@@ -188,7 +188,11 @@
               >Cancel</span
             >
             <div class="continue">
-              <button class="btn prim_btn clickable" [disabled]="loading">
+              <button
+                class="btn prim_btn clickable"
+                [disabled]="loading"
+                (click)="batchAddLearners()"
+              >
                 <span *ngIf="!loading">Continue</span>
                 <span *ngIf="loading">Processing...</span>
               </button>

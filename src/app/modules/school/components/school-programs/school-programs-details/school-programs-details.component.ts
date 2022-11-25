@@ -15,6 +15,8 @@ export class SchoolProgramsDetailsComponent implements OnInit {
   alertMessage: string = '';
   currentProgramId: any;
   program: any;
+  programId: string;
+  programCourses: any;
 
   constructor(
     private programsService: ProgramsService,
@@ -31,6 +33,20 @@ export class SchoolProgramsDetailsComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           this.program = res.data.program;
+          this.programId = this.program.id;
+        },
+        error: (e) => console.error(e),
+        // complete: () => {
+        //   this.dataLoading = false;
+        // },
+      });
+
+    // Get programs
+    this.programsService
+      .getProgramCourses(this.currentProgramId.programId)
+      .subscribe({
+        next: (res: any) => {
+          this.programCourses = res.data.courses;
         },
         error: (e) => console.error(e),
         // complete: () => {
