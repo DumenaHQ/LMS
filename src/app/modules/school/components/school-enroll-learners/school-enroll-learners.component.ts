@@ -50,7 +50,7 @@ export class SchoolEnrollLearnersComponent implements OnInit {
   }
 
   // Sign Up
-  signup() {
+  singleSignup() {
     // Set loading to true
     this.loading = true;
 
@@ -83,7 +83,7 @@ export class SchoolEnrollLearnersComponent implements OnInit {
             // Show Popup
             this.showAlert(res.message);
 
-            this.ngOnInit();
+            window.location.reload();
           }
 
           // Show error message
