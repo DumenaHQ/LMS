@@ -29,6 +29,7 @@ export class ChildrenComponent implements OnInit {
     this.authService.getParentChildren(this.user.id).subscribe({
       next: (res: any) => {
         this.children = res.data.learners;
+        console.log(this.children);
       },
       error: (e) => console.error(e),
       complete: () => {
@@ -36,6 +37,8 @@ export class ChildrenComponent implements OnInit {
       },
     });
   }
+
+  // isUserOnboarded
 
   // Open Add Child Modal
   openAddLearnerModal() {
