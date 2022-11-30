@@ -111,10 +111,16 @@ export class SchoolEnrollLearnersComponent implements OnInit {
       );
   }
 
-  // Sign Up
+  // Batch signup
   batchSignup() {
     // Set loading to true
     this.loading = true;
+
+    if (this.learnersList === undefined) {
+      this.loading = false;
+
+      return;
+    }
 
     // Payload
     let payload = {

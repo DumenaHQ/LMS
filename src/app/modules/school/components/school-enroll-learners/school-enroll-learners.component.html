@@ -10,6 +10,7 @@
         <span *ngIf="billingId == 'batch'">Enroll students</span>
       </h4>
       <form class="enroll_form auth_content_form" [formGroup]="userForm">
+        <!-- Tabs starts -->
         <div class="form-field col-2">
           <label for="">Select an enrollment method</label>
           <!-- enroll-mtd tabs -->
@@ -30,6 +31,8 @@
             </div>
           </div>
         </div>
+        <!-- Tabs ends -->
+
         <!-- Single enrollment starts *ngIf="billingId == 'single'" -->
         <div class="single-enroll col-2" *ngIf="billingId == 'single'">
           <div
@@ -183,7 +186,7 @@
             <div class="continue">
               <button
                 class="btn prim_btn clickable"
-                [disabled]="loading"
+                [disabled]="loading || learnersList === undefined"
                 (click)="batchSignup()"
               >
                 <span *ngIf="!loading">Continue</span>

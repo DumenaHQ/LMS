@@ -14,8 +14,7 @@
 .modal {
   @include modal($modal-area-width: 500px);
   &_area {
-    padding: $m-6 $m-3;
-    // close button
+    // padding: $m-6 $m-3;
     
   }
 }
@@ -53,7 +52,7 @@
 
 .auth_content {
   .auth_content_form {
-    // margin-top: $m-3;
+    margin-top: $m-2;
     .avatar {
       &_list {
         flex-wrap: wrap;
