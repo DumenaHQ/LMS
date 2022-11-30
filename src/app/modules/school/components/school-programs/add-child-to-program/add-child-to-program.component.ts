@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProgramsService } from 'src/app/services/programs.service';
+import { SchoolService } from 'src/app/services/school.service';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -29,10 +30,13 @@ export class AddChildToProgramComponent implements OnInit {
   file: File;
   arrayBuffer: any;
   learnersList: any;
+  students: any;
+  dataLoading: boolean = true;
 
   constructor(
     private authService: AuthService,
     private programsService: ProgramsService,
+    private schoolService: SchoolService,
     private router: Router,
     private formBuilder: FormBuilder
   ) {}
@@ -41,6 +45,18 @@ export class AddChildToProgramComponent implements OnInit {
     // Get User data from localstorage
     let userData = this.authService.getUser();
     this.user = userData.user;
+
+    // Get school learners from localstorage
+    this.schoolService.getSchoolLearners(this.user.id).subscribe({
+      next: (res: any) => {
+        this.students = res.data.students;
+        console.log(this.students);
+      },
+      error: (e) => console.error(e),
+      complete: () => {
+        this.dataLoading = false;
+      },
+    });
 
     this.userForm = this.formBuilder.group({
       fullname: ['', Validators.required],
@@ -55,7 +71,7 @@ export class AddChildToProgramComponent implements OnInit {
   }
 
   // Add Learner(s)
-  addLearner() {
+  addLearners() {
     // Set loading to true
     this.loading = true;
 
@@ -79,27 +95,33 @@ export class AddChildToProgramComponent implements OnInit {
     };
     console.log(this.programId);
 
-    this.programsService
-      .addLearnerToProgram(payload, this.programId)
-      .subscribe({
-        next: (res: any) => {
-          console.log(res);
+    // this.programsService
+    //   .addLearnerToProgram(payload, this.programId)
+    //   .subscribe({
+    //     next: (res: any) => {
+    //       console.log(res);
 
-          if (res.status === true) {
-            this.showAlertPopup(res.message);
-          }
-        },
-        error: (e) => console.error(e),
-        // complete: () => {
-        //   this.dataLoading = false;
-        // },
-      });
+    //       if (res.status === true) {
+    //         this.showAlertPopup(res.message);
+    //       }
+    //     },
+    //     error: (e) => console.error(e),
+    //     // complete: () => {
+    //     //   this.dataLoading = false;
+    //     // },
+    //   });
   }
 
   // Batch Add Learner(s)
   batchAddLearners() {
     // Set loading to true
     this.loading = true;
+
+    if (this.learnersList === undefined) {
+      this.loading = false;
+
+      return;
+    }
 
     // Payload
     let payload = {
@@ -108,21 +130,21 @@ export class AddChildToProgramComponent implements OnInit {
 
     console.log(payload);
 
-    this.programsService
-      .addLearnerToProgram(payload, this.programId)
-      .subscribe({
-        next: (res: any) => {
-          console.log(res);
+    // this.programsService
+    //   .addLearnerToProgram(payload, this.programId)
+    //   .subscribe({
+    //     next: (res: any) => {
+    //       console.log(res);
 
-          if (res.status === true) {
-            this.showAlertPopup(res.message);
-          }
-        },
-        error: (e) => console.error(e),
-        // complete: () => {
-        //   this.dataLoading = false;
-        // },
-      });
+    //       if (res.status === true) {
+    //         this.showAlertPopup(res.message);
+    //       }
+    //     },
+    //     error: (e) => console.error(e),
+    //     // complete: () => {
+    //     //   this.dataLoading = false;
+    //     // },
+    //   });
   }
 
   // Show alert popup
@@ -153,13 +175,12 @@ export class AddChildToProgramComponent implements OnInit {
       var first_sheet_name = workbook.SheetNames[0];
       var worksheet = workbook.Sheets[first_sheet_name];
       let learners = XLSX.utils.sheet_to_json(worksheet, { raw: true });
-      console.log(learners);
 
       let newLearners = learners.shift();
       this.learnersList = learners.map((learner: any) => ({
-        fullname: learner.__EMPTY,
-        parent_email: learner.__EMPTY_1,
-        grade: learner.__EMPTY_2,
+        username: learner.__EMPTY,
+        // parent_email: learner.__EMPTY_1,
+        // grade: learner.__EMPTY_2,
       }));
     };
     fileReader.readAsArrayBuffer(this.file);

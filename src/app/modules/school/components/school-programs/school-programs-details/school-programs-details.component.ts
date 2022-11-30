@@ -9,7 +9,7 @@ import { ProgramsService } from 'src/app/services/programs.service';
 })
 export class SchoolProgramsDetailsComponent implements OnInit {
   contentId: any = 'content';
-  addChildToProgramModal: boolean = false;
+  addChildToProgramModal: boolean = true;
   title: string = 'child';
   isAlert: boolean = false;
   alertMessage: string = '';

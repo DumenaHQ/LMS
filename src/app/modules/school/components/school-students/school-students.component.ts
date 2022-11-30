@@ -26,7 +26,7 @@ export class SchoolStudentsComponent implements OnInit {
     let userData = this.authService.getUser();
     this.user = userData.user;
 
-    // Get parent kids from localstorage
+    // Get school learners from localstorage
     this.schoolService.getSchoolLearners(this.user.id).subscribe({
       next: (res: any) => {
         this.students = res.data.students;

@@ -60,10 +60,10 @@
     </ng-container>
 
     <!-- Course Blank -->
-    <ng-template *ngIf="students?.length === 0">
+    <ng-container *ngIf="students?.length === 0">
       <app-student-blank
         (addLearnerModal)="openAddLearnerModal()"
       ></app-student-blank>
-    </ng-template>
+    </ng-container>
   </div>
 </section>

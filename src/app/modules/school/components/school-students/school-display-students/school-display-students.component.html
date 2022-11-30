@@ -7,11 +7,7 @@
       <th>Date Enrolled</th>
       <th></th>
     </tr>
-    <tr
-      class="table-body clickable"
-      *ngFor="let student of students"
-      routerLink="{{ student.id }}"
-    >
+    <tr class="table-body clickable" *ngFor="let student of students">
       <td class="name">
         <div class="dis-flex">
           <img
