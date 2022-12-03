@@ -171,17 +171,14 @@ export class SchoolEnrollLearnersComponent implements OnInit {
       var first_sheet_name = workbook.SheetNames[0];
       var worksheet = workbook.Sheets[first_sheet_name];
       let learners = XLSX.utils.sheet_to_json(worksheet, { raw: true });
-      // learners.forEach((email: any) => {
-      //   if (email.__EMPTY_1.includes('.com')) {
-      //     // console.log(learners);
-      //   }
-      // });
-      let newLearners = learners.shift();
+      
+      // let newLearners = learners.shift();
       this.learnersList = learners.map((learner: any) => ({
-        fullname: learner.__EMPTY,
-        parent_email: learner.__EMPTY_1,
-        grade: learner.__EMPTY_2,
+        fullname: learner['Student Name'],
+        parent_email: learner['Parent Email'],
+        grade: learner['Class/Grade'],
       }));
+      
     };
     fileReader.readAsArrayBuffer(this.file);
   }

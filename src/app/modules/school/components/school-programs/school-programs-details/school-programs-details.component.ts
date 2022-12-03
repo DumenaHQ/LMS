@@ -17,6 +17,7 @@ export class SchoolProgramsDetailsComponent implements OnInit {
   program: any;
   programId: string;
   programCourses: any;
+  programSchools: any;
   hasJoined: any;
   isAlert: boolean = false;
   alertMessage: string;
@@ -37,8 +38,22 @@ export class SchoolProgramsDetailsComponent implements OnInit {
     // Get User data from localstorage
     let userData = this.authService.getUser();
     this.user = userData.user;
-
+    
     // Get program
+    this.programsService
+      .getProgramsById(this.currentProgramId.programId)
+      .subscribe({
+        next: (res: any) => {
+          this.program = res.data.program;
+          this.programId = this.program.id;
+        },
+        error: (e) => console.error(e),
+        // complete: () => {
+        //   this.dataLoading = false;
+        // },
+      });
+
+    // Get program hasJoined value
     this.programsService
       .getAllPrograms()
       .subscribe({
@@ -47,27 +62,21 @@ export class SchoolProgramsDetailsComponent implements OnInit {
           result.forEach((p: any) => {
             if(p.id === this.currentProgramId.programId) {
               this.hasJoined = p.hasJoined
-              console.log(this.hasJoined);
             }
           });
         },
         error: (e) => console.error(e),
       });
 
-    // Get program
+      // Get programs schools
     this.programsService
-      .getProgramsById(this.currentProgramId.programId)
-      .subscribe({
-        next: (res: any) => {
-          this.program = res.data.program;
-          this.programId = this.program.id;
-          console.log(this.program);
-        },
-        error: (e) => console.error(e),
-        // complete: () => {
-        //   this.dataLoading = false;
-        // },
-      });
+    .getProgramSchools(this.currentProgramId.programId)
+    .subscribe({
+      next: (res: any) => {
+        this.programSchools = res.data.schools;
+      },
+      error: (e) => console.error(e),
+    });
       
     // Get program courses
     this.programsService
@@ -77,9 +86,6 @@ export class SchoolProgramsDetailsComponent implements OnInit {
           this.programCourses = res.data.courses;
         },
         error: (e) => console.error(e),
-        // complete: () => {
-        //   this.dataLoading = false;
-        // },
       });
   }
 
@@ -88,19 +94,19 @@ export class SchoolProgramsDetailsComponent implements OnInit {
     this.contentId = ids;
   }
   // Join Program
-  joinProgram(programId: string) {
+  joinProgram() {
     // this.loading = true;
 
     let payload = {
       schools: [
         {
-          id: this.user.id,
+          user_id: this.user.id,
           name: this.user.fullname,
         },
       ],
     };
 
-    this.programsService.addSchoolToProgram(payload, programId).subscribe({
+    this.programsService.addSchoolToProgram(payload, this.programId).subscribe({
       next: (res: any) => {
         console.log(res);
 

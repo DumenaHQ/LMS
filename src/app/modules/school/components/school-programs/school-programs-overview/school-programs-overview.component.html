@@ -64,8 +64,11 @@
                   {{ program?.description }}
                 </p>
               </div>
-              <button class="btn prim_btn" (click)="joinProgram(program?.id)">
+              <button class="btn prim_btn" *ngIf="program?.hasJoined === false"  (click)="joinProgram(program?.id)">
                 Join
+              </button>
+              <button class="btn grey_btn" *ngIf="program?.hasJoined === true">
+                Joined
               </button>
             </div>
             <ul class="dis-flex">

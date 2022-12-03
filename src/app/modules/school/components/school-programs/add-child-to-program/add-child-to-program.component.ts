@@ -34,7 +34,7 @@ export class AddChildToProgramComponent implements OnInit {
   students: any;
   dataLoading: boolean = true;
   studentName: any;
-  selectedLearnerss: any[] = [];
+  selectedLearners: any[] = [];
   
 
   constructor(
@@ -54,7 +54,6 @@ export class AddChildToProgramComponent implements OnInit {
     this.schoolService.getSchoolLearners(this.user.id).subscribe({
       next: (res: any) => {
         this.students = res.data.students;
-        // console.log(this.students);
       },
       error: (e) => console.error(e),
       complete: () => {
@@ -84,11 +83,9 @@ export class AddChildToProgramComponent implements OnInit {
     this.loading = true;
 
     let payload = {
-      learners: this.selectedLearnerss,
+      learners: this.selectedLearners,
     };
-    console.log(payload);
-
-
+    
     this.programsService
       .addLearnerToProgram(payload, this.programId)
       .subscribe({
@@ -98,7 +95,9 @@ export class AddChildToProgramComponent implements OnInit {
           if (res.status === true) {
             this.showAlertPopup(res.message, 'success');
             // close modal
-            this.closeAddChildToProgramModal()
+            setTimeout(() => {
+              this.closeAddChildToProgramModal()
+            }, 3000);
           }
         },
         error: (e) => {
@@ -129,23 +128,23 @@ export class AddChildToProgramComponent implements OnInit {
       learners: this.learnersList,
     };
 
-    console.log(payload);
+    this.programsService
+      .addLearnerToProgram(payload, this.programId)
+      .subscribe({
+        next: (res: any) => {
+          console.log(res);
 
-    // this.programsService
-    //   .addLearnerToProgram(payload, this.programId)
-    //   .subscribe({
-    //     next: (res: any) => {
-    //       console.log(res);
-
-    //       if (res.status === true) {
-    //         this.showAlertPopup(res.message);
-    //       }
-    //     },
-    //     error: (e) => console.error(e),
-    //     // complete: () => {
-    //     //   this.dataLoading = false;
-    //     // },
-    //   });
+          this.showAlertPopup(res.message, 'success');
+          // close modal
+          setTimeout(() => {
+            this.closeAddChildToProgramModal()
+          }, 3000);
+        },
+        error: (e) => console.error(e),
+        // complete: () => {
+        //   this.dataLoading = false;
+        // },
+      });
   }
 
   // Upload File
@@ -167,13 +166,12 @@ export class AddChildToProgramComponent implements OnInit {
       var first_sheet_name = workbook.SheetNames[0];
       var worksheet = workbook.Sheets[first_sheet_name];
       let learners = XLSX.utils.sheet_to_json(worksheet, { raw: true });
-
-      let newLearners = learners.shift();
+      
       this.learnersList = learners.map((learner: any) => ({
-        username: learner.__EMPTY,
-        // parent_email: learner.__EMPTY_1,
-        // grade: learner.__EMPTY_2,
+        name: learner['Fullname'],
+        username: learner['Username'],
       }));
+      
     };
     fileReader.readAsArrayBuffer(this.file);
   }
@@ -195,18 +193,16 @@ export class AddChildToProgramComponent implements OnInit {
 
     // If doesn't exist add new student
     if(event.target.checked === false) {
-      this.selectedLearnerss.forEach((element: any, index: any) => {
+      this.selectedLearners.forEach((element: any, index: any) => {
           if(element.username === student.username) {
-            this.selectedLearnerss.splice(index, 1)
+            this.selectedLearners.splice(index, 1)
           }
-          return this.selectedLearnerss
+          return this.selectedLearners
         });
       }
       else {
-        this.selectedLearnerss.push({username: student.username});
+        this.selectedLearners.push({username: student.username, name: student.fullname});
       }
-
-      console.log(this.selectedLearnerss);
       
   }
 

@@ -171,7 +171,7 @@
           <app-loader *ngIf="dataLoading"></app-loader>
 
           <ng-container *ngIf="programSchools?.length > 0">
-            <table *ngFor="let school of programSchools">
+            <table>
               <tr class="table-header">
                 <th>Name</th>
                 <th>Head of School</th>
@@ -179,11 +179,11 @@
                 <th>Number of students</th>
               </tr>
               <ng-container>
-                <tr class="table-body">
+                <tr class="table-body"  *ngFor="let school of programSchools">
                   <td>{{ school.name }}</td>
                   <td>none</td>
                   <td>none</td>
-                  <td>none</td>
+                  <td>{{school.student_count}}</td>
                 </tr>
               </ng-container>
               <ng-template>
