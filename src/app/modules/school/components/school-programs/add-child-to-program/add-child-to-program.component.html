@@ -84,7 +84,7 @@
                   <th>Student name</th>
                   <th>Username</th>
                   <th class="dis-flex actions">
-                    Mark all <input type="checkbox" name="" id="" />
+                    <!-- Mark all <input type="checkbox" name="" id="" /> -->
                   </th>
                 </tr>
                 <ng-container *ngIf="students?.length > 0">
@@ -128,8 +128,8 @@
             <label for=""
               >Upload an excel sheet containing the <b>Username</b> Or download
               an excel template
-              <strong class="text-primary-color hover-1 clicakble"
-                ><a [href]="'https://dev.dumena.com/schools/' + user.id + '/download-students-list'">here</a></strong
+              <strong 
+                ><a [href]="'https://dev.dumena.com/schools/' + user.id + '/download-students-list'" class="text-primary-color hover-1 clicakble">here</a></strong
               ></label
             >
             <div

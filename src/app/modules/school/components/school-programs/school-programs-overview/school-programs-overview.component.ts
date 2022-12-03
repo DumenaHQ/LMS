@@ -32,8 +32,6 @@ export class SchoolProgramsOverviewComponent implements OnInit {
     this.programsService.getAllPrograms().subscribe({
       next: (res: any) => {
         this.programs = res.data.programs;
-        console.log(this.programs);
-        
       },
       error: (e) => console.error(e),
       complete: () => {
@@ -49,7 +47,7 @@ export class SchoolProgramsOverviewComponent implements OnInit {
     let payload = {
       schools: [
         {
-          id: this.user.id,
+          user_id: this.user.id,
           name: this.user.fullname,
         },
       ],
