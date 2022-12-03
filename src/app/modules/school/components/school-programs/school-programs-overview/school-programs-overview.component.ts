@@ -15,6 +15,7 @@ export class SchoolProgramsOverviewComponent implements OnInit {
   loading: boolean = false;
   isAlert: boolean = false;
   alertMessage: string;
+  alertColor: string
 
   constructor(
     private programsService: ProgramsService,
@@ -32,6 +33,7 @@ export class SchoolProgramsOverviewComponent implements OnInit {
       next: (res: any) => {
         this.programs = res.data.programs;
         console.log(this.programs);
+        
       },
       error: (e) => console.error(e),
       complete: () => {
@@ -58,11 +60,11 @@ export class SchoolProgramsOverviewComponent implements OnInit {
         console.log(res);
 
         if (res.status === true) {
-          this.showAlertPopup(res.message);
+          this.showAlertPopup(res.message, 'success');
 
           setTimeout(() => {
             this.router.navigate([`/school/programs/${programId}`]);
-          }, 2000);
+          }, 3000);
         }
       },
       error: (e) => console.error(e),
@@ -91,12 +93,17 @@ export class SchoolProgramsOverviewComponent implements OnInit {
     });
   }
 
-  showAlertPopup(message: string) {
+  // Show alert
+  showAlertPopup(message: string, color: string) {
+    // Set message
     this.alertMessage = message;
+    // Set color
+    this.alertColor = color;
+    // Show Alert
     this.isAlert = true;
-    // Hide after some seconds
+    // Hide Alert
     setTimeout(() => {
       this.isAlert = false;
-    }, 2000);
+    }, 3000);
   }
 }

@@ -1,11 +1,17 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
+></app-alert-popup>
+
 <!-- Enrol Learner -->
 <app-add-child-to-program
   *ngIf="addChildToProgramModal"
   (addChildToProgramModal)="closeAddChildToProgramModal()"
-  (isAlert)="showAlertPopup()"
-  (alertMessaage)="setAlertMessage($event)"
   [programId]="programId"
 ></app-add-child-to-program>
+
 
 <section class="ds-head dis-flex">
   <h2 class="ds-head_title clickable" routerLink="/school/programs">
@@ -66,11 +72,11 @@
       </p>
       <ul class="numbers dis-flex">
         <li>
-          <p class="body-2-bold">{{ program?.courses.length }}</p>
+          <p class="body-2-bold">{{ program?.courses?.length }}</p>
           <p class="body-3-regular">Courses</p>
         </li>
         <li>
-          <p class="body-2-bold">{{ program?.schools.length }}</p>
+          <p class="body-2-bold">{{ program?.sponsors?.length }}</p>
           <p class="body-3-regular">Schools</p>
         </li>
       </ul>

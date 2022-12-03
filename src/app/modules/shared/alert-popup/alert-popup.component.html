@@ -1,3 +1,9 @@
 <div class="alert-msg">
-  <p>{{ alertMessage }}</p>
+  <p 
+  [class.success-color]="alertColor == 'success'"
+  [class.danger-color]="alertColor == 'error'"
+  [class.warning-color]="alertColor == 'warning'"
+  >
+  {{ alertMessage }}
+  </p>
 </div>

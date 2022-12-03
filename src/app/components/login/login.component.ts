@@ -15,8 +15,9 @@ export class LoginComponent implements OnInit {
   showError: boolean = false;
   userType: any;
   userForm: any = FormGroup;
-  alertMessage: string = '';
   isAlert: boolean = false;
+  alertMessage: string = '';
+  alertColor: string = '';
   isFormSubmitted: boolean = false;
 
   constructor(
@@ -71,9 +72,12 @@ export class LoginComponent implements OnInit {
           // Set User data
           this.authService.addUserDataToLocalStorage(res.data);
 
+          this.showAlertPopup(res.message, 'success');
+
           // Route user
-          // this.router.navigate(['/coming-soon'])
-          this.CheckUserType(res.data.user.role);
+          setTimeout(() => {
+            this.CheckUserType(res.data.user.role);
+          }, 3000);
         }
       },
       (error: any) => {
@@ -85,11 +89,6 @@ export class LoginComponent implements OnInit {
 
         // Set loading to false
         this.loading = false;
-
-        // Set Timeout
-        // setTimeout(() => {
-        //   this.showError = false
-        // }, 3000);
       }
     );
   }
@@ -122,30 +121,28 @@ export class LoginComponent implements OnInit {
 
   // Resend verification email
   reVerifyEmail() {
-    let payload = {
-      email: this.userForm?.value?.email,
-    };
-    // david.aremu@st.fut.minna.edu.ng
     this.authService
       .resendVerificationEmail(this.userForm.value.email)
       .subscribe((res: any) => {
         console.log(res);
         if (res.status === true) {
-          this.alertMessage = res.message;
-          this.showAlert();
+          this.showAlertPopup(res.message, 'success');
         }
       });
   }
 
   // Show alert
-  showAlert() {
+  showAlertPopup(message: string, color: string) {
+    // Set message
+    this.alertMessage = message;
+    // Set color
+    this.alertColor = color;
     // Show Alert
     this.isAlert = true;
-
     // Hide Alert
     setTimeout(() => {
       this.isAlert = false;
-    }, 2000);
+    }, 3000);
   }
 
   // Go Back to the previous page

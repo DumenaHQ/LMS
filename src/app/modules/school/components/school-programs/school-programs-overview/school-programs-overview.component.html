@@ -2,6 +2,7 @@
 <app-alert-popup
   *ngIf="isAlert"
   [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
 ></app-alert-popup>
 
 <section class="ds-head">
@@ -69,13 +70,13 @@
             </div>
             <ul class="dis-flex">
               <li>
-                <p class="body-2-bold">{{ program?.learners?.length }}</p>
-                <p class="body-3-regular">Learners</p>
+                <p class="body-2-bold">{{ program?.courses?.length }}</p>
+                <p class="body-3-regular">Courses</p>
               </li>
-              <li>
+              <!-- <li>
                 <p class="body-2-bold">{{ program?.schools?.length }}</p>
                 <p class="body-3-regular">Schools</p>
-              </li>
+              </li> -->
             </ul>
           </div>
 

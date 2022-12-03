@@ -13,6 +13,7 @@ import { PricingPlanComponent } from '../parent/components/pricing-plan/pricing-
 import { AlertPopupComponent } from './alert-popup/alert-popup.component';
 import { LoaderComponent } from './loader/loader.component';
 import { DisplayPaymentHistoryComponent } from './display-payment-history/display-payment-history.component';
+import { ConfirmDeleteComponent } from './confirm-delete/confirm-delete.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { DisplayPaymentHistoryComponent } from './display-payment-history/displa
     AlertPopupComponent,
     LoaderComponent,
     DisplayPaymentHistoryComponent,
+    ConfirmDeleteComponent,
     // PricingPlanComponent,
   ],
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
@@ -37,6 +39,7 @@ import { DisplayPaymentHistoryComponent } from './display-payment-history/displa
     DashboardPopupAlertComponent,
     AlertPopupComponent,
     LoaderComponent,
+    ConfirmDeleteComponent
   ],
 })
 export class SharedModule {}
