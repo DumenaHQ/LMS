@@ -85,9 +85,9 @@
               }
             }
             &.table-body {
-              td {
-                text-align: center;
-              }
+              // td:last-child {
+              //   text-align: center;
+              // }
             }
         }
     }

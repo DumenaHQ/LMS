@@ -14,6 +14,7 @@ export class UserProfileComponent implements OnInit {
   fullname: string = '';
   @Output() isAlert: boolean = false;
   alertMessage: string;
+  alertColor: string
   loading: boolean = false;
 
   constructor(
@@ -66,23 +67,27 @@ export class UserProfileComponent implements OnInit {
         // Set User data
         this.authService.addUserDataToLocalStorage(res.data);
 
-        this.showAlert();
+        this.showAlertPopup(res.message, 'success');
+
+        // Hide Alert
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       }
     });
   }
 
   // Show alert
-  showAlert() {
+  showAlertPopup(message: string, color: string) {
     // Set message
-    this.alertMessage = 'Your profile has been updated successfully!';
-
+    this.alertMessage = message;
+    // Set color
+    this.alertColor = color;
     // Show Alert
     this.isAlert = true;
-
     // Hide Alert
     setTimeout(() => {
       this.isAlert = false;
-      window.location.reload();
-    }, 2000);
+    }, 3000);
   }
 }

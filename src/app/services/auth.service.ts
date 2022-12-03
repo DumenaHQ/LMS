@@ -94,16 +94,13 @@ export class AuthService {
     return this.http.put(`${this.baseUrl}users`, data, this.getHttpOptions());
   }
 
-  // Delete enrolled child
-  deleteEnrolledChild(parentId: string, learnerId: string) {
-    console.log(parentId, learnerId);
-
+  // Delete
+  deleteItem(deleteUrl: string) {
     return this.http.delete(
-      `${this.baseUrl}parents/${parentId}/learners/${learnerId}`,
+      `${this.baseUrl}${deleteUrl}`,
       this.getHttpOptions()
     );
   }
-  // parents/:id/learners/:learnerid
 
   // Log Out
   logOut() {

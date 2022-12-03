@@ -1,3 +1,10 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
+></app-alert-popup>
+
 <div class="modal">
   <div class="modal_area" [class.remove-padd]="billingId == 'single'">
     <span class="modal_area_close" (click)="closeAddChildToProgramModal()">
@@ -13,8 +20,6 @@
       </h4>
       <form
         class="enroll_form auth_content_form"
-        [formGroup]="userForm"
-        #usersForm="ngForm"
       >
         <!-- Tabs starts -->
         <div class="form-field col-2" [class.add-padd]="billingId == 'single'">
@@ -48,7 +53,8 @@
                   src="../../../../../../assets/img/svg/Search.svg"
                   alt="image"
                 />
-                <input type="text" placeholder="Search..." />
+                <input type="text" placeholder="Search by Name" name="search" [(ngModel)]="studentName"
+                (input)="search()" />
               </div>
 
               <div class="grouping dis-flex">
@@ -72,7 +78,7 @@
                 </div>
               </div>
             </div>
-            <div style="overflow-x: auto">
+            <div style="overflow: auto; max-height: 300px;">
               <table>
                 <tr class="table-header">
                   <th>Student name</th>
@@ -81,16 +87,16 @@
                     Mark all <input type="checkbox" name="" id="" />
                   </th>
                 </tr>
-                <ng-container>
-                  <tr class="table-body">
-                    <td>Aremu David</td>
-                    <td>Aremu.david</td>
-                    <td><input type="checkbox" name="" id="" /></td>
+                <ng-container *ngIf="students?.length > 0">
+                  <tr class="table-body" *ngFor="let student of students">
+                    <td>{{student.fullname}}</td>
+                    <td>{{student.username}}</td>
+                    <td><input type="checkbox" name="student" [id]="student.id" (change)="selectStudent($event, student)" /></td>
                   </tr>
                 </ng-container>
-                <ng-template>
-                  <p style="text-align: center">Empty School list!</p>
-                </ng-template>
+                <ng-container *ngIf="students?.length === 0">
+                  <p style="text-align: center">No learner!</p>
+                </ng-container>
               </table>
             </div>
           </div>
@@ -123,7 +129,7 @@
               >Upload an excel sheet containing the <b>Username</b> Or download
               an excel template
               <strong class="text-primary-color hover-1 clicakble"
-                >here</strong
+                ><a [href]="'https://dev.dumena.com/schools/' + user.id + '/download-students-list'">here</a></strong
               ></label
             >
             <div

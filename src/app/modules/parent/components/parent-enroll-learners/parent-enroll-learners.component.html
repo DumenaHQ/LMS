@@ -1,3 +1,10 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
+></app-alert-popup>
+
 <div class="modal">
   <div class="modal_area">
     <span class="modal_area_close" (click)="closeAddLearnerModal()">

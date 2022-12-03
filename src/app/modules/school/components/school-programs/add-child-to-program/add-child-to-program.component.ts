@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { first } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProgramsService } from 'src/app/services/programs.service';
 import { SchoolService } from 'src/app/services/school.service';
@@ -13,8 +14,9 @@ import * as XLSX from 'xlsx';
 })
 export class AddChildToProgramComponent implements OnInit {
   @Output() addChildToProgramModal: EventEmitter<any> = new EventEmitter();
-  @Output() isAlert: EventEmitter<any> = new EventEmitter();
-  @Output() alertMessaage = new EventEmitter<string>();
+  isAlert: boolean = false;
+  alertMessage: string;
+  alertColor: string;
   @Input() programId: string;
 
   loading: boolean = false;
@@ -25,13 +27,15 @@ export class AddChildToProgramComponent implements OnInit {
   messageval: string;
   billingId: string = 'single';
   selectedFileName: any;
-  userForm: any = FormGroup;
   isFormSubmitted: boolean = false;
   file: File;
   arrayBuffer: any;
   learnersList: any;
   students: any;
   dataLoading: boolean = true;
+  studentName: any;
+  selectedLearnerss: any[] = [];
+  
 
   constructor(
     private authService: AuthService,
@@ -50,7 +54,7 @@ export class AddChildToProgramComponent implements OnInit {
     this.schoolService.getSchoolLearners(this.user.id).subscribe({
       next: (res: any) => {
         this.students = res.data.students;
-        console.log(this.students);
+        // console.log(this.students);
       },
       error: (e) => console.error(e),
       complete: () => {
@@ -58,11 +62,15 @@ export class AddChildToProgramComponent implements OnInit {
       },
     });
 
-    this.userForm = this.formBuilder.group({
-      fullname: ['', Validators.required],
-      parent_email: ['', [Validators.required, Validators.email]],
-      grade: ['', Validators.required],
-    });
+    // Get download learners list 
+    // this.schoolService.getDownloadLearnersList(this.user.id)
+    // .subscribe({
+    //   next: (res: any) => {
+    //     let result = res;
+    //     console.log(result);
+    //   },
+    //   error: (e) => console.error(e),,
+    // });
   }
 
   // Tab change
@@ -75,41 +83,34 @@ export class AddChildToProgramComponent implements OnInit {
     // Set loading to true
     this.loading = true;
 
-    // Set submitted to true
-    this.isFormSubmitted = true;
-
-    // If Form is invalid
-    if (this.userForm.invalid) {
-      this.loading = false;
-
-      return;
-    }
-
     let payload = {
-      learners: [
-        {
-          id: '6298dc927aa3eebca67f26ff',
-          name: 'Jeffery Bassey',
-        },
-      ],
+      learners: this.selectedLearnerss,
     };
-    console.log(this.programId);
+    console.log(payload);
 
-    // this.programsService
-    //   .addLearnerToProgram(payload, this.programId)
-    //   .subscribe({
-    //     next: (res: any) => {
-    //       console.log(res);
 
-    //       if (res.status === true) {
-    //         this.showAlertPopup(res.message);
-    //       }
-    //     },
-    //     error: (e) => console.error(e),
-    //     // complete: () => {
-    //     //   this.dataLoading = false;
-    //     // },
-    //   });
+    this.programsService
+      .addLearnerToProgram(payload, this.programId)
+      .subscribe({
+        next: (res: any) => {
+          console.log(res);
+
+          if (res.status === true) {
+            this.showAlertPopup(res.message, 'success');
+            // close modal
+            this.closeAddChildToProgramModal()
+          }
+        },
+        error: (e) => {
+          console.error(e)
+          this.showAlertPopup(e.error.message, 'error');
+
+          this.loading = false
+        },
+        // complete: () => {
+        //   this.dataLoading = false;
+        // },
+      });
   }
 
   // Batch Add Learner(s)
@@ -147,15 +148,6 @@ export class AddChildToProgramComponent implements OnInit {
     //   });
   }
 
-  // Show alert popup
-  showAlertPopup(message: string) {
-    this.messageval = message;
-    // Set alert message
-    this.alertMessaage.emit(this.messageval);
-
-    this.isAlert.emit();
-  }
-
   // Upload File
   uploadFile(event: any) {
     this.file = event.target.files[0];
@@ -186,8 +178,54 @@ export class AddChildToProgramComponent implements OnInit {
     fileReader.readAsArrayBuffer(this.file);
   }
 
+  // Search students
+  search() {
+    if (this.studentName != "") {
+      this.students = this.students.filter((res: any) => {
+        return res.fullname.toLocaleLowerCase().match(this.studentName.toLocaleLowerCase());
+      });
+    } else if (this.studentName == "") {
+      this.ngOnInit()
+    }
+  }
+
+  // Select students
+  selectStudent(event: any, student: any) {
+    // selected.selected = true;
+
+    // If doesn't exist add new student
+    if(event.target.checked === false) {
+      this.selectedLearnerss.forEach((element: any, index: any) => {
+          if(element.username === student.username) {
+            this.selectedLearnerss.splice(index, 1)
+          }
+          return this.selectedLearnerss
+        });
+      }
+      else {
+        this.selectedLearnerss.push({username: student.username});
+      }
+
+      console.log(this.selectedLearnerss);
+      
+  }
+
   // Close Add Modal
   closeAddChildToProgramModal() {
     this.addChildToProgramModal.emit();
+  }
+
+  // Show alert
+  showAlertPopup(message: string, color: string) {
+    // Set message
+    this.alertMessage = message;
+    // Set color
+    this.alertColor = color;
+    // Show Alert
+    this.isAlert = true;
+    // Hide Alert
+    setTimeout(() => {
+      this.isAlert = false;
+    }, 3000);
   }
 }

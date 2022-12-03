@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -10,13 +11,19 @@ export class ForgotPasswordComponent implements OnInit {
   loading: boolean = false;
   errorMessage: string = '';
   showError: boolean = false;
-
   id: any = 'forgot-password';
   email: string = '';
+  userForm: any;
+  isFormSubmitted: boolean = false;
 
-  constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {}
+  constructor(private authService: AuthService, private formBuilder: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.userForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+    });
+  }
 
   // Change sect
   showSect(ids: any) {
@@ -24,11 +31,21 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   // Set reset email
-  sendResetEmail(data: any) {
+  sendResetEmail() {
     // Start loading
     this.loading = true;
 
-    this.authService.sendResetEmail(data).subscribe(
+    // Set submitted to true
+    this.isFormSubmitted = true;
+
+    // If Form is invalid
+    if (this.userForm.invalid) {
+      this.loading = false;
+
+      return;
+    }    
+
+    this.authService.sendResetEmail(this.userForm.value).subscribe(
       (res: any) => {
         console.log(res);
 
@@ -37,7 +54,8 @@ export class ForgotPasswordComponent implements OnInit {
           this.id = 'check-mail';
 
           // Pass the user email
-          this.email = data.email;
+          this.email = this.userForm.value.email;
+          
         }
       },
       (error: any) => {
@@ -49,11 +67,6 @@ export class ForgotPasswordComponent implements OnInit {
 
         // Set loading to false
         this.loading = false;
-
-        // Set Timeout
-        // setTimeout(() => {
-        //   this.showError = false
-        // }, 3000);
       }
     );
   }

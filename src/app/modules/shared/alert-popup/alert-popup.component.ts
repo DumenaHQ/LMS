@@ -7,8 +7,10 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class AlertPopupComponent implements OnInit {
   @Input() alertMessage: string = '';
+  @Input() alertColor: string = '';
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 }

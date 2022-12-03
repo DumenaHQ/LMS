@@ -79,39 +79,11 @@
 </section>
 
 <!-- Delete confirmation -->
-<div class="modal confirm-delete-modal" *ngIf="deleteModal">
-  <div class="modal_area">
-    <h5></h5>
-
-    <div class="modal-details" style="text-align: left">
-      <h2 class="text-primary-color">Delete Child</h2>
-      <p>
-        Are you sure you want to remove
-        <strong class="text-primary-color">{{ child?.username }}</strong
-        >?
-      </p>
-    </div>
-    <!-- Buttons -->
-    <div class="modal-btns dis-flex">
-      <button type="button" class="btn skip_btn" (click)="closeDeleteModal()">
-        Cancel
-      </button>
-      <button class="btn prim_btn" (click)="removeChild()">Remove</button>
-    </div>
-  </div>
-</div>
+<app-confirm-delete *ngIf="deleteModal" (deleteModal)="closeDeleteModal()" [data]="child" [deleteUrl]="deleteUrl" [deleteRoutePath]="deleteRoutePath"></app-confirm-delete>
 
 <!-- Subscription plan -->
 <app-pricing-plan
   *ngIf="selectPlanModal"
   (selectPlanModal)="closeSelectPlanModal()"
   [childData]="child"
-  (isAlert)="showAlert()"
-  (alertMessaage)="setAlertMessage($event)"
 ></app-pricing-plan>
-
-<!-- Alert message -->
-<app-alert-popup
-  *ngIf="isAlert"
-  [alertMessage]="alertMessage"
-></app-alert-popup>

@@ -1,15 +1,7 @@
 <app-school-enroll-learners
   *ngIf="addLearnerModal"
   (addLearnerModal)="closeAddLearnerModal()"
-  (isAlert)="showAlertPopup()"
-  (alertMessage)="setAlertMessage($event)"
 ></app-school-enroll-learners>
-
-<!-- Alert message -->
-<app-alert-popup
-  *ngIf="isAlert"
-  [alertMessage]="alertMessage"
-></app-alert-popup>
 
 <section class="ds-head">
   <h2 class="ds-head_title">Students</h2>
