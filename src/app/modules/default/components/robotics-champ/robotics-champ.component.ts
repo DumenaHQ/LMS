@@ -121,7 +121,6 @@ export class RoboticsChampComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // Route user to Sign up page and pass event as property
   signUp() {
     let payload = {
       event: 'championship',
