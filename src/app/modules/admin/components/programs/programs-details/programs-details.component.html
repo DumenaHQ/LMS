@@ -136,25 +136,65 @@
 
       <ng-container *ngIf="contentId === 'schools'">
         <div class="table-container" style="overflow-x: auto">
-          <table>
-            <tr class="table-header">
-              <th>Name</th>
-              <th>Head of School</th>
-              <th>Phone Number</th>
-              <th>Number of students</th>
-            </tr>
-            <ng-container>
-              <tr class="table-body">
-                <td>FUNTAG College</td>
-                <td>Leslie Alexander</td>
-                <td>(629) 555-0129</td>
-                <td>4</td>
+          <app-loader *ngIf="dataLoading"></app-loader>
+
+          <ng-container *ngIf="programSchools?.length > 0">
+            <table *ngFor="let school of programSchools">
+              <tr class="table-header">
+                <th>Name</th>
+                <th>Head of School</th>
+                <th>Phone Number</th>
+                <th>Number of students</th>
               </tr>
-            </ng-container>
-            <ng-template>
-              <p style="text-align: center">Empty School list!</p>
-            </ng-template>
-          </table>
+              <ng-container>
+                <tr class="table-body">
+                  <td>{{ school.name }}</td>
+                  <td>none</td>
+                  <td>none</td>
+                  <td>none</td>
+                </tr>
+              </ng-container>
+              <ng-template>
+                <p style="text-align: center">Empty School list!</p>
+              </ng-template>
+            </table>
+          </ng-container>
+
+          <p style="text-align: center" *ngIf="programSchools?.length === 0">
+            No school available
+          </p>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="contentId === 'learners'">
+        <div class="table-container" style="overflow-x: auto">
+          <app-loader *ngIf="dataLoading"></app-loader>
+
+          <ng-container *ngIf="programSchools?.length > 0">
+            <table>
+              <tr class="table-header">
+                <th>Name</th>
+                <th>Head of School</th>
+                <th>Phone Number</th>
+                <th>Number of students</th>
+              </tr>
+              <ng-container>
+                <tr class="table-body"  *ngFor="let school of programSchools">
+                  <td>{{ school.name }}</td>
+                  <td>none</td>
+                  <td>none</td>
+                  <td>{{school.student_count}}</td>
+                </tr>
+              </ng-container>
+              <ng-template>
+                <p style="text-align: center">Empty School list!</p>
+              </ng-template>
+            </table>
+          </ng-container>
+
+          <p style="text-align: center" *ngIf="programSchools?.length === 0">
+            No school available
+          </p>
         </div>
       </ng-container>
     </div>

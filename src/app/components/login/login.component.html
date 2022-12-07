@@ -2,6 +2,7 @@
 <app-alert-popup
   *ngIf="isAlert"
   [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
 ></app-alert-popup>
 
 <div class="auth login">
@@ -39,12 +40,6 @@
             *ngIf="userForm.controls.email.errors.required"
           >
             Email is required
-          </p>
-          <p
-            class="body-3-regular error-msg"
-            *ngIf="userForm.controls.email.errors.email"
-          >
-            Invalid email address
           </p>
         </div>
       </div>

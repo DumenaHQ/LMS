@@ -1,19 +1,28 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
+></app-alert-popup>
+
 <div class="modal">
-  <div class="modal_area">
+  <div class="modal_area" [class.remove-padd]="billingId == 'single'">
     <span class="modal_area_close" (click)="closeAddChildToProgramModal()">
       <i class="bx bx-x icon clickable"></i>
     </span>
 
     <div class="enroll auth_content">
-      <h4 class="text-primary-color enroll_title">
-        Add a child to this program
+      <h4
+        class="text-primary-color enroll_title"
+        [class.add-padd]="billingId == 'single'"
+      >
+        Add student(s) to this program
       </h4>
       <form
         class="enroll_form auth_content_form"
-        (ngSubmit)="signUp(usersForm.value)"
-        #usersForm="ngForm"
       >
-        <div class="form-field col-2" *ngIf="user.role === 'school'">
+        <!-- Tabs starts -->
+        <div class="form-field col-2" [class.add-padd]="billingId == 'single'">
           <label for="">Select an enrollment method</label>
           <!-- enroll-mtd tabs -->
           <div class="enroll-mtd_tab">
@@ -22,67 +31,90 @@
                 class="tab"
                 [class.active]="billingId == 'single'"
                 (click)="tabChange('single')"
-                >Single enrollement
+                >Select student(s)
               </span>
               <span
                 class="tab"
                 [class.active]="billingId == 'batch'"
                 (click)="tabChange('batch')"
-                >Batch enrollement
+                >Upload students
               </span>
             </div>
           </div>
         </div>
+        <!-- Tabs starts -->
+
         <!-- Single enrollment starts *ngIf="billingId == 'single'" -->
-        <div class="single-enroll col-2" *ngIf="billingId == 'single'">
-          <div class="form-field col-2 avatar">
-            <label for="avatar">Select an avatar for your child</label>
-            <div class="avatar_list dis-flex">
-              <div class="" *ngFor="let i of avatars">
-                <input
-                  type="radio"
-                  name="avatar"
-                  [id]="i.name"
-                  (change)="selectAvatar(i.id)"
-                  style="display: none"
-                  ngModel
+        <div class="col-2" *ngIf="billingId == 'single'">
+          <div class="table-container">
+            <div class="table-container_header dis-flex">
+              <div class="input_field dis-flex">
+                <img
+                  src="../../../../../../assets/img/svg/Search.svg"
+                  alt="image"
                 />
-                <label [for]="i.name">
-                  <img
-                    [src]="i.image"
-                    alt="avatar"
-                    class="avatar_item"
-                    [class.selected]="i.selected"
-                  />
-                </label>
+                <input type="text" placeholder="Search by Name" name="search" [(ngModel)]="studentName"
+                (input)="search()" />
+              </div>
+
+              <div class="grouping dis-flex">
+                <!-- Filter -->
+                <div class="filter s-f">
+                  <div class="captions-regular dis-flex">
+                    <span class="title">Filter:</span>
+                    <span class="dropdown-btn dis-flex clickable"
+                      >All programs <i class="bx bx-chevron-down"></i
+                    ></span>
+                  </div>
+                </div>
+                <!-- Sort -->
+                <div class="sort s-f">
+                  <div class="captions-regular dis-flex">
+                    <span class="title">Sort:</span>
+                    <span class="dropdown-btn dis-flex clickable"
+                      >Last modified <i class="bx bx-chevron-down"></i
+                    ></span>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="form-field">
-            <label for="first-name">First Name</label>
-            <div class="input-field">
-              <input type="text" name="firstname" ngModel required />
+            <div style="overflow: auto; max-height: 300px;">
+              <table>
+                <tr class="table-header">
+                  <th>Student name</th>
+                  <th>Username</th>
+                  <th class="dis-flex actions">
+                    <!-- Mark all <input type="checkbox" name="" id="" /> -->
+                  </th>
+                </tr>
+                <ng-container *ngIf="students?.length > 0">
+                  <tr class="table-body" *ngFor="let student of students">
+                    <td>{{student.fullname}}</td>
+                    <td>{{student.username}}</td>
+                    <td><input type="checkbox" name="student" [id]="student.id" (change)="selectStudent($event, student)" /></td>
+                  </tr>
+                </ng-container>
+                <ng-container *ngIf="students?.length === 0">
+                  <p style="text-align: center">No learner!</p>
+                </ng-container>
+              </table>
             </div>
           </div>
-          <div class="form-field">
-            <label for="last-name">Last Name</label>
-            <div class="input-field">
-              <input type="text" name="lastname" ngModel required />
-            </div>
-          </div>
-          <span class="message col-2" *ngIf="showError">{{
-            errorMessage
-          }}</span>
+
           <!-- Submit Button -->
-          <div class="form-btns col-2 dis-flex">
+          <div class="form-btns dis-flex">
             <span
               class="grey_btn clickable"
               (click)="closeAddChildToProgramModal()"
               >Cancel</span
             >
             <div class="continue">
-              <button class="btn prim_btn clickable" [disabled]="loading">
-                <span *ngIf="!loading">Continue</span>
+              <button
+                class="btn prim_btn clickable"
+                [disabled]="loading"
+                (click)="addLearners()"
+              >
+                <span *ngIf="!loading">Add</span>
                 <span *ngIf="loading">Processing...</span>
               </button>
             </div>
@@ -94,8 +126,11 @@
         <div class="batch-enroll col-2" *ngIf="billingId == 'batch'">
           <div class="form-field col-2">
             <label for=""
-              >Upload an excel sheet containing the child's first name, last
-              name, gender, parent email, and parent phone number.</label
+              >Upload an excel sheet containing the <b>Username</b> Or download
+              an excel template
+              <strong 
+                ><a [href]="'https://dev.dumena.com/schools/' + user.id + '/download-students-list'" class="text-primary-color hover-1 clicakble">here</a></strong
+              ></label
             >
             <div
               class="form-field select-image clickable"
@@ -107,18 +142,12 @@
                 type="file"
                 #fileInput
                 hidden
-                (change)="uploadFile($any($event).target.files)"
+                accept=".xlsx"
+                (change)="uploadFile($event)"
               />
-              <img
-                [src]="
-                  showPreviewImage
-                    ? previewImage
-                    : '../../../assets/img/select-Image.svg'
-                "
-                alt=""
-              />
+              <p>{{ selectedFileName }}</p>
               <p class="body-3-regular">
-                Drag your image here or
+                Drag your file here or
                 <span class="text-primary-color">browse</span>
               </p>
               <p class="body-3-regular">Max file size 4MB</p>
@@ -132,7 +161,11 @@
               >Cancel</span
             >
             <div class="continue">
-              <button class="btn prim_btn clickable" [disabled]="loading">
+              <button
+                class="btn prim_btn clickable"
+                [disabled]="loading || learnersList === undefined"
+                (click)="batchAddLearners()"
+              >
                 <span *ngIf="!loading">Continue</span>
                 <span *ngIf="loading">Processing...</span>
               </button>
@@ -144,3 +177,113 @@
     </div>
   </div>
 </div>
+
+<!-- <div class="single-enroll col-2" *ngIf="billingId == 'single'">
+  <div
+    class="form-field col-2"
+    [ngClass]="{
+      'is-invalid': isFormSubmitted && userForm.controls.fullname.errors
+    }"
+  >
+    <label for="fullname">Full Name</label>
+    <div class="input-field">
+      <input
+        type="text"
+        id="fullname"
+        name="fullname"
+        formControlName="fullname"
+      />
+      <i class="bx bx-error-circle icon info-icon"></i>
+    </div>
+
+    <div *ngIf="isFormSubmitted && userForm.controls.fullname.errors">
+      <p
+        class="body-3-regular error-msg"
+        *ngIf="userForm.controls.fullname.errors.required"
+      >
+        Fullname is required
+      </p>
+    </div>
+  </div>
+  <div
+    class="form-field"
+    [ngClass]="{
+      'is-invalid':
+        isFormSubmitted && userForm.controls.parent_email.errors
+    }"
+  >
+    <label for="parent_email">Parent Email</label>
+    <div class="input-field">
+      <input
+        type="email"
+        id="parent_email"
+        name="parent_email"
+        formControlName="parent_email"
+      />
+      <i class="bx bx-error-circle icon info-icon"></i>
+    </div>
+
+    <div
+      *ngIf="isFormSubmitted && userForm.controls.parent_email.errors"
+    >
+      <p
+        class="body-3-regular error-msg"
+        *ngIf="userForm.controls.parent_email.errors.required"
+      >
+        Parent Email is required
+      </p>
+      <p
+        class="body-3-regular error-msg"
+        *ngIf="userForm.controls.parent_email.errors.email"
+      >
+        Invalid email address
+      </p>
+    </div>
+  </div>
+  <div
+    class="form-field"
+    [ngClass]="{
+      'is-invalid': isFormSubmitted && userForm.controls.grade.errors
+    }"
+  >
+    <label for="grade">Grade</label>
+    <div class="input-field">
+      <input
+        type="text"
+        id="grade"
+        name="grade"
+        formControlName="grade"
+      />
+      <i class="bx bx-error-circle icon info-icon"></i>
+    </div>
+
+    <div *ngIf="isFormSubmitted && userForm.controls.grade.errors">
+      <p
+        class="body-3-regular error-msg"
+        *ngIf="userForm.controls.grade.errors.required"
+      >
+        Grade is required
+      </p>
+    </div>
+  </div>
+  <span class="message col-2" *ngIf="showError">{{
+    errorMessage
+  }}</span>
+  <div class="form-btns col-2 dis-flex">
+    <span
+      class="grey_btn clickable"
+      (click)="closeAddChildToProgramModal()"
+      >Cancel</span
+    >
+    <div class="continue">
+      <button
+        class="btn prim_btn clickable"
+        [disabled]="loading"
+        (click)="addLearner()"
+      >
+        <span *ngIf="!loading">Continue</span>
+        <span *ngIf="loading">Processing...</span>
+      </button>
+    </div>
+  </div>
+</div> -->

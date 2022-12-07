@@ -8,13 +8,23 @@
     top: 0;
     transform: translateX(-50%);
     transition: all .2s cubic-bezier(0.075, 0.82, 0.165, 1);
-    z-index: 150;
-    animation: slideIn 0.2s;
+    z-index: 160;
+    animation: alertSlideIn 0.2s;
     p {
-      color: $success80;
       padding: 0.8rem;
-      background-color: $success40;
       border-radius: 0 0 $border-radius1 $border-radius1;
+      &.success-color {
+        color: $white-color;
+        background: $success80;
+      }
+      &.danger-color {
+        color: $white-color;
+        background: $error100;
+      }
+      &.warning-color {
+        color: $white-color;
+        background: $warning100;
+      }
     }
     // &.show {
     //   visibility: visible;
@@ -24,7 +34,7 @@
   }
 
 
-  @keyframes slideIn {
+  @keyframes alertSlideIn {
     0% {
       transform: translate(-50%, -2rem);
       opacity: 0;

@@ -15,7 +15,7 @@ export class ParentOverviewComponent implements OnInit {
   user: any;
   children: any;
   childData: any;
-  addModal: boolean = false;
+  addLearnerModal: boolean = false;
   title: string = 'child';
   selectPlanModal: boolean = false;
   isAlert: boolean = false;
@@ -87,13 +87,13 @@ export class ParentOverviewComponent implements OnInit {
   }
 
   // Open Add Child Modal
-  openAddModal() {
-    this.addModal = true;
+  openAddLearnerModal() {
+    this.addLearnerModal = true;
   }
 
   // Close Add Child Modal
-  closeAddModal() {
-    this.addModal = false;
+  closeAddLearnerModal() {
+    this.addLearnerModal = false;
   }
 
   // close Onboarding modal

@@ -8,14 +8,12 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./children.component.scss'],
 })
 export class ChildrenComponent implements OnInit {
-  addModal: boolean = false;
-  isAlert: boolean = false;
+  addLearnerModal: boolean = false;
   user: any;
   title: string = 'child';
   children: any;
   childData: any;
   selectPlanModal: boolean = false;
-  alertMessage: any;
   dataLoading: boolean = true;
 
   constructor(private authService: AuthService, private router: Router) {}
@@ -29,6 +27,7 @@ export class ChildrenComponent implements OnInit {
     this.authService.getParentChildren(this.user.id).subscribe({
       next: (res: any) => {
         this.children = res.data.learners;
+        console.log(this.children);
       },
       error: (e) => console.error(e),
       complete: () => {
@@ -37,30 +36,16 @@ export class ChildrenComponent implements OnInit {
     });
   }
 
+  // isUserOnboarded
+
   // Open Add Child Modal
-  openAddModal() {
-    this.addModal = true;
+  openAddLearnerModal() {
+    this.addLearnerModal = true;
   }
 
   // Close Add Child Modal
-  closeAddModal() {
-    this.addModal = false;
-  }
-
-  // Show alert
-  showAlert() {
-    // Show Alert
-    this.isAlert = true;
-
-    // Hide Alert
-    setTimeout(() => {
-      this.isAlert = false;
-    }, 2000);
-  }
-
-  // Set alert message
-  setAlertMessage(message: any) {
-    this.alertMessage = message;
+  closeAddLearnerModal() {
+    this.addLearnerModal = false;
   }
 
   // Open Select Plan Modal

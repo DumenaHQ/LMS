@@ -11,6 +11,9 @@ export class ProgramsDetailsComponent implements OnInit {
   contentId: any = 'content';
   currentProgramId: any;
   program: any;
+  programSchools: any;
+  dataLoading: boolean = true;
+  programLearners: any;
 
   constructor(
     private programsService: ProgramsService,
@@ -33,6 +36,34 @@ export class ProgramsDetailsComponent implements OnInit {
         //   this.dataLoading = false;
         // },
       });
+
+    // Get programs schools
+    this.programsService
+      .getProgramSchools(this.currentProgramId.programId)
+      .subscribe({
+        next: (res: any) => {
+          this.programSchools = res.data.schools;
+          console.log(this.programSchools);
+        },
+        error: (e) => console.error(e),
+        complete: () => {
+          this.dataLoading = false;
+        },
+      });
+
+    // Get programs learners
+    // this.programsService
+    //   .getProgramLearners(this.currentProgramId.programId)
+    //   .subscribe({
+    //     next: (res: any) => {
+    //       this.programLearners = res.data.learners;
+    //       console.log(this.programLearners);
+    //     },
+    //     error: (e) => console.error(e),
+    //     complete: () => {
+    //       this.dataLoading = false;
+    //     },
+    //   });
   }
 
   // Tab change

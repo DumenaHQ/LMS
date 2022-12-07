@@ -1,46 +1,48 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { SchoolService } from 'src/app/services/school.service';
 
 @Component({
   selector: 'app-school-students',
   templateUrl: './school-students.component.html',
-  styleUrls: ['./school-students.component.scss']
+  styleUrls: ['./school-students.component.scss'],
 })
 export class SchoolStudentsComponent implements OnInit {
-
-  addModal: boolean = false;
-  showAlert: boolean = false;
+  addLearnerModal: boolean = false;
   user: any;
-  title: string = 'student'
+  dataLoading: boolean = true;
+  students: any;
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private schoolService: SchoolService
+  ) {}
 
   ngOnInit(): void {
     // Get User data from localstorage
-    let userData = this.authService.getUser()
-    this.user = userData.user
+    let userData = this.authService.getUser();
+    this.user = userData.user;
 
-    // Get user data from localstorage
-    // this.authService.getParentChildren(this.user.id).subscribe((res: any) => {
-    //   console.log(res)
-    // })
-
+    // Get school learners from localstorage
+    this.schoolService.getSchoolLearners(this.user.id).subscribe({
+      next: (res: any) => {
+        this.students = res.data.students;
+        console.log(this.students);
+      },
+      error: (e) => console.error(e),
+      complete: () => {
+        this.dataLoading = false;
+      },
+    });
   }
 
-  openAddModal() {
-    this.addModal = true
+  // Open Learner Modal
+  openAddLearnerModal() {
+    this.addLearnerModal = true;
   }
 
-  closeAddModal() {
-    this.addModal = false
+  // Close Learner modal
+  closeAddLearnerModal() {
+    this.addLearnerModal = false;
   }
-
-  showAlertPopup() {
-    this.showAlert = true
-    // Hide after some seconds
-    setTimeout(() => {
-      this.showAlert = false
-    }, 2000);
-  }
-
 }

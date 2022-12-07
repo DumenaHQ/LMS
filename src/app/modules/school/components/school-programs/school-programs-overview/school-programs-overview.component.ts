@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 import { ProgramsService } from 'src/app/services/programs.service';
 
 @Component({
@@ -10,13 +11,23 @@ import { ProgramsService } from 'src/app/services/programs.service';
 export class SchoolProgramsOverviewComponent implements OnInit {
   dataLoading: boolean = true;
   programs: any;
+  user: any;
+  loading: boolean = false;
+  isAlert: boolean = false;
+  alertMessage: string;
+  alertColor: string
 
   constructor(
     private programsService: ProgramsService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    // Get User data from localstorage
+    let userData = this.authService.getUser();
+    this.user = userData.user;
+
     // Get programs
     this.programsService.getAllPrograms().subscribe({
       next: (res: any) => {
@@ -29,6 +40,38 @@ export class SchoolProgramsOverviewComponent implements OnInit {
     });
   }
 
+  // Join Program
+  joinProgram(programId: string) {
+    // this.loading = true;
+
+    let payload = {
+      schools: [
+        {
+          user_id: this.user.id,
+          name: this.user.fullname,
+        },
+      ],
+    };
+
+    this.programsService.addSchoolToProgram(payload, programId).subscribe({
+      next: (res: any) => {
+        console.log(res);
+
+        if (res.status === true) {
+          this.showAlertPopup(res.message, 'success');
+
+          setTimeout(() => {
+            this.router.navigate([`/school/programs/${programId}`]);
+          }, 3000);
+        }
+      },
+      error: (e) => console.error(e),
+      // complete: () => {
+      //   this.dataLoading = false;
+      // },
+    });
+  }
+
   // Display program
   displayProgram(programId: string) {
     this.router.navigate([`/school/programs/${programId}`]);
@@ -36,7 +79,6 @@ export class SchoolProgramsOverviewComponent implements OnInit {
 
   // Delete program
   deleteProgram(program: any) {
-    // Get programs
     this.programsService.deleteProgram(program.id).subscribe({
       next: (res: any) => {
         console.log(res);
@@ -47,5 +89,19 @@ export class SchoolProgramsOverviewComponent implements OnInit {
       //   this.dataLoading = false;
       // },
     });
+  }
+
+  // Show alert
+  showAlertPopup(message: string, color: string) {
+    // Set message
+    this.alertMessage = message;
+    // Set color
+    this.alertColor = color;
+    // Show Alert
+    this.isAlert = true;
+    // Hide Alert
+    setTimeout(() => {
+      this.isAlert = false;
+    }, 3000);
   }
 }

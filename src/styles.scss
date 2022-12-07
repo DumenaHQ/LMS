@@ -339,6 +339,8 @@ small {
   }
   .du_flex_img {
     flex-basis: 40%;
+    display: flex;
+    justify-content: center;
     img {
       max-width: 100%;
       height: auto;

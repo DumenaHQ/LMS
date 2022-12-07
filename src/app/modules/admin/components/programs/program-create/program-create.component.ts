@@ -15,6 +15,7 @@ export class ProgramCreateComponent implements OnInit {
   errorMessage: string = '';
   showError: boolean = false;
   alertMessage: string = '';
+  alertColor: string = '';
   isAlert: boolean = false;
 
   constructor(
@@ -45,7 +46,7 @@ export class ProgramCreateComponent implements OnInit {
         // Show alert
         if (res.status === true) {
           this.alertMessage = res.message;
-          this.showAlert();
+          this.showAlertPopup(res.message, 'success');
         }
 
         // Set loading to false
@@ -68,14 +69,17 @@ export class ProgramCreateComponent implements OnInit {
     );
   }
 
-  // Show alert
-  showAlert() {
-    // Show Alert
-    this.isAlert = true;
-
-    // Hide Alert
-    setTimeout(() => {
-      this.isAlert = false;
-    }, 2000);
-  }
+ // Show alert
+ showAlertPopup(message: string, color: string) {
+  // Set message
+  this.alertMessage = message;
+  // Set color
+  this.alertColor = color;
+  // Show Alert
+  this.isAlert = true;
+  // Hide Alert
+  setTimeout(() => {
+    this.isAlert = false;
+  }, 3000);
+}
 }

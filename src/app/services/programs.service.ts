@@ -23,10 +23,52 @@ export class ProgramsService {
     );
   }
 
+  // Get Program schools
+  getProgramSchools(programId: any) {
+    return this.http.get(
+      `${this.baseUrl}programs/${programId}/schools`,
+      this.getHttpOptions()
+    );
+  }
+
+  // Get Programs by id
+  getProgramLearners(programId: any) {
+    return this.http.get(
+      `${this.baseUrl}programs/${programId}/learners`,
+      this.getHttpOptions()
+    );
+  }
+
+  // Get Programs by id
+  getProgramCourses(programId: any) {
+    return this.http.get(
+      `${this.baseUrl}programs/${programId}/courses`,
+      this.getHttpOptions()
+    );
+  }
+
   // Add program
   addProgram(data: any) {
     return this.http.post(
       `${this.baseUrl}programs`,
+      data,
+      this.getHttpOptions()
+    );
+  }
+
+  // Add school to program
+  addSchoolToProgram(data: any, programId: any) {
+    return this.http.patch(
+      `${this.baseUrl}programs/${programId}/schools`,
+      data,
+      this.getHttpOptions()
+    );
+  }
+
+  // Add learner to program
+  addLearnerToProgram(data: any, programId: any) {
+    return this.http.patch(
+      `${this.baseUrl}programs/${programId}/learners`,
       data,
       this.getHttpOptions()
     );

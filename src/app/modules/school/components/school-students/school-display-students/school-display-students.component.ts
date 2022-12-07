@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
+import { SchoolService } from 'src/app/services/school.service';
 
 @Component({
   selector: 'app-school-display-students',
@@ -6,36 +8,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./school-display-students.component.scss'],
 })
 export class SchoolDisplayStudentsComponent implements OnInit {
-  allStudents = [
-    {
-      id: 1,
-      image: '../../../../../../assets/img/children-avatar/child-avatar-1.png',
-      name: 'Lovinda Jamestown',
-      email: 'name@gmail.com',
-      phoneNumber: '0901234567',
-      gender: 'Male',
-      dateEnrolled: 'July 2nd, 2022',
-    },
-    {
-      id: 2,
-      image: '../../../../../../assets/img/children-avatar/child-avatar-2.png',
-      name: 'David Khing',
-      email: 'name@gmail.com',
-      phoneNumber: '0901234567',
-      gender: 'Female',
-      dateEnrolled: 'July 2nd, 2022',
-    },
-    {
-      id: 3,
-      image: '../../../../../../assets/img/children-avatar/child-avatar-3.png',
-      name: 'Chris Evans',
-      email: 'name@gmail.com',
-      phoneNumber: '0901234567',
-      gender: 'Male',
-      dateEnrolled: 'July 2nd, 2022',
-    },
-  ];
-
+  user: any;
+  @Input() students: any;
   constructor() {}
 
   ngOnInit(): void {}

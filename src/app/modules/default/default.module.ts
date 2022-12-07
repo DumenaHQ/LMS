@@ -11,7 +11,6 @@ import { NewsletterComponent } from './components/newsletter/newsletter.componen
 import { SummerschoolComponent } from './components/summerschool/summerschool.component';
 import { RoboticsChampComponent } from './components/robotics-champ/robotics-champ.component';
 
-
 @NgModule({
   declarations: [
     DefaultComponent,
@@ -20,12 +19,8 @@ import { RoboticsChampComponent } from './components/robotics-champ/robotics-cha
     FaqComponent,
     NewsletterComponent,
     SummerschoolComponent,
-    RoboticsChampComponent
+    RoboticsChampComponent,
   ],
-  imports: [
-    CommonModule,
-    DefaultRoutingModule,
-    SharedModule
-  ]
+  imports: [CommonModule, DefaultRoutingModule, SharedModule],
 })
-export class DefaultModule { }
+export class DefaultModule {}

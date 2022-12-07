@@ -61,7 +61,7 @@
           'is-invalid': isFormSubmitted && userForm.controls.fullname.errors
         }"
       >
-        <label for="full_name">Full Name</label>
+        <label for="full_name">Contant Person's Name</label>
         <div class="input-field">
           <input type="text" name="full_name" formControlName="fullname" />
           <i class="bx bx-error-circle icon info-icon"></i>
@@ -72,7 +72,7 @@
             class="body-3-regular error-msg"
             *ngIf="userForm.controls.fullname.errors.required"
           >
-            Fullname is required
+          Contant person name is required
           </p>
         </div>
       </div>

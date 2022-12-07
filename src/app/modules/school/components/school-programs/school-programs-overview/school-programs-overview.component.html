@@ -1,3 +1,10 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
+></app-alert-popup>
+
 <section class="ds-head">
   <h2 class="ds-head_title">Programs</h2>
 </section>
@@ -35,36 +42,44 @@
           src="../../../../../../assets/img/program-thumbnail-patterns.svg"
           alt="image"
           class="program_card_item_image clickable"
-          (click)="displayProgram(program.id)"
+          (click)="displayProgram(program?.id)"
         />
 
         <div class="program_card_item_details">
           <div class="program_card_item_details_right">
-            <div class="program_card_item_details_right_header">
-              <h5
-                class="title clickable"
-                [title]="program.name"
-                (click)="displayProgram(program.id)"
-              >
-                {{
-                  program?.name.length > 20
-                    ? program?.name.slice(0, 20) + "..."
-                    : program?.name
-                }}
-              </h5>
-              <p>
-                {{ program.description }}
-              </p>
+            <div class="program_card_item_details_right_header dis-flex">
+              <div class="">
+                <h5
+                  class="title clickable"
+                  [title]="program?.name"
+                  (click)="displayProgram(program?.id)"
+                >
+                  {{
+                    program?.name.length > 20
+                      ? program?.name.slice(0, 20) + "..."
+                      : program?.name
+                  }}
+                </h5>
+                <p>
+                  {{ program?.description }}
+                </p>
+              </div>
+              <button class="btn prim_btn" *ngIf="program?.hasJoined === false"  (click)="joinProgram(program?.id)">
+                Join
+              </button>
+              <button class="btn grey_btn" *ngIf="program?.hasJoined === true">
+                Joined
+              </button>
             </div>
             <ul class="dis-flex">
               <li>
-                <p class="body-2-bold">{{ program.courses.length }}</p>
+                <p class="body-2-bold">{{ program?.courses?.length }}</p>
                 <p class="body-3-regular">Courses</p>
               </li>
-              <li>
-                <p class="body-2-bold">{{ program.schools.length }}</p>
+              <!-- <li>
+                <p class="body-2-bold">{{ program?.schools?.length }}</p>
                 <p class="body-3-regular">Schools</p>
-              </li>
+              </li> -->
             </ul>
           </div>
 
@@ -95,16 +110,18 @@
             <div class="completion">
               <p class="body-2-regular title">Start date</p>
               <p class="body-2-medium">
-                {{ program.start_date | date: "mediumDate" }}
+                {{ program?.start_date | date: "mediumDate" }}
               </p>
               <!-- {{ days > 1 ? days : "0" }} day{{ days < 2 ? "" : "s" }} -->
             </div>
             <div class="status">
               <span
                 [ngClass]="
-                  program.status === 'active' ? 'success_btn' : 'grey_btn'
+                  program?.status === 'active' ? 'success_btn' : 'grey_btn'
                 "
-                >{{ program.status === "active" ? "Published" : "Draft" }}</span
+                >{{
+                  program?.status === "active" ? "Published" : "Draft"
+                }}</span
               >
             </div>
           </div>

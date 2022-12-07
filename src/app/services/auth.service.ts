@@ -75,13 +75,9 @@ export class AuthService {
     );
   }
 
-  // Enroll child
-  enrollChild(data: any) {
-    return this.http.post(
-      `${this.baseUrl}learners/enroll`,
-      data,
-      this.getHttpOptions()
-    );
+  // Enroll Learner
+  enrollLearner(data: any, url: string) {
+    return this.http.post(`${this.baseUrl}${url}`, data, this.getHttpOptions());
   }
 
   // Activate email
@@ -98,16 +94,13 @@ export class AuthService {
     return this.http.put(`${this.baseUrl}users`, data, this.getHttpOptions());
   }
 
-  // Delete enrolled child
-  deleteEnrolledChild(parentId: string, learnerId: string) {
-    console.log(parentId, learnerId);
-
+  // Delete
+  deleteItem(deleteUrl: string) {
     return this.http.delete(
-      `${this.baseUrl}parents/${parentId}/learners/${learnerId}`,
+      `${this.baseUrl}${deleteUrl}`,
       this.getHttpOptions()
     );
   }
-  // parents/:id/learners/:learnerid
 
   // Log Out
   logOut() {

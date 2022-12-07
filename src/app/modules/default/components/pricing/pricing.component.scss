@@ -72,7 +72,7 @@
   }
   .pricing_card {
     justify-content: center;
-    @media only screen and (max-width: 840px) {
+    @media only screen and (max-width: 915px) {
       display: flex;
       flex-flow: row wrap;
       justify-content: space-around;
@@ -128,7 +128,7 @@
         }
       }
       &.standard {
-        @media only screen and (min-width: 840px) {
+        @media only screen and (min-width: 916px) {
           border-radius: $border-radius3 0 0 $border-radius3;
         }
         .icon {
@@ -152,9 +152,10 @@
         }
       }
       &.school {
-        // @media only screen and (min-width: 840px) {
-        //   border-radius: 0 $border-radius3 $border-radius3 0;
-        // }
+        @media only screen and (min-width: 916px) {
+          border-radius: 0 $border-radius3 $border-radius3 $border-radius3;
+          margin-top: 7rem;
+        }
         .icon {
           background-color: $fushiapink;
         }

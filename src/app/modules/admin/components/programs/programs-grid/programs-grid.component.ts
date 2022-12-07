@@ -20,7 +20,7 @@ export class ProgramsGridComponent implements OnInit {
 
   // Display program
   displayProgram(programId: string) {
-    this.router.navigate([`/admin/programs/${programId}`]);
+    this.router.navigate([`/admin/programs/${programId}/view-program`]);
   }
 
   // Delete program

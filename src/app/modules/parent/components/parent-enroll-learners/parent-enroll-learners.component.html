@@ -1,0 +1,146 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
+></app-alert-popup>
+
+<div class="modal">
+  <div class="modal_area">
+    <span class="modal_area_close" (click)="closeAddLearnerModal()">
+      <i class="bx bx-x icon clickable"></i>
+    </span>
+
+    <div class="enroll auth_content">
+      <h4 class="text-primary-color enroll_title">Enroll a child</h4>
+      <form class="enroll_form auth_content_form" [formGroup]="userForm">
+        <div class="single-enroll col-2">
+          <div class="form-field col-2 avatar">
+            <label for="avatar">Select an avatar for your child</label>
+            <div class="avatar_list dis-flex">
+              <div class="" *ngFor="let i of avatars">
+                <input
+                  type="radio"
+                  name="avatar"
+                  [id]="i.name"
+                  (change)="selectAvatar(i.id)"
+                  style="display: none"
+                />
+                <label [for]="i.name">
+                  <img
+                    [src]="i.image"
+                    alt="avatar"
+                    class="avatar_item"
+                    [class.selected]="i.selected"
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
+          <div
+            class="form-field"
+            [ngClass]="{
+              'is-invalid':
+                isFormSubmitted && userForm.controls.firstname.errors
+            }"
+          >
+            <label for="first-name">First Name</label>
+            <div class="input-field">
+              <input type="text" name="firstname" formControlName="firstname" />
+              <i class="bx bx-error-circle icon info-icon"></i>
+            </div>
+
+            <!-- Error -->
+            <div *ngIf="isFormSubmitted && userForm.controls.firstname.errors">
+              <p
+                class="body-3-regular error-msg"
+                *ngIf="userForm.controls.firstname.errors.required"
+              >
+                Firstname is required
+              </p>
+            </div>
+          </div>
+          <div
+            class="form-field"
+            [ngClass]="{
+              'is-invalid': isFormSubmitted && userForm.controls.lastname.errors
+            }"
+          >
+            <label for="last-name">Last Name</label>
+            <div class="input-field">
+              <input type="text" name="lastname" formControlName="lastname" />
+              <i class="bx bx-error-circle icon info-icon"></i>
+            </div>
+
+            <!-- Error -->
+            <div *ngIf="isFormSubmitted && userForm.controls.lastname.errors">
+              <p
+                class="body-3-regular error-msg"
+                *ngIf="userForm.controls.lastname.errors.required"
+              >
+                Lastname is required
+              </p>
+            </div>
+          </div>
+          <div
+            class="form-field col-2"
+            [ngClass]="{
+              'is-invalid': isFormSubmitted && userForm.controls.password.errors
+            }"
+          >
+            <label for="password">Password</label>
+            <div class="input-field">
+              <input
+                [type]="hide ? 'password' : 'text'"
+                name="password"
+                formControlName="password"
+              />
+              <i
+                [class]="
+                  hide
+                    ? 'bx bx-show clickable icon'
+                    : 'bx bx-hide clickable icon'
+                "
+                (click)="hide = !hide"
+              ></i>
+            </div>
+            <!-- Error -->
+            <div *ngIf="isFormSubmitted && userForm.controls.password.errors">
+              <p
+                class="body-3-regular error-msg"
+                *ngIf="userForm.controls.password.errors.required"
+              >
+                Lastname is required
+              </p>
+              <p
+                class="body-3-regular error-msg"
+                *ngIf="userForm.controls.password.errors.minLength"
+              >
+                Password must be at least 6 characters
+              </p>
+            </div>
+          </div>
+          <span class="message col-2" *ngIf="showError">{{
+            errorMessage
+          }}</span>
+          <!-- Submit Button -->
+          <div class="form-btns col-2 dis-flex">
+            <span class="grey_btn clickable" (click)="closeAddLearnerModal()"
+              >Cancel</span
+            >
+            <div class="continue">
+              <button
+                class="btn prim_btn clickable"
+                [disabled]="loading"
+                (click)="signup()"
+              >
+                <span *ngIf="!loading">Continue</span>
+                <span *ngIf="loading">Processing...</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,6 @@
-@import 'mixins.scss';
-@import 'variables.scss';
-@import 'default.scss';
+@import './mixins.scss';
+@import './variables.scss';
+@import './default.scss';
 
 // General starts
 .auth_content {
@@ -153,6 +153,7 @@
     }
   }
 }
+
 button:disabled {
   cursor: not-allowed;
 }
@@ -252,41 +253,40 @@ button:disabled {
       margin-bottom: $m-6 + $m-4;
     }
     // &_extra {
-      //   text-align: left;
-      // }
-    }
+    //   text-align: left;
+    // }
   }
-  // Auth Login starts
+}
+// Auth Login starts
 
-  // Auth Border starts
-  .auth_border {
-    padding: $m-4;
-    border: 1px solid $inner-border;
-    border-radius: $border-radius3;
+// Auth Border starts
+.auth_border {
+  padding: $m-4;
+  border: 1px solid $inner-border;
+  border-radius: $border-radius3;
+}
+// Auth Border ends
+
+// Message
+.message {
+  color: $error80;
+}
+
+// Spinner
+.loading-spinner {
+  display: grid;
+  place-items: center;
+  .spinner-3 {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: radial-gradient(farthest-side, $secondary80 94%, #0000) top/8px 8px
+        no-repeat,
+      conic-gradient(#0000 30%, $secondary80);
+    -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+    animation: s3 1s infinite linear;
   }
-  // Auth Border ends
-
-
-  // Message
-  .message {
-    color: $error80;
-  }
-
-  // Spinner
-  .loading-spinner {
-    display: grid;
-    place-items: center;
-    .spinner-3 {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      background: radial-gradient(farthest-side, $secondary80 94%, #0000) top/8px 8px
-          no-repeat,
-        conic-gradient(#0000 30%, $secondary80);
-      -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
-      animation: s3 1s infinite linear;
-    }
-  }
+}
 
 @keyframes s3 {
   100% {
