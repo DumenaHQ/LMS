@@ -87,6 +87,7 @@
                         border-bottom: 1px solid $divider-color;
                         gap: $m-1;
                         justify-content: space-between;
+                        align-items: flex-start;
                         h5 {
                             margin-bottom: $m-1;
                         }

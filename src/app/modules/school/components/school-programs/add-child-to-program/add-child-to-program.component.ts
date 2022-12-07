@@ -97,6 +97,8 @@ export class AddChildToProgramComponent implements OnInit {
             // close modal
             setTimeout(() => {
               this.closeAddChildToProgramModal()
+
+              this.ngOnInit()
             }, 3000);
           }
         },
@@ -138,6 +140,8 @@ export class AddChildToProgramComponent implements OnInit {
           // close modal
           setTimeout(() => {
             this.closeAddChildToProgramModal()
+
+            this.ngOnInit()
           }, 3000);
         },
         error: (e) => console.error(e),
