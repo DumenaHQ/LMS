@@ -1,5 +1,5 @@
 <svg width="716" height="512" viewBox="0 0 716 512" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<circle cx="242.977" cy="230.883" r="175.977" fill="url(#pattern0)"/>
+<path d="M418.954 230.883C418.954 328.073 340.167 406.86 242.977 406.86C145.788 406.86 67 328.073 67 230.883C67 133.694 145.788 54.9062 242.977 54.9062C340.167 54.9062 418.954 133.694 418.954 230.883Z" fill="url(#pattern0)"/>
 <g clip-path="url(#clip0_1735_5138)">
 <rect x="418" width="190.829" height="190.829" rx="95.4147" fill="white"/>
 <rect x="257.775" y="-81.0117" width="462.627" height="308.115" fill="url(#pattern1)"/>
@@ -30,7 +30,7 @@
 </g>
 <defs>
 <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
-<use xlink:href="#image0_1735_5138" transform="translate(-0.108134 -0.00284128) scale(0.000375369 0.000555556)"/>
+<use xlink:href="#image0_1735_5138" transform="translate(-0.233221 0.00852384) scale(0.000555556)"/>
 </pattern>
 <pattern id="pattern1" patternContentUnits="objectBoundingBox" width="1" height="1">
 <use xlink:href="#image1_1735_5138" transform="translate(0.0284129 0.268974) scale(0.000248016 0.000330688)"/>
