@@ -59,9 +59,6 @@ export class SetNewPasswordComponent implements OnInit {
       password: this.userForm.value.password,
     };
 
-    console.log(payload);
-    
-
     this.authService.resetPassword(payload).subscribe(
       (res: any) => {
         console.log(res);
