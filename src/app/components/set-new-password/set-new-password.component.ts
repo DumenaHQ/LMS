@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -14,16 +15,23 @@ export class SetNewPasswordComponent implements OnInit {
   loading: boolean = false;
   errorMessage: string = '';
   showError: boolean = false;
+  userForm: any;
+  isFormSubmitted: boolean = false;
 
   constructor(
     private authService: AuthService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
     // get email_hash and hash_string
     this.currentParamsIds = this.activatedRoute.snapshot.params;
-    console.log(this.currentParamsIds);
+
+    // User form
+    this.userForm = this.formBuilder.group({
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
   }
 
   // Show Section
@@ -31,15 +39,28 @@ export class SetNewPasswordComponent implements OnInit {
     this.id = ids;
   }
 
-  resetNewPassword(data: any) {
+  resetNewPassword() {
     // Start loading
     this.loading = true;
+
+    // Set submitted to true
+    this.isFormSubmitted = true;
+
+    // If Form is invalid
+    if (this.userForm.invalid) {
+      this.loading = false;
+
+      return;
+    }
 
     let payload = {
       email_hash: this.currentParamsIds.email_hash,
       hash_string: this.currentParamsIds.hash_string,
-      password: data.password,
+      password: this.userForm.value.password,
     };
+
+    console.log(payload);
+    
 
     this.authService.resetPassword(payload).subscribe(
       (res: any) => {
