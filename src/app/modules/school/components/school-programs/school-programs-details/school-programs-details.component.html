@@ -141,15 +141,12 @@
     <div class="course-details_body_content">
       <ng-container *ngIf="contentId === 'content'">
         <div class="courses">
-          <!-- *ngFor="let course of programCourses" -->
           <p class="body-3-medium">{{ programCourses?.length }} Course(s)</p>
         </div>
       </ng-container>
 
       <ng-container *ngIf="contentId === 'schools'">
         <div class="table-container" style="overflow-x: auto">
-          <!-- <app-loader *ngIf="dataLoading"></app-loader> -->
-
           <ng-container *ngIf="programSchools?.length > 0">
             <table>
               <tr class="table-header">
@@ -170,6 +167,34 @@
 
           <p style="text-align: center" *ngIf="programSchools?.length === 0">
             No school available
+          </p>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="contentId === 'learners'">
+        <div class="table-container" style="overflow-x: auto">
+          <ng-container *ngIf="programLearners?.length > 0">
+            <table>
+              <tr class="table-header">
+                <th>Name</th>
+                <th>Username</th>
+                <th>Date added</th>
+              </tr>
+              <ng-container>
+                <tr class="table-body" *ngFor="let learner of programLearners">
+                  <td>{{ learner.name }}</td>
+                  <td>{{learner.username}}</td>
+                  <td>{{learner.date_added | date: "mediumDate"}}</td>
+                </tr>
+              </ng-container>
+              <ng-template>
+                <p style="text-align: center">Empty School list!</p>
+              </ng-template>
+            </table>
+          </ng-container>
+
+          <p style="text-align: center" *ngIf="programSchools?.length === 0">
+            No Learner available
           </p>
         </div>
       </ng-container>

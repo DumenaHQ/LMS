@@ -18,6 +18,7 @@ export class SchoolProgramsDetailsComponent implements OnInit {
   programId: string;
   programCourses: any;
   programSchools: any;
+  programLearners: any;
   hasJoined: any;
   isAlert: boolean = false;
   alertMessage: string;
@@ -53,46 +54,26 @@ export class SchoolProgramsDetailsComponent implements OnInit {
         // },
       });
 
-    // Get program hasJoined value
-    this.programsService
-      .getAllPrograms()
-      .subscribe({
-        next: (res: any) => {
-          let result = res.data.programs; 
-          result.forEach((p: any) => {
-            if(p.id === this.currentProgramId.programId) {
-              this.hasJoined = p.hasJoined
-            }
-          });
-        },
-        error: (e) => console.error(e),
-      });
+    // Get Has joined 
+    this.getHasJoinedValue()
 
-      // Get programs schools
-    this.programsService
-    .getProgramSchools(this.currentProgramId.programId)
-    .subscribe({
-      next: (res: any) => {
-        this.programSchools = res.data.schools;
-      },
-      error: (e) => console.error(e),
-    });
-      
+    // Get program schools
+    this.getProgramSchools()
+
+    // Get program learners
+    this.getProgramLearners()
+
     // Get program courses
-    this.programsService
-      .getProgramCourses(this.currentProgramId.programId)
-      .subscribe({
-        next: (res: any) => {
-          this.programCourses = res.data.courses;
-        },
-        error: (e) => console.error(e),
-      });
+    this.getProgramCourses()
+
+    
   }
 
   // Tab change
   tabChange(ids: any) {
     this.contentId = ids;
   }
+
   // Join Program
   joinProgram() {
     // this.loading = true;
@@ -120,6 +101,60 @@ export class SchoolProgramsDetailsComponent implements OnInit {
       },
       error: (e) => console.error(e),
     });
+  }
+
+  // Get has joined
+  getHasJoinedValue() {
+    this.programsService
+      .getAllPrograms()
+      .subscribe({
+        next: (res: any) => {
+          let result = res.data.programs; 
+          result.forEach((p: any) => {
+            if(p.id === this.currentProgramId.programId) {
+              this.hasJoined = p.hasJoined
+            }
+          });
+        },
+        error: (e) => console.error(e),
+      });
+  }
+
+  // Get program schools
+  getProgramSchools() {
+    // Get programs schools
+    this.programsService
+    .getProgramSchools(this.currentProgramId.programId)
+    .subscribe({
+      next: (res: any) => {
+        this.programSchools = res.data.schools;
+      },
+      error: (e) => console.error(e),
+    });
+  }
+
+  // Get program learners
+  getProgramLearners() {
+    this.programsService
+    .getProgramLearners(this.currentProgramId.programId)
+    .subscribe({
+      next: (res: any) => {
+        this.programLearners = res.data.learners;
+      },
+      error: (e) => console.error(e),
+    });
+  }
+
+  // Get program courses
+  getProgramCourses() {
+    this.programsService
+      .getProgramCourses(this.currentProgramId.programId)
+      .subscribe({
+        next: (res: any) => {
+          this.programCourses = res.data.courses;
+        },
+        error: (e) => console.error(e),
+      });
   }
 
   // Open Add Child Modal
