@@ -1,9 +1,5 @@
 <!-- Alert message -->
-<app-alert-popup
-  *ngIf="isAlert"
-  [alertMessage]="alertMessage"
-  [alertColor]="alertColor"
-></app-alert-popup>
+<app-alert-popup *ngIf="isAlert" [alertMessage]="alertMessage" [alertColor]="alertColor"></app-alert-popup>
 
 <div class="modal">
   <div class="modal_area" [class.remove-padd]="billingId == 'single'">
@@ -12,32 +8,19 @@
     </span>
 
     <div class="enroll auth_content">
-      <h4
-        class="text-primary-color enroll_title"
-        [class.add-padd]="billingId == 'single'"
-      >
+      <h4 class="text-primary-color enroll_title" [class.add-padd]="billingId == 'single'">
         Add student(s) to this program
       </h4>
-      <form
-        class="enroll_form auth_content_form"
-      >
+      <form class="enroll_form auth_content_form">
         <!-- Tabs starts -->
         <div class="form-field col-2" [class.add-padd]="billingId == 'single'">
           <label for="">Select an enrollment method</label>
           <!-- enroll-mtd tabs -->
           <div class="enroll-mtd_tab">
             <div class="enroll-mtd_tab_wrapper">
-              <span
-                class="tab"
-                [class.active]="billingId == 'single'"
-                (click)="tabChange('single')"
-                >Select student(s)
+              <span class="tab" [class.active]="billingId == 'single'" (click)="tabChange('single')">Select student(s)
               </span>
-              <span
-                class="tab"
-                [class.active]="billingId == 'batch'"
-                (click)="tabChange('batch')"
-                >Upload students
+              <span class="tab" [class.active]="billingId == 'batch'" (click)="tabChange('batch')">Upload students
               </span>
             </div>
           </div>
@@ -49,12 +32,9 @@
           <div class="table-container">
             <div class="table-container_header dis-flex">
               <div class="input_field dis-flex">
-                <img
-                  src="../../../../../../assets/img/svg/Search.svg"
-                  alt="image"
-                />
+                <img src="../../../../../../assets/img/svg/Search.svg" alt="image" />
                 <input type="text" placeholder="Search by Name" name="search" [(ngModel)]="studentName"
-                (input)="search()" />
+                  (input)="search()" />
               </div>
 
               <div class="grouping dis-flex">
@@ -62,18 +42,15 @@
                 <div class="filter s-f">
                   <div class="captions-regular dis-flex">
                     <span class="title">Filter:</span>
-                    <span class="dropdown-btn dis-flex clickable"
-                      >All programs <i class="bx bx-chevron-down"></i
-                    ></span>
+                    <span class="dropdown-btn dis-flex clickable">All programs <i class="bx bx-chevron-down"></i></span>
                   </div>
                 </div>
                 <!-- Sort -->
                 <div class="sort s-f">
                   <div class="captions-regular dis-flex">
                     <span class="title">Sort:</span>
-                    <span class="dropdown-btn dis-flex clickable"
-                      >Last modified <i class="bx bx-chevron-down"></i
-                    ></span>
+                    <span class="dropdown-btn dis-flex clickable">Last modified <i
+                        class="bx bx-chevron-down"></i></span>
                   </div>
                 </div>
               </div>
@@ -91,7 +68,8 @@
                   <tr class="table-body" *ngFor="let student of students">
                     <td>{{student.fullname}}</td>
                     <td>{{student.username}}</td>
-                    <td><input type="checkbox" name="student" [id]="student.id" (change)="selectStudent($event, student)" /></td>
+                    <td><input type="checkbox" name="student" [id]="student.id"
+                        (change)="selectStudent($event, student)" /></td>
                   </tr>
                 </ng-container>
                 <ng-container *ngIf="students?.length === 0">
@@ -103,17 +81,9 @@
 
           <!-- Submit Button -->
           <div class="form-btns dis-flex">
-            <span
-              class="grey_btn clickable"
-              (click)="closeAddChildToProgramModal()"
-              >Cancel</span
-            >
+            <span class="grey_btn clickable" (click)="closeAddChildToProgramModal()">Cancel</span>
             <div class="continue">
-              <button
-                class="btn prim_btn clickable"
-                [disabled]="loading"
-                (click)="addLearners()"
-              >
+              <button class="btn prim_btn clickable" [disabled]="loading" (click)="addLearners()">
                 <span *ngIf="!loading">Add</span>
                 <span *ngIf="loading">Processing...</span>
               </button>
@@ -125,26 +95,25 @@
         <!-- Batch enrollment starts *ngIf="billingId == 'batch'" -->
         <div class="batch-enroll col-2" *ngIf="billingId == 'batch'">
           <div class="form-field col-2">
-            <label for=""
-              >Upload an excel sheet containing the <b>Username</b> Or download
-              an excel template
-              <strong 
-                ><a [href]="'https://dev.dumena.com/schools/' + user.id + '/download-students-list'" class="text-primary-color hover-1 clicakble">here</a></strong
-              ></label
-            >
-            <div
-              class="form-field select-image clickable"
-              (click)="fileInput.click()"
-              appDragDrop
-              (fileDropped)="uploadFile($event)"
-            >
-              <input
-                type="file"
-                #fileInput
-                hidden
-                accept=".xlsx"
-                (change)="uploadFile($event)"
-              />
+            <label for="">
+              <p>
+                <small>
+                  Upload an excel sheet containing a list of the pupils you want to enroll into this program.
+                  This excel sheet should contain details of pupils previously added to this account from your
+                  students'
+                  page.
+                </small>
+              </p>
+              <br />
+              <p>
+                <small>You can download the <strong>template</strong> with a list of your students </small>
+                <strong><a [href]="'https://dev.dumena.com/schools/' + user.id + '/download-students-list'"
+                    class="text-primary-color hover-1 clicakble">here</a></strong>
+              </p>
+            </label>
+            <div class="form-field select-image clickable" (click)="fileInput.click()" appDragDrop
+              (fileDropped)="uploadFile($event)">
+              <input type="file" #fileInput hidden accept=".xlsx" (change)="uploadFile($event)" />
               <p>{{ selectedFileName }}</p>
               <p class="body-3-regular">
                 Drag your file here or
@@ -155,17 +124,10 @@
           </div>
           <!-- Submit Button -->
           <div class="form-btns col-2 dis-flex">
-            <span
-              class="grey_btn clickable"
-              (click)="closeAddChildToProgramModal()"
-              >Cancel</span
-            >
+            <span class="grey_btn clickable" (click)="closeAddChildToProgramModal()">Cancel</span>
             <div class="continue">
-              <button
-                class="btn prim_btn clickable"
-                [disabled]="loading || learnersList === undefined"
-                (click)="batchAddLearners()"
-              >
+              <button class="btn prim_btn clickable" [disabled]="loading || learnersList === undefined"
+                (click)="batchAddLearners()">
                 <span *ngIf="!loading">Continue</span>
                 <span *ngIf="loading">Processing...</span>
               </button>
