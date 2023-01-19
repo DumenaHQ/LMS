@@ -119,6 +119,6 @@
 
 <!-- Modal onboard -->
 <app-parent-onboard
-  *ngIf="isOnboarding"
+  *ngIf="user?.isUserOnboarded === false"
   (isOnboarding)="closeOnboardModal()"
 ></app-parent-onboard>

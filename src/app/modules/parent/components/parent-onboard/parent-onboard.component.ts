@@ -5,6 +5,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   templateUrl: './parent-onboard.component.html',
   styleUrls: ['./parent-onboard.component.scss'],
 })
+
 export class ParentOnboardComponent implements OnInit {
   @Output() isOnboarding: EventEmitter<any> = new EventEmitter();
 

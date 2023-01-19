@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { first } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProgramsService } from 'src/app/services/programs.service';
 import { SchoolService } from 'src/app/services/school.service';
 
 @Component({
-  selector: 'app-school-programs-details',
-  templateUrl: './school-programs-details.component.html',
-  styleUrls: ['./school-programs-details.component.scss'],
+  selector: 'app-display-learner-program-details',
+  templateUrl: './display-learner-program-details.component.html',
+  styleUrls: ['./display-learner-program-details.component.scss']
 })
-export class SchoolProgramsDetailsComponent implements OnInit {
+export class DisplayLearnerProgramDetailsComponent implements OnInit {
+
   contentId: any = 'content';
-  addChildToProgramModal: boolean = false;
+  addLearnerToProgramModal: boolean = false;
   currentProgramId: any;
   program: any;
   programId: string;
@@ -158,13 +158,13 @@ export class SchoolProgramsDetailsComponent implements OnInit {
   }
 
   // Open Add Child Modal
-  openAddChildToProgramModal() {
-    this.addChildToProgramModal = true;
+  openAddLearnerToProgramModal() {
+    this.addLearnerToProgramModal = true;
   }
 
   // Close Add Child Modal
-  closeAddChildToProgramModal() {
-    this.addChildToProgramModal = false;
+  closeAddLearnerToProgramModal() {
+    this.addLearnerToProgramModal = false;
   }
 
   // Show alert
@@ -180,4 +180,6 @@ export class SchoolProgramsDetailsComponent implements OnInit {
       this.isAlert = false;
     }, 3000);
   }
+
+
 }

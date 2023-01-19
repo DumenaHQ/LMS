@@ -130,12 +130,12 @@ export class ParentEnrollLearnersComponent implements OnInit {
 
         if (res.status == true) {
           // Show Popup
-          this.showAlertPopup(res.message, 'success');
+          this.showAlertPopup(`${res.message}. An email has been sent containing the login details for ${this.userForm.value.firstname}`, 'success');
 
           // Reload the page
           setTimeout(() => {
             window.location.reload();
-          }, 3000);
+          }, 4000);
         }
       },
       (error: any) => {

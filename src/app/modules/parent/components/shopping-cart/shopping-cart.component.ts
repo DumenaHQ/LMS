@@ -14,8 +14,8 @@ export class ShoppingCartComponent implements OnInit {
   baseUrl: string = environment.baseUrl;
   key = environment.paystackKey;
   user: any;
-  allOrdersFromLS: any;
-  allOrderFromLS: any;
+  orders: any;
+  order: any;
   grandTotal: number = 0;
   value: any;
   isVoucher: boolean = false;
@@ -34,14 +34,15 @@ export class ShoppingCartComponent implements OnInit {
     this.user = userData.user;
 
     // Get Order from localstorge
-    this.allOrdersFromLS = this.orderService.getOrderFromLocalStorage();
-    if (this.allOrdersFromLS !== []) {
-      this.allOrdersFromLS.forEach((element: any) => {
-        this.allOrderFromLS = element;
+    this.orders = this.orderService.getOrderFromLocalStorage();
+    
+    if (this.orders) {
+      this.orders.forEach((element: any) => {
+        this.order = element;
       });
       // Find Sum
-      this.addAmounts(this.allOrdersFromLS);
     }
+    this.addAmounts(this.orders);
   }
 
   // Find Sum
@@ -72,9 +73,10 @@ export class ShoppingCartComponent implements OnInit {
     };
 
     // Map items from Localstorage to payload
-    this.allOrdersFromLS.map((item: any) => {
+    this.orders.map((item: any) => {
       payload.items.push(item);
     });
+    
 
     // Add order
     this.orderService.addOrder(payload).subscribe((res: any) => {
@@ -134,7 +136,6 @@ export class ShoppingCartComponent implements OnInit {
   removeItemFromCart(index: any) {
     // remove from LS
     this.orderService.removeOrderToLocalStorage(index);
-
     this.ngOnInit();
   }
 }

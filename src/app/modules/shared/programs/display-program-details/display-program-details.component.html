@@ -1,0 +1,206 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
+></app-alert-popup>
+
+<!-- Add learners to program -->
+<!-- <app-add-child-to-program
+  *ngIf="addChildToProgramModal"
+  (addChildToProgramModal)="closeAddChildToProgramModal()"
+  [programId]="programId"
+></app-add-child-to-program> -->
+<app-add-program-learners *ngIf="addLearnerToProgramModal"
+(addLearnerToProgramModal)="closeAddLearnerToProgramModal()"
+[programId]="programId"></app-add-program-learners>
+
+
+<section class="ds-head dis-flex">
+  <h2 class="ds-head_title clickable" routerLink="/school/programs">
+    Programs
+  </h2>
+  <i class="bx bx-chevron-right icon"></i>
+  <p class="clickable" [title]="program?.name">
+    {{
+      program?.name.length > 20
+        ? program?.name.slice(0, 20) + "..."
+        : program?.name
+    }}
+  </p>
+</section>
+
+<section class="course-details">
+  <div class="course-details_image">
+    <img src="../../../../../../assets/img/program-thumbnail.svg" alt="" />
+  </div>
+  <div class="course-details_header">
+    <div class="course-details_header_top">
+      <div class="left">
+        <h2>{{ program?.name }}</h2>
+        <div class="dis-flex left_bottom">
+          <button
+            [ngClass]="
+              program?.status === 'active' ? 'success_btn' : 'grey_btn'
+            "
+          >
+            {{ program?.status === "active" ? "Ongoing" : "Ended" }}
+          </button>
+          <div class="icons dis-flex">
+            <span class="dis-flex"
+              ><img
+                src="../../../../../../assets/img/svg/calendar-2.svg"
+                alt=""
+              />
+              <p class="body-2-regular">
+                Created {{ program?.createdAt | date: "mediumDate" }}
+              </p></span
+            >
+            <span class="dis-flex"
+              ><img src="../../../../../../assets/img/svg/medal.svg" alt="" />
+              <p class="body-2-regular">3 Sections</p></span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="right dis-flex">
+        <button class="btn prim_btn" *ngIf="hasJoined === true" (click)="openAddLearnerToProgramModal()">
+          Add Child
+        </button>
+        <button class="btn prim_btn" *ngIf="hasJoined === false" (click)="joinProgram()">
+          Join
+        </button>
+      </div>
+    </div>
+    <div class="course-details_header_bottom">
+      <p class="descript">
+        {{ program?.description }}
+      </p>
+      <ul class="numbers dis-flex">
+        <li>
+          <p class="body-2-bold">{{ program?.courses?.length }}</p>
+          <p class="body-3-regular">Courses</p>
+        </li>
+        <li>
+          <p class="body-2-bold">{{ program?.sponsors?.length }}</p>
+          <p class="body-3-regular">Schools</p>
+        </li>
+      </ul>
+      <div class="completion">
+        <p class="body-2-bold title">Timeframe</p>
+        <p class="body-2-medium text-primary-color">0 Day</p>
+      </div>
+      <div class="students">
+        <p class="body-2-bold title">Total Students</p>
+        <ul class="students_list dis-flex">
+          <li>
+            <img
+              src="../../../../../../../../../../../../assets/img/svg/orange-circle.svg"
+              alt=""
+            />
+          </li>
+          <li>
+            <img
+              src="../../../../../../../../../../../../assets/img/svg/orange-circle.svg"
+              alt=""
+            />
+          </li>
+          <li>
+            <img
+              src="../../../../../../../../../../../../assets/img/svg/orange-circle.svg"
+              alt=""
+            />
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="course-details_body">
+    <div class="course-details_body_header">
+      <ul class="dis-flex">
+        <li
+          class="body-2-medium active"
+          [class.active]="contentId === 'content'"
+          (click)="tabChange('content')"
+        >
+          Program Content
+        </li>
+        <li
+          class="body-2-medium"
+          [class.active]="contentId === 'schools'"
+          (click)="tabChange('schools')"
+        >
+          Schools
+        </li>
+        <li
+          class="body-2-medium"
+          [class.active]="contentId === 'learners'"
+          (click)="tabChange('learners')"
+        >
+          Learners
+        </li>
+      </ul>
+    </div>
+    <div class="course-details_body_content">
+      <ng-container *ngIf="contentId === 'content'">
+        <div class="courses">
+          <p class="body-3-medium">{{ programCourses?.length }} Course(s)</p>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="contentId === 'schools'">
+        <div class="table-container" style="overflow-x: auto">
+          <ng-container *ngIf="programSchools?.length > 0">
+            <table>
+              <tr class="table-header">
+                <th>Name</th>
+                <th>Number of students</th>
+              </tr>
+              <ng-container>
+                <tr class="table-body" *ngFor="let school of programSchools">
+                  <td>{{ school.name }}</td>
+                  <td>{{school.student_count}}</td>
+                </tr>
+              </ng-container>
+              <ng-template>
+                <p style="text-align: center">Empty School list!</p>
+              </ng-template>
+            </table>
+          </ng-container>
+
+          <p style="text-align: center" *ngIf="programSchools?.length === 0">
+            No school available
+          </p>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="contentId === 'learners'">
+        <div class="table-container" style="overflow-x: auto">
+          <ng-container *ngIf="programLearners?.length > 0">
+            <table>
+              <tr class="table-header">
+                <th>Name</th>
+                <th>Username</th>
+                <th>Date added</th>
+              </tr>
+              <ng-container>
+                <tr class="table-body" *ngFor="let learner of programLearners">
+                  <td>{{ learner.name }}</td>
+                  <td>{{learner.username}}</td>
+                  <td>{{learner.date_added | date: "mediumDate"}}</td>
+                </tr>
+              </ng-container>
+              <ng-template>
+                <p style="text-align: center">Empty School list!</p>
+              </ng-template>
+            </table>
+          </ng-container>
+
+          <p style="text-align: center" *ngIf="programSchools?.length === 0">
+            No Learner available
+          </p>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</section>

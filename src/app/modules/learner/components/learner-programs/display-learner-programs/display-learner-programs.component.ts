@@ -4,11 +4,12 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ProgramsService } from 'src/app/services/programs.service';
 
 @Component({
-  selector: 'app-school-programs-overview',
-  templateUrl: './school-programs-overview.component.html',
-  styleUrls: ['./school-programs-overview.component.scss'],
+  selector: 'app-display-learner-programs',
+  templateUrl: './display-learner-programs.component.html',
+  styleUrls: ['./display-learner-programs.component.scss']
 })
-export class SchoolProgramsOverviewComponent implements OnInit {
+export class DisplayLearnerProgramsComponent implements OnInit {
+
   dataLoading: boolean = true;
   programs: any;
   user: any;
@@ -32,6 +33,8 @@ export class SchoolProgramsOverviewComponent implements OnInit {
     this.programsService.getAllPrograms().subscribe({
       next: (res: any) => {
         this.programs = res.data.programs;
+        console.log(res);
+        
       },
       error: (e) => console.error(e),
       complete: () => {
@@ -40,56 +43,24 @@ export class SchoolProgramsOverviewComponent implements OnInit {
     });
   }
 
-  // Join Program
-  joinProgram(programId: string) {
-    // this.loading = true;
-
-    let payload = {
-      schools: [
-        {
-          user_id: this.user.id,
-          name: this.user.fullname,
-        },
-      ],
-    };
-
-    this.programsService.addSchoolToProgram(payload, programId).subscribe({
-      next: (res: any) => {
-        console.log(res);
-
-        if (res.status === true) {
-          this.showAlertPopup(res.message, 'success');
-
-          setTimeout(() => {
-            this.router.navigate([`/school/programs/${programId}`]);
-          }, 3000);
-        }
-      },
-      error: (e) => console.error(e),
-      // complete: () => {
-      //   this.dataLoading = false;
-      // },
-    });
-  }
-
   // Display program
   displayProgram(programId: string) {
-    this.router.navigate([`/school/programs/${programId}`]);
+    this.router.navigate([`/${this.user.role}/programs/${programId}`]);
   }
 
   // Delete program
-  deleteProgram(program: any) {
-    this.programsService.deleteProgram(program.id).subscribe({
-      next: (res: any) => {
-        console.log(res);
-        this.programs;
-      },
-      error: (e) => console.error(e),
-      // complete: () => {
-      //   this.dataLoading = false;
-      // },
-    });
-  }
+  // deleteProgram(program: any) {
+  //   this.programsService.deleteProgram(program.id).subscribe({
+  //     next: (res: any) => {
+  //       console.log(res);
+  //       this.programs;
+  //     },
+  //     error: (e) => console.error(e),
+  //     // complete: () => {
+  //     //   this.dataLoading = false;
+  //     // },
+  //   });
+  // }
 
   // Show alert
   showAlertPopup(message: string, color: string) {
@@ -104,4 +75,5 @@ export class SchoolProgramsOverviewComponent implements OnInit {
       this.isAlert = false;
     }, 3000);
   }
+
 }

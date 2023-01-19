@@ -1,0 +1,149 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
+></app-alert-popup>
+
+<section class="ds-head">
+    <h2 class="ds-head_title">Programs</h2>
+</section>
+
+<section class="grouping dis-flex">
+  <!-- Filter -->
+  <div class="filter s-f">
+    <div class="body-3-regular dis-flex">
+      <span class="title">Filter:</span>
+      <span class="dropdown dis-flex clickable"
+        >All programs <i class="bx bx-chevron-down"></i
+      ></span>
+    </div>
+  </div>
+
+  <div class="right dis-flex">
+    <!-- Sort -->
+    <div class="sort s-f">
+      <div class="body-3-regular dis-flex">
+        <span class="title">Sort:</span>
+        <span class="dropdown dis-flex clickable"
+          >Last modified <i class="bx bx-chevron-down"></i
+        ></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="programs">
+  <app-loader *ngIf="dataLoading"></app-loader>
+  <div class="programs_disgrid" *ngIf="programs?.length > 0">
+    <div class="program_card">
+      <div class="program_card_item" *ngFor="let program of programs">
+        <img
+          src="../../../../../../assets/img/program-thumbnail-patterns.svg"
+          alt="image"
+          class="program_card_item_image clickable"
+          (click)="displayProgram(program?.id)"
+        />
+
+        <div class="program_card_item_details">
+          <div class="program_card_item_details_right">
+            <div class="program_card_item_details_right_header dis-flex">
+              <div class="">
+                <h5
+                  class="title clickable"
+                  [title]="program?.name"
+                  (click)="displayProgram(program?.id)"
+                >
+                  {{
+                    program?.name.length > 20
+                      ? program?.name.slice(0, 20) + "..."
+                      : program?.name
+                  }}
+                </h5>
+                <p>
+                  {{ program?.description }}
+                </p>
+              </div>
+            </div>
+            <ul class="dis-flex">
+              <li>
+                <p class="body-2-bold">{{ program?.courses?.length }}</p>
+                <p class="body-3-regular">Courses</p>
+              </li>
+              <!-- <li>
+                <p class="body-2-bold">{{ program?.schools?.length }}</p>
+                <p class="body-3-regular">Schools</p>
+              </li> -->
+            </ul>
+          </div>
+
+          <div class="program_card_item_details_left">
+            <div class="students">
+              <p class="body-2-regular title">Total Students</p>
+              <ul class="students_list dis-flex">
+                <li>
+                  <img
+                    src="../../../../../../assets/img/svg/orange-circle.svg"
+                    alt=""
+                  />
+                </li>
+                <li>
+                  <img
+                    src="../../../../../../assets/img/svg/orange-circle.svg"
+                    alt=""
+                  />
+                </li>
+                <li>
+                  <img
+                    src="../../../../../../assets/img/svg/orange-circle.svg"
+                    alt=""
+                  />
+                </li>
+              </ul>
+            </div>
+            <div class="completion">
+              <p class="body-2-regular title">Start date</p>
+              <p class="body-2-medium">
+                {{ program?.start_date | date: "mediumDate" }}
+              </p>
+              <!-- {{ days > 1 ? days : "0" }} day{{ days < 2 ? "" : "s" }} -->
+            </div>
+            <div class="status">
+              <span
+                [ngClass]="
+                  program?.status === 'active' ? 'success_btn' : 'grey_btn'
+                "
+                >{{
+                  program?.status === "active" ? "Published" : "Draft"
+                }}</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="actions">
+          <img
+            src="../../../../../../assets/img/action.svg"
+            class="clickable"
+            alt="image"
+            (click)="actionBtn.click()"
+          />
+          <input
+            type="checkbox"
+            name="action-btn"
+            id="action-btn"
+            style="display: none"
+            #actionBtn
+          />
+          <div class="dropdown">
+            <small
+              class="body-3-regular delete clickable"
+              (click)="deleteProgram(program)"
+              >Delete</small
+            >
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</section>

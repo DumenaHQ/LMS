@@ -5,10 +5,6 @@
   [alertColor]="alertColor"
 ></app-alert-popup>
 
-<section class="ds-head">
-  <h2 class="ds-head_title">Programs</h2>
-</section>
-
 <section class="grouping dis-flex">
   <!-- Filter -->
   <div class="filter s-f">
@@ -64,9 +60,14 @@
                   {{ program?.description }}
                 </p>
               </div>
-              <button class="btn prim_btn" *ngIf="program?.hasJoined === false"  (click)="joinProgram(program?.id)">
-                Join
-              </button>
+              <ng-container *ngIf="program?.hasJoined === false">
+                  <button class="btn prim_btn" *ngIf="user.role === 'parent'"  (click)="addParentToProgram(program?.id)">
+                    Join
+                  </button>
+                  <button class="btn prim_btn" *ngIf="user.role === 'school'"  (click)="addSchoolToProgram(program?.id)">
+                    Join
+                  </button>
+              </ng-container>
               <button class="btn grey_btn" *ngIf="program?.hasJoined === true">
                 Joined
               </button>
@@ -149,6 +150,24 @@
             >
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Blank -->
+  <div class="dis-flex" *ngIf="programs?.length === 0">
+    <div class="blank-item">
+      <img
+        src="../../../../../assets/img/undraw_empty_street_sfxm 1.svg"
+        alt=""
+        class="blank-item_image"
+      />
+      <div class="blank-item_details">
+        <h2 class="text-primary-color">No available programs</h2>
+        <!-- <p>
+          Numquam quasi et sit earum. Culpa dicta quod officia doloribus animi
+          fuga voluptatem. Iure vel hic et porro sequi.
+        </p> -->
       </div>
     </div>
   </div>

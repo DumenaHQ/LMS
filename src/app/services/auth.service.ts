@@ -102,18 +102,6 @@ export class AuthService {
     );
   }
 
-  // Log Out
-  logOut() {
-    // Remove token
-    localStorage.removeItem('token');
-
-    // Remove User data
-    localStorage.removeItem('data');
-
-    // Route user back to login
-    this.router.navigate(['login']);
-  }
-
   // Send password reset email
   sendResetEmail(email: string) {
     return this.http.post(
@@ -151,6 +139,18 @@ export class AuthService {
   //     })
   //   )
   // }
+
+  // Log Out
+  logOut() {
+    // Remove token
+    localStorage.removeItem('token');
+
+    // Remove User data
+    localStorage.removeItem('data');
+
+    // Route user back to login
+    this.router.navigate(['login']);
+  }
 
   // Get HttpOptions
   getHttpOptions() {

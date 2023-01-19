@@ -26,6 +26,7 @@ export class DashboardHeaderComponent implements OnInit {
     let userData = this.authService.getUser();
     this.user = userData.user;
     this.userNamePath = this.user.fullname.replace(/\s/g, '-').toLowerCase();
+    
 
     // Get Order from localstorge
     this.allOrdersFromLS = this.orderService.getOrderFromLocalStorage();

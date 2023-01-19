@@ -79,3 +79,9 @@
     </ul>
   </aside> -->
 </section>
+
+<!-- Modal onboard -->
+<app-school-onboard
+  *ngIf="user?.isUserOnboarded === false"
+  (isOnboarding)="closeOnboardModal()"
+></app-school-onboard>
