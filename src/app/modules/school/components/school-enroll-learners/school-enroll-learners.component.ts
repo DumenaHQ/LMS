@@ -80,7 +80,7 @@ export class SchoolEnrollLearnersComponent implements OnInit {
           if (res.status == true) {
             
             // Show Popup
-            this.showAlertPopup(`${res.message}. An email has been sent containing the login details for ${this.userForm.value.fullname}`, 'success');
+            this.showAlertPopup(`${res.message}. An email has been sent containing the login credentials of ${this.userForm.value.fullname}`, 'success');
 
             // Close Modal
             // this.closeAddLearnerModal();
