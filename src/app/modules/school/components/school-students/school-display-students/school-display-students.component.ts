@@ -10,7 +10,26 @@ import { SchoolService } from 'src/app/services/school.service';
 export class SchoolDisplayStudentsComponent implements OnInit {
   user: any;
   @Input() students: any;
-  constructor() {}
 
-  ngOnInit(): void {}
+  constructor(
+    private authService: AuthService,
+    private schoolService: SchoolService
+  ) {}
+
+  ngOnInit(): void {
+     // Get User data from localstorage
+     let userData = this.authService.getUser();
+     this.user = userData.user;
+  }
+
+  deleteStudent() {
+    // Get school learners from localstorage
+    this.schoolService.getSchoolLearners(this.user.id).subscribe({
+      next: (res: any) => {
+        this.students = res;
+      },
+      error: (e) => console.error(e),
+    });
+    
+  }
 }

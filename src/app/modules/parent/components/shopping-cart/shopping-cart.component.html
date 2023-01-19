@@ -19,7 +19,7 @@
           <ng-container>
             <tr
               class="table-body"
-              *ngFor="let i of allOrdersFromLS; let j = index"
+              *ngFor="let i of orders; let j = index"
             >
               <td>{{ i.name | titlecase }}</td>
               <td>{{ i.slug.split("-")[0] | titlecase }}</td>
@@ -49,7 +49,7 @@
     </div>
 
     <!-- <div class="cart_body_list du-grid">
-      <div class="cart_body_list_item" *ngFor="let i of allOrdersFromLS">
+      <div class="cart_body_list_item" *ngFor="let i of orders">
         <div class="header dis-flex">
           <p class="body-2-bold">{{ i.slug | titlecase }} for {{ i.name }}</p>
           <h4 class="text-secondary-color">

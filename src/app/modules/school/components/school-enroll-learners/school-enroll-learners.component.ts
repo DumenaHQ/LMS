@@ -80,14 +80,14 @@ export class SchoolEnrollLearnersComponent implements OnInit {
           if (res.status == true) {
             
             // Show Popup
-            this.showAlertPopup(res.message, 'success');
+            this.showAlertPopup(`${res.message}. An email has been sent containing the login credentials of ${this.userForm.value.fullname}`, 'success');
 
             // Close Modal
             // this.closeAddLearnerModal();
             
             setTimeout(() => {
                 window.location.reload();
-              }, 3000);
+              }, 4000);
           }
         },
         (error: any) => {
@@ -125,17 +125,19 @@ export class SchoolEnrollLearnersComponent implements OnInit {
       .subscribe(
         (res: any) => {
           console.log(res);
+          // parentcook@gmail.com
 
           if (res.status === true) {
+            
             // Show Popup
-            this.showAlertPopup(res.message, 'success');
+            this.showAlertPopup(`${res.message}. An email has been sent containing the login details for all enrolled learners`, 'success');
 
             // Close Modal
             // this.closeAddLearnerModal();
             
             setTimeout(() => {
                 window.location.reload();
-              }, 3000);
+              }, 4000);
 
           }
         },

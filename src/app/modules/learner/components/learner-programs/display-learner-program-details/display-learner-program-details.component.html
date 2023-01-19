@@ -5,12 +5,15 @@
   [alertColor]="alertColor"
 ></app-alert-popup>
 
-<!-- Enrol Learner -->
-<app-add-child-to-program
+<!-- Add learners to program -->
+<!-- <app-add-child-to-program
   *ngIf="addChildToProgramModal"
   (addChildToProgramModal)="closeAddChildToProgramModal()"
   [programId]="programId"
-></app-add-child-to-program>
+></app-add-child-to-program> -->
+<app-add-program-learners *ngIf="addLearnerToProgramModal"
+(addLearnerToProgramModal)="closeAddLearnerToProgramModal()"
+[programId]="programId"></app-add-program-learners>
 
 
 <section class="ds-head dis-flex">
@@ -60,14 +63,14 @@
           </div>
         </div>
       </div>
-      <div class="right dis-flex">
-        <button class="btn prim_btn" *ngIf="hasJoined === true" (click)="openAddChildToProgramModal()">
+      <!-- <div class="right dis-flex">
+        <button class="btn prim_btn" *ngIf="hasJoined === true" (click)="openAddLearnerToProgramModal()">
           Add Child
         </button>
         <button class="btn prim_btn" *ngIf="hasJoined === false" (click)="joinProgram()">
           Join
         </button>
-      </div>
+      </div> -->
     </div>
     <div class="course-details_header_bottom">
       <p class="descript">

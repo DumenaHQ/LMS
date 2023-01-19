@@ -27,7 +27,6 @@ export class SchoolStudentsComponent implements OnInit {
     this.schoolService.getSchoolLearners(this.user.id).subscribe({
       next: (res: any) => {
         this.students = res.data.students;
-        console.log(this.students);
       },
       error: (e) => console.error(e),
       complete: () => {

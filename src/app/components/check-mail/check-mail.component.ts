@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class CheckMailComponent implements OnInit {
   hide: boolean = true;
 
-  @Input() email: string = 'me@email.com';
+  @Input() email: string = '';
 
   constructor() {}
 

@@ -10,6 +10,7 @@ export class ProgramsService {
 
   constructor(private http: HttpClient) {}
 
+  //-- GET STARTS --//
   // Get All Programs
   getAllPrograms() {
     return this.http.get(`${this.baseUrl}programs`, this.getHttpOptions());
@@ -46,7 +47,9 @@ export class ProgramsService {
       this.getHttpOptions()
     );
   }
+  //-- GET ENDS --//
 
+  //-- ADD STARTS --//
   // Add program
   addProgram(data: any) {
     return this.http.post(
@@ -62,25 +65,37 @@ export class ProgramsService {
       `${this.baseUrl}programs/${programId}/schools`,
       data,
       this.getHttpOptions()
-    );
-  }
+      );
+    }
 
+  // Add school to program
+  addParentToProgram(data: any, programId: any) {
+    return this.http.patch(
+      `${this.baseUrl}programs/${programId}/parents`,
+      data,
+      this.getHttpOptions()
+      );
+    }
+    
   // Add learner to program
   addLearnerToProgram(data: any, programId: any) {
     return this.http.patch(
       `${this.baseUrl}programs/${programId}/learners`,
       data,
       this.getHttpOptions()
-    );
-  }
-
+      );
+    }
+  //-- ADD ENDS --//
+    
+  //-- DELETE STARTS --//
   // Delete program
   deleteProgram(programId: any) {
     return this.http.delete(
       `${this.baseUrl}programs/${programId}`,
       this.getHttpOptions()
-    );
-  }
+      );
+    }
+  //-- DELETE ENDS --//
 
   // Get HttpOptions
   getHttpOptions() {

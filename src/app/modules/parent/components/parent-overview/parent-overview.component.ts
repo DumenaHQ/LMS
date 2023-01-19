@@ -98,7 +98,21 @@ export class ParentOverviewComponent implements OnInit {
 
   // close Onboarding modal
   closeOnboardModal() {
-    this.isOnboarding = false;
+
+    let payload = {
+      isUserOnboarded: true,
+    }
+    
+
+    // update user profile
+    this.authService.updateUser(payload).subscribe((res: any) => {
+      console.log(res);
+      if (res.status == true) {
+        // Set User data
+        this.authService.addUserDataToLocalStorage(res.data);
+        this.ngOnInit()
+      }
+    });
   }
 
   // Open Select Plan Modal
@@ -111,22 +125,6 @@ export class ParentOverviewComponent implements OnInit {
   // Close Select Plan Modal
   closeSelectPlanModal() {
     this.selectPlanModal = false;
-  }
-
-  // Show alert
-  showAlert() {
-    // Show Alert
-    this.isAlert = true;
-
-    // Hide Alert
-    setTimeout(() => {
-      this.isAlert = false;
-    }, 2000);
-  }
-
-  // Set alert message
-  setAlertMessage(message: any) {
-    this.alertMessage = message;
   }
 
   // Manage child

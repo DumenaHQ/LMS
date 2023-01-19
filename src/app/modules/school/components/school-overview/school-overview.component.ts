@@ -31,4 +31,22 @@ export class SchoolOverviewComponent implements OnInit {
     });
   }
 
+  // close Onboarding modal
+  closeOnboardModal() {
+
+    let payload = {
+      isUserOnboarded: true,
+    }
+    
+    // update user profile
+    this.authService.updateUser(payload).subscribe((res: any) => {
+      console.log(res);
+      if (res.status == true) {
+        // Set User data
+        this.authService.addUserDataToLocalStorage(res.data);
+        this.ngOnInit()
+      }
+    });
+  }
+
 }

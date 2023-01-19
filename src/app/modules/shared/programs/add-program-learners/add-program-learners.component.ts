@@ -1,19 +1,19 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { first } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProgramsService } from 'src/app/services/programs.service';
 import { SchoolService } from 'src/app/services/school.service';
 import * as XLSX from 'xlsx';
 
 @Component({
-  selector: 'app-add-child-to-program',
-  templateUrl: './add-child-to-program.component.html',
-  styleUrls: ['./add-child-to-program.component.scss'],
+  selector: 'app-add-program-learners',
+  templateUrl: './add-program-learners.component.html',
+  styleUrls: ['./add-program-learners.component.scss']
 })
-export class AddChildToProgramComponent implements OnInit {
-  @Output() addChildToProgramModal: EventEmitter<any> = new EventEmitter();
+export class AddProgramLearnersComponent implements OnInit {
+
+  @Output() addLearnerToProgramModal: EventEmitter<any> = new EventEmitter();
   isAlert: boolean = false;
   alertMessage: string;
   alertColor: string;
@@ -23,10 +23,10 @@ export class AddChildToProgramComponent implements OnInit {
   errorMessage: string = '';
   showError: boolean = false;
   user: any;
-  selectedAVatarUrl: string = '';
   messageval: string;
   billingId: string = 'single';
   selectedFileName: any;
+  userForm: any = FormGroup;
   isFormSubmitted: boolean = false;
   file: File;
   arrayBuffer: any;
@@ -70,6 +70,12 @@ export class AddChildToProgramComponent implements OnInit {
     //   },
     //   error: (e) => console.error(e),,
     // });
+
+    // User form
+    this.userForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      username: ['', Validators.required],
+    });
   }
 
   // Tab change
@@ -77,15 +83,45 @@ export class AddChildToProgramComponent implements OnInit {
     this.billingId = ids;
   }
 
-  // Add Learner(s)
-  addLearners() {
+  // School Add Learner(s)
+  schoolAddLearners() {
     // Set loading to true
     this.loading = true;
 
     let payload = {
       learners: this.selectedLearners,
     };
-    
+
+    this.addLearnersToProgram(payload)
+  }
+
+  // Parent Add Learner(s)
+  parentAddLearners() {
+    // Set loading to true
+    this.loading = true;
+
+    // Set submitted to true
+    this.isFormSubmitted = true;
+
+    // If Form is invalid
+    if (this.userForm.invalid) {
+      this.loading = false;
+
+      return;
+    }
+
+    let payload = {
+      learners: {
+        username: this.userForm.value.username, 
+        name: this.userForm.value.name
+      },
+    };
+
+    this.addLearnersToProgram(payload)
+  }
+
+  // Add learners to program (select and single enrollment)
+  addLearnersToProgram(payload: any) {
     this.programsService
       .addLearnerToProgram(payload, this.programId)
       .subscribe({
@@ -96,7 +132,7 @@ export class AddChildToProgramComponent implements OnInit {
             this.showAlertPopup(res.message, 'success');
             // close modal
             setTimeout(() => {
-              this.closeAddChildToProgramModal()
+              this.closeAddLearnerToProgramModal()
 
               this.ngOnInit()
             }, 3000);
@@ -115,7 +151,7 @@ export class AddChildToProgramComponent implements OnInit {
   }
 
   // Batch Add Learner(s)
-  batchAddLearners() {
+  batchAddLearnersToProgram() {
     // Set loading to true
     this.loading = true;
 
@@ -139,7 +175,7 @@ export class AddChildToProgramComponent implements OnInit {
           this.showAlertPopup(res.message, 'success');
           // close modal
           setTimeout(() => {
-            this.closeAddChildToProgramModal()
+            this.closeAddLearnerToProgramModal()
 
             this.ngOnInit()
           }, 3000);
@@ -191,7 +227,7 @@ export class AddChildToProgramComponent implements OnInit {
     }
   }
 
-  // Select students
+  // Select students (School)
   selectStudent(event: any, student: any) {
     // selected.selected = true;
 
@@ -211,8 +247,8 @@ export class AddChildToProgramComponent implements OnInit {
   }
 
   // Close Add Modal
-  closeAddChildToProgramModal() {
-    this.addChildToProgramModal.emit();
+  closeAddLearnerToProgramModal() {
+    this.addLearnerToProgramModal.emit();
   }
 
   // Show alert
@@ -228,4 +264,5 @@ export class AddChildToProgramComponent implements OnInit {
       this.isAlert = false;
     }, 3000);
   }
+
 }

@@ -24,7 +24,21 @@ export class LearnerOverviewComponent implements OnInit {
 
   // close Onboarding modal
   closeOnboardModal() {
-    this.isOnboarding = false;
+
+    this.isOnboarding = false
+    // let payload = {
+    //   isUserOnboarded: true,
+    // }
+    
+    // // update user profile
+    // this.authService.updateUser(payload).subscribe((res: any) => {
+    //   console.log(res);
+    //   if (res.status == true) {
+    //     // Set User data
+    //     this.authService.addUserDataToLocalStorage(res.data);
+    //     this.ngOnInit()
+    //   }
+    // });
   }
 
   // Progress Bar
