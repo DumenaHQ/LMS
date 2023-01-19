@@ -69,7 +69,7 @@ export class ParentEnrollLearnersComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Get User data from localstorage
@@ -130,12 +130,13 @@ export class ParentEnrollLearnersComponent implements OnInit {
 
         if (res.status == true) {
           // Show Popup
-          this.showAlertPopup(`${res.message}. An email has been sent containing the login details for ${this.userForm.value.firstname}`, 'success');
 
+          const message = res.message + '. Check your email for the login credentials';
+          this.showAlertPopup(message, 'success');
           // Reload the page
           setTimeout(() => {
             window.location.reload();
-          }, 4000);
+          }, 9000);
         }
       },
       (error: any) => {
@@ -150,7 +151,7 @@ export class ParentEnrollLearnersComponent implements OnInit {
       }
     );
   }
-  
+
   // Close Add Modal
   closeAddLearnerModal() {
     this.addLearnerModal.emit();
