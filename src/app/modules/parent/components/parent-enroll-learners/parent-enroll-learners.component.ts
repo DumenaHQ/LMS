@@ -130,13 +130,13 @@ export class ParentEnrollLearnersComponent implements OnInit {
 
         if (res.status == true) {
           // Show Popup
-          const message = res.message + ' Check your email for the login credentials';
+          const message = res.message + '. Check your email for the login credentials';
           this.showAlertPopup(message, 'success');
 
           // Reload the page
           setTimeout(() => {
             window.location.reload();
-          }, 3000);
+          }, 9000);
         }
       },
       (error: any) => {
