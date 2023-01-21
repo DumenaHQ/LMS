@@ -6,18 +6,13 @@
 ></app-alert-popup>
 
 <!-- Add learners to program -->
-<!-- <app-add-child-to-program
-  *ngIf="addChildToProgramModal"
-  (addChildToProgramModal)="closeAddChildToProgramModal()"
-  [programId]="programId"
-></app-add-child-to-program> -->
 <app-add-program-learners *ngIf="addLearnerToProgramModal"
 (addLearnerToProgramModal)="closeAddLearnerToProgramModal()"
 [programId]="programId"></app-add-program-learners>
 
 
 <section class="ds-head dis-flex">
-  <h2 class="ds-head_title clickable" routerLink="/school/programs">
+  <h2 class="ds-head_title clickable" [routerLink]="'/' + user?.role + '/programs'">
     Programs
   </h2>
   <i class="bx bx-chevron-right icon"></i>
@@ -64,10 +59,10 @@
         </div>
       </div>
       <div class="right dis-flex">
-        <button class="btn prim_btn" *ngIf="hasJoined === true" (click)="openAddLearnerToProgramModal()">
+        <button class="btn prim_btn" *ngIf="program?.hasJoined === true" (click)="openAddLearnerToProgramModal()">
           Add Child
         </button>
-        <button class="btn prim_btn" *ngIf="hasJoined === false" (click)="joinProgram()">
+        <button class="btn prim_btn" *ngIf="program?.hasJoined === false" (click)="joinProgram()">
           Join
         </button>
       </div>

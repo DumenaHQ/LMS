@@ -199,29 +199,6 @@
                 class="enroll_form auth_content_form"
                 [formGroup]="userForm"
             >
-                <!-- Tabs starts -->
-                <div class="form-field col-2">
-                <label for="">Select an enrollment method</label>
-                <!-- enroll-mtd tabs -->
-                <div class="enroll-mtd_tab">
-                    <div class="enroll-mtd_tab_wrapper">
-                    <span
-                        class="tab"
-                        [class.active]="billingId == 'single'"
-                        (click)="tabChange('single')"
-                        >Single enrollement
-                    </span>
-                    <span
-                        class="tab"
-                        [class.active]="billingId == 'batch'"
-                        (click)="tabChange('batch')"
-                        >Batch enrollement
-                    </span>
-                    </div>
-                </div>
-                </div>
-                <!-- Tabs starts -->
-        
                 <!-- Single enrollment starts *ngIf="billingId == 'single'" -->
                 <div class="single-enroll col-2" *ngIf="billingId == 'single'">
                     <div
@@ -302,58 +279,6 @@
                     </div>
                 </div>
                 <!-- Single enrollment ends -->
-        
-                <!-- Batch enrollment starts *ngIf="billingId == 'batch'" -->
-                <div class="batch-enroll col-2" *ngIf="billingId == 'batch'">
-                <div class="form-field col-2">
-                    <label for=""
-                    >Upload an excel sheet containing the <b>Username</b> Or download
-                    an excel template
-                    <strong 
-                        ><a [href]="'https://dev.dumena.com/schools/' + user.id + '/download-students-list'" class="text-primary-color hover-1 clicakble">here</a></strong
-                    ></label
-                    >
-                    <div
-                    class="form-field select-image clickable"
-                    (click)="fileInput.click()"
-                    appDragDrop
-                    (fileDropped)="uploadFile($event)"
-                    >
-                    <input
-                        type="file"
-                        #fileInput
-                        hidden
-                        accept=".xlsx"
-                        (change)="uploadFile($event)"
-                    />
-                    <p>{{ selectedFileName }}</p>
-                    <p class="body-3-regular">
-                      Select your file here 
-                      <!--or <span class="text-primary-color">browse</span> -->
-                    </p>
-                    <p class="body-3-regular">Max file size 4MB</p>
-                    </div>
-                </div>
-                <!-- Submit Button -->
-                <div class="form-btns col-2 dis-flex">
-                    <span
-                    class="grey_btn clickable"
-                    (click)="closeAddLearnerToProgramModal()"
-                    >Cancel</span
-                    >
-                    <div class="continue">
-                    <button
-                        class="btn prim_btn clickable"
-                        [disabled]="loading || learnersList === undefined"
-                        (click)="batchAddLearnersToProgram()"
-                    >
-                        <span *ngIf="!loading">Continue</span>
-                        <span *ngIf="loading">Processing...</span>
-                    </button>
-                    </div>
-                </div>
-                </div>
-                <!-- Batch enrollment ends -->
             </form>
             </div>
         </div>

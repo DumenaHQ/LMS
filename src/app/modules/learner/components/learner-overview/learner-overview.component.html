@@ -182,6 +182,6 @@
 
 <!-- Modal -->
 <app-learner-onboard
-  *ngIf="isOnboarding"
+  *ngIf="user?.isUserOnboarded === false"
   (isOnboarding)="closeOnboardModal()"
 ></app-learner-onboard>

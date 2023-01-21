@@ -51,15 +51,17 @@ export class AddProgramLearnersComponent implements OnInit {
     this.user = userData.user;
 
     // Get school learners from localstorage
-    this.schoolService.getSchoolLearners(this.user.id).subscribe({
-      next: (res: any) => {
-        this.students = res.data.students;
-      },
-      error: (e) => console.error(e),
-      complete: () => {
-        this.dataLoading = false;
-      },
-    });
+    if(this.user.role === 'school') {
+      this.schoolService.getSchoolLearners(this.user.id).subscribe({
+        next: (res: any) => {
+          this.students = res.data.students;
+        },
+        error: (e) => console.error(e),
+        complete: () => {
+          this.dataLoading = false;
+        },
+      });
+    }
 
     // Get download learners list 
     // this.schoolService.getDownloadLearnersList(this.user.id)

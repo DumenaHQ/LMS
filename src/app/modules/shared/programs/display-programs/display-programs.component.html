@@ -38,7 +38,7 @@
           src="../../../../../../assets/img/program-thumbnail-patterns.svg"
           alt="image"
           class="program_card_item_image clickable"
-          (click)="displayProgram(program?.id)"
+          (click)="displayProgram(program?._id)"
         />
 
         <div class="program_card_item_details">
@@ -48,7 +48,7 @@
                 <h5
                   class="title clickable"
                   [title]="program?.name"
-                  (click)="displayProgram(program?.id)"
+                  (click)="displayProgram(program?._id)"
                 >
                   {{
                     program?.name.length > 20
@@ -61,10 +61,10 @@
                 </p>
               </div>
               <ng-container *ngIf="program?.hasJoined === false">
-                  <button class="btn prim_btn" *ngIf="user.role === 'parent'"  (click)="addParentToProgram(program?.id)">
+                  <button class="btn prim_btn" *ngIf="user.role === 'parent'"  (click)="addParentToProgram(program?._id)">
                     Join
                   </button>
-                  <button class="btn prim_btn" *ngIf="user.role === 'school'"  (click)="addSchoolToProgram(program?.id)">
+                  <button class="btn prim_btn" *ngIf="user.role === 'school'"  (click)="addSchoolToProgram(program?._id)">
                     Join
                   </button>
               </ng-container>
@@ -115,7 +115,7 @@
               </p>
               <!-- {{ days > 1 ? days : "0" }} day{{ days < 2 ? "" : "s" }} -->
             </div>
-            <div class="status">
+            <!-- <div class="status">
               <span
                 [ngClass]="
                   program?.status === 'active' ? 'success_btn' : 'grey_btn'
@@ -124,7 +124,7 @@
                   program?.status === "active" ? "Published" : "Draft"
                 }}</span
               >
-            </div>
+            </div> -->
           </div>
         </div>
 

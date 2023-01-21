@@ -55,9 +55,7 @@ export class DisplayProgramsComponent implements OnInit {
         },
       ],
     };
-
-    //-- Use if to check user type and subscribe to their addToProgram --//
-
+    
     this.programsService.addParentToProgram(payload, programId).subscribe({
       next: (res: any) => {
         console.log(res);

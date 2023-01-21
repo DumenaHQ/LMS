@@ -168,6 +168,6 @@ export class ParentEnrollLearnersComponent implements OnInit {
     // Hide Alert
     setTimeout(() => {
       this.isAlert = false;
-    }, 3000);
+    }, 9000);
   }
 }
