@@ -113,10 +113,12 @@ export class AddProgramLearnersComponent implements OnInit {
     }
 
     let payload = {
-      learners: {
-        username: this.userForm.value.username, 
-        name: this.userForm.value.name
-      },
+      learners: [
+        {
+          username: this.userForm.value.username, 
+          name: this.userForm.value.name
+        }
+      ]
     };
 
     this.addLearnersToProgram(payload)

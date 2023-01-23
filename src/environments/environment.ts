@@ -7,7 +7,7 @@ export const environment = {
     baseUrl: 'https://dev.dumena.com/', 
     paystackKey: 'pk_test_d586eb9d6d6ec62439571f56fea7c8330e4d4366', 
     // https://documenter.getpostman.com/view/Uz5Gnw2i?version=latest#7beed2e5-8916-4f4e-8339-088483a52cd0
-  };
+};
   
   /*
    * For easier debugging in development mode, you can import the following file
