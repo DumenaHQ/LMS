@@ -174,13 +174,13 @@
           <ng-container *ngIf="programLearners?.length > 0">
             <table>
               <tr class="table-header">
-                <th>Name</th>
+                <!-- <th>Name</th> -->
                 <th>Username</th>
                 <th>Date added</th>
               </tr>
               <ng-container>
                 <tr class="table-body" *ngFor="let learner of programLearners">
-                  <td>{{ learner.name }}</td>
+                  <!-- <td>{{ learner.name }}</td> -->
                   <td>{{learner.username}}</td>
                   <td>{{learner.date_added | date: "mediumDate"}}</td>
                 </tr>

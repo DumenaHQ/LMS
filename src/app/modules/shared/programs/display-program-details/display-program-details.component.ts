@@ -143,7 +143,6 @@ export class DisplayProgramDetailsComponent implements OnInit {
     .subscribe({
       next: (res: any) => {
         this.programLearners = res.data.learners;
-        console.log(this.programLearners);
         
       },
       error: (e) => console.error(e),

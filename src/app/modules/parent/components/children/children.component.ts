@@ -23,7 +23,7 @@ export class ChildrenComponent implements OnInit {
     let userData = this.authService.getUser();
     this.user = userData.user;
 
-    // Get parent kids from localstorage
+    // Get parent learners
     this.authService.getParentChildren(this.user.id).subscribe({
       next: (res: any) => {
         this.children = res.data.learners;
@@ -35,8 +35,6 @@ export class ChildrenComponent implements OnInit {
       },
     });
   }
-
-  // isUserOnboarded
 
   // Open Add Child Modal
   openAddLearnerModal() {

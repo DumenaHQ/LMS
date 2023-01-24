@@ -1,6 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProgramsService } from 'src/app/services/programs.service';
 import { SchoolService } from 'src/app/services/school.service';
@@ -26,12 +24,11 @@ export class AddProgramLearnersComponent implements OnInit {
   messageval: string;
   billingId: string = 'single';
   selectedFileName: any;
-  userForm: any = FormGroup;
-  isFormSubmitted: boolean = false;
   file: File;
   arrayBuffer: any;
   learnersList: any;
-  students: any;
+  schoolLearners: any;
+  parentLearners: any;
   dataLoading: boolean = true;
   studentName: any;
   selectedLearners: any[] = [];
@@ -41,8 +38,6 @@ export class AddProgramLearnersComponent implements OnInit {
     private authService: AuthService,
     private programsService: ProgramsService,
     private schoolService: SchoolService,
-    private router: Router,
-    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -54,7 +49,19 @@ export class AddProgramLearnersComponent implements OnInit {
     if(this.user.role === 'school') {
       this.schoolService.getSchoolLearners(this.user.id).subscribe({
         next: (res: any) => {
-          this.students = res.data.students;
+          this.schoolLearners = res.data.students;
+        },
+        error: (e) => console.error(e),
+        complete: () => {
+          this.dataLoading = false;
+        },
+      });
+    } else {
+      // Get parent learners from localstorage
+      this.authService.getParentChildren(this.user.id).subscribe({
+        next: (res: any) => {
+          this.parentLearners = res.data.learners;
+          console.log(this.parentLearners);
         },
         error: (e) => console.error(e),
         complete: () => {
@@ -63,21 +70,6 @@ export class AddProgramLearnersComponent implements OnInit {
       });
     }
 
-    // Get download learners list 
-    // this.schoolService.getDownloadLearnersList(this.user.id)
-    // .subscribe({
-    //   next: (res: any) => {
-    //     let result = res;
-    //     console.log(result);
-    //   },
-    //   error: (e) => console.error(e),,
-    // });
-
-    // User form
-    this.userForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      username: ['', Validators.required],
-    });
   }
 
   // Tab change
@@ -85,8 +77,8 @@ export class AddProgramLearnersComponent implements OnInit {
     this.billingId = ids;
   }
 
-  // School Add Learner(s)
-  schoolAddLearners() {
+  // Add learners to program (select and single enrollment)
+  addLearnersToProgram() {
     // Set loading to true
     this.loading = true;
 
@@ -94,38 +86,6 @@ export class AddProgramLearnersComponent implements OnInit {
       learners: this.selectedLearners,
     };
 
-    this.addLearnersToProgram(payload)
-  }
-
-  // Parent Add Learner(s)
-  parentAddLearners() {
-    // Set loading to true
-    this.loading = true;
-
-    // Set submitted to true
-    this.isFormSubmitted = true;
-
-    // If Form is invalid
-    if (this.userForm.invalid) {
-      this.loading = false;
-
-      return;
-    }
-
-    let payload = {
-      learners: [
-        {
-          username: this.userForm.value.username, 
-          name: this.userForm.value.name
-        }
-      ]
-    };
-
-    this.addLearnersToProgram(payload)
-  }
-
-  // Add learners to program (select and single enrollment)
-  addLearnersToProgram(payload: any) {
     this.programsService
       .addLearnerToProgram(payload, this.programId)
       .subscribe({
@@ -148,9 +108,6 @@ export class AddProgramLearnersComponent implements OnInit {
 
           this.loading = false
         },
-        // complete: () => {
-        //   this.dataLoading = false;
-        // },
       });
   }
 
@@ -223,7 +180,7 @@ export class AddProgramLearnersComponent implements OnInit {
   // Search students
   search() {
     if (this.studentName != "") {
-      this.students = this.students.filter((res: any) => {
+      this.schoolLearners = this.schoolLearners.filter((res: any) => {
         return res.fullname.toLocaleLowerCase().match(this.studentName.toLocaleLowerCase());
       });
     } else if (this.studentName == "") {
@@ -245,7 +202,7 @@ export class AddProgramLearnersComponent implements OnInit {
         });
       }
       else {
-        this.selectedLearners.push({username: student.username, name: student.fullname});
+        this.selectedLearners.push({username: student.username, user_id: student.id});
       }
       
   }
