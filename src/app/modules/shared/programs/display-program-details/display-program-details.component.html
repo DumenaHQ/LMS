@@ -77,7 +77,7 @@
           <p class="body-3-regular">Courses</p>
         </li>
         <li>
-          <p class="body-2-bold">{{ program?.sponsors?.length }}</p>
+          <p class="body-2-bold">{{ program?.schools?.length }}</p>
           <p class="body-3-regular">Schools</p>
         </li>
       </ul>
@@ -145,16 +145,16 @@
 
       <ng-container *ngIf="contentId === 'schools'">
         <div class="table-container" style="overflow-x: auto">
-          <ng-container *ngIf="programSchools?.length > 0">
+          <ng-container *ngIf="program?.schools?.length > 0">
             <table>
               <tr class="table-header">
                 <th>Name</th>
                 <th>Number of students</th>
               </tr>
               <ng-container>
-                <tr class="table-body" *ngFor="let school of programSchools">
-                  <td>{{ school.name }}</td>
-                  <td>{{school.student_count}}</td>
+                <tr class="table-body" *ngFor="let school of program?.schools">
+                  <td>{{ school?.name }}</td>
+                  <td>{{school?.student_count}}</td>
                 </tr>
               </ng-container>
               <ng-template>
@@ -163,24 +163,22 @@
             </table>
           </ng-container>
 
-          <p style="text-align: center" *ngIf="programSchools?.length === 0">
-            No school available
+          <p style="text-align: center" *ngIf="program?.sponsors?.length === 0">
+            No School available
           </p>
         </div>
       </ng-container>
 
-      <ng-container *ngIf="contentId === 'learners'">
-        <div class="table-container" style="overflow-x: auto">
-          <ng-container *ngIf="programLearners?.length > 0">
+      <!-- <ng-container *ngIf="contentId === 'learners'">
+        <div class="table-container" style="overflow-x: auto" *ngFor="let sponsor of program?.sponsors">
+          <ng-container *ngIf="sponsor.learners?.length > 0 && sponsor?.user_id === user.id">
             <table>
               <tr class="table-header">
-                <!-- <th>Name</th> -->
                 <th>Username</th>
                 <th>Date added</th>
               </tr>
               <ng-container>
-                <tr class="table-body" *ngFor="let learner of programLearners">
-                  <!-- <td>{{ learner.name }}</td> -->
+                <tr class="table-body" *ngFor="let learner of sponsor?.learners">
                   <td>{{learner.username}}</td>
                   <td>{{learner.date_added | date: "mediumDate"}}</td>
                 </tr>
@@ -191,11 +189,11 @@
             </table>
           </ng-container>
 
-          <p style="text-align: center" *ngIf="programSchools?.length === 0">
+          <p style="text-align: center" *ngIf="sponsor.learners?.length === 0 && sponsor?.user_id === user.id">
             No Learner available
           </p>
         </div>
-      </ng-container>
+      </ng-container> -->
     </div>
   </div>
 </section>

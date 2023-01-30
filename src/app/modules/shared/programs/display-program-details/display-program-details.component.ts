@@ -17,9 +17,6 @@ export class DisplayProgramDetailsComponent implements OnInit {
   program: any;
   programId: string;
   programCourses: any;
-  programSchools: any;
-  programLearners: any;
-  hasJoined: any;
   isAlert: boolean = false;
   alertMessage: string;
   alertColor: string
@@ -28,7 +25,6 @@ export class DisplayProgramDetailsComponent implements OnInit {
   constructor(
     private programsService: ProgramsService,
     private activatedRoute: ActivatedRoute, 
-    private schoolServvice: SchoolService,
     private authService: AuthService
   ) {}
 
@@ -56,15 +52,6 @@ export class DisplayProgramDetailsComponent implements OnInit {
         //   this.dataLoading = false;
         // },
       });
-
-    // Get Has joined 
-    this.getHasJoinedValue()
-
-    // Get program schools
-    this.getProgramSchools()
-
-    // Get program learners
-    this.getProgramLearners()
 
     // Get program courses
     this.getProgramCourses()
@@ -101,49 +88,6 @@ export class DisplayProgramDetailsComponent implements OnInit {
             this.ngOnInit()
           }, 3000);
         }
-      },
-      error: (e) => console.error(e),
-    });
-  }
-
-  // Get has joined
-  getHasJoinedValue() {
-    this.programsService
-      .getAllPrograms()
-      .subscribe({
-        next: (res: any) => {
-          let result = res.data.programs; 
-          result.forEach((p: any) => {
-            if(p.id === this.currentProgramId.programId) {
-              this.hasJoined = p.hasJoined
-            }
-          });
-        },
-        error: (e) => console.error(e),
-      });
-  }
-
-  // Get program schools
-  getProgramSchools() {
-    // Get programs schools
-    this.programsService
-    .getProgramSchools(this.currentProgramId.programId)
-    .subscribe({
-      next: (res: any) => {
-        this.programSchools = res.data.schools;
-      },
-      error: (e) => console.error(e),
-    });
-  }
-
-  // Get program learners
-  getProgramLearners() {
-    this.programsService
-    .getProgramLearners(this.currentProgramId.programId)
-    .subscribe({
-      next: (res: any) => {
-        this.programLearners = res.data.learners;
-        
       },
       error: (e) => console.error(e),
     });

@@ -38,7 +38,7 @@
           src="../../../../../../assets/img/program-thumbnail-patterns.svg"
           alt="image"
           class="program_card_item_image clickable"
-          (click)="displayProgram(program?._id)"
+          (click)="displayProgram(program?.id)"
         />
 
         <div class="program_card_item_details">
@@ -48,7 +48,7 @@
                 <h5
                   class="title clickable"
                   [title]="program?.name"
-                  (click)="displayProgram(program?._id)"
+                  (click)="displayProgram(program?.id)"
                 >
                   {{
                     program?.name.length > 20
@@ -61,10 +61,10 @@
                 </p>
               </div>
               <ng-container *ngIf="program?.hasJoined === false">
-                  <button class="btn prim_btn" *ngIf="user.role === 'parent'"  (click)="addParentToProgram(program?._id)">
+                  <button class="btn prim_btn" *ngIf="user.role === 'parent'"  (click)="addParentToProgram(program?.id)">
                     Join
                   </button>
-                  <button class="btn prim_btn" *ngIf="user.role === 'school'"  (click)="addSchoolToProgram(program?._id)">
+                  <button class="btn prim_btn" *ngIf="user.role === 'school'"  (click)="addSchoolToProgram(program?.id)">
                     Join
                   </button>
               </ng-container>
