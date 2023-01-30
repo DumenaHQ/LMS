@@ -152,7 +152,7 @@ export class ParentEnrollLearnersComponent implements OnInit {
           this.showAlertPopup('Kindly login again', 'error')
           setTimeout(() => {
             this.router.navigate(['/login'])
-          }, 6000);
+          }, 9000);
         } else {
           this.errorMessage = error.error.message
         }
