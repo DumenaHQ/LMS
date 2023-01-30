@@ -142,10 +142,20 @@ export class ParentEnrollLearnersComponent implements OnInit {
       (error: any) => {
         console.log(error);
         // Show error message
-        error.error.error.code == 400
-          ? (this.errorMessage = error.error.error.errors[0].message)
-          : (this.errorMessage = error.error.message);
-        this.showError = true;
+        // error.error.error.code == 400
+        //   ? (this.errorMessage = error.error.error.errors[0].message)
+        //   : (this.errorMessage = error.error.message);
+        if(error.error.error.code == 400) {
+          this.errorMessage = error.error.error.errors[0].message
+          this.showError = true;
+        } else if( error.error.error.code == 401) {
+          this.showAlertPopup('Kindly login again', 'error')
+          setTimeout(() => {
+            this.router.navigate(['/login'])
+          }, 6000);
+        } else {
+          this.errorMessage = error.error.message
+        }
         // Set loading to false
         this.loading = false;
       }
