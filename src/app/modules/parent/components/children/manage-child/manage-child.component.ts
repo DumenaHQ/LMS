@@ -30,7 +30,7 @@ export class ManageChildComponent implements OnInit {
     let userData = this.authService.getUser();
     this.user = userData.user;
 
-    // Get parent child from localstorage
+    // Get parent child
     this.authService.getParentChildren(this.user.id).subscribe((res: any) => {
       const result = res.data.learners;
       result.forEach((element: any) => {

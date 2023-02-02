@@ -1,3 +1,10 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
+></app-alert-popup>
+
 <section class="ds-head dis-flex">
   <h2 class="ds-head_title clickable" routerLink="/parent/payment">Payments</h2>
   <i class="bx bx-chevron-right icon"></i>
@@ -19,13 +26,13 @@
           <ng-container>
             <tr
               class="table-body"
-              *ngFor="let i of orders; let j = index"
+              *ngFor="let plan of plans; let i = index"
             >
-              <td>{{ i.name | titlecase }}</td>
-              <td>{{ i.slug.split("-")[0] | titlecase }}</td>
+              <td>{{ plan.name | titlecase }}</td>
+              <td>{{ plan.slug.split("-")[0] | titlecase }}</td>
               <td>
-                {{ i.amount | number }}/{{
-                  i.billing_id == "monthly" ? "month" : "year"
+                {{ plan.amount | number }}/{{
+                  plan.billing_id == "monthly" ? "month" : "year"
                 }}
               </td>
               <td>
@@ -33,7 +40,7 @@
                   class="bx bx-x clickable"
                   style="color: #e92c2c; font-size: 20px"
                   title="Remove"
-                  (click)="removeItemFromCart(j)"
+                  (click)="removeItemFromLocalStorage(plan)"
                 ></i>
               </td>
             </tr>

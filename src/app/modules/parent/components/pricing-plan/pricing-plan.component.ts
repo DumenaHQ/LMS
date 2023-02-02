@@ -132,7 +132,7 @@ export class PricingPlanComponent implements OnInit {
     };
 
     // console.log(payload);
-    this.orderService.addOrderToLocalStorage(payload);
+    this.orderService.addToCart(payload);
 
     // Show Alert popup
     this.showAlertPopup('Added successfully', 'success');

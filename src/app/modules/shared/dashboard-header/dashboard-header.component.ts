@@ -13,7 +13,7 @@ export class DashboardHeaderComponent implements OnInit {
   showNotifi: boolean = false;
   user: any;
   userNamePath: any;
-  allOrdersFromLS: any;
+  plans: any;
 
   constructor(
     private authService: AuthService,
@@ -28,8 +28,8 @@ export class DashboardHeaderComponent implements OnInit {
     this.userNamePath = this.user.fullname.replace(/\s/g, '-').toLowerCase();
     
 
-    // Get Order from localstorge
-    this.allOrdersFromLS = this.orderService.getOrderFromLocalStorage();
+    // Get products from cart
+    this.plans = this.orderService.loadCart()
   }
 
   // Open Menu
