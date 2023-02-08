@@ -62,25 +62,30 @@
               </div>
               <ng-container *ngIf="program?.hasJoined === false">
                   <button class="btn prim_btn" *ngIf="user.role === 'parent'"  (click)="addParentToProgram(program?.id)">
-                    Join
+                    Follow
                   </button>
                   <button class="btn prim_btn" *ngIf="user.role === 'school'"  (click)="addSchoolToProgram(program?.id)">
                     Join
                   </button>
               </ng-container>
               <button class="btn grey_btn" *ngIf="program?.hasJoined === true">
-                Joined
+                <span *ngIf="user.role === 'parent'">Followed</span>
+                <span *ngIf="user.role === 'school'">Joined</span>
               </button>
             </div>
             <ul class="dis-flex">
               <li>
-                <p class="body-2-bold">{{ program?.courses?.length }}</p>
+                <p class="body-2-bold">{{ program?.course_count }}</p>
                 <p class="body-3-regular">Courses</p>
               </li>
-              <!-- <li>
-                <p class="body-2-bold">{{ program?.schools?.length }}</p>
+              <li>
+                <p class="body-2-bold">{{ program?.school_count }}</p>
                 <p class="body-3-regular">Schools</p>
-              </li> -->
+              </li>
+              <li>
+                <p class="body-2-bold">{{ program?.learner_count }}</p>
+                <p class="body-3-regular">Learners</p>
+              </li>
             </ul>
           </div>
 

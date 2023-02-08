@@ -143,7 +143,7 @@
     <div class="course-details_body_content">
       <ng-container *ngIf="contentId === 'content'">
         <div class="courses">
-          <p class="body-3-medium">{{ programCourses?.length }} Course(s)</p>
+          <p class="body-3-medium">{{ program?.courses?.length }} Course(s)</p>
         </div>
       </ng-container>
 
@@ -161,9 +161,9 @@
                   <td>{{school?.student_count}}</td>
                 </tr>
               </ng-container>
-              <ng-template>
+              <!-- <ng-template>
                 <p style="text-align: center">Empty School list!</p>
-              </ng-template>
+              </ng-template> -->
             </table>
           </ng-container>
 
@@ -173,31 +173,35 @@
         </div>
       </ng-container>
 
-      <!-- <ng-container *ngIf="contentId === 'learners'">
-        <div class="table-container" style="overflow-x: auto" *ngFor="let sponsor of program?.sponsors">
-          <ng-container *ngIf="sponsor.learners?.length > 0 && sponsor?.user_id === user.id">
+      <ng-container *ngIf="contentId === 'learners'">
+        <div class="table-container" style="overflow-x: auto">
+          <ng-container *ngIf="program?.learners?.length > 0">
             <table>
               <tr class="table-header">
-                <th>Username</th>
-                <th>Date added</th>
+                <th>Full Name</th>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Grade</th>
               </tr>
               <ng-container>
-                <tr class="table-body" *ngFor="let learner of sponsor?.learners">
+                <tr class="table-body" *ngFor="let learner of program?.learners">
+                  <td>{{learner.fullname}}</td>
                   <td>{{learner.username}}</td>
-                  <td>{{learner.date_added | date: "mediumDate"}}</td>
+                  <td>{{learner.email}}</td>
+                  <td>{{learner.grade}}</td>
                 </tr>
               </ng-container>
-              <ng-template>
+              <!-- <ng-template>
                 <p style="text-align: center">Empty School list!</p>
-              </ng-template>
+              </ng-template> -->
             </table>
           </ng-container>
 
-          <p style="text-align: center" *ngIf="sponsor.learners?.length === 0 && sponsor?.user_id === user.id">
+          <p style="text-align: center" *ngIf="program.learners?.length === 0">
             No Learner available
           </p>
         </div>
-      </ng-container> -->
+      </ng-container>
     </div>
   </div>
 </section>
