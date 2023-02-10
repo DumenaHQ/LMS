@@ -22,7 +22,7 @@ const routes: Routes = [
         },
       },
       {
-        path: 'course-details/:id',
+        path: 'course-details/:id', // Change this to course/:id 
         component: CourseDetailsComponent,
         data: {
           title: 'Course',
@@ -38,13 +38,21 @@ const routes: Routes = [
         },
       },
       {
-        path: 'create-course/add-lesson',
+        path: 'create-course/:courseId/add-module',
         component: AddLessonComponent,
         data: {
           title: 'Add Lesson',
           description: 'Description Meta Tag Content',
         },
       },
+      // {
+      //   path: 'create-course/add-lesson',
+      //   component: AddLessonComponent,
+      //   data: {
+      //     title: 'Add Lesson',
+      //     description: 'Description Meta Tag Content',
+      //   },
+      // },
       {
         path: 'create-course/quiz',
         component: AddQuizComponent,

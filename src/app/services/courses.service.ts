@@ -32,10 +32,19 @@ export class CoursesService {
     );
   }
 
-  // Add Lesson to Course
-  addLessonToCourse(courseId: any, data: any) {
+  // Add Module
+  addModule(courseId: string, data: any) {
     return this.http.post(
-      `${this.baseUrl}courses/${courseId}/lessons`,
+      `${this.baseUrl}courses/${courseId}/modules`,
+      data,
+      this.getHttpOptions()
+    );
+  }
+
+  // Add Lesson to Module
+  addLessonToModule(courseId: string, moduleId: string, data: any) {
+    return this.http.post(
+      `${this.baseUrl}courses/${courseId}/modules/${moduleId}/lessons`,
       data,
       this.getHttpOptionsForMultipart()
     );

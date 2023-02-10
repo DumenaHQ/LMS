@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { CoursesService } from 'src/app/services/courses.service';
 
 @Component({
@@ -12,43 +13,79 @@ export class AddLessonComponent implements OnInit {
   previewImage: any;
   showPreviewImage: boolean = false;
   loading: boolean = false;
-  errorMessage: string = '';
-  showError: boolean = false;
+  isAlert: boolean = false;
+  alertMessage: string;
+  alertColor: string;
+  moduleForm: any = FormGroup;
+  lessonForm: any = FormGroup;
+  // isModuleLeson: boolean = false;
+  moduleId: string
+  currentCourseId: any;
+  dataLoading: boolean = true;
+  modules: any;
 
   constructor(
     private coursesService: CoursesService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private activatedRoute: ActivatedRoute, 
   ) {}
 
-  // Course Form
-  courseForm = this.formBuilder.group({
-    title: ['', Validators.required],
-    further_reading: ['', Validators.required],
-    class_activity: ['', Validators.required],
-    code_example: ['', Validators.required],
-    instructor: ['', Validators.required],
-    lesson_video: ['', Validators.required],
-  });
-
   ngOnInit(): void {
-    this.courseForm = this.formBuilder.group({
-      title: ['Introducton to JavaScript Lesson one', Validators.required],
-      further_reading: ['Read up this', Validators.required],
-      class_activity: ['Do this exercise', Validators.required],
-      code_example: ['Some code', Validators.required],
-      instructor: ['Khing dave', Validators.required],
+
+     // Get Current Program
+     this.currentCourseId = this.activatedRoute.snapshot.params;
+
+    // Module Form
+    this.moduleForm = this.formBuilder.group({
+      title: ['', Validators.required],
+    });
+
+    // Lesson Form
+    this.lessonForm = this.formBuilder.group({
+      title: ['', Validators.required],
+      further_reading: ['', Validators.required],
+      class_activity: ['', Validators.required],
+      code_example: ['', Validators.required],
+      instructor: ['', Validators.required],
       lesson_video: ['', Validators.required],
+    });
+
+    // Fetch all course modules
+    this.coursesService.getCourse(this.currentCourseId.courseId).subscribe({
+      next: (res: any) => {
+        this.modules = res.data.course.modules;
+        console.log(this.modules);
+        
+      
+      },
+      error: (e) => console.error(e),
+      complete: () => {
+        this.dataLoading = false;
+      },
     });
   }
 
+  // Add Module
+  addModule() {
+    this.coursesService
+    .addModule(this.currentCourseId.courseId, this.moduleForm.value)
+    .subscribe((res: any) => {
+      console.log(res);
+      if(res.status === true) {
+        this.showAlertPopup(res.message, 'success')
+        // this.isModuleLeson = true
+        this.moduleId = res.data.module.id
+      }
+    });
+  }
   // Add Lesson
   addLesson() {
     var formData: any = new FormData();
-    formData.append('title', this.courseForm.value.title);
-    formData.append('further_reading', this.courseForm.value.further_reading);
-    formData.append('class_activity', this.courseForm.value.class_activity);
-    formData.append('code_example', this.courseForm.value.code_example);
-    formData.append('instructor', this.courseForm.value.instructor);
+    formData.append('title', this.lessonForm.value.title);
+    formData.append('further_reading', this.lessonForm.value.further_reading);
+    formData.append('class_activity', this.lessonForm.value.class_activity);
+    formData.append('code_example', this.lessonForm.value.code_example);
+    formData.append('instructor', this.lessonForm.value.instructor);
     // formData.append('lesson_video', '');
 
     for (var pair of formData.entries()) {
@@ -56,9 +93,15 @@ export class AddLessonComponent implements OnInit {
     }
 
     this.coursesService
-      .addLessonToCourse('6325242af131b0a5f3e7c4ae', formData)
+      .addLessonToModule(this.currentCourseId.courseId, this.moduleId, formData)
       .subscribe((res: any) => {
         console.log(res);
+        if(res.status === true) {
+          this.showAlertPopup(res.message, 'success')
+          setTimeout(() => {
+            this.ngOnInit()
+          }, 3000);
+        }
       });
   }
 
@@ -79,5 +122,19 @@ export class AddLessonComponent implements OnInit {
         }
       };
     }
+  }
+
+  // Show alert
+  showAlertPopup(message: string, color: string) {
+    // Set message
+    this.alertMessage = message;
+    // Set color
+    this.alertColor = color;
+    // Show Alert
+    this.isAlert = true;
+    // Hide Alert
+    setTimeout(() => {
+      this.isAlert = false;
+    }, 3000);
   }
 }

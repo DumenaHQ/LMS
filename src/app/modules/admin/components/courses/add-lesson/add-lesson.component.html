@@ -1,13 +1,47 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
+></app-alert-popup>
+
 <section class="set-info" app>
   <div class="set-info_header">
-    <!-- <h3 class="text-primary-color">Set the Course Information</h3>
-    <p>
+    <h3 class="text-primary-color">Course Module</h3>
+    <!-- <p>
       This information will be displayed to the learners before they start the
       course
     </p> -->
-    <button class="btn prim_btn" (click)="addLesson()">Save</button>
+    <!-- <button class="btn prim_btn" (click)="addLesson()">Save</button> -->
   </div>
-  <form [formGroup]="courseForm">
+  <!-- <div class="modules">
+    <div class="module_list dis-flex">
+      <div class="module_list_item" *ngFor="let module of modules">
+        <h5>{{module.title}}</h5>
+        <button class="btn sec_btn">Selet</button>
+      </div>
+    </div>
+  </div> -->
+  <!-- Module Form -->
+  <form [formGroup]="moduleForm" style="margin-bottom: 3rem;">
+    <div class="form_control">
+      <label for="title">Module Title</label>
+      <div class="form_control_field">
+        <input
+        type="text"
+          id="title"
+          placeholder="Type here"
+          formControlName="title"
+        />
+      </div>
+    </div>
+    <div class="form_control"></div>
+    <div class="form_btns">
+      <button class="btn prim_btn" (click)="addModule()">Save</button>
+    </div>
+  </form>
+  <!-- Lesson Form -->
+  <form [formGroup]="lessonForm">
     <div class="form_control">
       <label for="lesson_video">Lesson Video</label>
       <div class="">
@@ -44,7 +78,7 @@
       <label for="title">Lesson Title</label>
       <div class="form_control_field">
         <input
-          type="text"
+        type="text"
           id="title"
           placeholder="Type here"
           formControlName="title"
@@ -62,20 +96,20 @@
           placeholder="Type here"
           spellcheck="true"
           formControlName="further_reading"
-        ></textarea>
+          ></textarea>
       </div>
     </div>
     <div class="form_control">
       <label for="class_activity">Class Activity</label>
       <div class="form_control_field">
         <textarea
-          name=""
-          id="class_activity"
-          cols="30"
-          rows="8"
-          placeholder="Type here"
-          spellcheck="true"
-          formControlName="class_activity"
+        name=""
+        id="class_activity"
+        cols="30"
+        rows="8"
+        placeholder="Type here"
+        spellcheck="true"
+        formControlName="class_activity"
         ></textarea>
       </div>
     </div>
@@ -92,6 +126,9 @@
           formControlName="code_example"
         ></textarea>
       </div>
+    </div>
+    <div class="form_btns">
+      <button class="btn prim_btn" (click)="addLesson()">Save</button>
     </div>
   </form>
 </section>

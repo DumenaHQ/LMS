@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { CoursesService } from 'src/app/services/courses.service';
 
@@ -15,22 +16,19 @@ export class CreateCourseComponent implements OnInit {
   // @Output() showHeader: EventEmitter<any> = new EventEmitter();
 
   loading: boolean = false;
-  errorMessage: string = '';
-  showError: boolean = false;
+  isAlert: boolean = false;
+  alertMessage: string;
+  alertColor: string;
+  courseForm: any = FormGroup;
+  isTags: any;
+  isTagsList: boolean = false
+  tagsList: any[] = [];
 
   constructor(
     private coursesService: CoursesService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {}
-
-  // Course Form
-  courseForm = this.formBuilder.group({
-    title: ['', Validators.required],
-    description: ['', Validators.required],
-    tags: [[''], Validators.required],
-    difficulty_level: ['', Validators.required],
-    course_quadrant: ['', Validators.required],
-  });
 
   ngOnInit(): void {
     this.coursesService.getAllCourses().subscribe((res: any) => {
@@ -38,12 +36,30 @@ export class CreateCourseComponent implements OnInit {
     });
 
     this.courseForm = this.formBuilder.group({
-      title: ['Testing', Validators.required],
-      description: ['THis is testing', Validators.required],
-      tags: [['developer', 'tech'], Validators.required],
-      difficulty_level: ['Beginner', Validators.required],
-      course_quadrant: ['Developer', Validators.required],
+      title: ['', Validators.required],
+      description: ['', Validators.required],
+      tags: ['', Validators.required],
+      difficulty_level: ['', Validators.required],
+      course_quadrant: ['', Validators.required],
     });
+  }
+
+  // Add tags
+  addTag() {
+    // Show added tagsory(s)
+    if (this.courseForm.value.tags !== '') {
+      // Show added email(s)
+      this.isTagsList = true;
+      this.tagsList.push(this.courseForm.value.tags);
+    }
+    // Clear input field
+    this.courseForm.get('tags').setValue('');
+    
+  }
+  // Remove tagsory
+  removeTag(index: any) {
+    this.tagsList.splice(index, 1);
+    // this.ngOnInit()
   }
 
   // Sign Up
@@ -51,23 +67,25 @@ export class CreateCourseComponent implements OnInit {
     // Set loading to true
     this.loading = true;
 
-    let payroll = {
-      title: 'Basic JavaScript',
-      description: 'This course is about JavaScript Programming Language',
-      tags: ['developer', 'tech', 'coding'],
-      difficulty_level: 'Beginner',
-      course_quadrant: 'Developer',
+    let payload = {
+      title: this.courseForm.value.title,
+      description: this.courseForm.value.description,
+      tags: this.tagsList,
+      difficulty_level: this.courseForm.value.difficulty_level,
+      course_quadrant: this.courseForm.value.course_quadrant,
     };
 
-    console.log(this.courseForm.value);
+    console.log(payload);
     // Send users data
     this.coursesService.addCourse(this.courseForm.value).subscribe(
-      (res: any) => {
+        (res: any) => {
         console.log(res);
+        
+        this.showAlertPopup(res.message, 'success')
 
-        // Show error message
-        this.errorMessage = res.message;
-        this.showError = true;
+        setTimeout(() => {
+          this.router.navigate([`admin/courses/create-course/${res.data.course.id}/add-module`])
+        }, 3000);
 
         // Set loading to false
         this.loading = false;
@@ -76,8 +94,7 @@ export class CreateCourseComponent implements OnInit {
         console.log(error);
         // Show error message
         // this.errorMessage = error.error.error.errors[0].message
-        this.errorMessage = error.error.message;
-        this.showError = true;
+        this.showAlertPopup(error.error.message, 'error')
         // Set loading to false
         this.loading = false;
 
@@ -111,5 +128,19 @@ export class CreateCourseComponent implements OnInit {
         }
       };
     }
+  }
+
+  // Show alert
+  showAlertPopup(message: string, color: string) {
+    // Set message
+    this.alertMessage = message;
+    // Set color
+    this.alertColor = color;
+    // Show Alert
+    this.isAlert = true;
+    // Hide Alert
+    setTimeout(() => {
+      this.isAlert = false;
+    }, 3000);
   }
 }
