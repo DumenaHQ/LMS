@@ -47,7 +47,7 @@ export class AddLessonComponent implements OnInit {
       class_activity: ['', Validators.required],
       code_example: ['', Validators.required],
       instructor: ['', Validators.required],
-      lesson_video: ['', Validators.required],
+      // lesson_video: ['', Validators.required],
     });
 
     // Fetch all course modules
@@ -86,7 +86,7 @@ export class AddLessonComponent implements OnInit {
     formData.append('class_activity', this.lessonForm.value.class_activity);
     formData.append('code_example', this.lessonForm.value.code_example);
     formData.append('instructor', this.lessonForm.value.instructor);
-    // formData.append('lesson_video', '');
+    formData.append('lesson_video', '');
 
     for (var pair of formData.entries()) {
       console.log(pair[0] + ', ' + pair[1]);

@@ -2,10 +2,20 @@
   <h2 class="ds-head_title clickable" routerLink="/learner/library">Library</h2>
   <i class="bx bx-chevron-right icon"></i>
   <p class="clickable" [routerLink]="['/learner/library', course?.id]">
-    {{ course?.title | titlecase }}
+    {{
+      course?.title.length > 20
+        ? course?.title.slice(0, 20)  + "..." 
+        : course?.title | titlecase
+    }}
   </p>
   <i class="bx bx-chevron-right icon"></i>
-  <p>{{ currentCourseLesson?.title | titlecase }}</p>
+  <!-- <p>
+    {{
+      currentCourseLesson?.title.length > 20
+        ? currentCourseLesson?.title.slice(0, 20)  + "..." 
+        : currentCourseLesson?.title | titlecase
+    }}
+  </p> -->
 </section>
 
 <section class="">
@@ -18,7 +28,7 @@
         <div class="c-video">
           <video
             class="video"
-            [src]="currentCourseLesson?.video_url"
+            [src]="'currentCourseLesson?.video_url'"
             controls
             controlsList="nodownload"
             #videoPlayer
@@ -32,7 +42,7 @@
             </div>
           </div> -->
           <span class="play_icon" (click)="startVideo()" *ngIf="!videoClicked">
-            <img src="../../../assets/img/svg/white-play.svg" alt="" />
+            <img src="../../../../../assets/img/svg/white-play.svg" alt="" />
           </span>
         </div>
         <!-- <iframe
@@ -81,10 +91,10 @@
       <div class="course-content">
         <div class="course-content_header ds-sect-header">
           <h5>Course Content</h5>
-          <p class="total-length">Lessons ({{ course?.lessons.length }})</p>
+          <p class="total-length">Lessons ({{ course?.lesson_count }})</p>
         </div>
         <div class="course-content_list">
-          <div
+          <!-- <div
             class="course-content_list_item"
             *ngFor="
               let childItem of course?.lessons;
@@ -102,18 +112,63 @@
             </p>
             <span class="dis-flex length">
               <img
-                src="../../../assets/img/library/video-play-black.svg"
+                src="../../../../assets/img/library/video-play-black.svg"
                 alt=""
               />
               <p class="body-3-regular">{{ childItem.duration }}</p>
             </span>
+          </div> -->
+          <div
+            class="course-content_list_item"
+            *ngFor="let module of modules; let i = index"
+          >
+          <label [for]="'checkbox-' + i" class="course-content_list_item_module dis-flex clickable">
+            <div class="left dis-flex">
+              <span class="numb">{{module.id}}</span>
+              <div class="">
+                <h5 class="heading">{{module.title}}</h5>
+                <span class="time dis-flex">
+                  <img
+                    src="../../../../../assets/img/library/clock.svg"
+                    alt=""
+                  />
+                  <small>0:0:0</small>
+                </span>
+              </div>
+            </div>
+            <span class="right">
+              <i class="bx bx-chevron-down icon chevron-icon"></i>
+            </span>
+          </label>
+          <!-- For accordion dropdown -->
+          <input type="checkbox" [id]="'checkbox-' + i" style="display: none;">
+
+          <div class="course-content_list_item_lessons accordion-body">
+            <div class="course-content_list_item_lessons_item dis-flex clickable" *ngFor="let lesson of module.lessons">
+              <div class="left dis-flex">
+                <img
+                  src="../../../../../assets/img/library/video-play-black.svg"
+                  alt=""
+                  class="icon"
+                />
+                <p
+                  class="body-1-medium title"
+                >
+                {{lesson.title}}
+                </p>
+              </div>
+              <span class="right">
+                <p class="body-3-regular">00:00</p>
+              </span>
+            </div>
+          </div>
           </div>
         </div>
         <!-- <div class="course-content_tutor">
           <h5>Course Content</h5>
           <div class="course-content_tutor_profile">
             <img
-              src="../../../assets/img/library/course-tutor.svg"
+              src="../../../../assets/img/library/course-tutor.svg"
               alt="Course Tutor"
               class="image"
             />

@@ -1,16 +1,22 @@
 <section class="ds-head dis-flex">
   <h2 class="ds-head_title clickable" routerLink="/learner/library">Library</h2>
   <i class="bx bx-chevron-right icon"></i>
-  <p class="clickable">{{ currentCourse?.title | titlecase }}</p>
+  <p class="clickable">
+    {{
+      course?.title.length > 20
+        ? course?.title.slice(0, 20)  + "..." 
+        : course?.title | titlecase
+    }}
+  </p>
 </section>
 
 <section class="course-info">
   <div class="dis-flex course-info_header">
-    <h3 class="course-title">{{ currentCourse?.title }}</h3>
+    <h3 class="course-title">{{ course?.title }}</h3>
     <button
       class="btn prim_btn"
       (click)="startCourse()"
-      [disabled]="currentCourse?.lessons?.length === 0"
+      [disabled]="course?.lessons?.length === 0"
     >
       Start Course
     </button>
@@ -22,19 +28,19 @@
           <h5 class="">About the course</h5>
         </div>
         <p class="course-info_about_descp">
-          {{ currentCourse?.description }}
+          {{ course?.description }}
         </p>
         <div class="course-info_about_content">
-          <h5 class="course-info_about_content_title">Lessons</h5>
+          <h5 class="course-info_about_content_title">Course Modules</h5>
           <ol class="course-info_about_content_list">
             <li
               *ngFor="
-                let childItem of currentCourse?.lessons;
-                let indexOfelement = index
+                let module of course?.modules;
+                let modulesIndex = index
               "
-              [routerLink]="childItem?.id"
+              [routerLink]="module?.id"
             >
-              <b>{{ indexOfelement + 1 }}.</b> {{ childItem.title }}
+              <b>{{ modulesIndex + 1 }}.</b> {{ module.title }}
             </li>
           </ol>
         </div>

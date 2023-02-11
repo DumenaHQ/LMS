@@ -22,7 +22,13 @@ export class CoursesService {
       this.getHttpOptions()
     );
   }
-
+  // Get Module lessons for a course
+  getModuleLessons(courseId: string, moduleId: string) {
+    return this.http.get(
+      `${this.baseUrl}courses/${courseId}/modules/${moduleId}/lessons`,
+      this.getHttpOptions()
+    );
+  }
   // Add Course
   addCourse(data: any) {
     return this.http.post(

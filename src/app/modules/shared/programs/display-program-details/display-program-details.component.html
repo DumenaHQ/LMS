@@ -180,15 +180,15 @@
               <tr class="table-header">
                 <th>Full Name</th>
                 <th>User Name</th>
-                <th>Email</th>
-                <th>Grade</th>
+                <th *ngIf="user?.role === 'school'">Email</th>
+                <th *ngIf="user?.role === 'school'">Grade</th>
               </tr>
               <ng-container>
                 <tr class="table-body" *ngFor="let learner of program?.learners">
                   <td>{{learner.fullname}}</td>
                   <td>{{learner.username}}</td>
-                  <td>{{learner.email}}</td>
-                  <td>{{learner.grade}}</td>
+                  <td *ngIf="user?.role === 'school'">{{learner.email}}</td>
+                  <td *ngIf="user?.role === 'school'">{{learner.grade}}</td>
                 </tr>
               </ng-container>
               <!-- <ng-template>
