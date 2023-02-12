@@ -10,7 +10,8 @@ import { CoursesService } from 'src/app/services/courses.service';
 })
 export class AddCourseModuleLessonComponent implements OnInit {
 
-  selectedFile: File;
+  selectedFileName: string;
+  file: File;
   previewImage: any;
   showPreviewImage: boolean = false;
   loading: boolean = false;
@@ -44,14 +45,14 @@ export class AddCourseModuleLessonComponent implements OnInit {
   }
 
   // Add Lesson
-  addLesson() {
+  addAndCloseLesson() {
     var formData: any = new FormData();
     formData.append('title', this.lessonForm.value.title);
     formData.append('further_reading', this.lessonForm.value.further_reading);
     formData.append('class_activity', this.lessonForm.value.class_activity);
     formData.append('code_example', this.lessonForm.value.code_example);
     formData.append('instructor', 'instructor id');
-    formData.append('lesson_video', '');
+    formData.append('lesson_video', this.selectedFileName);
 
     for (var pair of formData.entries()) {
       console.log(pair[0] + ', ' + pair[1]);
@@ -70,23 +71,57 @@ export class AddCourseModuleLessonComponent implements OnInit {
       });
   }
 
+  // Add Lesson
+  addAndNewLesson() {
+    var formData: any = new FormData();
+    formData.append('title', this.lessonForm.value.title);
+    formData.append('further_reading', this.lessonForm.value.further_reading);
+    formData.append('class_activity', this.lessonForm.value.class_activity);
+    formData.append('code_example', this.lessonForm.value.code_example);
+    formData.append('instructor', 'instructor id');
+    formData.append('lesson_video', this.selectedFileName);
+
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ', ' + pair[1]);
+    }
+
+    this.coursesService
+      .addLessonToModule(this.currentModule.courseId, this.currentModule.moduleId, formData)
+      .subscribe((res: any) => {
+        console.log(res);
+        if(res.status === true) {
+          this.showAlertPopup(res.message, 'success')
+          this.lessonForm.reset()
+          this.selectedFileName = ''
+        }
+      });
+  } 
+
   // Upload File
   uploadFile(event: any) {
     // Preview File Selected
-    this.selectedFile = event[0];
+    // this.selectedFile = event[0];
 
-    if (this.selectedFile) {
-      let reader = new FileReader();
-      reader.readAsDataURL(this.selectedFile);
-      reader.onload = (e: any) => {
-        this.previewImage = e.target.result;
-        if (this.previewImage !== '') {
-          this.showPreviewImage = true;
-        } else {
-          this.showPreviewImage = false;
-        }
-      };
-    }
+    
+    this.file = event.target.files[0];
+    // Set file name
+    this.selectedFileName = this.file.name;
+
+    console.log(this.selectedFileName);
+    
+    // if (this.selectedFile) {
+    //   let reader = new FileReader();
+    //   reader.readAsDataURL(this.selectedFile);
+    //   reader.onload = (e: any) => {
+    //     this.previewImage = e.target.result;
+        
+    //     if (this.previewImage !== '') {
+    //       this.showPreviewImage = true;
+    //     } else {
+    //       this.showPreviewImage = false;
+    //     }
+    //   };
+    // }
   }
 
   // Show alert

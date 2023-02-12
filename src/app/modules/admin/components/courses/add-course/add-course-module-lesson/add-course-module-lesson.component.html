@@ -27,7 +27,7 @@
                     id="lesson_video"
                     #fileInput
                     hidden
-                    (change)="uploadFile($any($event).target.files)"
+                    (change)="uploadFile($event)"
                     />
                     <img
                     [src]="
@@ -41,7 +41,8 @@
                     Drag your image here or
                     <span class="text-primary-color">browse</span>
                     </p>
-                    <p class="body-3-regular">Max file size 4MB</p>
+                    <!-- <p class="body-3-regular">Max file size 4MB</p> -->
+                    <p class="body-3-regular">{{ selectedFileName }}</p>
                 </div>
                 </div>
             </div>
@@ -98,8 +99,9 @@
                 ></textarea>
                 </div>
             </div>
-            <div class="form_btns">
-                <button class="btn prim_btn" (click)="addLesson()">Save</button>
+            <div class="form_btns dis-flex">
+                <button class="btn prim_btn" (click)="addAndCloseLesson()">Save And Close</button>
+                <button class="btn sec_btn" (click)="addAndNewLesson()">Save And New</button>
             </div>
         </form>
     </div>
