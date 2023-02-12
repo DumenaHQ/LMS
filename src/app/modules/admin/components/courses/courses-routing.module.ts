@@ -23,7 +23,7 @@ const routes: Routes = [
         },
       },
       {
-        path: ':id/details',
+        path: ':courseId/details',
         component: CourseDetailsComponent,
         data: {
           title: 'Course',
