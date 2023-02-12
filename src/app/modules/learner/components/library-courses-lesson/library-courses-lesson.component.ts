@@ -51,7 +51,8 @@ export class LibraryCoursesLessonComponent implements OnInit {
       ]
     },
   ]
-  modules2: any;
+  moduleLessons: any;
+  isModuleLessons: boolean = false;
 
   // items: any[]
 
@@ -75,16 +76,6 @@ export class LibraryCoursesLessonComponent implements OnInit {
         
       });
 
-    // Get Module lessons
-    this.coursesService
-      .getModuleLessons(this.currentCourseId.courseId, this.moduleId)
-      .subscribe((res: any) => {
-        // Get course
-        this.modules2 = res.data.course;
-        console.log(res);
-        
-      });
-
       // this.items = [
       //   { header: 'Header 1', body: 'Body 1' },
       //   { header: 'Header 2', body: 'Body 2' },
@@ -94,6 +85,22 @@ export class LibraryCoursesLessonComponent implements OnInit {
       // this.items.forEach(item => {
       //   item.isOpen = false;
       // });
+  }
+
+  // Get Module lessons
+  getModuleLessons(moduleId: string) {
+    this.coursesService
+      .getModuleLessons(this.currentCourseId.courseId, moduleId)
+      .subscribe((res: any) => {
+        // Get course
+        this.moduleLessons = res.data.module;
+        console.log(res);
+        if(res.status === true) {
+          this.isModuleLessons = true
+        }
+        
+        
+      });
   }
 
   startVideo(): void {

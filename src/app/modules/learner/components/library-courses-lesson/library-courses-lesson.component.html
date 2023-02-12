@@ -120,32 +120,38 @@
           </div> -->
           <div
             class="course-content_list_item"
-            *ngFor="let module of modules; let i = index"
+            *ngFor="let module of course?.modules; let moduleIndex = index"
           >
-          <label [for]="'checkbox-' + i" class="course-content_list_item_module dis-flex clickable">
+          <div class="course-content_list_item_module dis-flex clickable" (click)="getModuleLessons(module.id)">
             <div class="left dis-flex">
-              <span class="numb">{{module.id}}</span>
+              <span class="numb">{{moduleIndex + 1}}</span>
               <div class="">
-                <h5 class="heading">{{module.title}}</h5>
+                <h5 class="heading">
+                  {{
+                    module?.title.length > 15
+                      ? module?.title.slice(0, 15)  + "..." 
+                      : module?.title
+                  }}
+                </h5>
                 <span class="time dis-flex">
                   <img
                     src="../../../../../assets/img/library/clock.svg"
                     alt=""
                   />
-                  <small>0:0:0</small>
+                  <small>{{module.duration}}</small>
                 </span>
               </div>
             </div>
             <span class="right">
               <i class="bx bx-chevron-down icon chevron-icon"></i>
             </span>
-          </label>
+          </div>
           <!-- For accordion dropdown -->
-          <input type="checkbox" [id]="'checkbox-' + i" style="display: none;">
+          <!-- <input type="checkbox" [id]="'checkbox-' + moduleIndex" style="display: none;"> -->
 
-          <div class="course-content_list_item_lessons accordion-body">
-            <div class="course-content_list_item_lessons_item dis-flex clickable" *ngFor="let lesson of module.lessons">
-              <div class="left dis-flex">
+          <div class="course-content_list_item_lessons" *ngIf="isModuleLessons && moduleLessons.id === module.id">
+            <div class="course-content_list_item_lessons_item dis-flex clickable" *ngFor="let lesson of moduleLessons.lessons">
+              <div class="left dis-flex" [title]="lesson?.id">
                 <img
                   src="../../../../../assets/img/library/video-play-black.svg"
                   alt=""
@@ -154,8 +160,18 @@
                 <p
                   class="body-1-medium title"
                 >
-                {{lesson.title}}
+                <!-- {{
+                  lesson?.title.length > 15
+                    ? lesson?.title.slice(0, 15)  + "..." 
+                    : lesson?.title
+                }} -->
+                {{
+                  lesson?.id.length > 15
+                    ? lesson?.id.slice(0, 15)  + "..." 
+                    : lesson?.id
+                }}
                 </p>
+                <p>Hi</p>
               </div>
               <span class="right">
                 <p class="body-3-regular">00:00</p>

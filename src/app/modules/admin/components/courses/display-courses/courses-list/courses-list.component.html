@@ -10,7 +10,7 @@
     <tr
       class="table-body clickable"
       *ngFor="let i of allCourses"
-      routerLink="{{ i.id }}"
+      routerLink="{{ i.id + '/details' }}"
     >
       <td class="thumbnail">
         <img [src]="i.thumbnail" alt="" />

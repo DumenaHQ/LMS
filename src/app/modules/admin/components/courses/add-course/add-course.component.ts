@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
 import { CoursesService } from 'src/app/services/courses.service';
 
 @Component({
-  selector: 'app-create-course',
-  templateUrl: './create-course.component.html',
-  styleUrls: ['./create-course.component.scss'],
+  selector: 'app-add-course',
+  templateUrl: './add-course.component.html',
+  styleUrls: ['./add-course.component.scss']
 })
-export class CreateCourseComponent implements OnInit {
+export class AddCourseComponent implements OnInit {
+
   selectedFile: File;
   previewImage: any;
   showPreviewImage: boolean = false;
@@ -62,7 +62,7 @@ export class CreateCourseComponent implements OnInit {
     // this.ngOnInit()
   }
 
-  // Sign Up
+  // Add Course
   addCourse() {
     // Set loading to true
     this.loading = true;
@@ -75,7 +75,6 @@ export class CreateCourseComponent implements OnInit {
       course_quadrant: this.courseForm.value.course_quadrant,
     };
 
-    console.log(payload);
     // Send users data
     this.coursesService.addCourse(this.courseForm.value).subscribe(
         (res: any) => {
@@ -84,7 +83,7 @@ export class CreateCourseComponent implements OnInit {
         this.showAlertPopup(res.message, 'success')
 
         setTimeout(() => {
-          this.router.navigate([`admin/courses/create-course/${res.data.course.id}/add-module`])
+          this.router.navigate([`admin/courses/create-course/${res.data.course.id}/modules`])
         }, 3000);
 
         // Set loading to false
@@ -143,4 +142,5 @@ export class CreateCourseComponent implements OnInit {
       this.isAlert = false;
     }, 3000);
   }
+
 }

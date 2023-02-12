@@ -1,0 +1,107 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
+></app-alert-popup>
+
+<section class="ds-head">
+    <h2 class="ds-head_title">Add Module Lesson</h2>
+</section>
+
+<section class="lessons">
+    <div class="lessons_body">
+        <!-- Lesson Form -->
+        <form [formGroup]="lessonForm">
+            <div class="form_control">
+                <label for="lesson_video">Lesson Video</label>
+                <div class="">
+                <div
+                    class="form_control_field select-image clickable"
+                    (click)="fileInput.click()"
+                    appDragDrop
+                    (fileDropped)="uploadFile($event)"
+                >
+                    <input
+                    type="file"
+                    id="lesson_video"
+                    #fileInput
+                    hidden
+                    (change)="uploadFile($any($event).target.files)"
+                    />
+                    <img
+                    [src]="
+                        showPreviewImage
+                        ? previewImage
+                        : '../../../assets/img/select-Image.svg'
+                    "
+                    alt=""
+                    />
+                    <p class="body-3-regular">
+                    Drag your image here or
+                    <span class="text-primary-color">browse</span>
+                    </p>
+                    <p class="body-3-regular">Max file size 4MB</p>
+                </div>
+                </div>
+            </div>
+            <div class="form_control">
+                <label for="title">Lesson Title</label>
+                <div class="form_control_field">
+                <input
+                type="text"
+                    id="title"
+                    placeholder="Type here"
+                    formControlName="title"
+                />
+                </div>
+            </div>
+            <div class="form_control">
+                <label for="further_reading">Further Reading</label>
+                <div class="form_control_field">
+                <textarea
+                    name=""
+                    id="further_reading"
+                    cols="30"
+                    rows="5"
+                    placeholder="Type here"
+                    spellcheck="true"
+                    formControlName="further_reading"
+                    ></textarea>
+                </div>
+            </div>
+            <div class="form_control">
+                <label for="class_activity">Class Activity</label>
+                <div class="form_control_field">
+                <textarea
+                name=""
+                id="class_activity"
+                cols="30"
+                rows="8"
+                placeholder="Type here"
+                spellcheck="true"
+                formControlName="class_activity"
+                ></textarea>
+                </div>
+            </div>
+            <div class="form_control code_example">
+                <label for="code_example">Code Example</label>
+                <div class="form_control_field">
+                <textarea
+                    name=""
+                    id="code_example"
+                    cols="30"
+                    rows="8"
+                    placeholder="Type here"
+                    spellcheck="true"
+                    formControlName="code_example"
+                ></textarea>
+                </div>
+            </div>
+            <div class="form_btns">
+                <button class="btn prim_btn" (click)="addLesson()">Save</button>
+            </div>
+        </form>
+    </div>
+  
+</section>

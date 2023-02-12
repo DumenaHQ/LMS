@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AddLessonComponent } from './add-lesson/add-lesson.component';
 import { AddQuizQuestionComponent } from './add-quiz-question/add-quiz-question.component';
 import { AddQuizComponent } from './add-quiz/add-quiz.component';
-import { CourseDetailsComponent } from './course-details/course-details.component';
-import { CoursesOverviewComponent } from './courses-overview/courses-overview.component';
+import { CourseDetailsComponent } from './display-courses/course-details/course-details.component';
 import { CoursesComponent } from './courses.component';
-import { CreateCourseComponent } from './create-course/create-course.component';
+import { DisplayCoursesComponent } from './display-courses/display-courses.component';
+import { AddCourseComponent } from './add-course/add-course.component';
+import { AddCourseModuleComponent } from './add-course/add-course-module/add-course-module.component';
+import { AddCourseModuleLessonComponent } from './add-course/add-course-module-lesson/add-course-module-lesson.component';
 
 const routes: Routes = [
   {
@@ -15,14 +16,14 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: CoursesOverviewComponent,
+        component: DisplayCoursesComponent,
         data: {
           title: 'Courses',
           description: 'Description Meta Tag Content',
         },
       },
       {
-        path: 'course-details/:id', // Change this to course/:id 
+        path: ':id/details',
         component: CourseDetailsComponent,
         data: {
           title: 'Course',
@@ -31,28 +32,28 @@ const routes: Routes = [
       },
       {
         path: 'create-course',
-        component: CreateCourseComponent,
+        component: AddCourseComponent,
         data: {
           title: 'Create Course',
           description: 'Description Meta Tag Content',
         },
       },
       {
-        path: 'create-course/:courseId/add-module',
-        component: AddLessonComponent,
+        path: 'create-course/:courseId/modules',
+        component: AddCourseModuleComponent,
         data: {
           title: 'Add Lesson',
           description: 'Description Meta Tag Content',
         },
       },
-      // {
-      //   path: 'create-course/add-lesson',
-      //   component: AddLessonComponent,
-      //   data: {
-      //     title: 'Add Lesson',
-      //     description: 'Description Meta Tag Content',
-      //   },
-      // },
+      {
+        path: 'create-course/:courseId/modules/:moduleId/add-lesson',
+        component: AddCourseModuleLessonComponent,
+        data: {
+          title: 'Add Lesson',
+          description: 'Description Meta Tag Content',
+        },
+      },
       {
         path: 'create-course/quiz',
         component: AddQuizComponent,

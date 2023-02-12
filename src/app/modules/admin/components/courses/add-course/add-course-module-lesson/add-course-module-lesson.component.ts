@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService } from 'src/app/services/courses.service';
 
 @Component({
-  selector: 'app-add-lesson',
-  templateUrl: './add-lesson.component.html',
-  styleUrls: ['./add-lesson.component.scss'],
+  selector: 'app-add-course-module-lesson',
+  templateUrl: './add-course-module-lesson.component.html',
+  styleUrls: ['./add-course-module-lesson.component.scss']
 })
-export class AddLessonComponent implements OnInit {
+export class AddCourseModuleLessonComponent implements OnInit {
+
   selectedFile: File;
   previewImage: any;
   showPreviewImage: boolean = false;
@@ -16,30 +17,21 @@ export class AddLessonComponent implements OnInit {
   isAlert: boolean = false;
   alertMessage: string;
   alertColor: string;
-  moduleForm: any = FormGroup;
   lessonForm: any = FormGroup;
-  // isModuleLeson: boolean = false;
-  moduleId: string
-  currentCourseId: any;
-  dataLoading: boolean = true;
-  modules: any;
+  currentModule: any;
 
   constructor(
     private coursesService: CoursesService,
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute, 
+    private router: Router
   ) {}
 
   ngOnInit(): void {
 
      // Get Current Program
-     this.currentCourseId = this.activatedRoute.snapshot.params;
-
-    // Module Form
-    this.moduleForm = this.formBuilder.group({
-      title: ['', Validators.required],
-    });
-
+     this.currentModule = this.activatedRoute.snapshot.params;
+     
     // Lesson Form
     this.lessonForm = this.formBuilder.group({
       title: ['', Validators.required],
@@ -49,35 +41,8 @@ export class AddLessonComponent implements OnInit {
       instructor: ['', Validators.required],
       // lesson_video: ['', Validators.required],
     });
-
-    // Fetch all course modules
-    this.coursesService.getCourse(this.currentCourseId.courseId).subscribe({
-      next: (res: any) => {
-        this.modules = res.data.course.modules;
-        console.log(this.modules);
-        
-      
-      },
-      error: (e) => console.error(e),
-      complete: () => {
-        this.dataLoading = false;
-      },
-    });
   }
 
-  // Add Module
-  addModule() {
-    this.coursesService
-    .addModule(this.currentCourseId.courseId, this.moduleForm.value)
-    .subscribe((res: any) => {
-      console.log(res);
-      if(res.status === true) {
-        this.showAlertPopup(res.message, 'success')
-        // this.isModuleLeson = true
-        this.moduleId = res.data.module.id
-      }
-    });
-  }
   // Add Lesson
   addLesson() {
     var formData: any = new FormData();
@@ -85,7 +50,7 @@ export class AddLessonComponent implements OnInit {
     formData.append('further_reading', this.lessonForm.value.further_reading);
     formData.append('class_activity', this.lessonForm.value.class_activity);
     formData.append('code_example', this.lessonForm.value.code_example);
-    formData.append('instructor', this.lessonForm.value.instructor);
+    formData.append('instructor', 'instructor id');
     formData.append('lesson_video', '');
 
     for (var pair of formData.entries()) {
@@ -93,13 +58,13 @@ export class AddLessonComponent implements OnInit {
     }
 
     this.coursesService
-      .addLessonToModule(this.currentCourseId.courseId, this.moduleId, formData)
+      .addLessonToModule(this.currentModule.courseId, this.currentModule.moduleId, formData)
       .subscribe((res: any) => {
         console.log(res);
         if(res.status === true) {
           this.showAlertPopup(res.message, 'success')
           setTimeout(() => {
-            this.ngOnInit()
+            this.router.navigate([`admin/courses/create-course/${this.currentModule.courseId}/modules`])
           }, 3000);
         }
       });
@@ -137,4 +102,7 @@ export class AddLessonComponent implements OnInit {
       this.isAlert = false;
     }, 3000);
   }
+
+
+
 }
