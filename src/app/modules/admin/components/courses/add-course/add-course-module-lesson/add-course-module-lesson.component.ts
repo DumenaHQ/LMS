@@ -56,19 +56,23 @@ export class AddCourseModuleLessonComponent implements OnInit {
 
     for (var pair of formData.entries()) {
       console.log(pair[0] + ', ' + pair[1]);
+      console.log(pair)
     }
+    
+    console.log(formData);
+    
 
-    this.coursesService
-      .addLessonToModule(this.currentModule.courseId, this.currentModule.moduleId, formData)
-      .subscribe((res: any) => {
-        console.log(res);
-        if(res.status === true) {
-          this.showAlertPopup(res.message, 'success')
-          setTimeout(() => {
-            this.router.navigate([`admin/courses/create-course/${this.currentModule.courseId}/modules`])
-          }, 3000);
-        }
-      });
+    // this.coursesService
+    //   .addLessonToModule(this.currentModule.courseId, this.currentModule.moduleId, formData)
+    //   .subscribe((res: any) => {
+    //     console.log(res);
+    //     if(res.status === true) {
+    //       this.showAlertPopup(res.message, 'success')
+    //       setTimeout(() => {
+    //         this.router.navigate([`admin/courses/create-course/${this.currentModule.courseId}/modules`])
+    //       }, 3000);
+    //     }
+    //   });
   }
 
   // Add Lesson
@@ -106,8 +110,6 @@ export class AddCourseModuleLessonComponent implements OnInit {
     this.file = event.target.files[0];
     // Set file name
     this.selectedFileName = this.file.name;
-
-    console.log(this.selectedFileName);
     
     // if (this.selectedFile) {
     //   let reader = new FileReader();

@@ -63,7 +63,8 @@
           Add Child
         </button>
         <button class="btn prim_btn" *ngIf="program?.hasJoined === false" (click)="joinProgram()">
-          Join
+          <span  *ngIf="user.role === 'school'">Join</span>
+          <span  *ngIf="user.role === 'parent'">Follow</span>
         </button>
       </div>
     </div>
@@ -74,15 +75,15 @@
       <ul class="numbers dis-flex">
         <li>
           <p class="body-2-bold">{{ program?.courses?.length }}</p>
-          <p class="body-3-regular">Courses</p>
+          <p class="body-3-regular">{{program?.courses?.length > 1 ? 'Courses' : 'Course'}}</p>
         </li>
         <li>
           <p class="body-2-bold">{{ program?.schools?.length }}</p>
-          <p class="body-3-regular">Schools</p>
+          <p class="body-3-regular">{{program?.schools?.length > 1 ? 'Schools' : 'School'}}</p>
         </li>
         <li>
           <p class="body-2-bold">{{ program?.learner_count }}</p>
-          <p class="body-3-regular">Learners</p>
+          <p class="body-3-regular">{{program?.learner_count > 1 ? 'Learners' : 'Learner'}}</p>
         </li>
       </ul>
       <div class="completion">

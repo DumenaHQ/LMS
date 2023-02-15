@@ -9,18 +9,18 @@
     }}
   </p>
   <i class="bx bx-chevron-right icon"></i>
-  <!-- <p>
+  <p>
     {{
-      currentCourseLesson?.title.length > 20
-        ? currentCourseLesson?.title.slice(0, 20)  + "..." 
-        : currentCourseLesson?.title | titlecase
+      modules[currentModuleIndex]?.title.length > 20
+        ? modules[currentModuleIndex]?.title.slice(0, 20)  + "..." 
+        : modules[currentModuleIndex]?.title | titlecase
     }}
-  </p> -->
+  </p>
 </section>
 
 <section class="">
   <div class="dis-flex course-header">
-    <h3 class="course-title">{{ course?.title }}</h3>
+    <h3 class="course-title">{{ modules[currentModuleIndex]?.lessons[currentLessonIndex].title }}</h3>
   </div>
   <div class="ds-flex">
     <main class="ds-grid">
@@ -28,7 +28,7 @@
         <div class="c-video">
           <video
             class="video"
-            [src]="'currentCourseLesson?.video_url'"
+            [src]="modules[currentModuleIndex]?.lessons[currentLessonIndex].lesson_video"
             controls
             controlsList="nodownload"
             #videoPlayer
@@ -55,17 +55,21 @@
       <div class="course-descp">
         <div class="course-descp_header">
           <ul class="dis-flex">
-            <li class="body-2-medium active">Course Description</li>
-            <li class="body-2-medium">Discussion</li>
+            <li class="body-2-medium active">Discussion</li>
+            <!-- <li class="body-2-medium active">Course Description</li> -->
           </ul>
         </div>
         <div class="course-descp_body">
+          <!-- <h4></h4> -->
           <p>
-            {{ course?.description }}
+            {{ modules[currentModuleIndex]?.further_reading }}
           </p>
           <div class="require">
-            <h4>Requirements</h4>
+            <h4>Objectives</h4>
             <ol>
+              <li class="" >
+                <!-- <p>{{modules[currentModuleIndex]?.objectives}}</p> -->
+              </li>
               <!-- <li><p>Hand</p></li>
               <li><p>Glooves</p></li>
               <li><p>Plier</p></li>
@@ -120,9 +124,9 @@
           </div> -->
           <div
             class="course-content_list_item"
-            *ngFor="let module of course?.modules; let moduleIndex = index"
+            *ngFor="let module of modules; let moduleIndex = index"
           >
-          <div class="course-content_list_item_module dis-flex clickable" (click)="getModuleLessons(module.id)">
+          <div class="course-content_list_item_module dis-flex clickable" (click)="showModuleLessons()">
             <div class="left dis-flex">
               <span class="numb">{{moduleIndex + 1}}</span>
               <div class="">
@@ -149,9 +153,10 @@
           <!-- For accordion dropdown -->
           <!-- <input type="checkbox" [id]="'checkbox-' + moduleIndex" style="display: none;"> -->
 
-          <div class="course-content_list_item_lessons" *ngIf="isModuleLessons && moduleLessons.id === module.id">
-            <div class="course-content_list_item_lessons_item dis-flex clickable" *ngFor="let lesson of moduleLessons.lessons">
-              <div class="left dis-flex" [title]="lesson?.id">
+          <div class="course-content_list_item_lessons" *ngIf="isModuleLessons">
+            <!-- && moduleLessons.id === module.id -->
+            <div class="course-content_list_item_lessons_item dis-flex clickable" *ngFor="let lesson of module.lessons; let lessonIndex = index" (click)="watchLesson(moduleIndex, lessonIndex)">
+              <div class="left dis-flex" [title]="lesson?.title">
                 <img
                   src="../../../../../assets/img/library/video-play-black.svg"
                   alt=""
@@ -160,21 +165,15 @@
                 <p
                   class="body-1-medium title"
                 >
-                <!-- {{
+                {{
                   lesson?.title.length > 15
                     ? lesson?.title.slice(0, 15)  + "..." 
                     : lesson?.title
-                }} -->
-                {{
-                  lesson?.id.length > 15
-                    ? lesson?.id.slice(0, 15)  + "..." 
-                    : lesson?.id
                 }}
                 </p>
-                <p>Hi</p>
               </div>
               <span class="right">
-                <p class="body-3-regular">00:00</p>
+                <p class="body-3-regular">{{lesson.duration}}</p>
               </span>
             </div>
           </div>

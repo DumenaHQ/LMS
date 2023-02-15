@@ -12,47 +12,11 @@ export class LibraryCoursesLessonComponent implements OnInit {
   currentCourseId: any;
   course: any;
   videoClicked: boolean = false;
-  moduleId: string = '63e647f34972099c1735b7fe'
-  modules = [
-    {
-      id: 1,
-      title: 'Module 1',
-      lessons: [
-        {
-          id: 1.1,
-          title: 'Lesson 1.1',
-        },
-        {
-          id: 1.2,
-          title: 'Lesson 1.2',
-        },
-        {
-          id: 1.3,
-          title: 'Lesson 1.2',
-        }
-      ]
-    },
-    {
-      id: 2,
-      title: 'Module 2',
-      lessons: [
-        {
-          id: 2.1,
-          title: 'Lesson 2.1',
-        },
-        {
-          id: 2.2,
-          title: 'Lesson 2.2',
-        },
-        {
-          id: 2.3,
-          title: 'Lesson 2.2',
-        }
-      ]
-    },
-  ]
-  moduleLessons: any;
   isModuleLessons: boolean = false;
+  modules: any;
+  currentModuleIndex: number = 0;
+  currentLessonIndex: number = 0;
+  lessonVideoUrl: string = ''
 
   // items: any[]
 
@@ -72,7 +36,12 @@ export class LibraryCoursesLessonComponent implements OnInit {
       .subscribe((res: any) => {
         // Get course
         this.course = res.data.course;
+        this.modules = this.course.modules
         console.log(this.course);
+        console.log(this.modules);
+        this.lessonVideoUrl = this.course.modules[0].lessons[0].lesson_video
+        console.log(this.lessonVideoUrl);
+        
         
       });
 
@@ -88,32 +57,33 @@ export class LibraryCoursesLessonComponent implements OnInit {
   }
 
   // Get Module lessons
-  getModuleLessons(moduleId: string) {
-    this.coursesService
-      .getModuleLessons(this.currentCourseId.courseId, moduleId)
-      .subscribe((res: any) => {
-        // Get course
-        this.moduleLessons = res.data.module;
-        console.log(res);
-        if(res.status === true) {
-          this.isModuleLessons = true
-        }
+  showModuleLessons() {
+    this.isModuleLessons = true
+    // this.coursesService
+    //   .getModuleLessons(this.currentCourseId.courseId, moduleId)
+    //   .subscribe((res: any) => {
+    //     // Get course
+    //     this.moduleLessons = res.data.module;
+    //     console.log(res);
+    //     if(res.status === true) {
+    //       this.isModuleLessons = true
+    //     }
         
         
-      });
+    //   });
   }
 
+  // Watch Lesson
+  watchLesson(moduleIndex: any, lessonIndex: any) {
+    // this.lessonVideoUrl = lessonVideo
+    this.currentModuleIndex = moduleIndex
+    this.currentLessonIndex = lessonIndex
+  } 
+
+  // Start Video
   startVideo(): void {
     this.videoClicked = !this.videoClicked;
     this.videoPlayer.nativeElement.play();
-  }
-
-  // Change Lesson
-  changeLesson(id: any) {
-    this.router.navigate([`/learner/library/${this.course.id}/${id}`]);
-    // this.currentCourseId.lessonId = id;
-    this.ngOnInit();
-    console.log('Yess');
   }
 
   // togglePlayPause() {

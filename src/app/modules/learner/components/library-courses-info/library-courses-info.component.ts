@@ -29,16 +29,7 @@ export class LibraryCoursesInfoComponent implements OnInit {
         this.course = res.data.course;
 
         console.log(res);
-        
-        this.coursesService
-          .getModuleLessons(this.currentCourse.courseId, this.course?.modules[2].id)
-          .subscribe((res: any) => {
-            this.modules = res.data.course;
-    
-            console.log(res);
-            
-          });
-          // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNjM4OTZkZDQzYjRhZTRkZGYzZTViZSIsImZ1bGxuYW1lIjoiS2hpbmcgRGF2ZSIsImVtYWlsIjoiZGhleXZlZDFAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaXNVc2VyT25ib2FyZGVkIjpmYWxzZSwiaWF0IjoxNjc2MDI4NTU1LCJleHAiOjE2NzYxMTQ5NTV9.df6ORqRSc5wR9Qf7DtlXh_Xx6bj6BAdqi4mBV1TvOQA
+      
       });
 
   }

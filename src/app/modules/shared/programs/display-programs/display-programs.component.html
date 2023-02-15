@@ -76,15 +76,15 @@
             <ul class="dis-flex">
               <li>
                 <p class="body-2-bold">{{ program?.course_count }}</p>
-                <p class="body-3-regular">Courses</p>
+                <p class="body-3-regular">{{program?.course_count > 1 ? 'Courses' : 'Course'}}</p>
               </li>
               <li>
                 <p class="body-2-bold">{{ program?.school_count }}</p>
-                <p class="body-3-regular">Schools</p>
+                <p class="body-3-regular">{{program?.school_count > 1 ? 'Schools' : 'School'}}</p>
               </li>
               <li>
                 <p class="body-2-bold">{{ program?.learner_count }}</p>
-                <p class="body-3-regular">Learners</p>
+                <p class="body-3-regular">{{program?.learner_count > 1 ? 'Learners' : 'Learner'}}</p>
               </li>
             </ul>
           </div>

@@ -15,7 +15,7 @@ section:not(:last-child) {
     @include sect-bg;
 
     &_descp {
-      margin-bottom: $m-2;
+      margin-bottom: $m-4;
     }
     &_content {
       &_list {
@@ -25,7 +25,7 @@ section:not(:last-child) {
           border: 1px solid $inner-border;
           border-left-width: 3px;
           border-radius: $border-radius1;
-          cursor: pointer;
+          // cursor: pointer;
           transition: all .2s;
           &:not(:last-child) {
             margin-bottom: $m-1;
@@ -45,6 +45,8 @@ section:not(:last-child) {
       display: grid;
       grid-gap: $m-4;
       &_item {
+        display: grid;
+        justify-items: center;
         .image {
           width: 60px;
           height: 60px;
