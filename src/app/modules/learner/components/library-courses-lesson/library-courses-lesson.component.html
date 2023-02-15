@@ -60,24 +60,26 @@
           </ul>
         </div>
         <div class="course-descp_body">
-          <!-- <h4></h4> -->
           <p>
             {{ modules[currentModuleIndex]?.further_reading }}
           </p>
-          <div class="require">
+          <!-- Objectives -->
+          <div class="obj">
             <h4>Objectives</h4>
-            <ol>
-              <li class="" >
-                <!-- <p>{{modules[currentModuleIndex]?.objectives}}</p> -->
+            <ul>
+              <li class="" *ngFor="let objective of modules[currentModuleIndex]?.objectives | keyvalue">
+                <p>{{objective.value}}</p>
               </li>
-              <!-- <li><p>Hand</p></li>
-              <li><p>Glooves</p></li>
-              <li><p>Plier</p></li>
-              <li><p>Nuts and bolts</p></li>
-              <li><p>Dishwasher</p></li>
-              <li><p>Cardboard</p></li> -->
-              <li><p>None</p></li>
-            </ol>
+            </ul>
+          </div>
+          <!-- Activities -->
+          <div class="acti">
+            <h4>Activities</h4>
+            <ul>
+              <li class="" *ngFor="let activity of modules[currentModuleIndex]?.class_activities | keyvalue">
+                <p>{{activity.value}}</p>
+              </li>
+            </ul>
           </div>
           <!-- <div class="activity">
             <h4>Class Activity</h4>

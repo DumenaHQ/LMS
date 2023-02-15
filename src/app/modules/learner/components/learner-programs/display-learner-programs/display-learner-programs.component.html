@@ -67,12 +67,16 @@
             </div>
             <ul class="dis-flex">
               <li>
-                <p class="body-2-bold">{{ program?.courses?.length }}</p>
-                <p class="body-3-regular">Courses</p>
+                <p class="body-2-bold">{{ program?.course_count }}</p>
+                <p class="body-3-regular">{{program?.course_count > 1 ? 'Courses' : 'Course'}}</p>
               </li>
               <!-- <li>
-                <p class="body-2-bold">{{ program?.schools?.length }}</p>
-                <p class="body-3-regular">Schools</p>
+                <p class="body-2-bold">{{ program?.school_count }}</p>
+                <p class="body-3-regular">{{program?.school_count > 1 ? 'Schools' : 'School'}}</p>
+              </li>
+              <li>
+                <p class="body-2-bold">{{ program?.learner_count }}</p>
+                <p class="body-3-regular">{{program?.learner_count > 1 ? 'Learners' : 'Learner'}}</p>
               </li> -->
             </ul>
           </div>
@@ -108,7 +112,7 @@
               </p>
               <!-- {{ days > 1 ? days : "0" }} day{{ days < 2 ? "" : "s" }} -->
             </div>
-            <div class="status">
+            <!-- <div class="status">
               <span
                 [ngClass]="
                   program?.status === 'active' ? 'success_btn' : 'grey_btn'
@@ -117,7 +121,7 @@
                   program?.status === "active" ? "Published" : "Draft"
                 }}</span
               >
-            </div>
+            </div> -->
           </div>
         </div>
 

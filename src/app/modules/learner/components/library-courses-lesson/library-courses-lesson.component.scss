@@ -123,11 +123,13 @@ section:not(:last-child) {
     display: grid;
     grid-gap: $m-4;
     font-weight: 500;
-    .require {
-      ol {
-        list-style-type: decimal;
+    .obj,
+    .acti {
+      ul {
+        // list-style-type: decimal;
         li {
-          display: block;
+          list-style: disc;
+          margin-left: $m-4;
           &:not(:last-child) {
             margin-bottom: $m-1;
           }
@@ -136,6 +138,15 @@ section:not(:last-child) {
     }
     h4 {
       margin-bottom: $m-2;
+      position: relative;
+      &::before {
+        position: absolute;
+        content: '';
+        left: -2rem;
+        width: 5px;
+        height: 100%;
+        background-color: $primary80;
+      }
     }
   }
 }

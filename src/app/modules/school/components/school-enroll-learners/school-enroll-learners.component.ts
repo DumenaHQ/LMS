@@ -40,7 +40,7 @@ export class SchoolEnrollLearnersComponent implements OnInit {
 
     this.userForm = this.formBuilder.group({
       fullname: ['', Validators.required],
-      parent_email: ['', [Validators.required, Validators.email]],
+      parent_email: ['', [Validators.email]],
       grade: ['', Validators.required],
     });
   }
