@@ -98,7 +98,7 @@ export class AddProgramLearnersComponent implements OnInit {
             setTimeout(() => {
               this.closeAddLearnerToProgramModal()
 
-              this.ngOnInit()
+              window.location.reload()
             }, 3000);
           }
         },
@@ -138,7 +138,7 @@ export class AddProgramLearnersComponent implements OnInit {
           setTimeout(() => {
             this.closeAddLearnerToProgramModal()
 
-            this.ngOnInit()
+            window.location.reload()
           }, 3000);
         },
         error: (e) => console.error(e),

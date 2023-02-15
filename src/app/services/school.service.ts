@@ -65,7 +65,7 @@ export class SchoolService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': contentType,
-        Authorization: 'Bearer ' + localStorage.getItem('token'),
+        Authorization: 'bearer ' + localStorage.getItem('token'),
       }),
     };
     return httpOptions;

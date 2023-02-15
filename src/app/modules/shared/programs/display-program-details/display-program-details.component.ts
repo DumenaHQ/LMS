@@ -16,7 +16,6 @@ export class DisplayProgramDetailsComponent implements OnInit {
   currentProgramId: any;
   program: any;
   programId: string;
-  programCourses: any;
   isAlert: boolean = false;
   alertMessage: string;
   alertColor: string
@@ -53,10 +52,6 @@ export class DisplayProgramDetailsComponent implements OnInit {
         // },
       });
 
-    // Get program courses
-    this.getProgramCourses()
-
-    
   }
 
   // Tab change
@@ -91,18 +86,6 @@ export class DisplayProgramDetailsComponent implements OnInit {
       },
       error: (e) => console.error(e),
     });
-  }
-
-  // Get program courses
-  getProgramCourses() {
-    this.programsService
-      .getProgramCourses(this.currentProgramId.programId)
-      .subscribe({
-        next: (res: any) => {
-          this.programCourses = res.data.courses;
-        },
-        error: (e) => console.error(e),
-      });
   }
 
   // Open Add Child Modal

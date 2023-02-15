@@ -3,7 +3,7 @@
     <div
       class="card_item clickable"
       *ngFor="let i of allCourses"
-      [routerLink]="i.id"
+      [routerLink]="i.id + '/details'"
       [title]="i.title"
     >
       <img

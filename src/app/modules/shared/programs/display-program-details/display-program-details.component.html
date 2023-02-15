@@ -63,7 +63,8 @@
           Add Child
         </button>
         <button class="btn prim_btn" *ngIf="program?.hasJoined === false" (click)="joinProgram()">
-          Join
+          <span  *ngIf="user.role === 'school'">Join</span>
+          <span  *ngIf="user.role === 'parent'">Follow</span>
         </button>
       </div>
     </div>
@@ -74,15 +75,15 @@
       <ul class="numbers dis-flex">
         <li>
           <p class="body-2-bold">{{ program?.courses?.length }}</p>
-          <p class="body-3-regular">Courses</p>
+          <p class="body-3-regular">{{program?.courses?.length > 1 ? 'Courses' : 'Course'}}</p>
         </li>
         <li>
           <p class="body-2-bold">{{ program?.schools?.length }}</p>
-          <p class="body-3-regular">Schools</p>
+          <p class="body-3-regular">{{program?.schools?.length > 1 ? 'Schools' : 'School'}}</p>
         </li>
         <li>
           <p class="body-2-bold">{{ program?.learner_count }}</p>
-          <p class="body-3-regular">Learners</p>
+          <p class="body-3-regular">{{program?.learner_count > 1 ? 'Learners' : 'Learner'}}</p>
         </li>
       </ul>
       <div class="completion">
@@ -143,7 +144,7 @@
     <div class="course-details_body_content">
       <ng-container *ngIf="contentId === 'content'">
         <div class="courses">
-          <p class="body-3-medium">{{ programCourses?.length }} Course(s)</p>
+          <p class="body-3-medium">{{ program?.courses?.length }} Course(s)</p>
         </div>
       </ng-container>
 
@@ -161,9 +162,9 @@
                   <td>{{school?.student_count}}</td>
                 </tr>
               </ng-container>
-              <ng-template>
+              <!-- <ng-template>
                 <p style="text-align: center">Empty School list!</p>
-              </ng-template>
+              </ng-template> -->
             </table>
           </ng-container>
 
@@ -173,31 +174,35 @@
         </div>
       </ng-container>
 
-      <!-- <ng-container *ngIf="contentId === 'learners'">
-        <div class="table-container" style="overflow-x: auto" *ngFor="let sponsor of program?.sponsors">
-          <ng-container *ngIf="sponsor.learners?.length > 0 && sponsor?.user_id === user.id">
+      <ng-container *ngIf="contentId === 'learners'">
+        <div class="table-container" style="overflow-x: auto">
+          <ng-container *ngIf="program?.learners?.length > 0">
             <table>
               <tr class="table-header">
-                <th>Username</th>
-                <th>Date added</th>
+                <th>Full Name</th>
+                <th>User Name</th>
+                <th *ngIf="user?.role === 'school'">Email</th>
+                <th *ngIf="user?.role === 'school'">Grade</th>
               </tr>
               <ng-container>
-                <tr class="table-body" *ngFor="let learner of sponsor?.learners">
+                <tr class="table-body" *ngFor="let learner of program?.learners">
+                  <td>{{learner.fullname}}</td>
                   <td>{{learner.username}}</td>
-                  <td>{{learner.date_added | date: "mediumDate"}}</td>
+                  <td *ngIf="user?.role === 'school'">{{learner.email}}</td>
+                  <td *ngIf="user?.role === 'school'">{{learner.grade}}</td>
                 </tr>
               </ng-container>
-              <ng-template>
+              <!-- <ng-template>
                 <p style="text-align: center">Empty School list!</p>
-              </ng-template>
+              </ng-template> -->
             </table>
           </ng-container>
 
-          <p style="text-align: center" *ngIf="sponsor.learners?.length === 0 && sponsor?.user_id === user.id">
+          <p style="text-align: center" *ngIf="program.learners?.length === 0">
             No Learner available
           </p>
         </div>
-      </ng-container> -->
+      </ng-container>
     </div>
   </div>
 </section>

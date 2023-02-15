@@ -1,40 +1,46 @@
 <section class="ds-head dis-flex">
   <h2 class="ds-head_title clickable" routerLink="/admin/courses">Course</h2>
   <i class="bx bx-chevron-right icon"></i>
-  <p class="clickable">Course Info</p>
+  <p class="clickable">
+    {{
+      course?.title.length > 20
+        ? course?.title.slice(0, 20)  + "..." 
+        : course?.title | titlecase
+    }}
+  </p>
 </section>
 
 <section class="course-details">
   <div class="course-details_image">
-    <img src="../../../assets/img/thumbnail-1.png" alt="" />
+    <img src="../../../../../../../assets/img/thumbnail-1.png" alt="" />
   </div>
   <div class="course-details_header">
     <div class="course-details_header_top">
       <div class="left">
-        <h2>Introduction to Robotics</h2>
+        <h2>{{course?.title}}</h2>
         <div class="dis-flex left_bottom">
           <button class="success_btn">Published</button>
           <div class="icons dis-flex">
             <span class="dis-flex"
-              ><img src="../../../assets/img/svg/calendar-2.svg" alt="" />
-              <p class="body-2-regular">Created May 12.2022</p></span
+              ><img src="../../../../../../../assets/img/svg/calendar-2.svg" alt="" />
+              <p class="body-2-regular">Created {{course?.createdAt | date: 'mediumDate'}}</p></span
             >
             <span class="dis-flex"
-              ><img src="../../../assets/img/library/Bag.svg" alt="" />
-              <p class="body-2-regular">Developer</p></span
+              ><img src="../../../../../../../assets/img/library/Bag.svg" alt="" />
+              <p class="body-2-regular">{{course?.course_quadrant}}</p></span
             >
             <span class="dis-flex"
-              ><img src="../../../assets/img/svg/medal.svg" alt="" />
-              <p class="body-2-regular">10 questions</p></span
+              ><img src="../../../../../../../assets/img/library/video-square.svg" alt="" />
+              <p class="body-2-regular">{{course?.lesson_count}} {{course?.lesson_count > 1 ? 'Lessons' : 'Lesson'}}</p></span
             >
           </div>
         </div>
       </div>
       <div class="right dis-flex">
-        <button class="grey_btn">Edit Quiz</button>
+        <button class="grey_btn">Edit</button>
         <button class="grey_btn">Preview as Learner</button>
         <button class="grey_btn settings">
-          <img src="../../../assets/img/svg/setting-grey.svg" alt="" />
+          <img src="../../../../../../../assets/img/svg/setting-grey.svg" alt="" />
         </button>
       </div>
     </div>
@@ -49,35 +55,23 @@
     <div class="course-details_body_content">
       <aside>
         <ul>
-          <li class="active">
-            <h5 class="body-2-medium">Question -1</h5>
-            <p>Updated May 23,2022 5:12PM</p>
-          </li>
-          <li>
-            <h5 class="body-2-medium">Question -2</h5>
-            <p>Updated May 23,2022 5:12PM</p>
-          </li>
-          <li>
-            <h5 class="body-2-medium">Question -3</h5>
-            <p>Updated May 23,2022 5:12PM</p>
-          </li>
-          <li>
-            <h5 class="body-2-medium">Question -3</h5>
-            <p>Updated May 23,2022 5:12PM</p>
+          <!-- class="active" -->
+          <li *ngFor="let module of course?.modules; let i = index" [ngClass]="{'active': moduleIndex === i}" (click)="getModuleLessons(module.id, i)">
+            <h5 class="body-2-medium">{{module?.title}}</h5>
+            <!-- <p>Updated May 23,2022 5:12PM</p> -->
+            <p>{{module?.lesson_count}} {{module?.lesson_count > 1 ? 'Lessons' : 'Lesson'}}</p>
           </li>
         </ul>
       </aside>
       <main>
         <div class="header">
-          <h5 class="body-2-medium ds-sect-header">State your question</h5>
+          <h5 class="body-2-medium ds-sect-header">Lessons</h5>
           <p class="question">
-            Inventore ex repellat voluptate quisquam. Culpa omnis velit earum
-            qui expedita. Tempora qui qui rerum nesciunt perferendis atque
-            illum.
+            {{moduleLessons?.id}}
           </p>
         </div>
         <ul>
-          <li>
+          <!-- <li>
             <p>A. <span>The weaver</span></p>
           </li>
           <li>
@@ -85,7 +79,7 @@
           </li>
           <li>
             <p>C. <span>The wardrobe</span></p>
-          </li>
+          </li> -->
         </ul>
       </main>
     </div>

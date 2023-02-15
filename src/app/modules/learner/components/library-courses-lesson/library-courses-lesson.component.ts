@@ -11,8 +11,14 @@ export class LibraryCoursesLessonComponent implements OnInit {
   @ViewChild('videoPlayer') videoPlayer: ElementRef;
   currentCourseId: any;
   course: any;
-  currentCourseLesson: any;
   videoClicked: boolean = false;
+  isModuleLessons: boolean = false;
+  modules: any;
+  currentModuleIndex: number = 0;
+  currentLessonIndex: number = 0;
+  lessonVideoUrl: string = ''
+
+  // items: any[]
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -30,26 +36,54 @@ export class LibraryCoursesLessonComponent implements OnInit {
       .subscribe((res: any) => {
         // Get course
         this.course = res.data.course;
-        this.course.lessons.forEach((e: any) => {
-          // Get the current lesson with lesson id
-          if (e.id === this.currentCourseId.lessonId) {
-            this.currentCourseLesson = e;
-          }
-        });
+        this.modules = this.course.modules
+        console.log(this.course);
+        console.log(this.modules);
+        this.lessonVideoUrl = this.course.modules[0].lessons[0].lesson_video
+        console.log(this.lessonVideoUrl);
+        
+        
       });
+
+      // this.items = [
+      //   { header: 'Header 1', body: 'Body 1' },
+      //   { header: 'Header 2', body: 'Body 2' },
+      //   { header: 'Header 3', body: 'Body 3' },
+      // ];
+
+      // this.items.forEach(item => {
+      //   item.isOpen = false;
+      // });
   }
 
+  // Get Module lessons
+  showModuleLessons() {
+    this.isModuleLessons = true
+    // this.coursesService
+    //   .getModuleLessons(this.currentCourseId.courseId, moduleId)
+    //   .subscribe((res: any) => {
+    //     // Get course
+    //     this.moduleLessons = res.data.module;
+    //     console.log(res);
+    //     if(res.status === true) {
+    //       this.isModuleLessons = true
+    //     }
+        
+        
+    //   });
+  }
+
+  // Watch Lesson
+  watchLesson(moduleIndex: any, lessonIndex: any) {
+    // this.lessonVideoUrl = lessonVideo
+    this.currentModuleIndex = moduleIndex
+    this.currentLessonIndex = lessonIndex
+  } 
+
+  // Start Video
   startVideo(): void {
     this.videoClicked = !this.videoClicked;
     this.videoPlayer.nativeElement.play();
-  }
-
-  // Change Lesson
-  changeLesson(id: any) {
-    this.router.navigate([`/learner/library/${this.course.id}/${id}`]);
-    // this.currentCourseId.lessonId = id;
-    this.ngOnInit();
-    console.log('Yess');
   }
 
   // togglePlayPause() {
@@ -57,5 +91,15 @@ export class LibraryCoursesLessonComponent implements OnInit {
   //   if(video.paused) {
 
   //   }
+  // }
+
+  // toggle(item: any) {
+  //   this.items.forEach(i => {
+  //     if (i === item) {
+  //       i.isOpen = !i.isOpen;
+  //     } else {
+  //       i.isOpen = false;
+  //     }
+  //   });
   // }
 }

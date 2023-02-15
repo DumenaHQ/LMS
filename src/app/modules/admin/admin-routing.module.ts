@@ -3,8 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { UserProfileComponent } from '../shared/user-profile/user-profile.component';
 import { AdminComponent } from './admin.component';
 import { AdminOverviewComponent } from './components/admin-overview/admin-overview.component';
-import { AddLessonComponent } from './components/courses/add-lesson/add-lesson.component';
-import { CreateCourseComponent } from './components/courses/create-course/create-course.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
 
 const routes: Routes = [

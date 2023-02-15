@@ -1,0 +1,78 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
+></app-alert-popup>
+
+<section class="ds-head">
+    <h2 class="ds-head_title">Course Modules</h2>
+</section>
+
+<section class="grouping dis-flex">
+    <!-- Filter -->
+    <div class="filter s-f">
+      <div class="body-3-regular dis-flex">
+        <span class="title">Filter:</span>
+        <span class="dropdown dis-flex clickable"
+          >All Modules <i class="bx bx-chevron-down"></i
+        ></span>
+      </div>
+    </div>
+  
+    <div class="right dis-flex">
+      <!-- Sort -->
+      <div class="sort s-f">
+        <div class="body-3-regular dis-flex">
+          <span class="title">Sort:</span>
+          <span class="dropdown dis-flex clickable"
+            >Last modified <i class="bx bx-chevron-down"></i
+          ></span>
+        </div>
+      </div>
+      <!-- New Course Button -->
+      <button class="btn prim_btn" (click)="openAddModuleModal()">New Module</button>
+    </div>
+  </section>
+
+<section class="modules">
+  <div class="modules_body">
+    <div class="module_list dis-flex card" *ngIf="modules?.length > 0">
+      <div class="module_list_item card_item" *ngFor="let module of modules">
+        <h5>{{module.title}}</h5>
+        <div class="module_list_item_bottom dis-flex">
+            <p>{{module.lesson_count}} {{module.lesson_count > 1 ? 'Lessons' : 'Lesson'}}</p>
+            <button class="btn sec_btn" (click)="addLesson(module.id)">Add Lesson</button>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="modules?.length === 0">
+        <p>Empty list!</p>
+    </ng-container>
+  </div>
+</section>
+
+<div class="modal" *ngIf="addModuleModal">
+    <div class="modal_area">
+        <span class="modal_area_close" (click)="closeAddModuleModal()">
+            <i class="bx bx-x icon clickable"></i>
+        </span>
+        <!-- Module Form -->
+        <form [formGroup]="moduleForm">
+            <div class="form_control">
+                <label for="title">Module Title</label>
+                <div class="form_control_field">
+                    <input
+                    type="text"
+                    id="title"
+                    placeholder="Type here"
+                    formControlName="title"
+                    />
+                </div>
+            </div>
+            <div class="form_btns">
+                <button class="btn prim_btn" (click)="addModule()">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
