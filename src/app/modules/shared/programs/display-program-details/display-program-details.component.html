@@ -120,10 +120,10 @@
       <ul class="dis-flex">
         <li
           class="body-2-medium active"
-          [class.active]="contentId === 'content'"
-          (click)="tabChange('content')"
+          [class.active]="contentId === 'courses'"
+          (click)="tabChange('courses')"
         >
-          Program Content
+          Courses
         </li>
         <li
           class="body-2-medium"
@@ -142,12 +142,38 @@
       </ul>
     </div>
     <div class="course-details_body_content">
-      <ng-container *ngIf="contentId === 'content'">
-        <div class="courses">
-          <p class="body-3-medium">{{ program?.courses?.length }} Course(s)</p>
+      <!-- Courses -->
+      <ng-container *ngIf="contentId === 'courses'">
+        <div class="table-container" style="overflow-x: auto">
+          <ng-container *ngIf="program?.courses?.length > 0">
+            <table>
+              <tr class="table-header">
+                <th>Title</th>
+                <th>Number of lesson(s)</th>
+                <th>Quadrant</th>
+                <th>Duration</th>
+              </tr>
+              <ng-container>
+                <tr class="table-body" *ngFor="let course of program?.courses">
+                  <td>{{ course?.title }}</td>
+                  <td>{{course?.lesson_count}}</td>
+                  <td>{{course?.course_quadrant}}</td>
+                  <td>{{course?.duration}}</td>
+                </tr>
+              </ng-container>
+              <!-- <ng-template>
+                <p style="text-align: center">Empty School list!</p>
+              </ng-template> -->
+            </table>
+          </ng-container>
+
+          <p style="text-align: center" *ngIf="program?.sponsors?.length === 0">
+            No Course available
+          </p>
         </div>
       </ng-container>
 
+      <!-- Schools -->
       <ng-container *ngIf="contentId === 'schools'">
         <div class="table-container" style="overflow-x: auto">
           <ng-container *ngIf="program?.schools?.length > 0">
@@ -174,6 +200,7 @@
         </div>
       </ng-container>
 
+      <!-- Learners -->
       <ng-container *ngIf="contentId === 'learners'">
         <div class="table-container" style="overflow-x: auto">
           <ng-container *ngIf="program?.learners?.length > 0">

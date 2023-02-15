@@ -11,7 +11,7 @@ import { SchoolService } from 'src/app/services/school.service';
 })
 export class DisplayProgramDetailsComponent implements OnInit {
 
-  contentId: any = 'content';
+  contentId: any = 'courses';
   addLearnerToProgramModal: boolean = false;
   currentProgramId: any;
   program: any;
