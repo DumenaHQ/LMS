@@ -15,7 +15,6 @@ export class DisplayLearnerProgramDetailsComponent implements OnInit {
   addLearnerToProgramModal: boolean = false;
   currentProgramId: any;
   program: any;
-  programId: string;
   isAlert: boolean = false;
   alertMessage: string;
   alertColor: string
@@ -42,7 +41,8 @@ export class DisplayLearnerProgramDetailsComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           this.program = res.data.program;
-          this.programId = this.program.id;
+          console.log(this.program);
+          
         },
         error: (e) => console.error(e),
         // complete: () => {
