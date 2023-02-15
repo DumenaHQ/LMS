@@ -166,13 +166,10 @@ aside {
       &_item {
         border-top: 1px solid $divider-color;
         border-bottom: 1px solid $divider-color;
-        // transition: all .2s;
-        // input[type="checkbox"]:checked + .accordion-body {
-        //   display: block;
-        // }
-        // .accordion-body {
-        //   display: block;
-        // }
+        transition: all .2s;
+        input[type="checkbox"]:checked + .accordion-body {
+          display: block;
+        }
         &_module {
           gap: $m-2;
           padding: $m-2;
@@ -203,7 +200,7 @@ aside {
           }
         }
         &_lessons {
-          display: block;
+          display: none;
           &_item {
             gap: $m-2;
             justify-content: space-between;

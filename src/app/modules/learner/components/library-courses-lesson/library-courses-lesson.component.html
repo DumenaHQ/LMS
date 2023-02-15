@@ -129,7 +129,7 @@
             class="course-content_list_item"
             *ngFor="let module of modules; let moduleIndex = index"
           >
-          <div class="course-content_list_item_module dis-flex clickable" (click)="showModuleLessons()">
+          <label [for]="'checkbox-' + moduleIndex" class="course-content_list_item_module dis-flex clickable" (click)="showModuleLessons()">
             <div class="left dis-flex">
               <span class="numb">{{moduleIndex + 1}}</span>
               <div class="">
@@ -152,11 +152,11 @@
             <span class="right">
               <i class="bx bx-chevron-down icon chevron-icon"></i>
             </span>
-          </div>
+          </label>
           <!-- For accordion dropdown -->
-          <!-- <input type="checkbox" [id]="'checkbox-' + moduleIndex" style="display: none;"> -->
+          <input type="checkbox" [id]="'checkbox-' + moduleIndex" style="display: none;">
 
-          <div class="course-content_list_item_lessons" *ngIf="isModuleLessons">
+          <div class="course-content_list_item_lessons accordion-body">
             <!-- && moduleLessons.id === module.id -->
             <div class="course-content_list_item_lessons_item dis-flex clickable" *ngFor="let lesson of module.lessons; let lessonIndex = index" (click)="watchLesson(moduleIndex, lessonIndex)">
               <div class="left dis-flex" [title]="lesson?.title">
