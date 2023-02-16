@@ -44,13 +44,13 @@
                 alt=""
               />
               <p class="body-2-regular">
-                Created {{ program?.createdAt | date: "mediumDate" }}
+                Start date {{ program?.start_date | date: "mediumDate" }}
               </p></span
             >
-            <span class="dis-flex"
+            <!-- <span class="dis-flex"
               ><img src="../../../../../../assets/img/svg/medal.svg" alt="" />
               <p class="body-2-regular">3 Sections</p></span
-            >
+            > -->
           </div>
         </div>
       </div>
@@ -131,13 +131,17 @@
                 <th>Number of lesson(s)</th>
                 <th>Quadrant</th>
                 <th>Duration</th>
+                <th>Action</th>
               </tr>
-              <ng-container>63ec16c3bf53a19000ac3cdf
+              <ng-container>
                 <tr class="table-body clickable" *ngFor="let course of program?.courses" (click)="takeCourse(course?.id)">
                   <td>{{ course?.title }}</td>
                   <td>{{course?.lesson_count}}</td>
                   <td>{{course?.course_quadrant}}</td>
                   <td>{{course?.duration}}</td>
+                  <td>
+                    <button class="btn sec_btn" (click)="takeCourse(course?.id)">Start</button>
+                  </td>
                 </tr>
               </ng-container>
               <!-- <ng-template>

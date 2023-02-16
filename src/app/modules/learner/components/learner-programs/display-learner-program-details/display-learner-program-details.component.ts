@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { first } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProgramsService } from 'src/app/services/programs.service';
 import { SchoolService } from 'src/app/services/school.service';
@@ -15,7 +16,6 @@ export class DisplayLearnerProgramDetailsComponent implements OnInit {
   addLearnerToProgramModal: boolean = false;
   currentProgramId: any;
   program: any;
-  programId: string;
   isAlert: boolean = false;
   alertMessage: string;
   alertColor: string
@@ -25,7 +25,7 @@ export class DisplayLearnerProgramDetailsComponent implements OnInit {
     private programsService: ProgramsService,
     private activatedRoute: ActivatedRoute, 
     private authService: AuthService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -42,7 +42,8 @@ export class DisplayLearnerProgramDetailsComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           this.program = res.data.program;
-          this.programId = this.program.id;
+          console.log(this.program);
+          
         },
         error: (e) => console.error(e),
         // complete: () => {
