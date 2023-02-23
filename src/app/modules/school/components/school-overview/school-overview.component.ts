@@ -11,6 +11,7 @@ export class SchoolOverviewComponent implements OnInit {
   user: any;
   dataLoading: boolean = true;
   students: any;
+  public greeting: string = ''
 
   constructor(
     private authService: AuthService,
@@ -18,6 +19,10 @@ export class SchoolOverviewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+    // Get greeting
+    this.greeting = this.authService.getGreeting() 
+
     // Get User data from localstorage
     let userData = this.authService.getUser();
     this.user = userData.user;

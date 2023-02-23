@@ -11,10 +11,15 @@ export class LearnerOverviewComponent implements OnInit {
   stepValue = 40;
   user: any;
   isOnboarding: boolean = true;
+  public greeting: string = ''
 
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
+
+    // Get greeting
+    this.greeting = this.authService.getGreeting() 
+    
     // Get user data from localstorage
     let userData = this.authService.getUser();
     this.user = userData.user;
