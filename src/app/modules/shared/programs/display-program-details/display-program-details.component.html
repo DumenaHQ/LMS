@@ -27,7 +27,7 @@
 
 <section class="course-details">
   <div class="course-details_image">
-    <img src="../../../../../../assets/img/program-thumbnail.svg" alt="" />
+    <img src="../../../../../assets/img/program-thumbnail.svg" alt="" />
   </div>
   <div class="course-details_header">
     <div class="course-details_header_top">
@@ -44,7 +44,7 @@
           <div class="icons dis-flex">
             <span class="dis-flex"
               ><img
-                src="../../../../../../assets/img/svg/calendar-2.svg"
+                src="../../../../../assets/img/svg/calendar-2.svg"
                 alt=""
               />
               <p class="body-2-regular">
@@ -81,33 +81,33 @@
           <p class="body-2-bold">{{ program?.schools?.length }}</p>
           <p class="body-3-regular">{{program?.schools?.length > 1 ? 'Schools' : 'School'}}</p>
         </li>
-        <li>
+        <!-- <li>
           <p class="body-2-bold">{{ program?.learner_count }}</p>
           <p class="body-3-regular">{{program?.learner_count > 1 ? 'Learners' : 'Learner'}}</p>
-        </li>
+        </li> -->
       </ul>
       <div class="completion">
         <p class="body-2-bold title">Timeframe</p>
         <p class="body-2-medium text-primary-color">0 Day</p>
       </div>
       <div class="students">
-        <p class="body-2-bold title">Total Students</p>
+        <p class="body-2-bold title">Total {{program?.learner_count > 1 ? 'Learners' : 'Learner'}} ({{ program?.learner_count }})</p>
         <ul class="students_list dis-flex">
           <li>
             <img
-              src="../../../../../../../../../../../../assets/img/svg/orange-circle.svg"
+              src="../../../../../assets/img/children-avatar/child-avatar-1.png"
               alt=""
             />
           </li>
           <li>
             <img
-              src="../../../../../../../../../../../../assets/img/svg/orange-circle.svg"
+              src="../../../../../assets/img/children-avatar/child-avatar-2.png"
               alt=""
             />
           </li>
           <li>
             <img
-              src="../../../../../../../../../../../../assets/img/svg/orange-circle.svg"
+              src="../../../../../assets/img/children-avatar/child-avatar-3.png"
               alt=""
             />
           </li>

@@ -71,7 +71,7 @@ export class AuthService {
     return this.http.post(
       `${this.baseUrl}users/login`,
       data,
-      this.getHttpOptions()
+      // this.getHttpOptions()
     );
   }
 
@@ -85,7 +85,7 @@ export class AuthService {
     return this.http.put(
       `${this.baseUrl}users/activate`,
       model,
-      this.getHttpOptions()
+      // this.getHttpOptions()
     );
   }
 
@@ -107,7 +107,7 @@ export class AuthService {
     return this.http.post(
       `${this.baseUrl}users/send-password-reset-email`,
       email,
-      this.getHttpOptions()
+      // this.getHttpOptions()
     );
   }
 
@@ -119,7 +119,7 @@ export class AuthService {
     return this.http.post(
       `${this.baseUrl}users/resend-verification-email`,
       payload,
-      this.getHttpOptions()
+      // this.getHttpOptions()
     );
   }
 
@@ -128,7 +128,7 @@ export class AuthService {
     return this.http.post(
       `${this.baseUrl}users/reset-password`,
       data,
-      this.getHttpOptions()
+      // this.getHttpOptions()
     );
   }
 
