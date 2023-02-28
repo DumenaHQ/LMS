@@ -104,7 +104,7 @@ export class ProgramsService {
         'Content-Type': 'application/json',
         Authorization: 'bearer ' + localStorage.getItem('token'),
       }),
-      mode: 'cors' // enables CORS mode
+      // mode: 'cors' // enables CORS mode
     };
     return httpOptions;
   }

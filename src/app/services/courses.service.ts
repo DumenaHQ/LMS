@@ -74,7 +74,7 @@ export class CoursesService {
         'Content-Type': 'multipart/form-data',
         Authorization: 'bearer ' + localStorage.getItem('token'),
       }),
-      mode: 'cors' // enables CORS mode
+      // mode: 'cors' // enables CORS mode
     };
     return httpOptions;
   }

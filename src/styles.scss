@@ -397,6 +397,22 @@ small {
 }
 //-- Dashboard ends --//
 
+//-- Chart starts --//
+.chart-container {
+  // padding-top: $m-2;
+  .chart {
+      width: 100%;
+      height: auto;
+      margin: auto;
+      @media only screen and (max-width: 745px) {
+        width: 100% !important;
+      }
+  }
+}
+//-- Chart ends --//
+
+
+
 
 
 

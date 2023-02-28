@@ -101,11 +101,8 @@
       <div class="ds-sect-header">
         <h5>Learning Overview</h5>
       </div>
-      <div class="chart">
-        <img
-          src="../../../../../assets/img/learner/NBcharts-lineChats.svg"
-          alt=""
-        />
+      <div class="chart-container">
+        <div class="chart" id="chart_div" style="width: 100%;"></div>
       </div>
     </div>
   </main>
@@ -160,11 +157,12 @@
         <h5>Learning Quadrant</h5>
         <p class="caption-regular text-primary-color clickable">See Details</p>
       </div>
-      <div class="chart">
-        <img
+      <div class="chart-container">
+        <!-- <img
           src="../../../../../assets/img/learner/learning-quadrant-chart.svg"
           alt=""
-        />
+        /> -->
+        <div class="chart" id="donutchart" style="width: 100%;"></div>
       </div>
     </div>
     <!-- Leaderboard(lb) -->
@@ -179,6 +177,10 @@
     </div>
   </aside>
 </section>
+
+<div class="chart-container">
+  <div class="chart" id="chart_div" ></div>
+</div>
 
 <!-- Modal -->
 <app-learner-onboard
