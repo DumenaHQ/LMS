@@ -67,7 +67,7 @@ export class SchoolService {
         'Content-Type': contentType,
         Authorization: 'bearer ' + localStorage.getItem('token'),
       }),
-      mode: 'cors' // enables CORS mode
+      // mode: 'cors' // enables CORS mode
     };
     return httpOptions;
   }

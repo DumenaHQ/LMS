@@ -22,7 +22,7 @@ export class SchoolDisplayStudentsComponent implements OnInit {
      this.user = userData.user;
   }
 
-  deleteStudent() {
+  deleteStudent(student: any) {
     // Get school learners from localstorage
     this.schoolService.getSchoolLearners(this.user.id).subscribe({
       next: (res: any) => {
