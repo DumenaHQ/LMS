@@ -73,13 +73,13 @@ export class LearnerOverviewComponent implements OnInit {
       data.addColumn('string', 'Topping');
       data.addColumn('number', 'count');
       data.addRows([
-        ['Monday', 0],
-        ['Tuesday', 0],
-        ['Wednesday', 0], 
-        ['Thursday', 0],
-        ['Friday', 0],
-        ['Saturday', 0],
-        ['Sunday', 0]
+        ['Mon', 0],
+        ['Tue', 0],
+        ['Wed', 0], 
+        ['Thur', 0],
+        ['Frid', 0],
+        ['Sat', 0],
+        ['Sun', 0]
       ]);
       var options = {
         // width: 600,

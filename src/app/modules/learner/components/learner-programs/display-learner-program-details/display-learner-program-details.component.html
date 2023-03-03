@@ -19,8 +19,6 @@
   </p>
 </section>
 
-<!-- eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNjM4NzJkZDQzYjRhZTRkZGYzZTVhOCIsImZ1bGxuYW1lIjoiRGF2aWRkIFBhcmVudCIsImVtYWlsIjoiZGF2aWQuYXJlbXVAc3QuZnV0bWlubmEuZWR1Lm5nIiwicm9sZSI6InBhcmVudCIsImlzVXNlck9uYm9hcmRlZCI6dHJ1ZSwicGhvbmUiOiIxMTExMTExMTExMTExMTEiLCJpYXQiOjE2NzY0NDgzNzgsImV4cCI6MTY3NjUzNDc3OH0.70xMz-Gv6lFihjAbZgcAch-31m9Wnpu-EKLGW9lR-gY -->
-
 <section class="course-details">
   <div class="course-details_image">
     <img src="../../../../../../assets/img/program-thumbnail.svg" alt="" />
@@ -78,23 +76,23 @@
         <p class="body-2-medium text-primary-color">0 Day</p>
       </div>
       <div class="students">
-        <p class="body-2-bold title">Total Students</p>
+        <p class="body-2-bold title">Total {{program?.learner_count > 1 ? 'Learners' : 'Learner'}} ({{ program?.learner_count }})</p>
         <ul class="students_list dis-flex">
           <li>
             <img
-              src="../../../../../../../../../../../../assets/img/svg/orange-circle.svg"
+              src="../../../../../../assets/img/children-avatar/child-avatar-1.png"
               alt=""
             />
           </li>
           <li>
             <img
-              src="../../../../../../../../../../../../assets/img/svg/orange-circle.svg"
+              src="../../../../../../assets/img/children-avatar/child-avatar-2.png"
               alt=""
             />
           </li>
           <li>
             <img
-              src="../../../../../../../../../../../../assets/img/svg/orange-circle.svg"
+              src="../../../../../../assets/img/children-avatar/child-avatar-3.png"
               alt=""
             />
           </li>
