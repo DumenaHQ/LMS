@@ -42,7 +42,7 @@
           <div class="dropdown">
             <small
               class="body-3-regular delete clickable"
-              (click)="deleteStudent(student)"
+              (click)="openDeleteModal(student)"
               >Delete</small
             >
           </div>
@@ -50,3 +50,6 @@
     </tr>
   </table>
 </div>
+
+<!-- Delete confirmation -->
+<app-confirm-delete *ngIf="deleteModal" (deleteModal)="closeDeleteModal()" [data]="student" [deleteUrl]="deleteUrl" [deleteRoutePath]="deleteRoutePath"></app-confirm-delete>

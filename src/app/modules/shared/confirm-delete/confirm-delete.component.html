@@ -22,7 +22,14 @@
         <button type="button" class="btn skip_btn" (click)="closeDeleteModal()">
           Cancel
         </button>
-        <button class="btn prim_btn" (click)="removeItem()">Remove</button>
+        <button
+          class="btn prim_btn"
+          [disabled]="loading"
+          (click)="removeItem()"
+        >
+          <span *ngIf="!loading">Remove</span>
+          <span *ngIf="loading">Processing...</span>
+        </button>
       </div>
     </div>
   </div>

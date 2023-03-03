@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { SchoolService } from 'src/app/services/school.service';
 
 @Component({
   selector: 'app-school-display-students',
@@ -10,10 +9,14 @@ import { SchoolService } from 'src/app/services/school.service';
 export class SchoolDisplayStudentsComponent implements OnInit {
   user: any;
   @Input() students: any;
+  student: any
+
+  deleteModal: boolean = false;
+  deleteUrl: string;
+  deleteRoutePath: string;
 
   constructor(
     private authService: AuthService,
-    private schoolService: SchoolService
   ) {}
 
   ngOnInit(): void {
@@ -22,14 +25,20 @@ export class SchoolDisplayStudentsComponent implements OnInit {
      this.user = userData.user;
   }
 
-  deleteStudent(student: any) {
-    // Get school learners from localstorage
-    this.schoolService.getSchoolLearners(this.user.id).subscribe({
-      next: (res: any) => {
-        this.students = res;
-      },
-      error: (e) => console.error(e),
-    });
+   // Open Confirm Delete Modal
+   openDeleteModal(student: any) {
+
+    console.log(student);
+    this.student = student
     
+    this.deleteModal = true;
+
+    this.deleteUrl = `schools/${this.user.id}/learners/${this.student.id}`
+    this.deleteRoutePath = '/school/students'
+  }
+
+  // Close Confirm Delete Modal
+  closeDeleteModal() {
+    this.deleteModal = false;
   }
 }

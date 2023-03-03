@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { of, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,10 @@ export class SchoolService {
   baseUrl: string = environment.baseUrl;
   paystackKey: string = environment.paystackKey;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService
+    ) {}
 
   // Get All school learners
   getSchoolLearners(userId: string) {
@@ -59,6 +63,14 @@ export class SchoolService {
       this.getHttpOptions('application/json') 
     );
   }
+
+  // Delete School learner
+  // deleteSchoolLearner(userId: string) {
+  //   return this.http.post(
+  //     `${this.baseUrl}schools/${userId}/learners`,
+  //     this.getHttpOptions('application/json') 
+  //   );
+  // }
 
   // Get HttpOptions
   getHttpOptions(contentType: string) {
