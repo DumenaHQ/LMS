@@ -39,7 +39,7 @@
     <div class="program_card">
       <div class="program_card_item" *ngFor="let program of programs">
         <img
-          src="../../../../../../assets/img/program-thumbnail-patterns.svg"
+          src="../../../../../../assets/img/robotics-champ/rob-hero-img.png"
           alt="image"
           class="program_card_item_image clickable"
           (click)="displayProgram(program?.id)"
@@ -83,23 +83,23 @@
 
           <div class="program_card_item_details_left">
             <div class="students">
-              <p class="body-2-regular title">Total Students</p>
+              <p class="body-2-regular title">Total {{program?.learner_count > 1 ? 'Learners' : 'Learner'}} ({{ program?.learner_count }})</p>
               <ul class="students_list dis-flex">
                 <li>
                   <img
-                    src="../../../../../../assets/img/svg/orange-circle.svg"
+                    src="../../../../../../assets/img/children-avatar/child-avatar-1.png"
                     alt=""
                   />
                 </li>
                 <li>
                   <img
-                    src="../../../../../../assets/img/svg/orange-circle.svg"
+                    src="../../../../../../assets/img/children-avatar/child-avatar-2.png"
                     alt=""
                   />
                 </li>
                 <li>
                   <img
-                    src="../../../../../../assets/img/svg/orange-circle.svg"
+                    src="../../../../../../assets/img/children-avatar/child-avatar-3.png"
                     alt=""
                   />
                 </li>
