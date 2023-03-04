@@ -59,13 +59,20 @@
         </div>
       </div>
       <div class="right dis-flex">
-        <button class="btn prim_btn" *ngIf="program?.hasJoined === true" (click)="openAddLearnerToProgramModal()">
-          Add Child
-        </button>
-        <button class="btn prim_btn" *ngIf="program?.hasJoined === false" (click)="joinProgram()">
-          <span  *ngIf="user.role === 'school'">Join</span>
-          <span  *ngIf="user.role === 'parent'">Follow</span>
-        </button>
+        <ng-container *ngIf="program?.hasJoined === false">
+          <button class="btn prim_btn" *ngIf="user.role === 'parent'" [disabled]="loading"  (click)="addParentToProgram(program?.id)">
+            <span *ngIf="!loading">Follow</span>
+            <span *ngIf="loading">Processing...</span>
+          </button>
+          <button class="btn prim_btn" *ngIf="user.role === 'school'" [disabled]="loading"  (click)="addSchoolToProgram(program?.id)">
+            <span *ngIf="!loading">Join</span>
+            <span *ngIf="loading">Processing...</span>
+          </button>
+      </ng-container>
+      <button class="btn grey_btn" *ngIf="program?.hasJoined === true">
+        <span *ngIf="user.role === 'parent'">Followed</span>
+        <span *ngIf="user.role === 'school'">Joined</span>
+      </button>
       </div>
     </div>
     <div class="course-details_header_bottom">

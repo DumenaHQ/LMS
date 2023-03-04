@@ -45,7 +45,7 @@ export class DisplayProgramsComponent implements OnInit {
 
   // Add Parent to Program
   addParentToProgram(programId: string) {
-    // this.loading = true;
+    this.loading = true;
 
     let payload = {
       parents: [
@@ -69,15 +69,15 @@ export class DisplayProgramsComponent implements OnInit {
         }
       },
       error: (e) => console.error(e),
-      // complete: () => {
-      //   this.dataLoading = false;
-      // },
+      complete: () => {
+        this.loading = false;
+      },
     });
   }
 
   // Add School to program
   addSchoolToProgram(programId: string) {
-    // this.loading = true;
+    this.loading = true;
 
     let payload = {
       schools: [
@@ -101,9 +101,9 @@ export class DisplayProgramsComponent implements OnInit {
         }
       },
       error: (e) => console.error(e),
-      // complete: () => {
-      //   this.dataLoading = false;
-      // },
+      complete: () => {
+        this.loading = false;
+      },
     });
   }
 

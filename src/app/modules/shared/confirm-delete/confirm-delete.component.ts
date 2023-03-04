@@ -15,6 +15,7 @@ export class ConfirmDeleteComponent implements OnInit {
   @Input() data: any;
   @Input() deleteUrl: any;
   @Input() deleteRoutePath: any;
+  loading: boolean = false
 
   constructor(private authService: AuthService, private router: Router) { }
 
@@ -23,12 +24,16 @@ export class ConfirmDeleteComponent implements OnInit {
 
   // Remove item
   removeItem() {
+    this.loading = true
+
     this.authService
       .deleteItem(this.deleteUrl)
       .subscribe((res: any) => {
         console.log(res);
         if (res.status === true) {
           this.showAlertPopup(res.message, 'success');
+
+          this.closeDeleteModal()
 
           if(this.deleteRoutePath !== '') {
             setTimeout(() => {
