@@ -20,6 +20,7 @@ export class DisplayProgramDetailsComponent implements OnInit {
   alertMessage: string;
   alertColor: string
   user: any;
+  loading: boolean = false;
 
   constructor(
     private programsService: ProgramsService,
@@ -42,9 +43,6 @@ export class DisplayProgramDetailsComponent implements OnInit {
         next: (res: any) => {
           this.program = res.data.program;
           this.programId = this.program.id;
-
-          console.log(this.program);
-          
         },
         error: (e) => console.error(e),
         // complete: () => {
@@ -59,9 +57,41 @@ export class DisplayProgramDetailsComponent implements OnInit {
     this.contentId = ids;
   }
 
-  // Join Program
-  joinProgram() {
-    // this.loading = true;
+   // Add Parent to Program
+   addParentToProgram(programId: string) {
+    this.loading = true;
+
+    let payload = {
+      parents: [
+        {
+          user_id: this.user.id,
+          name: this.user.fullname,
+        },
+      ],
+    };
+    
+    this.programsService.addParentToProgram(payload, programId).subscribe({
+      next: (res: any) => {
+        console.log(res);
+
+        if (res.status === true) {
+          this.showAlertPopup(res.message, 'success');
+          
+          setTimeout(() => {
+            this.ngOnInit()
+          }, 3000);
+        }
+      },
+      error: (e) => console.error(e),
+      complete: () => {
+        this.loading = false;
+      },
+    });
+  }
+
+  // Add School to program
+  addSchoolToProgram(programId: string) {
+    this.loading = true;
 
     let payload = {
       schools: [
@@ -72,7 +102,7 @@ export class DisplayProgramDetailsComponent implements OnInit {
       ],
     };
 
-    this.programsService.addSchoolToProgram(payload, this.programId).subscribe({
+    this.programsService.addSchoolToProgram(payload, programId).subscribe({
       next: (res: any) => {
         console.log(res);
 
@@ -85,8 +115,12 @@ export class DisplayProgramDetailsComponent implements OnInit {
         }
       },
       error: (e) => console.error(e),
+      complete: () => {
+        this.loading = false;
+      },
     });
   }
+
 
   // Open Add Child Modal
   openAddLearnerToProgramModal() {
