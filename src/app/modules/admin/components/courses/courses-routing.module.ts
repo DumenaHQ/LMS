@@ -7,7 +7,7 @@ import { CoursesComponent } from './courses.component';
 import { DisplayCoursesComponent } from './display-courses/display-courses.component';
 import { AddCourseComponent } from './add-course/add-course.component';
 import { AddCourseModuleComponent } from './add-course/add-course-module/add-course-module.component';
-import { AddCourseModuleLessonComponent } from './add-course/add-course-module-lesson/add-course-module-lesson.component';
+import { DisplayCourseModulesComponent } from './add-course/display-course-modules/display-course-modules.component';
 
 const routes: Routes = [
   {
@@ -40,17 +40,17 @@ const routes: Routes = [
       },
       {
         path: 'create-course/:courseId/modules',
-        component: AddCourseModuleComponent,
+        component: DisplayCourseModulesComponent,
         data: {
-          title: 'Add Lesson',
+          title: 'Add Modules',
           description: 'Description Meta Tag Content',
         },
       },
       {
-        path: 'create-course/:courseId/modules/:moduleId/add-lesson',
-        component: AddCourseModuleLessonComponent,
+        path: 'create-course/:courseId/modules/add-module',
+        component: AddCourseModuleComponent,
         data: {
-          title: 'Add Lesson',
+          title: 'Add Modules',
           description: 'Description Meta Tag Content',
         },
       },

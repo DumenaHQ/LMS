@@ -6,73 +6,151 @@
 ></app-alert-popup>
 
 <section class="ds-head">
-    <h2 class="ds-head_title">Course Modules</h2>
+    <h2 class="ds-head_title">Add Module</h2>
 </section>
 
-<section class="grouping dis-flex">
-    <!-- Filter -->
-    <div class="filter s-f">
-      <div class="body-3-regular dis-flex">
-        <span class="title">Filter:</span>
-        <span class="dropdown dis-flex clickable"
-          >All Modules <i class="bx bx-chevron-down"></i
-        ></span>
-      </div>
-    </div>
-  
-    <div class="right dis-flex">
-      <!-- Sort -->
-      <div class="sort s-f">
-        <div class="body-3-regular dis-flex">
-          <span class="title">Sort:</span>
-          <span class="dropdown dis-flex clickable"
-            >Last modified <i class="bx bx-chevron-down"></i
-          ></span>
-        </div>
-      </div>
-      <!-- New Course Button -->
-      <button class="btn prim_btn" (click)="openAddModuleModal()">New Module</button>
-    </div>
-  </section>
-
-<section class="modules">
-  <div class="modules_body">
-    <div class="module_list dis-flex card" *ngIf="modules?.length > 0">
-      <div class="module_list_item card_item" *ngFor="let module of modules">
-        <h5>{{module.title}}</h5>
-        <div class="module_list_item_bottom dis-flex">
-            <p>{{module.lesson_count}} {{module.lesson_count > 1 ? 'Lessons' : 'Lesson'}}</p>
-            <button class="btn sec_btn" (click)="addLesson(module.id)">Add Lesson</button>
-        </div>
-      </div>
-    </div>
-    <ng-container *ngIf="modules?.length === 0">
-        <p>Empty list!</p>
-    </ng-container>
-  </div>
-</section>
-
-<div class="modal" *ngIf="addModuleModal">
-    <div class="modal_area">
-        <span class="modal_area_close" (click)="closeAddModuleModal()">
-            <i class="bx bx-x icon clickable"></i>
-        </span>
-        <!-- Module Form -->
+<section class="lessons">
+    <div class="lessons_body">
+        <!-- Lesson Form -->
         <form [formGroup]="moduleForm">
-            <div class="form_control">
-                <label for="title">Module Title</label>
-                <div class="form_control_field">
+            <!-- <div class="form_control">
+                <label for="lesson_video">Lesson Video</label>
+                <div class="">
+                <div
+                    class="form_control_field select-image clickable"
+                    (click)="fileInput.click()"
+                    appDragDrop
+                    (fileDropped)="uploadFile($event)"
+                >
                     <input
-                    type="text"
-                    id="title"
-                    placeholder="Type here"
-                    formControlName="title"
+                    type="file"
+                    id="lesson_video"
+                    #fileInput
+                    hidden
+                    (change)="uploadFile($event)"
                     />
+                    <img
+                    [src]="
+                        showPreviewImage
+                        ? previewImage
+                        : '../../../assets/img/select-Image.svg'
+                    "
+                    alt=""
+                    />
+                    <p class="body-3-regular">
+                    Drag your image here or
+                    <span class="text-primary-color">browse</span>
+                    </p>
+                    <p class="body-3-regular">{{ selectedFileName }}</p>
                 </div>
+                </div>
+            </div> -->
+            <div class="form_control_container">
+              <div class="form_control">
+                  <label for="title">Module Title</label>
+                  <div class="form_control_field">
+                  <input
+                  type="text"
+                      id="title"
+                      placeholder="Type here"
+                      formControlName="title"
+                  />
+                  </div>
+              </div>
+              <div class="form_control">
+                <label for="objectives">Objectives</label>
+                <div class="form_control_field dis-flex">
+                  <input
+                    type="text"
+                    name="objectives"
+                    id="objectives"
+                    placeholder="Type here"
+                    formControlName="objectives"
+                  >
+                  <button class="btn prim_btn" (click)="addObjective()">Add</button>
+                </div>
+                <div class="tag_list dis-flex">
+                  <div
+                    class="tag_list_item dis-flex"
+                    *ngFor="let objective of objectivesList; let objectiveIndex = index"
+                  >
+                    <small [title]="objective">{{
+                      objective.length > 30 ? objective.slice(0, 30) + "..." : objective
+                    }}</small>
+                    <i
+                      class="bx bx-x icon clickable"
+                      (click)="removeObjective(objectiveIndex)"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+              <div class="form_control">
+                  <label for="further_reading">Further Reading</label>
+                  <div class="form_control_field">
+                  <textarea
+                      name=""
+                      id="further_reading"
+                      cols="30"
+                      rows="5"
+                      placeholder="Type here"
+                      spellcheck="true"
+                      formControlName="further_reading"
+                      ></textarea>
+                  </div>
+              </div>
+              <div class="form_control">
+                <label for="class_activities">Class Activities</label>
+                <div class="form_control_field dis-flex">
+                  <input
+                    type="text"
+                    name="class_activities"
+                    id="class_activities"
+                    placeholder="Type here"
+                    formControlName="class_activities"
+                  >
+                  <button class="btn prim_btn" (click)="addClassActivity()">Add</button>
+                </div>
+                <div class="tag_list dis-flex">
+                  <div
+                    class="tag_list_item dis-flex"
+                    *ngFor="let classActivity of classActivityList; let classActivityIndex = index"
+                  >
+                    <small [title]="classActivity">{{
+                      classActivity.length > 30 ? classActivity.slice(0, 30) + "..." : classActivity
+                    }}</small>
+                    <i
+                      class="bx bx-x icon clickable"
+                      (click)="removeClassActivity(classActivityIndex)"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+              <div class="form_control code_example">
+                  <label for="code_example">Code Example</label>
+                  <div class="form_control_field">
+                  <textarea
+                      name=""
+                      id="code_example"
+                      cols="30"
+                      rows="5"
+                      placeholder="Type here"
+                      spellcheck="true"
+                      formControlName="code_example"
+                  ></textarea>
+                  </div>
+              </div>
             </div>
-            <div class="form_btns">
-                <button class="btn prim_btn" (click)="addModule()">Save</button>
+            <div class="form_btns dis-flex">
+              <ng-container *ngIf="!loading">
+                <button class="btn prim_btn" (click)="addAndCloseModule()">Save And Close</button>
+                <button class="btn sec_btn" (click)="addAndNewModule()">Save And New</button>
+              </ng-container>
+              <button
+                class="btn prim_btn"
+                [disabled]="loading"
+                *ngIf="loading"
+              >Processing...</button>
             </div>
         </form>
     </div>
-</div>
+</section>

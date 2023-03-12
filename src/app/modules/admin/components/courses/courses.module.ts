@@ -15,7 +15,7 @@ import { AddQuizQuestionComponent } from './add-quiz-question/add-quiz-question.
 import { DisplayCoursesComponent } from './display-courses/display-courses.component';
 import { AddCourseComponent } from './add-course/add-course.component';
 import { AddCourseModuleComponent } from './add-course/add-course-module/add-course-module.component';
-import { AddCourseModuleLessonComponent } from './add-course/add-course-module-lesson/add-course-module-lesson.component';
+import { DisplayCourseModulesComponent } from './add-course/display-course-modules/display-course-modules.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,7 @@ import { AddCourseModuleLessonComponent } from './add-course/add-course-module-l
     DisplayCoursesComponent,
     AddCourseComponent,
     AddCourseModuleComponent,
-    AddCourseModuleLessonComponent,
+    DisplayCourseModulesComponent,
   ],
   imports: [
     CommonModule,
