@@ -74,9 +74,9 @@ export class AddCourseComponent implements OnInit {
       difficulty_level: this.courseForm.value.difficulty_level,
       course_quadrant: this.courseForm.value.course_quadrant,
     };
-
+    
     // Send users data
-    this.coursesService.addCourse(this.courseForm.value).subscribe(
+    this.coursesService.addCourse(payload).subscribe(
         (res: any) => {
         console.log(res);
         
