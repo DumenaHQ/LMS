@@ -21,6 +21,7 @@ export class DisplayCourseModulesComponent implements OnInit {
 
   selectedFileName: string;
   file: File;
+  course: any;
   // previewImage: any;
   // showPreviewImage: boolean = false;
 
@@ -33,6 +34,18 @@ export class DisplayCourseModulesComponent implements OnInit {
 
      // Get Current Program
      this.currentCourseId = this.activatedRoute.snapshot.params;
+
+     // Get Course
+    this.coursesService.getCourse(this.currentCourseId.courseId).subscribe({
+      next: (res: any) => {
+        this.course = res.data.course;
+        console.log(this.course);
+      },
+      error: (e) => console.error(e),
+      complete: () => {
+        // this.dataLoading = false;
+      },
+    });
 
     // Fetch all course modules
     this.coursesService.getCourse(this.currentCourseId.courseId).subscribe({
