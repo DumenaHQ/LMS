@@ -19,7 +19,7 @@ export class SchoolSignupComponent implements OnInit {
   statesInNigeria = [
     {
       code: 'FC',
-      name: 'Abuja',
+      name: 'FCT',
     },
     {
       code: 'AB',
