@@ -201,7 +201,8 @@ aside {
         }
         &_lessons {
           display: none;
-          &_item {
+          &_item,
+          &_quiz {
             gap: $m-2;
             justify-content: space-between;
             padding: $m-1 $m-2;
@@ -215,6 +216,10 @@ aside {
                 width: 16px;
               }
             }
+          }
+          &_quiz {
+            display: block;
+            background-color: $inner-border;
           }
         }
       }
