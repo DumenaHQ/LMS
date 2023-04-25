@@ -55,8 +55,17 @@ export class ProgramsService {
     return this.http.post(
       `${this.baseUrl}programs`,
       data,
-      this.getHttpOptions()
+      this.getHttpOptionsForMultipart()
     );
+  }
+
+  // Add course to program
+  addCourseToProgram(data: any, programId: any) {
+    return this.http.patch(
+      `${this.baseUrl}programs/${programId}/courses`,
+      data,
+      this.getHttpOptions()
+      );
   }
 
   // Add school to program
@@ -66,16 +75,16 @@ export class ProgramsService {
       data,
       this.getHttpOptions()
       );
-    }
+  }
 
-  // Add school to program
+  // Add parent to program
   addParentToProgram(data: any, programId: any) {
     return this.http.patch(
       `${this.baseUrl}programs/${programId}/parents`,
       data,
       this.getHttpOptions()
       );
-    }
+  }
     
   // Add learner to program
   addLearnerToProgram(data: any, programId: any) {
@@ -84,8 +93,18 @@ export class ProgramsService {
       data,
       this.getHttpOptions()
       );
-    }
+  }
   //-- ADD ENDS --//
+
+  //-- EDIT STARTS --//
+  editProgram(data: any, programId: any) {
+    return this.http.put(
+      `${this.baseUrl}programs/${programId}`,
+      data,
+      this.getHttpOptions()
+    );
+  }
+  //-- EDIT END --//
     
   //-- DELETE STARTS --//
   // Delete program
@@ -108,4 +127,17 @@ export class ProgramsService {
     };
     return httpOptions;
   }
+
+  // Get HttpOptions for multipart
+  getHttpOptionsForMultipart() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'multipart/form-data',
+        Authorization: 'bearer ' + localStorage.getItem('token'),
+      }),
+      // mode: 'cors' // enables CORS mode
+    };
+    return httpOptions;
+  }
+
 }

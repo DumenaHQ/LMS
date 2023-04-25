@@ -5,46 +5,25 @@
   [alertColor]="alertColor"
 ></app-alert-popup>
 
-<section class="ds-head">
-    <h2 class="ds-head_title">Add Module</h2>
+<section class="ds-head dis-flex">
+  <h2 class="ds-head_title clickable" routerLink="/admin/courses">Courses</h2>
+  <i class="bx bx-chevron-right icon"></i>
+  <p class="clickable">
+    {{
+      course?.title.length > 20
+      ? course?.title.slice(0, 20)  + "..." 
+      : course?.title | titlecase
+    }}
+  </p>
+  <i class="bx bx-chevron-right icon"></i>
+  <p>Add Module</p>
+
 </section>
 
 <section class="lessons">
     <div class="lessons_body">
         <!-- Lesson Form -->
         <form [formGroup]="moduleForm">
-            <!-- <div class="form_control">
-                <label for="lesson_video">Lesson Video</label>
-                <div class="">
-                <div
-                    class="form_control_field select-image clickable"
-                    (click)="fileInput.click()"
-                    appDragDrop
-                    (fileDropped)="uploadFile($event)"
-                >
-                    <input
-                    type="file"
-                    id="lesson_video"
-                    #fileInput
-                    hidden
-                    (change)="uploadFile($event)"
-                    />
-                    <img
-                    [src]="
-                        showPreviewImage
-                        ? previewImage
-                        : '../../../assets/img/select-Image.svg'
-                    "
-                    alt=""
-                    />
-                    <p class="body-3-regular">
-                    Drag your image here or
-                    <span class="text-primary-color">browse</span>
-                    </p>
-                    <p class="body-3-regular">{{ selectedFileName }}</p>
-                </div>
-                </div>
-            </div> -->
             <div class="form_control_container">
               <div class="form_control">
                   <label for="title">Module Title</label>
@@ -125,6 +104,61 @@
                   </div>
                 </div>
               </div>
+              <div class="form_control further_reading_links">
+                <label for="further_reading_links_caption">Further Reading Links</label>
+                <div class="further_reading_links_field dis-flex">
+                  <div class="form_control_field">
+                    <input
+                      type="text"
+                      name="further_reading_links_caption"
+                      id="further_reading_links_caption"
+                      placeholder="Caption"
+                      formControlName="further_reading_links_caption"
+                    >
+                  </div>
+                  <div class="form_control_field">
+                    <input
+                      type="text"
+                      name="further_reading_links_url"
+                      id="further_reading_links_url"
+                      placeholder="Link"
+                      formControlName="further_reading_links_url"
+                    >
+                  </div>
+                  <button class="btn prim_btn" (click)="addFurtherReadingLink()">Add</button>
+                </div>
+                <div style="overflow-x: auto;">
+                  <table>
+                    <tr class="table-header">
+                      <th>Caption</th>
+                      <th>Link</th>
+                      <th>Action</th>
+                    </tr>
+                    <ng-container *ngIf="furtherReadingLinksList.length > 0">
+                      <tr
+                        class="table-body"
+                        *ngFor="let item of furtherReadingLinksList; let i = index"
+                      >
+                        <td>{{ item.caption }}</td>
+                        <td>{{ item.url }}</td>
+                        <td>
+                          <i
+                            class="bx bx-x clickable"
+                            style="color: #e92c2c; font-size: 20px"
+                            title="Remove"
+                            (click)="removeFurtherReadingLink(item)"
+                          ></i>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </table>
+                  <ng-container *ngIf="furtherReadingLinksList.length === 0">
+                    <div style="text-align: center; margin: 1rem 0;">
+                      <p>Empty List!</p>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
               <div class="form_control code_example">
                   <label for="code_example">Code Example</label>
                   <div class="form_control_field">
@@ -142,8 +176,8 @@
             </div>
             <div class="form_btns dis-flex">
               <ng-container *ngIf="!loading">
-                <button class="btn prim_btn" (click)="addAndCloseModule()">Save And Close</button>
-                <button class="btn sec_btn" (click)="addAndNewModule()">Save And New</button>
+                <button class="btn prim_btn" [disabled]="moduleForm.invalid" (click)="addModule('Save and Close')">Save And Close</button>
+                <button class="btn sec_btn" [disabled]="moduleForm.invalid" (click)="addModule('Save and New')">Save And New</button>
               </ng-container>
               <button
                 class="btn prim_btn"

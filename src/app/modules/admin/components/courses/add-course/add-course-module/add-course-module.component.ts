@@ -17,11 +17,15 @@ export class AddCourseModuleComponent implements OnInit {
   alertColor: string;
   moduleForm: any = FormGroup;
   currentModule: any;
-  isObjectivesList: boolean = false
+  isObjectivesList: boolean = false;
   objectivesList: any[] = [];
-  isClassActivityList: boolean = false
+  isClassActivityList: boolean = false;
   classActivityList: any[] = [];
   user: any;
+  course: any;
+  isFurtherReadingLinksList: boolean = false;
+  furtherReadingLinksList: any[] = [];
+  submitType: string;
 
   constructor(
     private coursesService: CoursesService,
@@ -38,14 +42,29 @@ export class AddCourseModuleComponent implements OnInit {
 
      // Get Current Program
      this.currentModule = this.activatedRoute.snapshot.params;
+
+     // Get Course
+    this.coursesService.getCourse(this.currentModule.courseId).subscribe({
+      next: (res: any) => {
+        this.course = res.data.course;
+        console.log(this.course);
+      },
+      error: (e) => console.error(e),
+      complete: () => {
+        // this.dataLoading = false;
+      },
+    });
+     
      
     // Lesson Form
     this.moduleForm = this.formBuilder.group({
       title: ['', Validators.required],
       objectives: [''],
-      further_reading: ['', Validators.required],
+      further_reading: [''],
       class_activities: [''],
-      code_example: ['', Validators.required],
+      further_reading_links_caption: [''],
+      further_reading_links_url: [''],
+      code_example: [''],
       instructor: [this.user.id, Validators.required],
     });
   }
@@ -62,6 +81,7 @@ export class AddCourseModuleComponent implements OnInit {
     this.moduleForm.get('objectives').setValue('');
     
   }
+
   // Remove objective
   removeObjective(index: any) {
     this.objectivesList.splice(index, 1);
@@ -80,14 +100,40 @@ export class AddCourseModuleComponent implements OnInit {
     this.moduleForm.get('class_activities').setValue('');
     
   }
+
   // Remove class activity
   removeClassActivity(index: any) {
     this.classActivityList.splice(index, 1);
     // this.ngOnInit()
   }
+  
+   // Add Further reading link
+   addFurtherReadingLink() {
+    if (this.moduleForm.value.further_reading_links_caption !== '' && this.moduleForm.value.further_reading_links_url !== '') {
+      // Show added further reading links
+      this.isFurtherReadingLinksList = true;
+      this.furtherReadingLinksList.push(
+        {
+          caption: this.moduleForm.value.further_reading_links_caption,
+          url: this.moduleForm.value.further_reading_links_url
+        }
+      );
+    }
 
-  // Add and Close Module
-  addAndCloseModule() {
+    // Clear input field
+    this.moduleForm.get('further_reading_links_caption').setValue('');
+    this.moduleForm.get('further_reading_links_url').setValue('');
+    
+  }
+
+  // Remove further reading link
+  removeFurtherReadingLink(index: any) {
+    this.furtherReadingLinksList.splice(index, 1);
+    // this.ngOnInit()
+  }
+
+  // Add Module
+  addModule(submitType: string) {
 
     this.loading = true
 
@@ -103,59 +149,44 @@ export class AddCourseModuleComponent implements OnInit {
       objectives: this.objectivesList,
       further_reading: this.moduleForm.value.further_reading,
       class_activities: this.classActivityList,
+      further_reading_links: this.furtherReadingLinksList,
       code_example: this.moduleForm.value.code_example,
       instructor: this.moduleForm.value.instructor
     }
 
-    console.log(payload);
-    
-
+    // Check which botton user clicks
     this.coursesService
-      .addModule(this.currentModule.courseId, payload)
-      .subscribe((res: any) => {
+    .addModule(this.currentModule.courseId, payload)
+    .subscribe((res: any) => {
         console.log(res);
         if(res.status === true) {
           this.showAlertPopup(res.message, 'success')
-          setTimeout(() => {
-            this.router.navigate([`admin/courses/create-course/${this.currentModule.courseId}/modules`])
-          }, 3000);
+          if(submitType === 'Save and New') {
+            console.log({
+              title: 'Save and New',
+              data: payload
+            });
+            // Reset all forms
+            this.moduleForm.get('title').setValue('');
+            this.objectivesList = [];
+            this.classActivityList = [];
+            this.furtherReadingLinksList = [];
+            this.loading = false;
+            
+          } else {
+            console.log({
+              title: 'Save and Close',
+              data: payload
+            });
+            // Route to modules page
+            setTimeout(() => {
+              this.router.navigate([`admin/courses/create-course/${this.currentModule.courseId}/modules`])
+            }, 3000);
+          }
+          
         }
       });
   }
-
-  // Add And New Module
-  addAndNewModule() {
-    this.loading = true
-
-    // If Form is invalid
-    if (this.moduleForm.invalid) {
-      this.loading = false;
-
-      return;
-    }
-    
-    let payload = {
-      title: this.moduleForm.value.title,
-      objectives: this.objectivesList,
-      further_reading: this.moduleForm.value.further_reading,
-      class_activities: this.classActivityList,
-      code_example: this.moduleForm.value.code_example,
-      instructor: this.moduleForm.value.instructor
-    }
-
-    this.coursesService
-      .addModule(this.currentModule.courseId, payload)
-      .subscribe((res: any) => {
-        console.log(res);
-        if(res.status === true) {
-          this.showAlertPopup(res.message, 'success')
-          this.moduleForm.reset()
-          this.objectivesList = []
-          this.classActivityList = []
-          this.loading = false
-        }
-      });
-  } 
 
   // Show alert
   showAlertPopup(message: string, color: string) {

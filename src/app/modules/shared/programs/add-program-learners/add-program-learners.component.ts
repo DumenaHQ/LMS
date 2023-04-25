@@ -12,10 +12,10 @@ import * as XLSX from 'xlsx';
 export class AddProgramLearnersComponent implements OnInit {
 
   @Output() addLearnerToProgramModal: EventEmitter<any> = new EventEmitter();
+  @Input() programId: string;
   isAlert: boolean = false;
   alertMessage: string;
   alertColor: string;
-  @Input() programId: string;
 
   loading: boolean = false;
   errorMessage: string = '';
