@@ -32,6 +32,8 @@
             controls
             controlsList="nodownload"
             #videoPlayer
+            autoplay
+            (ended)="playNextVideo()"
             ></video>
             <!-- autoplay -->
           <!-- <div class="controls">
@@ -42,9 +44,9 @@
               <button id="play-pause"></button>
             </div>
           </div> -->
-          <span class="play_icon" (click)="startVideo()" *ngIf="!videoClicked">
+          <!-- <span class="play_icon" (click)="startVideo()" *ngIf="!videoClicked">
             <img src="../../../../../assets/img/svg/white-play.svg" alt="image" />
-          </span>
+          </span> -->
         </div>
         <!-- <iframe
           [src]="currentCourseLesson?.video_url"
@@ -159,7 +161,7 @@
 
           <div class="course-content_list_item_lessons accordion-body">
             <!-- && moduleLessons.id === module.id -->
-            <div class="course-content_list_item_lessons_item dis-flex clickable" *ngFor="let lesson of module.lessons; let lessonIndex = index" (click)="watchLesson(moduleIndex, lessonIndex)" [title]="lesson?.title">
+            <div class="course-content_list_item_lessons_item dis-flex clickable" *ngFor="let lesson of module.lessons; let lessonIndex = index" (click)="watchLesson(moduleIndex, lessonIndex)" [title]="lesson?.title" [class.active]="currentModuleIndex + currentLessonIndex === moduleIndex + lessonIndex">
               <div class="left dis-flex">
                 <img
                   src="../../../../../assets/img/library/video-play-black.svg"

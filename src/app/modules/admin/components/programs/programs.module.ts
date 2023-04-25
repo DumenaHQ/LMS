@@ -12,6 +12,7 @@ import { ProgramsDetailsComponent } from './programs-details/programs-details.co
 import { ProgramCreateComponent } from './program-create/program-create.component';
 import { AddCourseModalComponent } from './add-course-modal/add-course-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProgramEditComponent } from './program-edit/program-edit.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ProgramsDetailsComponent,
     ProgramCreateComponent,
     AddCourseModalComponent,
+    ProgramEditComponent,
   ],
   imports: [
     CommonModule,

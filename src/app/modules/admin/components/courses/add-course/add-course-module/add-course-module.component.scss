@@ -58,6 +58,11 @@ form {
         resize: none;
       }
     }
+    &.further_reading_links {
+      .further_reading_links_field {
+        gap: $m-2
+      }
+    }
     &.code_example {
       .form_control_field {
         background: $text-color1;
@@ -114,4 +119,15 @@ form {
       }
     }
   }
+}
+
+// Table
+table {
+  margin-top: $m-2;
+  td, th {
+    padding: $m-1;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
 }

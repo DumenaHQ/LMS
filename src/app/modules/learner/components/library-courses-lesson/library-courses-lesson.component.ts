@@ -80,11 +80,22 @@ export class LibraryCoursesLessonComponent implements OnInit {
     this.currentLessonIndex = lessonIndex
   } 
 
-  // Start Video
-  startVideo(): void {
-    this.videoClicked = !this.videoClicked;
-    this.videoPlayer.nativeElement.play();
+  playNextVideo() {
+    this.currentLessonIndex++;
+    this.lessonVideoUrl = this.course.modules[this.currentModuleIndex].lessons[this.currentLessonIndex].lesson_video
+    if (this.currentLessonIndex < this.course.modules[this.currentModuleIndex].lessons.length - 1) {
+      this.videoPlayer.nativeElement.src = this.lessonVideoUrl;
+      this.videoPlayer.nativeElement.load();
+      this.videoPlayer.nativeElement.play();
+      console.log(this.currentLessonIndex);
+    }
   }
+  
+  // Start Video
+  // startVideo(): void {
+  //   this.videoClicked = !this.videoClicked;
+  //   this.videoPlayer.nativeElement.play();
+  // }
 
   // togglePlayPause() {
   //   const video = document.querySelector('.video')

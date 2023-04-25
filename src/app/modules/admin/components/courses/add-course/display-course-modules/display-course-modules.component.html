@@ -8,7 +8,7 @@
 <section class="ds-head dis-flex">
   <h2 class="ds-head_title clickable" routerLink="/admin/courses">Courses</h2>
   <i class="bx bx-chevron-right icon"></i>
-  <p class="clickable">
+  <p>
     {{
       course?.title.length > 20
         ? course?.title.slice(0, 20)  + "..." 
@@ -50,7 +50,7 @@
         <h5>{{module.title}}</h5>
         <div class="module_list_item_bottom dis-flex">
             <p>{{module.lesson_count}} {{module.lesson_count > 1 ? 'Lessons' : 'Lesson'}}</p>
-            <button class="btn sec_btn" (click)="openModuleLesson(module.id)">Add Lesson</button>
+            <button class="btn sec_btn" (click)="openModuleLesson(module.id, module.title)">Add Lesson</button>
         </div>
       </div>
     </div>
@@ -65,8 +65,19 @@
         <span class="modal_area_close" (click)="closeAddModuleLesson()">
             <i class="bx bx-x icon clickable"></i>
         </span>
+
+        <div class="modal_area_header">
+          <h4 class="text-primary-color">
+            {{
+            moduleName.length > 20
+              ? moduleName.slice(0, 20)  + "..." 
+              : moduleName | titlecase
+            }}
+          </h4>
+        </div>
+
         <!-- Module Form -->
-        <form>
+        <form style="margin-top: 2rem;">
             <div class="form_control">
                 <label for="lesson_video">Lesson Video</label>
                 <div class="">
@@ -86,11 +97,9 @@
                         src="../../../../../../../assets/img/library/video-square.svg"
                         alt=""
                     />
-                    <p class="body-3-regular">
-                    Select a video
-                    <!-- <span class="text-primary-color">browse</span> -->
+                    <p class="body-3-regular text-primary-color">
+                      {{ selectedFileName === '' ? 'Select a video' : selectedFileName }}
                     </p>
-                    <p class="body-3-regular text-primary-color">{{ selectedFileName }}</p>
                 </div>
                 </div>
             </div>

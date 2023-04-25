@@ -4,6 +4,7 @@ import { ProgramCreateComponent } from './program-create/program-create.componen
 import { ProgramsDetailsComponent } from './programs-details/programs-details.component';
 import { ProgramsOverviewComponent } from './programs-overview/programs-overview.component';
 import { ProgramsComponent } from './programs.component';
+import { ProgramEditComponent } from './program-edit/program-edit.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,14 @@ const routes: Routes = [
         },
       },
       {
+        path: 'create-program',
+        component: ProgramCreateComponent,
+        data: {
+          title: 'Programs',
+          description: 'Description Meta Tag Content',
+        },
+      },
+      {
         path: ':programId/view-program',
         component: ProgramsDetailsComponent,
         data: {
@@ -27,8 +36,8 @@ const routes: Routes = [
         },
       },
       {
-        path: 'create-program',
-        component: ProgramCreateComponent,
+        path: ':programId/edit-program',
+        component: ProgramEditComponent,
         data: {
           title: 'Programs',
           description: 'Description Meta Tag Content',

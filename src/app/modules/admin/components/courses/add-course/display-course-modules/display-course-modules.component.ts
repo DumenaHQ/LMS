@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService } from 'src/app/services/courses.service';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-display-course-modules',
@@ -18,8 +19,9 @@ export class DisplayCourseModulesComponent implements OnInit {
   modules: any;
   addModuleLessonModal: boolean = false;
   moduleId: string;
+  moduleName: string;
 
-  selectedFileName: string;
+  selectedFileName: string = '';
   file: File;
   course: any;
   // previewImage: any;
@@ -28,6 +30,7 @@ export class DisplayCourseModulesComponent implements OnInit {
   constructor(
     private coursesService: CoursesService,
     private activatedRoute: ActivatedRoute, 
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +43,7 @@ export class DisplayCourseModulesComponent implements OnInit {
       next: (res: any) => {
         this.course = res.data.course;
         console.log(this.course);
+        
       },
       error: (e) => console.error(e),
       complete: () => {
@@ -62,10 +66,21 @@ export class DisplayCourseModulesComponent implements OnInit {
     });
   }
 
+  // Upload File
+  uploadFile(event: any) {
+  
+    this.file = event.target.files[0] as File;
+    // Set file name
+    this.selectedFileName = this.file.name;
+
+    console.log(this.selectedFileName);
+
+  }
+  // 'https://s3.amazonaws.com/lms.videos/Circuit-design/1st-Section.mp4'
   // Add Module
   addModuleLesson() {
     var formData: any = new FormData();
-    formData.append('lesson_video', 'https://s3.amazonaws.com/lms.videos/Circuit-design/1st-Section.mp4');
+    formData.append('lesson_video', this.selectedFileName);
 
     for (var pair of formData.entries()) {
       console.log(pair[0] + ', ' + pair[1]);
@@ -78,57 +93,47 @@ export class DisplayCourseModulesComponent implements OnInit {
 
     this.coursesService
     .addLessonToModule(this.currentCourseId.courseId, this.moduleId, formData)
-    .subscribe((res: any) => {
-      console.log(res);
-      if(res.status === true) {
-        this.showAlertPopup(res.message, 'success')
+    .subscribe({
+      next: (res: any) => {
+        console.log(res);
+        if (res.type === HttpEventType.UploadProgress) {
+          const progress = Math.round(100 * res.loaded / res.total);
+          console.log(`File upload progress: ${progress}%`);
+        } else if (res.type === HttpEventType.Response) {
+          console.log('File upload complete');
+        }
+        
+        if(res.status === true) {
+          this.showAlertPopup(res.message, 'success');
 
-        setTimeout(() => {
-          this.addModuleLessonModal = false
-          this.ngOnInit()
-        }, 3000);
+          
+          setTimeout(() => {
+            this.addModuleLessonModal = false
+            this.changeDetectorRef.detectChanges()
+            this.ngOnInit()
+          }, 3000);
+        }
+      },
+      error: (error: any) => {
+        console.log(error);
+        this.showAlertPopup(error.error.message, 'error')
       }
     });
   }
+
+
+  
   
   // Add Module Lesson
-  openModuleLesson(moduleId: string) {
+  openModuleLesson(moduleId: string, moduleName: string) {
     this.moduleId = moduleId
+    this.moduleName = moduleName
     this.addModuleLessonModal = true
     
   }
   // Close Add Module
   closeAddModuleLesson() {
     this.addModuleLessonModal = false
-  }
-
-
-  // Upload File
-  uploadFile(event: any) {
-    // Preview File Selected
-    // this.selectedFile = event[0];
-
-    
-    this.file = event.target.files[0];
-    // Set file name
-    this.selectedFileName = this.file.name;
-
-    console.log(this.selectedFileName);
-    
-    
-    // if (this.selectedFile) {
-    //   let reader = new FileReader();
-    //   reader.readAsDataURL(this.selectedFile);
-    //   reader.onload = (e: any) => {
-    //     this.previewImage = e.target.result;
-        
-    //     if (this.previewImage !== '') {
-    //       this.showPreviewImage = true;
-    //     } else {
-    //       this.showPreviewImage = false;
-    //     }
-    //   };
-    // }
   }
 
   // Show alert

@@ -1,46 +1,101 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
+></app-alert-popup>
+
 <div class="modal">
-  <div class="modal_area">
-    <span class="modal_area_close">
+  <div class="modal_area remove-padd">
+    <span class="modal_area_close" (click)="closeAddCourseToProgramModal()">
       <i class="bx bx-x icon clickable"></i>
     </span>
 
-    <div class="modal_area_header">
-      <h4 class="text-primary-color">Add a Course</h4>
-    </div>
+    <div class="enroll auth_content">
+      <h4
+        class="text-primary-color enroll_title add-padd"
+      >
+        Add Course(s) to this program
+      </h4>
+      <form
+        class="enroll_form auth_content_form"
+      >
 
-    <div class="table-container">
-      <div class="table-container_header">
-        <div class="input_field dis-flex">
-          <img src="../../../../../../assets/img/svg/Search.svg" alt="image" />
-          <input type="text" placeholder="Search for anything" />
+        <!-- Single enrollment starts *ngIf="billingId == 'single'" -->
+        <div class="col-2">
+          <div class="table-container" >
+            <div class="table-container_header dis-flex">
+              <div class="input_field dis-flex">
+                <img
+                  src="../../../../../../assets/img/svg/Search.svg"
+                  alt="image"
+                />
+                <input type="text" placeholder="Search by Title" name="search" [(ngModel)]="courseName"
+                (input)="search()" />
+              </div>
+
+              <!-- <div class="grouping dis-flex">
+                <div class="filter s-f">
+                  <div class="captions-regular dis-flex">
+                    <span class="title">Filter:</span>
+                    <span class="dropdown-btn dis-flex clickable"
+                      >Grade <i class="bx bx-chevron-down"></i
+                    ></span>
+                  </div>
+                </div>
+                <div class="sort s-f">
+                  <div class="captions-regular dis-flex">
+                    <span class="title">Sort:</span>
+                    <span class="dropdown-btn dis-flex clickable"
+                      >Name <i class="bx bx-chevron-down"></i
+                    ></span>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+            <div style="overflow: auto; max-height: 300px;">
+              <app-loader *ngIf="dataLoading"></app-loader>
+              <table *ngIf="courses?.length > 0">
+                <tr class="table-header">
+                  <th>Title</th>
+                  <th>Number of lesson</th>
+                  <th class="dis-flex actions">
+                    <!-- Mark all <input type="checkbox" name="" id="" /> -->
+                  </th>
+                </tr>
+                <tr class="table-body" *ngFor="let course of courses">
+                  <td>{{ course.title }}</td>
+                  <td>{{ course.lesson_count }}</td>
+                  <td><input type="checkbox" name="course" [id]="course.id" (change)="selectCourse($event, course)" /></td>
+                </tr>
+              </table>
+              <ng-container *ngIf="courses?.length === 0">
+                <p style="text-align: center">No Course!</p>
+              </ng-container>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="form-btns dis-flex">
+            <span
+              class="grey_btn clickable"
+              (click)="closeAddCourseToProgramModal()"
+              >Cancel</span
+            >
+            <div class="continue">
+              <button
+                class="btn prim_btn clickable"
+                [disabled]="loading"
+                (click)="addCourseToProgram()"
+              >
+                <span *ngIf="!loading">Add</span>
+                <span *ngIf="loading">Processing...</span>
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-      <div style="overflow-x: auto">
-        <table>
-          <tr class="table-header">
-            <th>Course Name</th>
-            <th>Quadrant</th>
-            <th>No of Lessons</th>
-            <th></th>
-          </tr>
-          <ng-container>
-            <tr class="table-body">
-              <td>What do you know about Robots Quiz</td>
-              <td>Developer</td>
-              <td>15</td>
-              <td><input type="checkbox" name="" id="" /></td>
-            </tr>
-          </ng-container>
-          <ng-template>
-            <p style="text-align: center">Empty School list!</p>
-          </ng-template>
-        </table>
-      </div>
-    </div>
-
-    <div class="btns dis-flex">
-      <button class="btn tert_btn">Cancel</button>
-      <button class="btn prim_btn">Next</button>
+        <!-- Single enrollment ends -->
+      </form>
     </div>
   </div>
 </div>
