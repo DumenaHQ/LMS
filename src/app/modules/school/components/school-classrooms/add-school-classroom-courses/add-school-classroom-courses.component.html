@@ -1,0 +1,80 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
+></app-alert-popup>
+
+<div class="modal">
+  <div class="modal_area remove-padd">
+    <span class="modal_area_close" (click)="closeAddCourseToClassroomModal()">
+      <i class="bx bx-x icon clickable"></i>
+    </span>
+
+    <div class="enroll auth_content">
+      <h4
+        class="text-primary-color enroll_title add-padd"
+      >
+        Add Course(s) to this Classroom
+      </h4>
+      <form
+        class="enroll_form auth_content_form"
+      >
+
+        <!-- Single enrollment starts *ngIf="billingId == 'single'" -->
+        <div class="col-2">
+          <div class="table-container" >
+            <div class="table-container_header dis-flex">
+              <div class="input_field dis-flex">
+                <img
+                  src="../../../../../../assets/img/svg/Search.svg"
+                  alt="image"
+                />
+                <input type="text" placeholder="Search by Title" name="search" [(ngModel)]="courseName"
+                (input)="search()" />
+              </div>
+            </div>
+            <div style="overflow: auto; max-height: 300px;">
+              <app-loader *ngIf="dataLoading"></app-loader>
+              <table *ngIf="courses?.length > 0">
+                <tr class="table-header">
+                  <th>Title</th>
+                  <th>Number of lesson</th>
+                  <th class="dis-flex actions">
+                  </th>
+                </tr>
+                <tr class="table-body" *ngFor="let course of courses">
+                  <td>{{ course.title }}</td>
+                  <td>{{ course.lesson_count }}</td>
+                  <td><input type="checkbox" name="course" [id]="course.id" (change)="selectCourse($event, course)" /></td>
+                </tr>
+              </table>
+              <ng-container *ngIf="courses?.length === 0">
+                <p style="text-align: center">No Course!</p>
+              </ng-container>
+            </div>
+          </div>
+
+          <div class="form-btns dis-flex">
+            <span
+              class="grey_btn clickable"
+              (click)="closeAddCourseToClassroomModal()"
+              >Cancel</span
+            >
+            <div class="continue">
+              <button
+                class="btn prim_btn clickable"
+                [disabled]="loading"
+                (click)="addCourseToProgram()"
+              >
+                <span *ngIf="!loading">Add</span>
+                <span *ngIf="loading">Processing...</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Single enrollment ends -->
+      </form>
+    </div>
+  </div>
+</div>

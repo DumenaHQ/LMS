@@ -88,10 +88,6 @@
           <p class="body-2-bold">{{ program?.schools?.length }}</p>
           <p class="body-3-regular">{{program?.schools?.length > 1 ? 'Schools' : 'School'}}</p>
         </li>
-        <!-- <li>
-          <p class="body-2-bold">{{ program?.learner_count }}</p>
-          <p class="body-3-regular">{{program?.learner_count > 1 ? 'Learners' : 'Learner'}}</p>
-        </li> -->
       </ul>
       <div class="completion">
         <p class="body-2-bold title">Timeframe</p>
@@ -195,9 +191,6 @@
                   <td>{{school?.student_count}}</td>
                 </tr>
               </ng-container>
-              <!-- <ng-template>
-                <p style="text-align: center">Empty School list!</p>
-              </ng-template> -->
             </table>
           </ng-container>
 
@@ -226,9 +219,6 @@
                   <td *ngIf="user?.role === 'school'">{{learner.grade}}</td>
                 </tr>
               </ng-container>
-              <!-- <ng-template>
-                <p style="text-align: center">Empty School list!</p>
-              </ng-template> -->
             </table>
           </ng-container>
 

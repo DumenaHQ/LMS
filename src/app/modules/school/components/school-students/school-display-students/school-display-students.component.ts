@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class SchoolDisplayStudentsComponent implements OnInit {
   user: any;
   @Input() students: any;
-  student: any
+  studentName: any
 
   deleteModal: boolean = false;
   deleteUrl: string;
@@ -29,11 +29,11 @@ export class SchoolDisplayStudentsComponent implements OnInit {
    openDeleteModal(student: any) {
 
     console.log(student);
-    this.student = student
+    this.studentName = student.username
     
     this.deleteModal = true;
 
-    this.deleteUrl = `schools/${this.user.id}/learners/${this.student.id}`
+    this.deleteUrl = `schools/${this.user.id}/learners/${student.id}`
     this.deleteRoutePath = '/school/students'
   }
 

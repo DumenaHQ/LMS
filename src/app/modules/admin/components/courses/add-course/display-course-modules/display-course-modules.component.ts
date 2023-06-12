@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService } from 'src/app/services/courses.service';
 import { HttpClient, HttpEventType } from '@angular/common/http';
@@ -29,8 +29,7 @@ export class DisplayCourseModulesComponent implements OnInit {
 
   constructor(
     private coursesService: CoursesService,
-    private activatedRoute: ActivatedRoute, 
-    private changeDetectorRef: ChangeDetectorRef
+    private activatedRoute: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -73,8 +72,6 @@ export class DisplayCourseModulesComponent implements OnInit {
     // Set file name
     this.selectedFileName = this.file.name;
 
-    console.log(this.selectedFileName);
-
   }
   // 'https://s3.amazonaws.com/lms.videos/Circuit-design/1st-Section.mp4'
   // Add Module
@@ -86,10 +83,6 @@ export class DisplayCourseModulesComponent implements OnInit {
       console.log(pair[0] + ', ' + pair[1]);
       console.log(pair)
     }
-    
-    console.log(formData);
-    console.log(this.selectedFileName);
-    
 
     this.coursesService
     .addLessonToModule(this.currentCourseId.courseId, this.moduleId, formData)
@@ -105,12 +98,11 @@ export class DisplayCourseModulesComponent implements OnInit {
         
         if(res.status === true) {
           this.showAlertPopup(res.message, 'success');
-
-          
+          // Set file name to empty
+          this.selectedFileName = ''
           setTimeout(() => {
             this.addModuleLessonModal = false
-            this.changeDetectorRef.detectChanges()
-            this.ngOnInit()
+            this.ngOnInit();
           }, 3000);
         }
       },

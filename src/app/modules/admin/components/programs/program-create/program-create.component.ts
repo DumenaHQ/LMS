@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ProgramsService } from 'src/app/services/programs.service';
 
 @Component({
@@ -23,7 +24,8 @@ export class ProgramCreateComponent implements OnInit {
 
   constructor(
     private programsService: ProgramsService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -84,17 +86,17 @@ export class ProgramCreateComponent implements OnInit {
 
         // Show alert
         if (res.status === true) {
-          this.alertMessage = res.message;
           this.showAlertPopup(res.message, 'success');
+          setTimeout(() => {
+            this.router.navigate(['admin/programs']);
+          }, 3000);
         }
         
-        // Set loading to false
-        this.loading = false;
       },
       (error: any) => {
         console.log(error);
         // Show error message
-        this.showAlertPopup(error.error.message, 'success');
+        this.showAlertPopup(error.error.message, 'error');
 
         // Set loading to false
         this.loading = false;

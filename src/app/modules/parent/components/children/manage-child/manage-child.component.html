@@ -82,7 +82,7 @@
 </section>
 
 <!-- Delete confirmation -->
-<app-confirm-delete *ngIf="deleteModal" (deleteModal)="closeDeleteModal()" [data]="child" [deleteUrl]="deleteUrl" [deleteRoutePath]="deleteRoutePath"></app-confirm-delete>
+<app-confirm-delete *ngIf="deleteModal" (deleteModal)="closeDeleteModal()" [itemName]="child.username" [deleteUrl]="deleteUrl" [deleteRoutePath]="deleteRoutePath"></app-confirm-delete>
 
 <!-- Subscription plan -->
 <app-pricing-plan

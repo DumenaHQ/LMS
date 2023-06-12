@@ -8,7 +8,7 @@
         (click)="displayProgram(program?.id)"
       />
 
-      <div class="program_card_item_details">
+      <div class="program_card_item_details" *ngIf="program.name !== undefined">
         <div class="program_card_item_details_right">
           <div class="program_card_item_details_right_header">
             <h5
@@ -100,7 +100,7 @@
         <div class="dropdown">
           <small
             class="body-3-regular delete clickable"
-            (click)="deleteProgram(program)"
+            (click)="openDeleteModal(program)"
             >Delete</small
           >
         </div>
@@ -108,3 +108,6 @@
     </div>
   </div>
 </div>
+
+<!-- Delete confirmation -->
+<app-confirm-delete *ngIf="deleteModal" (deleteModal)="closeDeleteModal()" [itemName]="programName" [deleteUrl]="deleteUrl" [deleteRoutePath]="deleteRoutePath"></app-confirm-delete>

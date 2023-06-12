@@ -52,4 +52,4 @@
 </div>
 
 <!-- Delete confirmation -->
-<app-confirm-delete *ngIf="deleteModal" (deleteModal)="closeDeleteModal()" [data]="student" [deleteUrl]="deleteUrl" [deleteRoutePath]="deleteRoutePath"></app-confirm-delete>
+<app-confirm-delete *ngIf="deleteModal" (deleteModal)="closeDeleteModal()" [itemName]="studentName" [deleteUrl]="deleteUrl" [deleteRoutePath]="deleteRoutePath"></app-confirm-delete>

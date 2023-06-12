@@ -1,9 +1,6 @@
 @import '../../../../../assets/css/variables.scss';
 @import '../../../../../assets/css/mixins.scss';
-
-section:not(:last-child) {
-  margin-bottom: $m-3;
-}
+@import '../../../../../assets/css/dashboard.scss';
 
 .children {
   position: relative;
@@ -69,36 +66,6 @@ section:not(:last-child) {
           color: $primary80;
         }
       }
-    }
-  }
-}
-
-// Alert Message
-.alert-msg {
-  position: absolute;
-  top: 0;
-  visibility: hidden;
-  opacity: 0;
-  width: 100%;
-  display: flex;
-  transition: all .2s cubic-bezier(0.075, 0.82, 0.165, 1);
-  z-index: 5;
-  &.show {
-    visibility: visible;
-    opacity: 1;
-    top: 1.5rem;
-  }
-  @media only screen and (min-width: 556px) {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  &_content {
-    margin: auto;
-    padding: 0.8rem;
-    background-color: $success40;
-    border-radius: $border-radius1;
-    p {
-      color: $success80;
     }
   }
 }
