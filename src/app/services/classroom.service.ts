@@ -53,6 +53,28 @@ export class ClassroomService {
     return this.http.put(`${this.baseUrl}classes/${classroomId}`, data, this.getHttpOptions());
   }
 
+  //--- TEMPLATES STARTS --//
+  // Get Classroom templates 
+  getClassroomTemplates() {
+    return this.http.get(`${this.baseUrl}classes/templates`, this.getHttpOptions());
+  }
+
+  // Get Classroom template by Id
+  getClassroomTemplateById(templateId: string) {
+    return this.http.get(`${this.baseUrl}classes/templates/${templateId}`, this.getHttpOptions());
+  }
+
+  // Add classroom template
+  addClassroomTemplate(data: any) {
+    return this.http.post(
+      `${this.baseUrl}classes/templates`,
+      data, 
+      this.getHttpOptions()
+    );
+  }
+
+  //--- TEMPLATES ENDS --//
+
 
 
   // Get HttpOptions

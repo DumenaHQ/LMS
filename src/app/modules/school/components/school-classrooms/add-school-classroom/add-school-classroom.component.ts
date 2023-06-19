@@ -20,6 +20,7 @@ export class AddSchoolClassroomComponent implements OnInit {
   selectedThumbnailName: string = '';
   selectedHeaderPhotoName: string = '';
   file: File;
+  templates: any;
   // previewImage: any;
   // showPreviewImage: boolean = false;
 
@@ -34,8 +35,22 @@ export class AddSchoolClassroomComponent implements OnInit {
     this.classroomForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
+      template: ['', [Validators.required]],
       thumbnail: [''],
       header_photo: [''],
+    });
+
+    this.getClassroomTemplates();
+  }
+
+  // Get classroom templates
+  getClassroomTemplates() {
+    this.classroomService.getClassroomTemplates().subscribe({
+      next: (res: any) => {
+        this.templates = res.data.classTemplates;
+        console.log(res);
+      },
+      error: (e) => console.error(e),
     });
   }
 
@@ -81,10 +96,9 @@ export class AddSchoolClassroomComponent implements OnInit {
 
     let payload = {
       name: this.classroomForm.value.name,
-      description: this.classroomForm.value.description
+      description: this.classroomForm.value.description,
+      template: this.classroomForm.value.template
     }
-    
-    
 
     // Send users data
     this.classroomService.addClassroom(payload).subscribe(
