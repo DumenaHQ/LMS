@@ -94,9 +94,9 @@ export class AddSchoolClassroomComponent implements OnInit {
         // Show alert
         if (res.status === true) {
           this.showAlertPopup(res.message, 'success');
-          // setTimeout(() => {
-          //   this.router.navigate(['admin/programs']);
-          // }, 3000);
+          setTimeout(() => {
+            this.router.navigate(['school/classrooms']);
+          }, 3000);
         }
         
       },

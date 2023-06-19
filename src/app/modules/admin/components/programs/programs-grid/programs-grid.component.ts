@@ -30,14 +30,12 @@ export class ProgramsGridComponent implements OnInit {
 
   // Open Confirm Delete Modal
   openDeleteModal(program: any) {
-
-    console.log(program);
     this.programName = program.name
     
     this.deleteModal = true;
 
     this.deleteUrl = `programs/${program.id}`
-    this.deleteRoutePath = '/admin/programs'
+    this.deleteRoutePath = ''
   }
 
   // Close Confirm Delete Modal

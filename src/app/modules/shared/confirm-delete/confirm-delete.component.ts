@@ -36,6 +36,8 @@ export class ConfirmDeleteComponent implements OnInit {
             this.closeDeleteModal();
             if(this.deleteRoutePath !== '') {
               this.router.navigate([this.deleteRoutePath]);
+            } else {
+              window.location.reload();
             }
           }, 3000);
         }

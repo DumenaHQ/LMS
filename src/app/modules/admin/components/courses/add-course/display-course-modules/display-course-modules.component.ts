@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService } from 'src/app/services/courses.service';
 import { HttpClient, HttpEventType } from '@angular/common/http';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-display-course-modules',
@@ -10,6 +11,8 @@ import { HttpClient, HttpEventType } from '@angular/common/http';
 })
 export class DisplayCourseModulesComponent implements OnInit {
 
+
+  moduleLessonForm: any = FormGroup;
   loading: boolean = false;
   isAlert: boolean = false;
   alertMessage: string;
@@ -22,7 +25,7 @@ export class DisplayCourseModulesComponent implements OnInit {
   moduleName: string;
 
   selectedFileName: string = '';
-  file: File;
+  selectedFile: File;
   course: any;
   // previewImage: any;
   // showPreviewImage: boolean = false;
@@ -30,9 +33,12 @@ export class DisplayCourseModulesComponent implements OnInit {
   constructor(
     private coursesService: CoursesService,
     private activatedRoute: ActivatedRoute,
+    private formBuilder: FormBuilder
   ) {}
-
+  
   ngOnInit(): void {
+    
+    this.initForm();
 
      // Get Current Program
      this.currentCourseId = this.activatedRoute.snapshot.params;
@@ -63,38 +69,47 @@ export class DisplayCourseModulesComponent implements OnInit {
         this.dataLoading = false;
       },
     });
-  }
-
-  // Upload File
-  uploadFile(event: any) {
-  
-    this.file = event.target.files[0] as File;
-    // Set file name
-    this.selectedFileName = this.file.name;
 
   }
-  // 'https://s3.amazonaws.com/lms.videos/Circuit-design/1st-Section.mp4'
+
+  // Initilize form
+  initForm() {
+    this.moduleLessonForm = this.formBuilder.group({
+      title: ['', Validators.required],
+    });
+  }
+
+  // On file select
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+    this.selectedFileName = this.selectedFile.name;
+  }
+
   // Add Module
   addModuleLesson() {
-    var formData: any = new FormData();
-    formData.append('lesson_video', this.selectedFileName);
+    // Set loading to true
+    this.loading = true;
 
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ', ' + pair[1]);
-      console.log(pair)
-    }
+    const formData: any = new FormData();
+    formData.append('title', this.moduleLessonForm.value.title);
+    formData.append('lesson_video', this.selectedFile);
+
+    // for (var pair of formData.entries()) {
+    //   console.log(pair[0] + ', ' + pair[1]);
+    //   console.log(pair)
+    // }
 
     this.coursesService
     .addLessonToModule(this.currentCourseId.courseId, this.moduleId, formData)
     .subscribe({
       next: (res: any) => {
         console.log(res);
-        if (res.type === HttpEventType.UploadProgress) {
-          const progress = Math.round(100 * res.loaded / res.total);
-          console.log(`File upload progress: ${progress}%`);
-        } else if (res.type === HttpEventType.Response) {
-          console.log('File upload complete');
-        }
+        // if (res.type === HttpEventType.UploadProgress) {
+        //   const progress = Math.round(100 * res.loaded / res.total);
+        //   console.log(`File upload progress: ${progress}%`);
+        // } else if (res.type === HttpEventType.Response) {
+        //   console.log('File upload complete');
+        // }
         
         if(res.status === true) {
           this.showAlertPopup(res.message, 'success');
@@ -108,7 +123,10 @@ export class DisplayCourseModulesComponent implements OnInit {
       },
       error: (error: any) => {
         console.log(error);
-        this.showAlertPopup(error.error.message, 'error')
+        this.showAlertPopup(error.error.message, 'error');
+
+        // Set loading to false
+        this.loading = false;
       }
     });
   }

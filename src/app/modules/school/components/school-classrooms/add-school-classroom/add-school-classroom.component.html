@@ -101,8 +101,15 @@
       </div> -->
     </div>
     <div class="form_btns dis-flex">
-      <button class="btn grey_btn" routerLink="/school/classrooms">Cancel</button>
-      <button class="btn prim_btn" (click)="createClassroom()">Continue</button>
+      <ng-container *ngIf="!loading">
+        <button class="btn grey_btn" routerLink="/school/classrooms">Cancel</button>
+        <button class="btn prim_btn" (click)="createClassroom()">Save</button>
+      </ng-container>
+      <button
+        class="btn prim_btn"
+        [disabled]="loading"
+        *ngIf="loading"
+      >Processing...</button> 
     </div>
   </form>
 </section>
