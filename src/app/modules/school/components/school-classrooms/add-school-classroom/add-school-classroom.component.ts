@@ -21,6 +21,8 @@ export class AddSchoolClassroomComponent implements OnInit {
   selectedHeaderPhotoName: string = '';
   file: File;
   templates: any;
+  isFormSubmitted: boolean = false;
+
   // previewImage: any;
   // showPreviewImage: boolean = false;
 
@@ -35,7 +37,7 @@ export class AddSchoolClassroomComponent implements OnInit {
     this.classroomForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      template: ['', [Validators.required]],
+      template: [''],
       thumbnail: [''],
       header_photo: [''],
     });
@@ -83,6 +85,16 @@ export class AddSchoolClassroomComponent implements OnInit {
     // Set loading to true
     this.loading = true;
 
+    // Set submitted to true
+    this.isFormSubmitted = true;
+
+    // If Form is invalid
+    if (this.classroomForm.invalid) {
+      this.loading = false;
+
+      return;
+    }
+
     // var formData: any = new FormData();
     // formData.append('name', this.classroomForm.value.name);
     // formData.append('description', this.classroomForm.value.description);
@@ -100,34 +112,37 @@ export class AddSchoolClassroomComponent implements OnInit {
       template: this.classroomForm.value.template
     }
 
+    console.log(payload);
+    
+
     // Send users data
-    this.classroomService.addClassroom(payload).subscribe(
-      (res: any) => {
-        console.log(res);
+    // this.classroomService.addClassroom(payload).subscribe(
+    //   (res: any) => {
+    //     console.log(res);
 
-        // Show alert
-        if (res.status === true) {
-          this.showAlertPopup(res.message, 'success');
-          setTimeout(() => {
-            this.router.navigate(['school/classrooms']);
-          }, 3000);
-        }
+    //     // Show alert
+    //     if (res.status === true) {
+    //       this.showAlertPopup(res.message, 'success');
+    //       setTimeout(() => {
+    //         this.router.navigate(['school/classrooms']);
+    //       }, 3000);
+    //     }
         
-      },
-      (error: any) => {
-        console.log(error);
-        // Show error message
-        this.showAlertPopup(error.error.message, 'error');
+    //   },
+    //   (error: any) => {
+    //     console.log(error);
+    //     // Show error message
+    //     this.showAlertPopup(error.error.message, 'error');
 
-        // Set loading to false
-        this.loading = false;
+    //     // Set loading to false
+    //     this.loading = false;
 
-        // Set Timeout
-        // setTimeout(() => {
-        //   this.showError = false
-        // }, 3000);
-      }
-    );
+    //     // Set Timeout
+    //     // setTimeout(() => {
+    //     //   this.showError = false
+    //     // }, 3000);
+    //   }
+    // );
   }
 
   // Show alert

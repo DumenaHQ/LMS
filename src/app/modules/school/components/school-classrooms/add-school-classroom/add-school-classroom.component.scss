@@ -42,6 +42,9 @@
         margin-bottom: $m-2;
         font-size: 18px;
         font-weight: 700;
+        .label-required {
+          color: $error80;
+        }
       }
       &_field {
         width: 100%;

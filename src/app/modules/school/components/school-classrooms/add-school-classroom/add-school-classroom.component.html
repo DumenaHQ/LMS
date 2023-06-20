@@ -24,7 +24,7 @@
   <form [formGroup]="classroomForm">
     <div class="form_control_container">
       <div class="form_control">
-        <label for="name">Name of Classroom</label>
+        <label for="name">Name of Classroom <strong class="label-required">*</strong></label>
         <div class="form_control_field">
           <input
             type="text"
@@ -36,7 +36,18 @@
         </div>
       </div>
       <div class="form_control description">
-        <label for="description">Classroom details</label>
+        <label for="description">Classroom Template</label>
+        <div class="form_control_field">
+          <select name="" id="" formControlName="template">
+            <option value="" selected>Select a Template</option>
+            <option [value]="item.id" *ngFor="let item of templates">
+              {{ item.title }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form_control description">
+        <label for="description">Classroom details <strong class="label-required">*</strong></label>
         <div class="form_control_field">
           <textarea
             name="description"
@@ -49,17 +60,7 @@
           ></textarea>
         </div>
       </div>
-      <div class="form_control description">
-        <label for="description">Classroom details</label>
-        <div class="form_control_field">
-          <select name="" id="" formControlName="template">
-            <option value="" selected>Select a Template</option>
-            <option [value]="item.id" *ngFor="let item of templates">
-              {{ item.title }}
-            </option>
-          </select>
-        </div>
-      </div>
+      
       <!-- <div class="form_control">
         <label for="thumbnail">Thumbnail</label>
         <div class="">
