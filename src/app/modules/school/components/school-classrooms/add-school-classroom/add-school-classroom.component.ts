@@ -116,33 +116,33 @@ export class AddSchoolClassroomComponent implements OnInit {
     
 
     // Send users data
-    // this.classroomService.addClassroom(payload).subscribe(
-    //   (res: any) => {
-    //     console.log(res);
+    this.classroomService.addClassroom(payload).subscribe(
+      (res: any) => {
+        console.log(res);
 
-    //     // Show alert
-    //     if (res.status === true) {
-    //       this.showAlertPopup(res.message, 'success');
-    //       setTimeout(() => {
-    //         this.router.navigate(['school/classrooms']);
-    //       }, 3000);
-    //     }
+        // Show alert
+        if (res.status === true) {
+          this.showAlertPopup(res.message, 'success');
+          setTimeout(() => {
+            this.router.navigate(['school/classrooms']);
+          }, 3000);
+        }
         
-    //   },
-    //   (error: any) => {
-    //     console.log(error);
-    //     // Show error message
-    //     this.showAlertPopup(error.error.message, 'error');
+      },
+      (error: any) => {
+        console.log(error);
+        // Show error message
+        this.showAlertPopup(error.error.message, 'error');
 
-    //     // Set loading to false
-    //     this.loading = false;
+        // Set loading to false
+        this.loading = false;
 
-    //     // Set Timeout
-    //     // setTimeout(() => {
-    //     //   this.showError = false
-    //     // }, 3000);
-    //   }
-    // );
+        // Set Timeout
+        // setTimeout(() => {
+        //   this.showError = false
+        // }, 3000);
+      }
+    );
   }
 
   // Show alert

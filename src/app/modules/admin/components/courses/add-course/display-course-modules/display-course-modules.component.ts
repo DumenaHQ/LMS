@@ -92,7 +92,7 @@ export class DisplayCourseModulesComponent implements OnInit {
 
     const formData: any = new FormData();
     formData.append('title', this.moduleLessonForm.value.title);
-    formData.append('lesson_video', this.selectedFile);
+    // formData.append('lesson_video', this.selectedFile);
 
     // for (var pair of formData.entries()) {
     //   console.log(pair[0] + ', ' + pair[1]);

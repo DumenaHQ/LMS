@@ -5,6 +5,8 @@ import { LearnerOverviewComponent } from './components/learner-overview/learner-
 import { DisplayLearnerProgramDetailsComponent } from './components/learner-programs/display-learner-program-details/display-learner-program-details.component';
 import { DisplayLearnerProgramsComponent } from './components/learner-programs/display-learner-programs/display-learner-programs.component';
 import { LearnerComponent } from './learner.component';
+import { DisplayLearnerClassoomsComponent } from './components/learner-classrooms/display-learner-classooms/display-learner-classooms.component';
+import { DisplayDetailsLearnerClassoomComponent } from './components/learner-classrooms/display-details-learner-classoom/display-details-learner-classoom.component';
 
 const routes: Routes = [
   {
@@ -41,7 +43,23 @@ const routes: Routes = [
         path: 'programs/:programId',
         component: DisplayLearnerProgramDetailsComponent,
         data: {
-          title: 'Programs',
+          title: 'Program',
+          description: 'Description Meta Tag Content'
+        }
+      },
+      {
+        path: 'classrooms',
+        component: DisplayLearnerClassoomsComponent,
+        data: {
+          title: 'Clasrooms',
+          description: 'Description Meta Tag Content'
+        }
+      },
+      {
+        path: 'classrooms/:classroomId',
+        component: DisplayDetailsLearnerClassoomComponent,
+        data: {
+          title: 'Classroom',
           description: 'Description Meta Tag Content'
         }
       },

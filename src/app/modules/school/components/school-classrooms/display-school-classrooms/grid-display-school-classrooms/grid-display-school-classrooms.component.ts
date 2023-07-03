@@ -26,7 +26,7 @@ export class GridDisplaySchoolClassroomsComponent implements OnInit {
   ngOnInit(): void {}
 
   // Display program
-  displayProgram(classroomId: string) {
+  displayClassroom(classroomId: string) {
     this.router.navigate([`/school/classrooms/${classroomId}/view-classroom`]);
   }
 
