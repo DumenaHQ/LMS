@@ -75,6 +75,8 @@ export class CoursesCardComponent implements OnInit {
     var filteredData = this.allCourses.filter((obj: any) => {
       return obj[filter] === keyword;
     });
+
+    
     // this.allCourses = filteredData
 
     console.log(filteredData);

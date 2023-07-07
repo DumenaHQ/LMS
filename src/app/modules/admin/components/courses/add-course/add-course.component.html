@@ -1,0 +1,120 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
+></app-alert-popup>
+
+<section class="set-info" app>
+  <div class="set-info_header">
+    <button class="btn prim_btn" (click)="addCourse()">Add Course</button>
+    <!-- <button class="btn sec_btn" style="margin: 0 1rem 1rem 1rem" [routerLink]="'id' + '/add-module'">
+      Add Module
+    </button> -->
+    <button class="btn sec_btn" style="margin: 0 1rem 1rem 1rem" routerLink="quiz">
+      Add Quiz
+    </button>
+    <h3 class="text-primary-color">Set the Course Information</h3>
+    <p>
+      This information will be displayed to the learners before they start the
+      course
+    </p>
+  </div>
+  <form [formGroup]="courseForm">
+    <!-- <div class="form_control">
+      <label for="thumbnail">Course Thumbnail</label>
+      <div class="">
+        <div
+          class="form_control_field select-image clickable"
+          (click)="fileInput.click()"
+          appDragDrop
+          (fileDropped)="uploadFile($event)"
+        >
+          <input
+            type="file"
+            #fileInput
+            hidden
+            (change)="uploadFile($any($event).target.files)"
+          />
+          <img
+            [src]="
+              showPreviewImage
+                ? previewImage
+                : '../../../assets/img/select-Image.svg'
+            "
+            alt=""
+          />
+          <p class="body-3-regular">
+            Drag your image here or
+            <span class="text-primary-color">browse</span>
+          </p>
+          <p class="body-3-regular">Max file size 4MB</p>
+        </div>
+      </div>
+    </div> -->
+    <div class="form_control">
+      <label for="title">Course Title</label>
+      <div class="form_control_field">
+        <input type="text" name="title" id="title" placeholder="Type here" formControlName="title" />
+      </div>
+    </div>
+    <div class="form_control">
+      <label for="description">Course Description</label>
+      <div class="form_control_field">
+        <textarea
+          name="description"
+          id="description"
+          cols="30"
+          rows="5"
+          placeholder="Type here"
+          spellcheck="true"
+          formControlName="description"
+        ></textarea>
+      </div>
+    </div>
+    <div class="form_control">
+      <label for="difficulty_level">Difficulty Level</label>
+      <div class="form_control_field">
+        <select name="difficulty_level" id="difficulty_level" formControlName="difficulty_level">
+          <option value="">Please Select</option>
+          <option value="Beginner">Beginner</option>
+          <option value="Intermediate">Intermediate</option>
+          <option value="Advanced">Advanced</option>
+        </select>
+      </div>
+    </div>
+    <div class="form_control">
+      <label for="course_quadrant">Course Quadrant</label>
+      <div class="form_control_field">
+        <input type="text" name="course_quadrant" id="course_quadrant" placeholder="Type here" formControlName="course_quadrant">
+      </div>
+    </div>
+    <div class="form_control">
+      <label for="tags">Tags</label>
+      <div class="form_control_field dis-flex">
+        <input
+          type="text"
+          name="tags"
+          id="tags"
+          placeholder="Type here"
+          formControlName="tags"
+        >
+        <button class="btn prim_btn" (click)="addTag()">Add</button>
+      </div>
+      <div class="tag_list dis-flex">
+        <div
+          class="tag_list_item dis-flex"
+          *ngFor="let tag of tagsList; let tagIndex = index"
+        >
+          <small [title]="tag">{{
+            tag.length > 12 ? tag.slice(0, 10) + "..." : tag
+          }}</small>
+          <i
+            class="bx bx-x icon clickable"
+            (click)="removeTag(tagIndex)"
+          ></i>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>

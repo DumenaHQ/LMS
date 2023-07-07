@@ -21,36 +21,9 @@ export class ParentOverviewComponent implements OnInit {
   isAlert: boolean = false;
   elem: any;
   stepValue = 40;
-
-  // Payment History
-  paymentsHistory = [
-    {
-      id: 1,
-      childName: 'Alousa Jones',
-      Product: 'Standard Plan',
-      date: '05 June 2022',
-      amount: '180,990',
-      status: 'complete',
-    },
-    {
-      id: 2,
-      childName: 'Alousa Jones',
-      Product: 'Standard Plan',
-      date: '05 June 2022',
-      amount: '180,990',
-      status: 'declined',
-    },
-    {
-      id: 3,
-      childName: 'Alousa Jones',
-      Product: 'Standard Plan',
-      date: '05 June 2022',
-      amount: '180,990',
-      status: 'pending',
-    },
-  ];
   alertMessage: string = '';
   isOnboarding: boolean = true;
+  public greeting: string = ''
 
   constructor(
     private orderService: OrderService,
@@ -59,6 +32,10 @@ export class ParentOverviewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    
+    // Get greeting
+    this.greeting = this.authService.getGreeting() 
+    
     // Get user data from localstorage
     let userData = this.authService.getUser();
     this.user = userData.user;
@@ -72,6 +49,7 @@ export class ParentOverviewComponent implements OnInit {
         .sort(() => Math.random() - Math.random())
         .slice(0, size);
     });
+    
 
     // Progress bar
     this.progressBar();
@@ -98,7 +76,21 @@ export class ParentOverviewComponent implements OnInit {
 
   // close Onboarding modal
   closeOnboardModal() {
-    this.isOnboarding = false;
+
+    let payload = {
+      isUserOnboarded: true,
+    }
+    
+
+    // update user profile
+    this.authService.updateUser(payload).subscribe((res: any) => {
+      console.log(res);
+      if (res.status == true) {
+        // Set User data
+        this.authService.addUserDataToLocalStorage(res.data);
+        this.ngOnInit()
+      }
+    });
   }
 
   // Open Select Plan Modal
@@ -113,21 +105,7 @@ export class ParentOverviewComponent implements OnInit {
     this.selectPlanModal = false;
   }
 
-  // Show alert
-  showAlert() {
-    // Show Alert
-    this.isAlert = true;
-
-    // Hide Alert
-    setTimeout(() => {
-      this.isAlert = false;
-    }, 2000);
-  }
-
-  // Set alert message
-  setAlertMessage(message: any) {
-    this.alertMessage = message;
-  }
+  
 
   // Manage child
   manageChild(userId: any) {

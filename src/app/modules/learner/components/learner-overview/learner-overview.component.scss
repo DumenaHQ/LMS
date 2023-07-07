@@ -2,13 +2,6 @@
 @import '../../../../../assets/css/mixins.scss';
 @import '../../../../../assets/css/dashboard.scss';
 
-.chart {
-  img {
-    width: 100%;
-    height: auto;
-  }
-}
-
 main {
   .welcome {
     @include sect-bg($primary80);

@@ -10,8 +10,9 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ParentEnrollLearnersComponent implements OnInit {
   @Output() addLearnerModal: EventEmitter<any> = new EventEmitter();
-  @Output() isAlert: EventEmitter<any> = new EventEmitter();
-  @Output() alertMessaage = new EventEmitter<string>();
+  isAlert: boolean = false;
+  alertMessage: string;
+  alertColor: string;
 
   hide: boolean = true;
   loading: boolean = false;
@@ -24,7 +25,7 @@ export class ParentEnrollLearnersComponent implements OnInit {
   userForm: any = FormGroup;
   isFormSubmitted: boolean = false;
 
-  selectedAVatarUrl: string = '';
+  selectedAVatarUrl: string = 'assets/img/children-avatar/child-avatar-1.png';
   avatars = [
     {
       id: 1,
@@ -68,7 +69,7 @@ export class ParentEnrollLearnersComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Get User data from localstorage
@@ -117,7 +118,7 @@ export class ParentEnrollLearnersComponent implements OnInit {
 
     let payload = {
       avatar: this.selectedAVatarUrl,
-      irstname: this.userForm.value.firstname,
+      firstname: this.userForm.value.firstname,
       lastname: this.userForm.value.lastname,
       password: this.userForm.value.password,
     };
@@ -128,52 +129,55 @@ export class ParentEnrollLearnersComponent implements OnInit {
         console.log(res);
 
         if (res.status == true) {
-          // Close Modal
-          this.closeAddLearnerModal();
-
           // Show Popup
-          this.showAlert();
 
+          const message = res.message + '. Check your email for the login credentials';
+          this.showAlertPopup(message, 'success');
           // Reload the page
-          window.location.reload();
+          setTimeout(() => {
+            window.location.reload();
+          }, 9000);
         }
-
-        // Show error message
-        this.errorMessage = res.message;
-        this.showError = true;
-
-        // Set loading to false
-        this.loading = false;
       },
       (error: any) => {
         console.log(error);
         // Show error message
-        error.error.error.code == 400
-          ? (this.errorMessage = error.error.error.errors[0].message)
-          : (this.errorMessage = error.error.message);
-        this.showError = true;
+        // error.error.error.code == 400
+        //   ? (this.errorMessage = error.error.error.errors[0].message)
+        //   : (this.errorMessage = error.error.message);
+        if(error.error.error.code == 400) {
+          this.errorMessage = error.error.error.errors[0].message
+          this.showError = true;
+        } else if( error.error.error.code == 401) {
+          this.showAlertPopup('Kindly login again', 'error')
+          setTimeout(() => {
+            this.router.navigate(['/login'])
+          }, 9000);
+        } else {
+          this.errorMessage = error.error.message
+        }
         // Set loading to false
         this.loading = false;
-
-        // Set Timeout
-        // setTimeout(() => {
-        //   this.showError = false
-        // }, 3000);
       }
     );
-  }
-
-  // Show alert popup
-  showAlert() {
-    this.messageval = 'You have enrolled a child successfully!';
-    // Set alert message
-    this.alertMessaage.emit(this.messageval);
-
-    this.isAlert.emit();
   }
 
   // Close Add Modal
   closeAddLearnerModal() {
     this.addLearnerModal.emit();
+  }
+
+  // Show alert
+  showAlertPopup(message: string, color: string) {
+    // Set message
+    this.alertMessage = message;
+    // Set color
+    this.alertColor = color;
+    // Show Alert
+    this.isAlert = true;
+    // Hide Alert
+    setTimeout(() => {
+      this.isAlert = false;
+    }, 9000);
   }
 }

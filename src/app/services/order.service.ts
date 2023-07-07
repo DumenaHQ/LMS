@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 export class OrderService {
   baseUrl: string = environment.baseUrl;
   userData: any;
+  plans: any[] = [];
 
   constructor(private http: HttpClient) {}
 
@@ -21,29 +22,50 @@ export class OrderService {
     return this.http.post(this.baseUrl + 'orders', data, this.getHttpOptions());
   }
 
-  // Get Order to localstorage
-  getOrderFromLocalStorage() {
-    this.userData = localStorage.getItem('cart');
-    let data = JSON.parse(this.userData);
-    return data;
+
+  // Get Plans
+  getPlans() {
+    return this.plans
   }
 
-  // Add Order to localstorage
-  addOrderToLocalStorage(data: any): void {
-    let allData = JSON.parse(localStorage.getItem('cart') || '[]');
-    let exist = allData.some((obj: any) => obj.user_id === data.user_id);
-    if (!exist) {
-      allData.push(data);
-      return localStorage.setItem('cart', JSON.stringify(allData));
+  // Save cart
+  saveCart() {
+    localStorage.setItem('cart_item', JSON.stringify(this.plans))
+  }
+
+  // Add to cart
+  addToCart(plan: any) {
+    this.loadCart()
+
+    this.plans.push(plan)
+    
+    this.saveCart()
+  }
+
+  // Load Cart
+  loadCart() {
+    this.plans = JSON.parse(localStorage.getItem('cart_item') as any) || [];
+    return this.plans
+  }
+
+  // Plan in Cart
+  planInCart(plan: any): boolean {
+    return this.plans.findIndex((x: any) => x.id === plan.id) > -1;
+  }
+
+  // Remove plan
+  removePlan(plan: any) {
+    const index = this.plans.findIndex((x: any) => x.id === plan.id);
+    
+    if (index > -1) {
+      this.plans.splice(index, 1);
+      this.saveCart();
     }
   }
-  // Add Order to localstorage
-  removeOrderToLocalStorage(index: any): void {
-    let allData = JSON.parse(localStorage.getItem('cart') || '[]');
-    // if (!exist) {
-    allData.splice(index, 1);
-    return localStorage.setItem('cart', JSON.stringify(allData));
-    // }
+  
+  // Clear cart
+  clearPlans() {
+    localStorage.clear();
   }
 
   // Get HttpOptions
@@ -51,8 +73,9 @@ export class OrderService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('token'),
+        Authorization: 'bearer ' + localStorage.getItem('token'),
       }),
+      // mode: 'cors' // enables CORS mode
     };
     return httpOptions;
   }

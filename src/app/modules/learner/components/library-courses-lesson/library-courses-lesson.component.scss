@@ -123,11 +123,13 @@ section:not(:last-child) {
     display: grid;
     grid-gap: $m-4;
     font-weight: 500;
-    .require {
-      ol {
-        list-style-type: decimal;
+    .obj,
+    .acti {
+      ul {
+        // list-style-type: decimal;
         li {
-          display: block;
+          list-style: disc;
+          margin-left: $m-4;
           &:not(:last-child) {
             margin-bottom: $m-1;
           }
@@ -136,6 +138,15 @@ section:not(:last-child) {
     }
     h4 {
       margin-bottom: $m-2;
+      position: relative;
+      &::before {
+        position: absolute;
+        content: '';
+        left: -2rem;
+        width: 5px;
+        height: 100%;
+        background-color: $primary80;
+      }
     }
   }
 }
@@ -144,37 +155,72 @@ aside {
   .course-content {
     @include sect-bg;
     border: 1px solid $divider-color;
-    padding: $m-4 0;
+    padding: $m-3 0;
     &_header {
-      padding: 0 $m-4;
+      padding: 0 $m-2;
       .total-length {
         margin-top: $m-2;
       }
     }
     &_list {
       &_item {
-        padding: $m-2 $m-4;
-        cursor: pointer;
+        border-top: 1px solid $divider-color;
+        border-bottom: 1px solid $divider-color;
         transition: all .2s;
-        &:hover {
-          background-color: $grey40;
+        input[type="checkbox"]:checked + .accordion-body {
+          display: block;
         }
-        .heading {
-          font-weight: 700;
-        }
-        .title {
-          margin: $m-1 0;
-        }
-        .length {
-          img {
-            width: 16px;
-            height: 16px;
-            margin-right: $m-1;
+        &_module {
+          gap: $m-2;
+          padding: $m-2;
+          justify-content: space-between;
+          transition: all .2s ease;
+          border-left: 2px solid transparent;
+          &:hover,
+          &.active {
+            background-color: $grey40;
+            border-left: 2px solid $primary80;
+          }
+          .left {
+            gap: $m-2;
+            .numb {
+              @include icon-area(30px);
+              border: 2px solid $primary100;
+            }
+            .time {
+              margin-top: 0.2rem;
+              gap: 0.3rem;
+            }
+          }
+          .right {
+            .icon {
+              font-size: 26px;
+              transition: all .2s ease;
+            }
           }
         }
-        &.active {
-          background-color: $grey40;
-          border-left: 2px solid $primary80;
+        &_lessons {
+          display: none;
+          &_item,
+          &_quiz {
+            gap: $m-2;
+            justify-content: space-between;
+            padding: $m-1 $m-2;
+            &:hover,
+            &.active {
+              background-color: #52525b67;
+            }
+            .left {
+              gap: $m-2;
+              .icon {
+                width: 16px;
+              }
+            }
+          }
+          &_quiz {
+            display: block;
+            background-color: $inner-border;
+          }
         }
       }
     }

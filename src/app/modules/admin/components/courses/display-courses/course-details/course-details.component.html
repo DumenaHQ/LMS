@@ -1,0 +1,87 @@
+<section class="ds-head dis-flex">
+  <h2 class="ds-head_title clickable" routerLink="/admin/courses">Courses</h2>
+  <i class="bx bx-chevron-right icon"></i>
+  <p class="clickable">
+    {{
+      course?.title.length > 20
+        ? course?.title.slice(0, 20)  + "..." 
+        : course?.title | titlecase
+    }}
+  </p>
+</section>
+
+<section class="course-details">
+  <div class="course-details_image">
+    <img src="../../../../../../../assets/img/thumbnail-1.png" alt="" />
+  </div>
+  <div class="course-details_header">
+    <div class="course-details_header_top">
+      <div class="left">
+        <h2>{{course?.title}}</h2>
+        <div class="dis-flex left_bottom">
+          <button class="success_btn">Published</button>
+          <div class="icons dis-flex">
+            <span class="dis-flex"
+              ><img src="../../../../../../../assets/img/svg/calendar-2.svg" alt="" />
+              <p class="body-2-regular">Created {{course?.createdAt | date: 'mediumDate'}}</p></span
+            >
+            <span class="dis-flex"
+              ><img src="../../../../../../../assets/img/library/Bag.svg" alt="" />
+              <p class="body-2-regular">{{course?.course_quadrant}}</p></span
+            >
+            <span class="dis-flex"
+              ><img src="../../../../../../../assets/img/library/video-square.svg" alt="" />
+              <p class="body-2-regular">{{course?.lesson_count}} {{course?.lesson_count > 1 ? 'Lessons' : 'Lesson'}}</p></span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="right dis-flex">
+        <button class="grey_btn">Edit</button>
+        <button class="grey_btn">Preview as Learner</button>
+        <button class="grey_btn settings">
+          <img src="../../../../../../../assets/img/svg/setting-grey.svg" alt="" />
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="course-details_body">
+    <div class="course-details_body_header">
+      <ul class="dis-flex">
+        <li class="body-2-medium active">Content</li>
+        <li class="body-2-medium">Statistics</li>
+      </ul>
+    </div>
+    <div class="course-details_body_content">
+      <aside>
+        <ul>
+          <!-- class="active" -->
+          <li *ngFor="let module of course?.modules; let i = index" [ngClass]="{'active': moduleIndex === i}" (click)="getModuleLessons(module.id, i)">
+            <h5 class="body-2-medium">{{module?.title}}</h5>
+            <!-- <p>Updated May 23,2022 5:12PM</p> -->
+            <p>{{module?.lesson_count}} {{module?.lesson_count > 1 ? 'Lessons' : 'Lesson'}}</p>
+          </li>
+        </ul>
+      </aside>
+      <main>
+        <div class="header">
+          <h5 class="body-2-medium ds-sect-header">Lessons</h5>
+          <p class="question">
+            {{moduleLessons?.id}}
+          </p>
+        </div>
+        <ul>
+          <!-- <li>
+            <p>A. <span>The weaver</span></p>
+          </li>
+          <li>
+            <p>B. <span>A book</span></p>
+          </li>
+          <li>
+            <p>C. <span>The wardrobe</span></p>
+          </li> -->
+        </ul>
+      </main>
+    </div>
+  </div>
+</section>

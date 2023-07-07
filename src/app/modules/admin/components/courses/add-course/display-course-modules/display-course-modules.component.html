@@ -1,0 +1,130 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
+></app-alert-popup>
+
+<section class="ds-head dis-flex">
+  <h2 class="ds-head_title clickable" routerLink="/admin/courses">Courses</h2>
+  <i class="bx bx-chevron-right icon"></i>
+  <p>
+    {{
+      course?.title.length > 20
+        ? course?.title.slice(0, 20)  + "..." 
+        : course?.title | titlecase
+    }}
+  </p>
+</section>
+
+<section class="grouping dis-flex">
+    <!-- Filter -->
+    <div class="filter s-f">
+      <div class="body-3-regular dis-flex">
+        <span class="title">Filter:</span>
+        <span class="dropdown dis-flex clickable"
+          >All Modules <i class="bx bx-chevron-down"></i
+        ></span>
+      </div>
+    </div>
+  
+    <div class="right dis-flex">
+      <!-- Sort -->
+      <div class="sort s-f">
+        <div class="body-3-regular dis-flex">
+          <span class="title">Sort:</span>
+          <span class="dropdown dis-flex clickable"
+            >Last modified <i class="bx bx-chevron-down"></i
+          ></span>
+        </div>
+      </div>
+      <!-- New Course Button -->
+      <button class="btn prim_btn" routerLink="add-module">New Module</button>
+    </div>
+  </section>
+
+<section class="modules">
+  <div class="modules_body">
+    <div class="module_list dis-flex card" *ngIf="modules?.length > 0">
+      <div class="module_list_item card_item" *ngFor="let module of modules">
+        <h5>{{module.title}}</h5>
+        <div class="module_list_item_bottom dis-flex">
+            <p>{{module.lesson_count}} {{module.lesson_count > 1 ? 'Lessons' : 'Lesson'}}</p>
+            <button class="btn sec_btn" (click)="openModuleLesson(module.id, module.title)">Add Lesson</button>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="modules?.length === 0">
+        <p>Empty list!</p>
+    </ng-container>
+  </div>
+</section>
+
+<div class="modal" *ngIf="addModuleLessonModal">
+    <div class="modal_area">
+        <span class="modal_area_close" (click)="closeAddModuleLesson()">
+            <i class="bx bx-x icon clickable"></i>
+        </span>
+
+        <div class="modal_area_header">
+          <h4 class="text-primary-color">
+            {{
+            moduleName.length > 20
+              ? moduleName.slice(0, 20)  + "..." 
+              : moduleName | titlecase
+            }}
+          </h4>
+        </div>
+
+        <!-- Module Form -->
+        <form style="margin-top: 2rem;" [formGroup]="moduleLessonForm">
+          <div class="form_control">
+            <label for="title">Lesson Title</label>
+            <div class="form_control_field">
+            <input
+              type="text"
+              id="title"
+              placeholder="Type here"
+              formControlName="title"
+            />
+            </div>
+          </div>
+          <div class="form_control">
+              <label for="lesson_video">Lesson Video</label>
+              <div class="">
+              <div
+                  class="form_control_field select-image clickable"
+                  (click)="fileInput.click()"
+                  (fileDropped)="onFileSelected($event)"
+              >
+                  <input
+                  type="file"
+                  id="lesson_video"
+                  #fileInput
+                  hidden
+                  (change)="onFileSelected($event)"
+                  />
+                  <img
+                      src="../../../../../../../assets/img/library/video-square.svg"
+                      alt=""
+                  />
+                  <p class="body-3-regular text-primary-color">
+                    {{ selectedFileName === '' ? 'Select a video' : selectedFileName }}
+                  </p>
+              </div>
+              </div>
+          </div>
+
+          <div class="form_btns">
+              <!-- <button class="btn prim_btn" (click)="addModuleLesson()" [disabled]="moduleLessonForm.invalid">Add</button> -->
+              <button
+                class="btn prim_btn clickable"
+                (click)="addModuleLesson()" [disabled]="moduleLessonForm.invalid || loading"
+              >
+                <span *ngIf="!loading">Add</span>
+                <span *ngIf="loading">Processing...</span>
+              </button>
+          </div>
+        </form>
+    </div>
+</div>

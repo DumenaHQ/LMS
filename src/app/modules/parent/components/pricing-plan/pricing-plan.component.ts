@@ -10,9 +10,9 @@ import { OrderService } from 'src/app/services/order.service';
 })
 export class PricingPlanComponent implements OnInit {
   @Output() selectPlanModal: EventEmitter<any> = new EventEmitter();
-  @Output() isAlert: EventEmitter<any> = new EventEmitter();
-  // @Input() selectPlanModal: boolean = false;
-  @Output() alertMessaage = new EventEmitter<string>();
+  isAlert: boolean = false;
+  alertMessage: string;
+  alertColor: string;
   @Input() childData: any;
   pricingPlanForm: any = FormGroup;
 
@@ -128,18 +128,21 @@ export class PricingPlanComponent implements OnInit {
       slug: this.pricingPlanForm.value.plan || 'standard-plan',
       order_type: 'sub',
       billing_id: this.billingId,
-      amount: this.billingId == 'monthly' ? amount : amount * 12, // If billing is monthly send original value other calculate for yearly (amount * 12)
+      amount: this.billingId == 'monthly' ? amount : amount * 12, // If billing is monthly send original value otherwise calculate for yearly (amount * 12)
     };
 
     // console.log(payload);
-    this.orderService.addOrderToLocalStorage(payload);
-
-    this.ngOnInit();
-
-    this.closeSelectPlanModal();
+    this.orderService.addToCart(payload);
 
     // Show Alert popup
-    this.showAlert();
+    this.showAlertPopup('Added successfully', 'success');
+
+    setTimeout(() => {
+      this.ngOnInit();
+      this.closeSelectPlanModal();
+    }, 3000);
+
+
   }
 
   // Close Select plan Modal
@@ -147,11 +150,17 @@ export class PricingPlanComponent implements OnInit {
     this.selectPlanModal.emit();
   }
 
-  showAlert() {
-    this.messageval = 'Added to cart successfully!';
-    // Set alert message
-    this.alertMessaage.emit(this.messageval);
-
-    this.isAlert.emit();
+  // Show alert
+  showAlertPopup(message: string, color: string) {
+    // Set message
+    this.alertMessage = message;
+    // Set color
+    this.alertColor = color;
+    // Show Alert
+    this.isAlert = true;
+    // Hide Alert
+    setTimeout(() => {
+      this.isAlert = false;
+    }, 3000);
   }
 }

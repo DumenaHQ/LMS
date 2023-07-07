@@ -11,7 +11,7 @@
         </span>
         <div class="card_item_details">
           <h5 class="title">Students</h5>
-          <h2 class="value">0</h2>
+          <h2 class="value">{{students?.length}}</h2>
         </div>
       </div>
       <div class="card_item dis-flex">
@@ -37,8 +37,11 @@
       <div class="enroll_title">
         <h5>Enrollment</h5>
       </div>
-      <div class="">
+      <!-- <div class="">
         <img src="../../../../../assets/img/svg/chart.svg" alt="" />
+      </div> -->
+      <div class="chart-container">
+        <div class="chart" id="chart_div" style="width: 100%;"></div>
       </div>
     </div>
   </main>
@@ -79,3 +82,9 @@
     </ul>
   </aside> -->
 </section>
+
+<!-- Modal onboard -->
+<app-school-onboard
+  *ngIf="user?.isUserOnboarded === false"
+  (isOnboarding)="closeOnboardModal()"
+></app-school-onboard>

@@ -33,8 +33,9 @@ export class QuizService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('token'),
+        Authorization: 'bearer ' + localStorage.getItem('token'),
       }),
+      // mode: 'cors' // enables CORS mode
     };
     return httpOptions;
   }

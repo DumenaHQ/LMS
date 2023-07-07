@@ -9,9 +9,6 @@ import { SchoolService } from 'src/app/services/school.service';
 })
 export class SchoolStudentsComponent implements OnInit {
   addLearnerModal: boolean = false;
-  isAlert: boolean = false;
-  alertMessage: string = '';
-  showAlert: boolean = false;
   user: any;
   dataLoading: boolean = true;
   students: any;
@@ -30,7 +27,6 @@ export class SchoolStudentsComponent implements OnInit {
     this.schoolService.getSchoolLearners(this.user.id).subscribe({
       next: (res: any) => {
         this.students = res.data.students;
-        console.log(this.students);
       },
       error: (e) => console.error(e),
       complete: () => {
@@ -47,19 +43,5 @@ export class SchoolStudentsComponent implements OnInit {
   // Close Learner modal
   closeAddLearnerModal() {
     this.addLearnerModal = false;
-  }
-
-  showAlertPopup() {
-    this.showAlert = true;
-    // Hide after some seconds
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 2000);
-  }
-
-  // Set alert message
-  setAlertMessage(message: any) {
-    this.alertMessage = message;
-    this.ngOnInit();
   }
 }

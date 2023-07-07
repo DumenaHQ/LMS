@@ -11,8 +11,9 @@ import * as XLSX from 'xlsx';
 })
 export class SchoolEnrollLearnersComponent implements OnInit {
   @Output() addLearnerModal: EventEmitter<any> = new EventEmitter();
-  @Output() isAlert: EventEmitter<any> = new EventEmitter();
-  @Output() alertMessage = new EventEmitter<string>();
+  isAlert: boolean = true;
+  alertMessage: string;
+  alertColor: string;
   loading: boolean = false;
   errorMessage: string = '';
   showError: boolean = false;
@@ -39,7 +40,7 @@ export class SchoolEnrollLearnersComponent implements OnInit {
 
     this.userForm = this.formBuilder.group({
       fullname: ['', Validators.required],
-      parent_email: ['', [Validators.required, Validators.email]],
+      parent_email: ['', [Validators.email]],
       grade: ['', Validators.required],
     });
   }
@@ -77,21 +78,17 @@ export class SchoolEnrollLearnersComponent implements OnInit {
           console.log(res);
 
           if (res.status == true) {
-            // Close Modal
-            this.closeAddLearnerModal();
-
+            
             // Show Popup
-            this.showAlert(res.message);
+            this.showAlertPopup(`${res.message}. An email has been sent containing the login credentials of ${this.userForm.value.fullname}`, 'success');
 
-            window.location.reload();
+            // Close Modal
+            // this.closeAddLearnerModal();
+            
+            setTimeout(() => {
+                window.location.reload();
+              }, 4000);
           }
-
-          // Show error message
-          this.errorMessage = res.message;
-          this.showError = true;
-
-          // Set loading to false
-          this.loading = false;
         },
         (error: any) => {
           console.log(error);
@@ -102,11 +99,6 @@ export class SchoolEnrollLearnersComponent implements OnInit {
           this.showError = true;
           // Set loading to false
           this.loading = false;
-
-          // Set Timeout
-          // setTimeout(() => {
-          //   this.showError = false
-          // }, 3000);
         }
       );
   }
@@ -133,23 +125,21 @@ export class SchoolEnrollLearnersComponent implements OnInit {
       .subscribe(
         (res: any) => {
           console.log(res);
+          // parentcook@gmail.com
 
           if (res.status === true) {
-            // Close Modal
-            this.closeAddLearnerModal();
-
+            
             // Show Popup
-            this.showAlert(res.message);
+            this.showAlertPopup(`${res.message}. An email has been sent containing the login details for all enrolled learners`, 'success');
 
-            window.location.reload();
+            // Close Modal
+            // this.closeAddLearnerModal();
+            
+            setTimeout(() => {
+                window.location.reload();
+              }, 4000);
+
           }
-
-          // Show error message
-          // this.errorMessage = res.message;
-          // this.showError = true;
-
-          // // Set loading to false
-          // this.loading = false;
         },
         (error: any) => {
           console.log(error);
@@ -160,21 +150,8 @@ export class SchoolEnrollLearnersComponent implements OnInit {
           this.showError = true;
           // Set loading to false
           this.loading = false;
-
-          // Set Timeout
-          // setTimeout(() => {
-          //   this.showError = false
-          // }, 3000);
         }
       );
-  }
-
-  // Show alert popup
-  showAlert(messageval: string) {
-    this.messageval = messageval;
-    // Set alert message
-    this.alertMessage.emit(this.messageval);
-    this.isAlert.emit();
   }
 
   // Upload File
@@ -196,17 +173,14 @@ export class SchoolEnrollLearnersComponent implements OnInit {
       var first_sheet_name = workbook.SheetNames[0];
       var worksheet = workbook.Sheets[first_sheet_name];
       let learners = XLSX.utils.sheet_to_json(worksheet, { raw: true });
-      // learners.forEach((email: any) => {
-      //   if (email.__EMPTY_1.includes('.com')) {
-      //     // console.log(learners);
-      //   }
-      // });
-      let newLearners = learners.shift();
+      
+      // let newLearners = learners.shift();
       this.learnersList = learners.map((learner: any) => ({
-        fullname: learner.__EMPTY,
-        parent_email: learner.__EMPTY_1,
-        grade: learner.__EMPTY_2,
+        fullname: learner['Student Name'],
+        parent_email: learner['Parent Email'],
+        grade: learner['Class/Grade'],
       }));
+      
     };
     fileReader.readAsArrayBuffer(this.file);
   }
@@ -214,5 +188,20 @@ export class SchoolEnrollLearnersComponent implements OnInit {
   // Close Add Modal
   closeAddLearnerModal() {
     this.addLearnerModal.emit();
+  }
+
+
+  // Show alert
+  showAlertPopup(message: string, color: string) {
+    // Set message
+    this.alertMessage = message;
+    // Set color
+    this.alertColor = color;
+    // Show Alert
+    this.isAlert = true;
+    // Hide Alert
+    setTimeout(() => {
+      this.isAlert = false;
+    }, 3000);
   }
 }

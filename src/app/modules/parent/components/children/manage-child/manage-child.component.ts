@@ -12,9 +12,9 @@ export class ManageChildComponent implements OnInit {
   child: any;
   user: any;
   selectPlanModal: boolean = false;
-  isAlert: boolean = false;
-  alertMessage: any;
   deleteModal: boolean = false;
+  deleteUrl: string;
+  deleteRoutePath: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -30,7 +30,7 @@ export class ManageChildComponent implements OnInit {
     let userData = this.authService.getUser();
     this.user = userData.user;
 
-    // Get parent child from localstorage
+    // Get parent child
     this.authService.getParentChildren(this.user.id).subscribe((res: any) => {
       const result = res.data.learners;
       result.forEach((element: any) => {
@@ -39,33 +39,6 @@ export class ManageChildComponent implements OnInit {
         }
       });
     });
-  }
-
-  // Remove child
-  removeChild() {
-    this.authService
-      .deleteEnrolledChild(this.user.id, this.child.id)
-      .subscribe((res: any) => {
-        console.log(res);
-        if (res.status === true) {
-          this.showAlert();
-        }
-      });
-  }
-
-  // Show alert
-  showAlert() {
-    // Set message
-    this.alertMessage = 'Child removed successfully!';
-
-    // Show Alert
-    this.isAlert = true;
-
-    // Hide Alert
-    setTimeout(() => {
-      this.isAlert = false;
-      this.router.navigate(['/parent/children']);
-    }, 2000);
   }
 
   // Open Select Plan Modal
@@ -81,6 +54,9 @@ export class ManageChildComponent implements OnInit {
   // Open Confirm Delete Modal
   openDeleteModal() {
     this.deleteModal = true;
+
+    this.deleteUrl = `parents/${this.user.id}/learners/${this.child.id}`
+    this.deleteRoutePath = '/parent/children'
   }
 
   // Close Confirm Delete Modal
@@ -88,19 +64,4 @@ export class ManageChildComponent implements OnInit {
     this.deleteModal = false;
   }
 
-  // Show alert
-  // showAlert() {
-  //   // Show Alert
-  //   this.isAlert = true;
-
-  //   // Hide Alert
-  //   setTimeout(() => {
-  //     this.isAlert = false;
-  //   }, 2000);
-  // }
-
-  // Set alert message
-  setAlertMessage(message: any) {
-    this.alertMessage = message;
-  }
 }

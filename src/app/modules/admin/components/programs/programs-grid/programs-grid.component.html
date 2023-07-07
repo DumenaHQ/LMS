@@ -8,7 +8,7 @@
         (click)="displayProgram(program?.id)"
       />
 
-      <div class="program_card_item_details">
+      <div class="program_card_item_details" *ngIf="program.name !== undefined">
         <div class="program_card_item_details_right">
           <div class="program_card_item_details_right_header">
             <h5
@@ -28,35 +28,39 @@
           </div>
           <ul class="dis-flex">
             <li>
-              <p class="body-2-bold">{{ program?.learners?.length }}</p>
-              <p class="body-3-regular">Learners</p>
+              <p class="body-2-bold">{{ program?.course_count }}</p>
+              <p class="body-3-regular">{{program?.course_count > 1 ? 'Courses' : 'Course'}}</p>
             </li>
             <li>
-              <p class="body-2-bold">{{ program?.schools?.length }}</p>
-              <p class="body-3-regular">Schools</p>
+              <p class="body-2-bold">{{ program?.school_count }}</p>
+              <p class="body-3-regular">{{program?.school_count > 1 ? 'Schools' : 'School'}}</p>
+            </li>
+            <li>
+              <p class="body-2-bold">{{ program?.learner_count }}</p>
+              <p class="body-3-regular">{{program?.learner_count > 1 ? 'Learners' : 'Learner'}}</p>
             </li>
           </ul>
         </div>
 
         <div class="program_card_item_details_left">
           <div class="students">
-            <p class="body-2-regular title">Total Students</p>
+            <p class="body-2-regular title">Total {{program?.learner_count > 1 ? 'Learners' : 'Learner'}} ({{ program?.learner_count }})</p>
             <ul class="students_list dis-flex">
               <li>
                 <img
-                  src="../../../../../../assets/img/svg/orange-circle.svg"
+                  src="../../../../../assets/img/children-avatar/child-avatar-1.png"
                   alt=""
                 />
               </li>
               <li>
                 <img
-                  src="../../../../../../assets/img/svg/orange-circle.svg"
+                  src="../../../../../assets/img/children-avatar/child-avatar-2.png"
                   alt=""
                 />
               </li>
               <li>
                 <img
-                  src="../../../../../../assets/img/svg/orange-circle.svg"
+                  src="../../../../../assets/img/children-avatar/child-avatar-3.png"
                   alt=""
                 />
               </li>
@@ -67,7 +71,6 @@
             <p class="body-2-medium">
               {{ program?.start_date | date: "mediumDate" }}
             </p>
-            <!-- {{ days > 1 ? days : "0" }} day{{ days < 2 ? "" : "s" }} -->
           </div>
           <div class="status">
             <span
@@ -97,7 +100,7 @@
         <div class="dropdown">
           <small
             class="body-3-regular delete clickable"
-            (click)="deleteProgram(program)"
+            (click)="openDeleteModal(program)"
             >Delete</small
           >
         </div>
@@ -105,3 +108,6 @@
     </div>
   </div>
 </div>
+
+<!-- Delete confirmation -->
+<app-confirm-delete *ngIf="deleteModal" (deleteModal)="closeDeleteModal()" [itemName]="programName" [deleteUrl]="deleteUrl" [deleteRoutePath]="deleteRoutePath"></app-confirm-delete>

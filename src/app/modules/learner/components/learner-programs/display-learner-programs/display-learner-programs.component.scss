@@ -1,0 +1,162 @@
+@import '../../../../../../assets/css/variables.scss';
+@import '../../../../../../assets/css/mixins.scss';
+@import '../../../../../../assets/css/dashboard.scss';
+
+.grouping {
+  justify-content: space-between;
+  gap: $m-2;
+  // Sort and Filter
+  .s-f {
+    .title {
+      color: $primary20;
+      margin-right: 0.2rem;
+    }
+    .dropdown {
+      i {
+        font-size: 18px;
+      }
+    }
+  }
+  .right {
+    gap: $m-2;
+    .display-type {
+      span {
+        display: inline-block;
+        padding: $m-1;
+        border: 1px solid $divider-color;
+        border-radius: $border-radius1;
+        transition: all .2s;
+        cursor: pointer;
+        &:hover,
+        &.active {
+          background-color: $white-color;
+        }
+        &:not(:last-child) {
+          margin-right: $m-2;
+        }
+        img {
+          width: 25px;
+          height: 22px;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}
+
+.programs_disgrid {
+    width: 100%;
+    .program_card {
+        display: grid;
+        grid-gap: $m-2;
+        &_item {
+            border: 1px solid $divider-color;
+            border-radius: $border-radius1;
+            background-color: $white-color;
+            display: flex;
+            gap: $m-2;
+            padding: $m-2 $m-3;
+            @media only screen and (max-width: 997px) {
+                display: grid;
+                grid-gap: $m-2;
+            }
+            &_image {
+                max-width: 280px;
+                height: 173px;
+                width: 100%;  
+                @media only screen and (max-width: 997px) {
+                    max-width: 100%;
+                    height: 300px;
+                }      
+            }
+            &_details {
+                width: 100%;
+                display: flex;  
+                gap: $m-2;
+                @media only screen and (max-width: 997px) {
+                    display: grid;
+                    grid-gap: $m-2;
+                }
+                &_right { 
+                    flex-basis: 80%;
+                    @media only screen and (min-width: 997px) {
+                        border-right: 1px solid $divider-color;
+                    }
+                    &_header {
+                        padding: 0 $m-2 $m-2 0;
+                        border-bottom: 1px solid $divider-color;
+                        gap: $m-1;
+                        justify-content: space-between;
+                        align-items: flex-start;
+                        h5 {
+                            margin-bottom: $m-1;
+                        }
+                    }
+                    ul {
+                        gap: $m-1;
+                        margin-top: $m-2;
+                        li {
+                            display: grid;
+                            place-items: center;
+                            padding: $m-1;
+                            border: 1px solid $divider-color;
+                            border-radius: $border-radius1;
+                        }
+                    }
+                }
+                &_left {
+                    display: grid;
+                    grid-gap: $m-2;
+                    justify-content: space-between;
+                    flex-basis: 20%;
+                    @media only screen and (max-width: 997px) {
+                        display: flex;
+                        gap: $m-2;
+                        flex-wrap: wrap;
+                    }
+                    .title {
+                        color: $primary20;
+                        margin-bottom: $m-1;
+                    }
+                    .students {
+                        &_list {
+                            margin-top: $m-1;
+                            li {
+                                &:not(:first-child) {
+                                    margin-left: -10px;
+                                }
+                                img {
+                                    width: 25px;
+                                    height: 25px;
+                                    border: 1px solid $white-color;
+                                    border-radius: 50%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            // Actions
+            .actions {
+                position: relative;
+                input:checked + .dropdown {
+                    display: block;
+                }
+                .dropdown {
+                    display: none;
+                    position: absolute;
+                    top: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: $white-color;
+                    box-shadow: $box-shadow;
+                    padding: $m-1;
+                    border-radius: 2.5px;
+                    .delete {
+                        color: $error80;
+                    }
+                }
+            }
+        }
+    }
+}

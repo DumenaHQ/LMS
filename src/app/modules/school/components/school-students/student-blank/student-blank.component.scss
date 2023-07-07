@@ -1,21 +1,2 @@
-@import '../../../../../../assets/css/variables.scss';
-@import '../../../../../../assets/css/mixins.scss';
 @import '../../../../../../assets/css/dashboard.scss';
 
-// Courses Blank
-.courses_blank {
-  margin: $m-6 auto;
-  text-align: center;
-  @media only screen and (min-width: 590px) {
-    width: 50%;
-  }
-  &_image {
-    max-width: 100%;
-  }
-  &_details {
-    padding: $m-3 0 $m-4 0;
-    p {
-      margin-top: $m-2;
-    }
-  }
-}

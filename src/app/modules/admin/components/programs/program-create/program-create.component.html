@@ -2,9 +2,19 @@
 <app-alert-popup
   *ngIf="isAlert"
   [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
 ></app-alert-popup>
 
-<section class="set-info" app>
+<section class="ds-head dis-flex">
+  <h2 class="ds-head_title clickable" routerLink="/admin/programs">Programs</h2>
+  <i class="bx bx-chevron-right icon"></i>
+  <p>
+    Add Program
+  </p>
+</section>
+
+
+<section class="set-info">
   <div class="set-info_header">
     <h3 class="text-primary-color">Set the Program Information</h3>
     <p>
@@ -12,60 +22,115 @@
       program
     </p>
   </div>
-  <button class="btn prim_btn" (click)="createProgram()">Save</button>
   <form [formGroup]="programForm">
-    <div class="form_control">
-      <label for="name">Program Title</label>
-      <div class="form_control_field">
-        <input
-          type="text"
-          id="name"
-          name="name"
-          placeholder="Type here"
-          formControlName="name"
-        />
+    <div class="form_control_container">
+      <div class="form_control">
+        <label for="name">Program Title</label>
+        <div class="form_control_field">
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Type here"
+            formControlName="name"
+          />
+        </div>
+      </div>
+      <div class="form_control description">
+        <label for="description">Description</label>
+        <div class="form_control_field">
+          <textarea
+            name="description"
+            id="description"
+            cols="30"
+            rows="5"
+            placeholder="Type here"
+            spellcheck="true"
+            formControlName="description"
+          ></textarea>
+        </div>
+      </div>
+      <div class="form_control">
+        <label for="thumbnail">Thumbnail</label>
+        <div class="">
+          <div
+            class="form_control_field select-image clickable"
+            (click)="fileThumbnail.click()"
+            appDragDrop
+            (fileDropped)="uploadThumbnail($event)"
+          >
+            <input
+              type="file"
+              #fileThumbnail
+              hidden
+              (change)="uploadThumbnail($event)"
+            />
+            <img
+              src="../../../../../../../assets/img/select-Image.svg"
+              alt=""
+            />
+            <p class="body-3-regular text-primary-color">
+              {{ selectedThumbnailName === '' ? 'Select a picture' : selectedThumbnailName }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="form_control">
+        <label for="thumbnail">Header Photo</label>
+        <div class="">
+          <div
+            class="form_control_field select-image clickable"
+            (click)="fileHeaderPhoto.click()"
+            appDragDrop
+            (fileDropped)="uploadHeaderPhoto($event)"
+          >
+            <input
+              type="file"
+              #fileHeaderPhoto
+              hidden
+              (change)="uploadHeaderPhoto($event)"
+            />
+            <img
+              src="../../../../../../../assets/img/select-Image.svg"
+              alt=""
+            />
+            <p class="body-3-regular text-primary-color">
+              {{ selectedHeaderPhotoName === '' ? 'Select a picture' : selectedHeaderPhotoName }}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="form_control description">
-      <label for="description">Program Details</label>
-      <div class="form_control_field">
-        <textarea
-          name="description"
-          id="description"
-          cols="30"
-          rows="5"
-          placeholder="Type here"
-          spellcheck="true"
-          formControlName="description"
-        ></textarea>
-      </div>
-    </div>
-    <div class="form_setting">
-      <div class="">
-        <h3 class="text-primary-color">Program Timeframe</h3>
-        <p>Confugure the start and end date of the program</p>
-      </div>
-      <div class="set-date-area">
-        <label for="start_date" class="date start_date">
-          <input
-            type="date"
-            id="start_date"
-            name="start_date"
-            formControlName="start_date"
-          />
-        </label>
-        <i class="bx bx-minus icon"></i>
-        <label for="end_date" class="date end_date">
-          <input
-            type="date"
-            id="end_date"
-            name="end_date"
-            formControlName="end_date"
-          />
-        </label>
-      </div>
+    <div class="form_btns">
+      <button class="btn prim_btn" (click)="createProgram()">Save</button>
     </div>
   </form>
 </section>
 
 <!-- <app-add-course-modal></app-add-course-modal> -->
+
+<!-- <div class="form_setting">
+  <div class="">
+    <h3 class="text-primary-color">Program Timeframe</h3>
+    <p>Confugure the start and end date of the program</p>
+  </div>
+  <div class="set-date-area">
+    <label for="start_date" class="date start_date">
+      <input
+        type="date"
+        id="start_date"
+        name="start_date"
+        formControlName="start_date"
+      />
+    </label>
+    <i class="bx bx-minus icon"></i>
+    <label for="end_date" class="date end_date">
+      <input
+        type="date"
+        id="end_date"
+        name="end_date"
+        formControlName="end_date"
+      />
+    </label>
+  </div>
+</div> -->

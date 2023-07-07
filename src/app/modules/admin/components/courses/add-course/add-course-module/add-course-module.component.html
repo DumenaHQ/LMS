@@ -1,0 +1,190 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
+></app-alert-popup>
+
+<section class="ds-head dis-flex">
+  <h2 class="ds-head_title clickable" routerLink="/admin/courses">Courses</h2>
+  <i class="bx bx-chevron-right icon"></i>
+  <p class="clickable">
+    {{
+      course?.title.length > 20
+      ? course?.title.slice(0, 20)  + "..." 
+      : course?.title | titlecase
+    }}
+  </p>
+  <i class="bx bx-chevron-right icon"></i>
+  <p>Add Module</p>
+
+</section>
+
+<section class="lessons">
+    <div class="lessons_body">
+        <!-- Lesson Form -->
+        <form [formGroup]="moduleForm">
+            <div class="form_control_container">
+              <div class="form_control">
+                  <label for="title">Module Title</label>
+                  <div class="form_control_field">
+                  <input
+                  type="text"
+                      id="title"
+                      placeholder="Type here"
+                      formControlName="title"
+                  />
+                  </div>
+              </div>
+              <div class="form_control">
+                <label for="objectives">Objectives</label>
+                <div class="form_control_field dis-flex">
+                  <input
+                    type="text"
+                    name="objectives"
+                    id="objectives"
+                    placeholder="Type here"
+                    formControlName="objectives"
+                  >
+                  <button class="btn prim_btn" (click)="addObjective()">Add</button>
+                </div>
+                <div class="tag_list dis-flex">
+                  <div
+                    class="tag_list_item dis-flex"
+                    *ngFor="let objective of objectivesList; let objectiveIndex = index"
+                  >
+                    <small [title]="objective">{{
+                      objective.length > 30 ? objective.slice(0, 30) + "..." : objective
+                    }}</small>
+                    <i
+                      class="bx bx-x icon clickable"
+                      (click)="removeObjective(objectiveIndex)"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+              <div class="form_control">
+                  <label for="further_reading">Further Reading</label>
+                  <div class="form_control_field">
+                  <textarea
+                      name=""
+                      id="further_reading"
+                      cols="30"
+                      rows="5"
+                      placeholder="Type here"
+                      spellcheck="true"
+                      formControlName="further_reading"
+                      ></textarea>
+                  </div>
+              </div>
+              <div class="form_control">
+                <label for="class_activities">Class Activities</label>
+                <div class="form_control_field dis-flex">
+                  <input
+                    type="text"
+                    name="class_activities"
+                    id="class_activities"
+                    placeholder="Type here"
+                    formControlName="class_activities"
+                  >
+                  <button class="btn prim_btn" (click)="addClassActivity()">Add</button>
+                </div>
+                <div class="tag_list dis-flex">
+                  <div
+                    class="tag_list_item dis-flex"
+                    *ngFor="let classActivity of classActivityList; let classActivityIndex = index"
+                  >
+                    <small [title]="classActivity">{{
+                      classActivity.length > 30 ? classActivity.slice(0, 30) + "..." : classActivity
+                    }}</small>
+                    <i
+                      class="bx bx-x icon clickable"
+                      (click)="removeClassActivity(classActivityIndex)"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+              <div class="form_control further_reading_links">
+                <label for="further_reading_links_caption">Further Reading Links</label>
+                <div class="further_reading_links_field dis-flex">
+                  <div class="form_control_field">
+                    <input
+                      type="text"
+                      name="further_reading_links_caption"
+                      id="further_reading_links_caption"
+                      placeholder="Caption"
+                      formControlName="further_reading_links_caption"
+                    >
+                  </div>
+                  <div class="form_control_field">
+                    <input
+                      type="text"
+                      name="further_reading_links_url"
+                      id="further_reading_links_url"
+                      placeholder="Link"
+                      formControlName="further_reading_links_url"
+                    >
+                  </div>
+                  <button class="btn prim_btn" (click)="addFurtherReadingLink()">Add</button>
+                </div>
+                <div style="overflow-x: auto;">
+                  <table>
+                    <tr class="table-header">
+                      <th>Caption</th>
+                      <th>Link</th>
+                      <th>Action</th>
+                    </tr>
+                    <ng-container *ngIf="furtherReadingLinksList.length > 0">
+                      <tr
+                        class="table-body"
+                        *ngFor="let item of furtherReadingLinksList; let i = index"
+                      >
+                        <td>{{ item.caption }}</td>
+                        <td>{{ item.url }}</td>
+                        <td>
+                          <i
+                            class="bx bx-x clickable"
+                            style="color: #e92c2c; font-size: 20px"
+                            title="Remove"
+                            (click)="removeFurtherReadingLink(item)"
+                          ></i>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </table>
+                  <ng-container *ngIf="furtherReadingLinksList.length === 0">
+                    <div style="text-align: center; margin: 1rem 0;">
+                      <p>Empty List!</p>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+              <div class="form_control code_example">
+                  <label for="code_example">Code Example</label>
+                  <div class="form_control_field">
+                  <textarea
+                      name=""
+                      id="code_example"
+                      cols="30"
+                      rows="5"
+                      placeholder="Type here"
+                      spellcheck="true"
+                      formControlName="code_example"
+                  ></textarea>
+                  </div>
+              </div>
+            </div>
+            <div class="form_btns dis-flex">
+              <ng-container *ngIf="!loading">
+                <button class="btn prim_btn" [disabled]="moduleForm.invalid" (click)="addModule('Save and Close')">Save And Close</button>
+                <button class="btn sec_btn" [disabled]="moduleForm.invalid" (click)="addModule('Save and New')">Save And New</button>
+              </ng-container>
+              <button
+                class="btn prim_btn"
+                [disabled]="loading"
+                *ngIf="loading"
+              >Processing...</button>
+            </div>
+        </form>
+    </div>
+</section>

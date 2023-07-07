@@ -7,7 +7,7 @@
       <th>Date Enrolled</th>
       <th></th>
     </tr>
-    <tr class="table-body clickable" *ngFor="let student of students">
+    <tr class="table-body" *ngFor="let student of students">
       <td class="name">
         <div class="dis-flex">
           <img
@@ -16,7 +16,7 @@
           />
           <div>
             <p>{{ student.fullname | titlecase }}</p>
-            <p>{{ student.username | titlecase }}</p>
+            <p>{{ student.username }}</p>
           </div>
         </div>
       </td>
@@ -31,8 +31,25 @@
         <p>{{ student.createdAt | date: "mediumDate" }}</p>
       </td>
       <td class="actions">
-        <img src="../../../../../../assets/img/action.svg" alt="" />
+        <img src="../../../../../../assets/img/action.svg" alt="" class="clickable" (click)="actionBtn.click()" />
+        <input
+            type="checkbox"
+            name="action-btn"
+            id="action-btn"
+            style="display: none"
+            #actionBtn
+          />
+          <div class="dropdown">
+            <small
+              class="body-3-regular delete clickable"
+              (click)="openDeleteModal(student)"
+              >Delete</small
+            >
+          </div>
       </td>
     </tr>
   </table>
 </div>
+
+<!-- Delete confirmation -->
+<app-confirm-delete *ngIf="deleteModal" (deleteModal)="closeDeleteModal()" [itemName]="studentName" [deleteUrl]="deleteUrl" [deleteRoutePath]="deleteRoutePath"></app-confirm-delete>

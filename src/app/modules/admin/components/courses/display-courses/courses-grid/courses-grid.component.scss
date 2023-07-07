@@ -1,0 +1,104 @@
+@import '../../../../../../../assets/css/variables.scss';
+@import '../../../../../../../assets/css/mixins.scss';
+
+// Courses Display Grid
+.courses_disgrid {
+  width: 100%;
+  .card {
+    // @include card(200px);
+    &_item {
+      border: 1px solid $divider-color;
+      border-radius: $border-radius1;
+      display: grid;
+      &_image {
+        width: 100%;
+        height: 180px;
+        border-radius: $border-radius1 $border-radius1 0 0;
+      }
+      .content {
+        padding: $m-2;
+        &_details {
+          &_header {
+            justify-content: space-between;
+            gap: $m-2;
+            .actions {
+              position: relative;
+              input:checked + .dropdown {
+                display: block;
+              }
+              .dropdown {
+                display: none;
+                position: absolute;
+                top: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: max-content;
+                background: $white-color;
+                box-shadow: $box-shadow;
+                padding: $m-2;
+                border-radius: 2.5px;
+                transition: all .2s ease-in;
+                .delete {
+                  color: $primary80;
+                  font-size: 1rem;
+                }
+                &:hover {
+                  background-color: $divider-color;
+                }
+              }
+            }
+          }
+          .icons {
+            gap: $m-1;
+            flex-flow: row wrap;
+            justify-content: space-between;
+            color: $primary40;
+            margin: $m-2 0 $m-3 0;
+            img {
+              margin-right: $m-1;
+              width: 14px;
+              height: 14px;
+            }
+          }
+        }
+      }
+      &_footer {
+        border-top: 1px solid $divider-color;
+        height: 80px;
+        &_rates {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          height: inherit;
+          &_item {
+            padding: $m-2;
+            &:last-child {
+              border-left: 1px solid $divider-color;
+            }
+            .title {
+              color: $primary20;
+              margin-bottom: $m-1;
+            }
+            .value {
+              font-weight: 600;
+            }
+          }
+        }
+        &_no-stats {
+          display: none;
+          justify-content: center;
+          height: inherit;
+          span {
+            justify-content: center;
+            img {
+              margin-right: $m-1;
+            }
+            p {
+              color: $primary60;
+
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -146,6 +146,7 @@ export class LearnerOnboardComponent implements OnInit {
     // Get user details
     let userData = this.authService.getUser();
     this.user = userData.user;
+    
   }
 
   // Close Modal
@@ -176,7 +177,7 @@ export class LearnerOnboardComponent implements OnInit {
     });
   }
 
-  // Select Avatar
+  // Select Interest
   selectInterest(selected: any) {
     selected.selected = true;
 
@@ -204,18 +205,25 @@ export class LearnerOnboardComponent implements OnInit {
       avatar: this.selectedAvatarUrl,
       username: this.username,
       interests: this.selectedInterest,
+      isUserOnboarded: true
     };
 
     // update user profile
-    this.authService.updateUser(payload).subscribe((res: any) => {
+    this.updateUser(payload)
+
+    // Move to next modal
+    this.onboardModal = currentModal += 1;
+  }
+
+  // Update User
+  updateUser(payload: any) {
+     // update user profile
+     this.authService.updateUser(payload).subscribe((res: any) => {
       console.log(res);
       if (res.status == true) {
         // Set User data
         this.authService.addUserDataToLocalStorage(res.data);
       }
     });
-
-    // Move to next modal
-    this.onboardModal = currentModal += 1;
   }
 }

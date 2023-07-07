@@ -13,6 +13,10 @@ import { PricingPlanComponent } from '../parent/components/pricing-plan/pricing-
 import { AlertPopupComponent } from './alert-popup/alert-popup.component';
 import { LoaderComponent } from './loader/loader.component';
 import { DisplayPaymentHistoryComponent } from './display-payment-history/display-payment-history.component';
+import { ConfirmDeleteComponent } from './confirm-delete/confirm-delete.component';
+import { DisplayProgramsComponent } from './programs/display-programs/display-programs.component';
+import { DisplayProgramDetailsComponent } from './programs/display-program-details/display-program-details.component';
+import { AddProgramLearnersComponent } from './programs/add-program-learners/add-program-learners.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +30,10 @@ import { DisplayPaymentHistoryComponent } from './display-payment-history/displa
     AlertPopupComponent,
     LoaderComponent,
     DisplayPaymentHistoryComponent,
+    ConfirmDeleteComponent,
+    DisplayProgramsComponent,
+    DisplayProgramDetailsComponent,
+    AddProgramLearnersComponent,
     // PricingPlanComponent,
   ],
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
@@ -35,8 +43,15 @@ import { DisplayPaymentHistoryComponent } from './display-payment-history/displa
     DashboardHeaderComponent,
     DashboardSidenavComponent,
     DashboardPopupAlertComponent,
+    UserProfileComponent,
+    NotifiPopupComponent,
     AlertPopupComponent,
     LoaderComponent,
+    DisplayPaymentHistoryComponent,
+    ConfirmDeleteComponent,
+    DisplayProgramsComponent,
+    DisplayProgramDetailsComponent,
+    AddProgramLearnersComponent,
   ],
 })
 export class SharedModule {}

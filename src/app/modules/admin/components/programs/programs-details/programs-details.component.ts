@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProgramsService } from 'src/app/services/programs.service';
 
 @Component({
@@ -8,16 +8,18 @@ import { ProgramsService } from 'src/app/services/programs.service';
   styleUrls: ['./programs-details.component.scss'],
 })
 export class ProgramsDetailsComponent implements OnInit {
-  contentId: any = 'content';
+  
+  contentId: any = 'courses';
   currentProgramId: any;
   program: any;
-  programSchools: any;
   dataLoading: boolean = true;
-  programLearners: any;
+  addCourseToProgram: boolean = false;
 
   constructor(
     private programsService: ProgramsService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private changeDectetorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -30,40 +32,32 @@ export class ProgramsDetailsComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           this.program = res.data.program;
+          console.log({
+            title: 'Programs',
+            data: this.program
+          });
+          this.changeDectetorRef.detectChanges();
         },
         error: (e) => console.error(e),
         // complete: () => {
         //   this.dataLoading = false;
         // },
       });
+  }
 
-    // Get programs schools
-    this.programsService
-      .getProgramSchools(this.currentProgramId.programId)
-      .subscribe({
-        next: (res: any) => {
-          this.programSchools = res.data.schools;
-          console.log(this.programSchools);
-        },
-        error: (e) => console.error(e),
-        complete: () => {
-          this.dataLoading = false;
-        },
-      });
+  // Open add course to program modal
+  openAddCourseToProgramModal() {
+    this.addCourseToProgram = true
+  }
 
-    // Get programs learners
-    // this.programsService
-    //   .getProgramLearners(this.currentProgramId.programId)
-    //   .subscribe({
-    //     next: (res: any) => {
-    //       this.programLearners = res.data.learners;
-    //       console.log(this.programLearners);
-    //     },
-    //     error: (e) => console.error(e),
-    //     complete: () => {
-    //       this.dataLoading = false;
-    //     },
-    //   });
+  // Close add course to program modal
+  closeAddCourseToProgramModal() {
+    this.addCourseToProgram = false
+  }
+
+  // Edit program
+  editProgram() {
+    this.router.navigate([`/admin/programs/${this.currentProgramId.programId}/edit-program`]);
   }
 
   // Tab change

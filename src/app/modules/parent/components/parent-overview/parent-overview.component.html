@@ -6,7 +6,7 @@
   <main class="ds-grid">
     <div class="welcome dis-flex">
       <div class="welcome_details">
-        <h1>Good Morning, {{ user.fullname.split(" ")[0] }}!</h1>
+        <h1>{{greeting}}, {{ user.fullname.split(" ")[0] }}!</h1>
         <p>
           Your dashboard shows updates on your child’s courses, news,
           assignments, and all other progress
@@ -32,7 +32,7 @@
       </div>
       <div class="card">
         <div class="card_item clickable" *ngFor="let i of children">
-          <img [src]="i.avatar" alt="" class="avatar" />
+          <img [src]="i.avatar === '' ? '../../../../../assets/img/children-avatar/child-avatar-1.png' : i.avatar" alt="image" class="avatar" />
           <h4 class="name">{{ i.fullname }}</h4>
           <button class="btn prim_btn" (click)="manageChild(i.id)">
             Manage Child
@@ -108,9 +108,6 @@
 <app-parent-enroll-learners
   *ngIf="addLearnerModal"
   (addLearnerModal)="closeAddLearnerModal()"
-  (isAlert)="showAlert()"
-  (alertMessaage)="setAlertMessage($event)"
-  [title]="title"
 ></app-parent-enroll-learners>
 
 <!-- Subscription plan -->
@@ -118,18 +115,10 @@
   *ngIf="selectPlanModal"
   (selectPlanModal)="closeSelectPlanModal()"
   [childData]="childData"
-  (isAlert)="showAlert()"
-  (alertMessaage)="setAlertMessage($event)"
 ></app-pricing-plan>
-
-<!-- Alert message -->
-<app-alert-popup
-  *ngIf="isAlert"
-  [alertMessage]="alertMessage"
-></app-alert-popup>
 
 <!-- Modal onboard -->
 <app-parent-onboard
-  *ngIf="isOnboarding"
+  *ngIf="user?.isUserOnboarded === false"
   (isOnboarding)="closeOnboardModal()"
 ></app-parent-onboard>

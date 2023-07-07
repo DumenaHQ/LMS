@@ -10,7 +10,7 @@
   <main class="ds-grid">
     <div class="welcome dis-flex">
       <div class="welcome_details dis-flex">
-        <img [src]="child?.avatar" alt="" />
+        <img [src]="child?.avatar === '' ? 'assets/img/children-avatar/child-avatar-1.png' : child?.avatar" alt="image" />
         <div class="">
           <h3>{{ child?.fullname }}</h3>
           <p>{{ child?.username }}</p>
@@ -43,9 +43,12 @@
     <div class="upgrade-plan dis-flex">
       <div class="left">
         <h4>Subscription</h4>
-        <p>Standard Plan</p>
+        <p *ngIf="child?.content_access.length > 0">Standard Plan</p>
       </div>
-      <button class="btn" (click)="openSelectPlanModal()">Upgrade</button>
+      <button class="btn" (click)="openSelectPlanModal()">
+        <span *ngIf="child?.content_access.length === 0">Add Plan</span>
+        <span *ngIf="child?.content_access.length > 0">Upgrade</span>
+      </button>
     </div>
     <!-- Upgrade plan ends -->
     <!-- Learning quadrant(lq) -->
@@ -79,39 +82,11 @@
 </section>
 
 <!-- Delete confirmation -->
-<div class="modal confirm-delete-modal" *ngIf="deleteModal">
-  <div class="modal_area">
-    <h5></h5>
-
-    <div class="modal-details" style="text-align: left">
-      <h2 class="text-primary-color">Delete Child</h2>
-      <p>
-        Are you sure you want to remove
-        <strong class="text-primary-color">{{ child?.username }}</strong
-        >?
-      </p>
-    </div>
-    <!-- Buttons -->
-    <div class="modal-btns dis-flex">
-      <button type="button" class="btn skip_btn" (click)="closeDeleteModal()">
-        Cancel
-      </button>
-      <button class="btn prim_btn" (click)="removeChild()">Remove</button>
-    </div>
-  </div>
-</div>
+<app-confirm-delete *ngIf="deleteModal" (deleteModal)="closeDeleteModal()" [itemName]="child.username" [deleteUrl]="deleteUrl" [deleteRoutePath]="deleteRoutePath"></app-confirm-delete>
 
 <!-- Subscription plan -->
 <app-pricing-plan
   *ngIf="selectPlanModal"
   (selectPlanModal)="closeSelectPlanModal()"
   [childData]="child"
-  (isAlert)="showAlert()"
-  (alertMessaage)="setAlertMessage($event)"
 ></app-pricing-plan>
-
-<!-- Alert message -->
-<app-alert-popup
-  *ngIf="isAlert"
-  [alertMessage]="alertMessage"
-></app-alert-popup>

@@ -1,0 +1,111 @@
+<div class="programs_disgrid">
+    <div class="program_card">
+      <div class="program_card_item" *ngFor="let classroom of classrooms">
+        <img
+          src="../../../../../../assets/img/program-thumbnail-patterns.svg"
+          alt="image"
+          class="program_card_item_image clickable"
+          (click)="displayClassroom(classroom?.id)"
+        />
+  
+        <div class="program_card_item_details" *ngIf="classroom.name !== undefined">
+          <div class="program_card_item_details_right">
+            <div class="program_card_item_details_right_header">
+              <h5
+                class="title clickable"
+                [title]="classroom?.name"
+                (click)="displayClassroom(classroom?.id)"
+              >
+                {{
+                  classroom?.name.length > 20
+                    ? classroom?.name.slice(0, 20) + "..."
+                    : classroom?.name
+                }}
+              </h5>
+              <p>
+                {{ classroom?.description }}
+              </p>
+            </div>
+            <ul class="dis-flex">
+              <li>
+                <p class="body-2-bold">{{ classroom?.course_count }}</p>
+                <p class="body-3-regular">{{classroom?.course_count > 1 ? 'Courses' : 'Course'}}</p>
+              </li>
+              <!-- <li>
+                <p class="body-2-bold">{{ classroom?.school_count }}</p>
+                <p class="body-3-regular">{{classroom?.school_count > 1 ? 'Schools' : 'School'}}</p>
+              </li> -->
+              <li>
+                <p class="body-2-bold">{{ classroom?.learner_count }}</p>
+                <p class="body-3-regular">{{classroom?.learner_count > 1 ? 'Learners' : 'Learner'}}</p>
+              </li>
+            </ul>
+          </div>
+  
+          <div class="program_card_item_details_left">
+            <div class="students">
+              <p class="body-2-regular title">Total {{classroom?.learner_count > 1 ? 'Learners' : 'Learner'}} ({{ classroom?.learner_count }})</p>
+              <ul class="students_list dis-flex">
+                <li>
+                  <img
+                    src="../../../../../assets/img/children-avatar/child-avatar-1.png"
+                    alt=""
+                  />
+                </li>
+                <li>
+                  <img
+                    src="../../../../../assets/img/children-avatar/child-avatar-2.png"
+                    alt=""
+                  />
+                </li>
+                <li>
+                  <img
+                    src="../../../../../assets/img/children-avatar/child-avatar-3.png"
+                    alt=""
+                  />
+                </li>
+              </ul>
+            </div>
+            <!-- <div class="completion">
+              <p class="body-2-regular title">Start date</p>
+              <p class="body-2-medium">
+                {{ classroom?.start_date | date: "mediumDate" }}
+              </p>
+            </div> -->
+            <!-- <div class="status">
+              <span
+                [ngClass]="
+                  classroom?.status === 'active' ? 'success_btn' : 'grey_btn'
+                "
+                >{{ classroom?.status === "active" ? "Published" : "Draft" }}</span
+              >
+            </div> -->
+          </div>
+        </div>
+<!--   
+        <div class="actions">
+          <img
+            src="../../../../../../assets/img/action.svg"
+            class="clickable"
+            alt="image"
+            (click)="actionBtn.click()"
+          />
+          <input
+            type="checkbox"
+            name="action-btn"
+            id="action-btn"
+            style="display: none"
+            #actionBtn
+          />
+          <div class="dropdown">
+            <small
+              class="body-3-regular delete clickable"
+              (click)="openDeleteModal(classroom)"
+              >Delete</small
+            >
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  

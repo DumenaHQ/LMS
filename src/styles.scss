@@ -117,6 +117,9 @@ textarea::placeholder {
   background-color: $white-color;
   color: $inner-border;
   // border-color: $grey100;
+  &:hover {
+    background-color: $divider-color;
+  }
 }
 .warning_btn {
   background: linear-gradient(0deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), #FACC15;
@@ -396,6 +399,22 @@ small {
   grid-gap: $m-4;
 }
 //-- Dashboard ends --//
+
+//-- Chart starts --//
+.chart-container {
+  // padding-top: $m-2;
+  .chart {
+      width: 100%;
+      height: auto;
+      margin: auto;
+      @media only screen and (max-width: 745px) {
+        width: 100% !important;
+      }
+  }
+}
+//-- Chart ends --//
+
+
 
 
 

@@ -1,0 +1,30 @@
+<div class="courses_dislist">
+  <table>
+    <tr class="table-header">
+      <th>Thumbnail</th>
+      <th>Course name</th>
+      <th>Quadrant</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+    <tr
+      class="table-body clickable"
+      *ngFor="let i of allCourses"
+      routerLink="{{ i.id + '/details' }}"
+    >
+      <td class="thumbnail">
+        <img [src]="i.thumbnail" alt="" />
+      </td>
+      <td class="name">{{ i.title | titlecase }}</td>
+      <td class="quadrant">{{ i.course_quadrant | titlecase }}</td>
+      <td class="status">
+        <span [ngClass]="i.status ? 'success_btn' : 'grey_btn'">{{
+          i.status ? "Published" : "Draft"
+        }}</span>
+      </td>
+      <td class="actions">
+        <img src="../../../assets/img/action.svg" alt="" />
+      </td>
+    </tr>
+  </table>
+</div>

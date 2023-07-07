@@ -71,7 +71,7 @@ export class AuthService {
     return this.http.post(
       `${this.baseUrl}users/login`,
       data,
-      this.getHttpOptions()
+      this.getHttpOptionsWithoutAuth()
     );
   }
 
@@ -85,7 +85,7 @@ export class AuthService {
     return this.http.put(
       `${this.baseUrl}users/activate`,
       model,
-      this.getHttpOptions()
+      this.getHttpOptionsWithoutAuth()
     );
   }
 
@@ -94,16 +94,51 @@ export class AuthService {
     return this.http.put(`${this.baseUrl}users`, data, this.getHttpOptions());
   }
 
-  // Delete enrolled child
-  deleteEnrolledChild(parentId: string, learnerId: string) {
-    console.log(parentId, learnerId);
-
+  // Delete
+  deleteItem(deleteUrl: string) {
     return this.http.delete(
-      `${this.baseUrl}parents/${parentId}/learners/${learnerId}`,
+      `${this.baseUrl}${deleteUrl}`,
       this.getHttpOptions()
     );
   }
-  // parents/:id/learners/:learnerid
+
+  // Send password reset email
+  sendResetEmail(email: string) {
+    return this.http.post(
+      `${this.baseUrl}users/send-password-reset-email`,
+      email,
+      this.getHttpOptionsWithoutAuth()
+    );
+  }
+
+  // Resend Verification email
+  resendVerificationEmail(email: string) {
+    let payload = {
+      email: email,
+    };
+    return this.http.post(
+      `${this.baseUrl}users/resend-verification-email`,
+      payload,
+      this.getHttpOptionsWithoutAuth()
+    );
+  }
+
+  // Resend Verification email
+  resetPassword(data: any) {
+    return this.http.post(
+      `${this.baseUrl}users/reset-password`,
+      data,
+      this.getHttpOptionsWithoutAuth()
+    );
+  }
+
+  // login(data: any) {
+  //   return this.http.post(this.baseUrl + 'users/login', data, this.getHttpOptions()).pipe(
+  //     map((res: any) => {
+  //       this.setToken(res.data?.user.token)
+  //     })
+  //   )
+  // }
 
   // Log Out
   logOut() {
@@ -117,52 +152,44 @@ export class AuthService {
     this.router.navigate(['login']);
   }
 
-  // Send password reset email
-  sendResetEmail(email: string) {
-    return this.http.post(
-      `${this.baseUrl}users/send-password-reset-email`,
-      email,
-      this.getHttpOptions()
-    );
-  }
-
-  // Resend Verification email
-  resendVerificationEmail(email: string) {
-    let payload = {
-      email: email,
-    };
-    return this.http.post(
-      `${this.baseUrl}users/resend-verification-email`,
-      payload,
-      this.getHttpOptions()
-    );
-  }
-
-  // Resend Verification email
-  resetPassword(data: any) {
-    return this.http.post(
-      `${this.baseUrl}users/reset-password`,
-      data,
-      this.getHttpOptions()
-    );
-  }
-
-  // login(data: any) {
-  //   return this.http.post(this.baseUrl + 'users/login', data, this.getHttpOptions()).pipe(
-  //     map((res: any) => {
-  //       this.setToken(res.data?.user.token)
-  //     })
-  //   )
-  // }
-
   // Get HttpOptions
   getHttpOptions() {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('token'),
+        Authorization: 'bearer ' + localStorage.getItem('token'),
       }),
+      // mode: 'no-cors' // enables CORS mode
     };
     return httpOptions;
+  }
+  
+  // Get HttpOptions without authorization
+  getHttpOptionsWithoutAuth() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      // mode: 'no-cors' // enables CORS mode
+    };
+    return httpOptions;
+  }
+
+
+  // Get greeting time
+  getGreeting(): string {
+    const currentTime = new Date();
+    const currentHour = currentTime.getHours();
+    let greeting: string;
+  
+    if (currentHour >= 5 && currentHour < 12) {
+      greeting = 'Good morning';
+    } else if (currentHour >= 12 && currentHour < 18) {
+      greeting = 'Good afternoon';
+    } else {
+      greeting = 'Good evening';
+    }
+  
+    return greeting;
   }
 }

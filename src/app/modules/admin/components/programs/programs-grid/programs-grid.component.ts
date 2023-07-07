@@ -10,6 +10,11 @@ import { ProgramsService } from 'src/app/services/programs.service';
 export class ProgramsGridComponent implements OnInit {
   @Input() programs: any;
   @Input() days: any;
+  programName: any;
+
+  deleteModal: boolean = false;
+  deleteUrl: string;
+  deleteRoutePath: string;
 
   constructor(
     private programsService: ProgramsService,
@@ -21,6 +26,21 @@ export class ProgramsGridComponent implements OnInit {
   // Display program
   displayProgram(programId: string) {
     this.router.navigate([`/admin/programs/${programId}/view-program`]);
+  }
+
+  // Open Confirm Delete Modal
+  openDeleteModal(program: any) {
+    this.programName = program.name
+    
+    this.deleteModal = true;
+
+    this.deleteUrl = `programs/${program.id}`
+    this.deleteRoutePath = ''
+  }
+
+  // Close Confirm Delete Modal
+  closeDeleteModal() {
+    this.deleteModal = false;
   }
 
   // Delete program

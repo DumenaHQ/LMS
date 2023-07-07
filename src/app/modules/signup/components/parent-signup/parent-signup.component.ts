@@ -22,7 +22,7 @@ export class ParentSignupComponent implements OnInit {
   statesInNigeria = [
     {
       code: 'FC',
-      name: 'Abuja',
+      name: 'FCT',
     },
     {
       code: 'AB',

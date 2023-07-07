@@ -40,6 +40,12 @@ export class ParentComponent implements OnInit {
         subLinks: [],
       },
       {
+        name: 'Programs',
+        link: '/parent/programs',
+        icon: 'assets/img/svg/gameboy.svg',
+        subLinks: [],
+      },
+      {
         name: 'Payments',
         link: '/parent/payment',
         icon: 'assets/img/svg/wallet.svg',

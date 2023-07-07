@@ -14,12 +14,16 @@ export class ShoppingCartComponent implements OnInit {
   baseUrl: string = environment.baseUrl;
   key = environment.paystackKey;
   user: any;
-  allOrdersFromLS: any;
-  allOrderFromLS: any;
+  orders: any;
+  order: any;
   grandTotal: number = 0;
   value: any;
   isVoucher: boolean = false;
   loading: boolean = false;
+  plans: any;
+  alertMessage: string = '';
+  alertColor: string = '';
+  isAlert: boolean = false;
 
   constructor(
     private orderService: OrderService,
@@ -33,34 +37,18 @@ export class ShoppingCartComponent implements OnInit {
     let userData = this.authService.getUser();
     this.user = userData.user;
 
-    // Get Order from localstorge
-    this.allOrdersFromLS = this.orderService.getOrderFromLocalStorage();
-    if (this.allOrdersFromLS !== []) {
-      this.allOrdersFromLS.forEach((element: any) => {
-        this.allOrderFromLS = element;
-      });
-      // Find Sum
-      this.addAmounts(this.allOrdersFromLS);
-    }
+    // Get cart products from local storage
+    this.plans = this.orderService.loadCart()
+    this.getGrandTotal()
   }
 
   // Find Sum
-  addAmounts(data: any) {
-    this.value = data;
-    for (let j = 0; j < data.length; j++) {
-      this.grandTotal += this.value[j].amount;
-      // Add commas as thousands seperaators
-      // this.grandTotal = this.calcTotal
-      //   .toString()
-      //   .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    }
+  getGrandTotal() {
+    // this.value = data;
+    this.grandTotal = this.plans.reduce((sum: any, product: any) => sum += product.amount, 0)
+    
+    return this.grandTotal
   }
-  // substractAmount(data: any) {
-  //   this.value = data;
-  //   for (let j = 0; j < data.length; j++) {
-  //     this.grandTotal -= this.value[j].amount;
-  //   }
-  // }
 
   // Add Order
   addOrder() {
@@ -68,22 +56,18 @@ export class ShoppingCartComponent implements OnInit {
     this.loading = true;
 
     let payload = {
-      items: new Array(),
+      items: this.plans,
     };
-
-    // Map items from Localstorage to payload
-    this.allOrdersFromLS.map((item: any) => {
-      payload.items.push(item);
-    });
 
     // Add order
     this.orderService.addOrder(payload).subscribe((res: any) => {
       console.log(res);
+
       // Send data to paystack
       this.payWithPaystack(res.data.order);
 
       // Remove cart item from localstorage
-      localStorage.removeItem('cart');
+      localStorage.removeItem('cart_item');
     });
   }
 
@@ -130,11 +114,25 @@ export class ShoppingCartComponent implements OnInit {
     handler.openIframe();
   }
 
-  // Remove item from Local strorage
-  removeItemFromCart(index: any) {
-    // remove from LS
-    this.orderService.removeOrderToLocalStorage(index);
+  // Remove item from localstorage
+  removeItemFromLocalStorage(plan: any): void {
+    this.orderService.removePlan(plan)
+    this.getGrandTotal()
+    // Show alert
+    this.showAlert('Item removed from cart', 'success')
+  }
 
-    this.ngOnInit();
+  // Show alert
+  showAlert(message: string, color: string) {
+    // Set message
+    this.alertMessage = message;
+    // Set color
+    this.alertColor = color;
+    // Show Alert
+    this.isAlert = true;
+    // Hide Alert
+    setTimeout(() => {
+      this.isAlert = false;
+    }, 3000);
   }
 }

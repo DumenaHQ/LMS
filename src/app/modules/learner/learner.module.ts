@@ -8,12 +8,24 @@ import { LearnerComponent } from './learner.component';
 import { LearnerOverviewComponent } from './components/learner-overview/learner-overview.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LearnerOnboardComponent } from './components/learner-onboard/learner-onboard.component';
+import { DisplayLearnerProgramsComponent } from './components/learner-programs/display-learner-programs/display-learner-programs.component';
+import { DisplayLearnerProgramDetailsComponent } from './components/learner-programs/display-learner-program-details/display-learner-program-details.component';
+import { DisplayLearnerClassoomsComponent } from './components/learner-classrooms/display-learner-classooms/display-learner-classooms.component';
+import { DisplayDetailsLearnerClassoomComponent } from './components/learner-classrooms/display-details-learner-classoom/display-details-learner-classoom.component';
+import { BlankDisplayLearnerClassroomComponent } from './components/learner-classrooms/display-learner-classooms/blank-display-learner-classroom/blank-display-learner-classroom.component';
+import { GridDisplayLearnerClassroomsComponent } from './components/learner-classrooms/display-learner-classooms/grid-display-learner-classrooms/grid-display-learner-classrooms.component';
 
 @NgModule({
   declarations: [
     LearnerComponent,
     LearnerOverviewComponent,
     LearnerOnboardComponent,
+    DisplayLearnerProgramsComponent,
+    DisplayLearnerProgramDetailsComponent,
+    DisplayLearnerClassoomsComponent,
+    DisplayDetailsLearnerClassoomComponent,
+    BlankDisplayLearnerClassroomComponent,
+    GridDisplayLearnerClassroomsComponent,
   ],
   imports: [
     CommonModule,

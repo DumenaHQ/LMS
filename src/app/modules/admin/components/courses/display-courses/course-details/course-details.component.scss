@@ -1,0 +1,162 @@
+@import '../../../../../../../assets/css/variables.scss';
+@import '../../../../../../../assets/css/mixins.scss';
+
+section:not(:last-child) {
+  margin-bottom: $m-3;
+}
+
+.course-details {
+  @include sect-bg($border-color: transparent);
+  padding: $m-4 0;
+  &_image {
+    padding: 0 $m-3;
+    img {
+      width: 100%;
+      max-height: 300px;
+    }
+  }
+  &_header {
+    padding: 0 $m-3;
+    margin-top: $m-2;
+    &_top {
+      display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      gap: $m-2;
+      margin-bottom: $m-2;
+      .left {
+          &_bottom {
+            gap: $m-2;
+            margin-top: $m-2;
+            .icons {
+                gap: $m-2;
+                flex-flow: row wrap;
+                justify-content: space-between;
+                color: $primary40;
+                img {
+                    margin-right: $m-1;
+                    width: 14px;
+                    height: 14px;
+                }
+            }
+        }
+      }
+      .right {
+        gap: $m-2;
+        .status-btn.settings {
+          padding: $m-1 0.7rem;
+          img {
+            width: 16px;
+            height: 16px;
+            vertical-align: middle;
+            transition: all 0.2s;
+          }
+          &:hover {
+            img {
+              transform: rotate(360deg);
+            }
+          }
+        }
+      }
+    }
+    &_bottom {
+      gap: $m-2;
+      .icons {
+        gap: $m-2;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        color: $primary40;
+        img {
+          margin-right: $m-1;
+          width: 14px;
+          height: 14px;
+        }
+      }
+    }
+  }
+  &_body {
+    margin-top: $m-4;
+    &_header {
+      padding: 0 $m-4;
+      height: 3.5rem;
+      border-bottom: 1px solid $divider-color;
+      overflow: hidden;
+      ul {
+        // gap: $m-4;
+        // flex-wrap: wrap;
+        li {
+          line-height: 3.3rem;
+          cursor: pointer;
+          transition: all .2s;
+          padding: 0 $m-3;
+          &.active {
+            color: $primary80;
+            border-bottom: 2px solid $primary80;
+          }
+          &:hover {
+            background-color: $grey40;
+          }
+        }
+      }
+    }
+    &_content {
+      display: flex;
+      aside {
+        flex-basis:25%;
+        border-right: 1px solid $divider-color;
+        ul {
+          li {
+            padding: $m-2 $m-4;
+            transition: all .2s ease-in;
+            border-left: 3px solid transparent;
+            cursor: pointer;
+            &.active,
+            &:hover {
+              background-color: $divider-color;
+            }
+            &.active {
+              border-color: $secondary80;
+            }
+            p {
+              color: $primary20;
+            }
+
+          }
+        }
+      }
+      main {
+        // flex-basis: 70%;
+        padding: $m-4;
+        .header {
+          h5 {
+            color: $primary20;
+          }
+          p {
+            border: 1px solid $inner-border;
+            border-radius: $border-radius1;
+            padding: $m-2;
+          }
+
+        }
+        ul {
+          margin-top: $m-6;
+          li {
+            width: 100%;
+            &:not(:last-child) {
+              margin-bottom: $m-2;
+            }
+            p {
+              span {
+                display: inline-block;
+                border: 1px solid $inner-border;
+                border-radius: $border-radius1;
+                padding: $m-1 $m-2;
+                margin-left: $m-2;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

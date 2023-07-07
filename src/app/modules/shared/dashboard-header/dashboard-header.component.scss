@@ -2,10 +2,17 @@
 @import '../../../../assets/css/mixins.scss';
 
 header {
+  position: fixed;
+  width: 85%;
+  height: 5rem;
+  padding: 0 $m-3;
   background-color: $white-color;
   border-bottom: 1px solid $divider-color;
-  padding: $m-3;
   justify-content: space-between;
+  z-index: 150;
+  @media only screen and (max-width: 997px) {
+    width: 100%;
+  }
   .search_area {
     .hamburger {
       display: none;

@@ -1,0 +1,47 @@
+@import '../../../../../assets/css/variables.scss';
+@import '../../../../../assets/css/mixins.scss';
+@import '../../../../../assets/css/dashboard.scss';
+
+.modal {
+    @include modal();
+    opacity: 1;
+    visibility: visible;
+    &.hide-modal {
+      opacity: 0;
+      visibility: hidden;
+    }
+    &_area {
+      .modal-btns {
+        justify-content: center;
+        gap: $m-2;
+        margin-top: $m-3;
+        .skip_btn {
+          border: 1px solid $inner-border;
+          color: $grey100;
+          background-color: transparent;
+          &:hover {
+            border-color: $primary80;
+          }
+        }
+      }
+      // Intro
+      .intro {
+        &_image {
+          width: 164px;
+          height: auto;
+          display: flex;
+          margin: 0 auto $m-2 auto;
+        }
+        .close-btn {
+          position: absolute;
+          top: $m-4;
+          right: $m-4;
+          i {
+            font-size: 26px;
+            color: $primary20;
+          }
+        }
+  
+      }
+    }
+  }

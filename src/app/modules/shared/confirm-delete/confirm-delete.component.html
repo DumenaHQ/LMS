@@ -1,0 +1,35 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
+></app-alert-popup>
+
+<div class="modal confirm-delete-modal">
+    <div class="modal_area">
+      <h5></h5>
+  
+      <div class="modal-details" style="text-align: left">
+        <h2 class="text-primary-color">Confirm delete</h2>
+        <p>
+          Are you sure you want to remove
+          <strong class="text-primary-color">{{ itemName }}</strong
+          >?
+        </p>
+      </div>
+      <!-- Buttons -->
+      <div class="modal-btns dis-flex">
+        <button type="button" class="btn skip_btn" (click)="closeDeleteModal()">
+          Cancel
+        </button>
+        <button
+          class="btn prim_btn"
+          [disabled]="loading"
+          (click)="removeItem()"
+        >
+          <span *ngIf="!loading">Remove</span>
+          <span *ngIf="loading">Processing...</span>
+        </button>
+      </div>
+    </div>
+  </div>

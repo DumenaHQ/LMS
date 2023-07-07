@@ -23,7 +23,7 @@
       left: -100%;
       width: 200px;
       transition: all 0.5s;
-      z-index: 100;
+      z-index: 150;
       &.show-menu {
         left: 0;
       }
@@ -43,9 +43,8 @@
     overflow: hidden;
     background-color: $grey40;
     .main-body {
-      // display: grid;
-      // grid-gap: 2rem;
       padding: $m-3;
+      margin-top: 5rem;
     }
 
     @media only screen and (max-width: 997px) {

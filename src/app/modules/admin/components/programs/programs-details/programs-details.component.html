@@ -41,49 +41,56 @@
         </div>
       </div>
       <div class="right dis-flex">
-        <button class="grey_btn">Edit Program</button>
+        <button class="grey_btn" (click)="editProgram()">Edit Program</button>
         <button class="grey_btn settings">
           <img src="../../../assets/img/svg/setting-grey.svg" alt="" />
         </button>
       </div>
     </div>
     <div class="course-details_header_bottom">
-      <ul class="hh dis-flex">
+      <p class="descript">
+        {{ program?.description }}
+      </p>
+      <ul class="numbers dis-flex">
         <li>
-          <p class="body-2-bold">{{ program?.courses.length }}</p>
-          <p class="body-3-regular">Courses</p>
+          <p class="body-2-bold">{{ program?.courses?.length }}</p>
+          <p class="body-3-regular">{{program?.courses?.length > 1 ? 'Courses' : 'Course'}}</p>
         </li>
         <li>
-          <p class="body-2-bold">{{ program?.schools.length }}</p>
-          <p class="body-3-regular">Schools</p>
+          <p class="body-2-bold">{{ program?.schools?.length }}</p>
+          <p class="body-3-regular">{{program?.schools?.length > 1 ? 'Schools' : 'School'}}</p>
         </li>
+        <!-- <li>
+          <p class="body-2-bold">{{ program?.learner_count }}</p>
+          <p class="body-3-regular">{{program?.learner_count > 1 ? 'Learners' : 'Learner'}}</p>
+        </li> -->
       </ul>
+      <div class="completion">
+        <p class="body-2-bold title">Timeframe</p>
+        <p class="body-2-medium text-primary-color">0 Day</p>
+      </div>
       <div class="students">
-        <p class="body-2-bold title">Total Students</p>
+        <p class="body-2-bold title">Total {{program?.learner_count > 1 ? 'Learners' : 'Learner'}} ({{ program?.learner_count }})</p>
         <ul class="students_list dis-flex">
           <li>
             <img
-              src="../../../../../../assets/img/svg/orange-circle.svg"
+              src="../../../../../assets/img/children-avatar/child-avatar-1.png"
               alt=""
             />
           </li>
           <li>
             <img
-              src="../../../../../../assets/img/svg/orange-circle.svg"
+              src="../../../../../assets/img/children-avatar/child-avatar-2.png"
               alt=""
             />
           </li>
           <li>
             <img
-              src="../../../../../../assets/img/svg/orange-circle.svg"
+              src="../../../../../assets/img/children-avatar/child-avatar-3.png"
               alt=""
             />
           </li>
         </ul>
-      </div>
-      <div class="completion">
-        <p class="body-2-bold title">Completion rate</p>
-        <p class="body-2-medium text-primary-color">85% completed this plan</p>
       </div>
     </div>
   </div>
@@ -92,10 +99,10 @@
       <ul class="dis-flex">
         <li
           class="body-2-medium active"
-          [class.active]="contentId === 'content'"
-          (click)="tabChange('content')"
+          [class.active]="contentId === 'courses'"
+          (click)="tabChange('courses')"
         >
-          Content
+          Courses
         </li>
         <li
           class="body-2-medium"
@@ -114,89 +121,120 @@
       </ul>
     </div>
     <div class="course-details_body_content">
-      <ng-container *ngIf="contentId === 'content'">
-        <aside>
-          <ul>
-            <li class="active">
-              <h5 class="body-2-medium">Course 1</h5>
-              <p>Updated May 23,2022 5:12PM</p>
-            </li>
-            <li>
-              <h5 class="body-2-medium">Course 2</h5>
-              <p>Updated May 23,2022 5:12PM</p>
-            </li>
-            <li>
-              <h5 class="body-2-medium">Quiz 1</h5>
-              <p>Updated May 23,2022 5:12PM</p>
-            </li>
-          </ul>
-        </aside>
-        <main></main>
-      </ng-container>
-
-      <ng-container *ngIf="contentId === 'schools'">
+      <!-- Courses -->
+      <ng-container *ngIf="contentId === 'courses'">
         <div class="table-container" style="overflow-x: auto">
-          <app-loader *ngIf="dataLoading"></app-loader>
-
-          <ng-container *ngIf="programSchools?.length > 0">
-            <table *ngFor="let school of programSchools">
+          <ng-container *ngIf="program?.courses?.length > 0">
+            <table>
               <tr class="table-header">
-                <th>Name</th>
-                <th>Head of School</th>
-                <th>Phone Number</th>
-                <th>Number of students</th>
+                <th>Title</th>
+                <th>Number of lesson(s)</th>
+                <th>Quadrant</th>
+                <th>Duration</th>
               </tr>
               <ng-container>
-                <tr class="table-body">
-                  <td>{{ school.name }}</td>
-                  <td>none</td>
-                  <td>none</td>
-                  <td>none</td>
+                <tr class="table-body" *ngFor="let course of program?.courses">
+                  <td>{{ course?.title }}</td>
+                  <td>{{course?.lesson_count}}</td>
+                  <td>{{course?.course_quadrant}}</td>
+                  <td>{{course?.duration}}</td>
                 </tr>
               </ng-container>
-              <ng-template>
+              <!-- <ng-template>
                 <p style="text-align: center">Empty School list!</p>
-              </ng-template>
+              </ng-template> -->
             </table>
           </ng-container>
 
-          <p style="text-align: center" *ngIf="programSchools?.length === 0">
-            No school available
+          <div *ngIf="program?.courses?.length === 0" class="course-empty">
+            <p style="text-align: center" >
+              No Course available
+            </p>
+            <button type="button" class="btn sec_btn" (click)="openAddCourseToProgramModal()">Add Course</button>
+          </div>
+        </div>
+      </ng-container>
+      
+      <!-- Schools -->
+      <ng-container *ngIf="contentId === 'schools'">
+        <div class="table-container" style="overflow-x: auto">
+          <ng-container *ngIf="program?.schools?.length > 0">
+            <table>
+              <tr class="table-header">
+                <th>Name</th>
+                <th>Number of students</th>
+              </tr>
+              <ng-container>
+                <tr class="table-body" *ngFor="let school of program?.schools">
+                  <td>{{ school?.name }}</td>
+                  <td>{{school?.student_count}}</td>
+                </tr>
+              </ng-container>
+              <!-- <ng-template>
+                <p style="text-align: center">Empty School list!</p>
+              </ng-template> -->
+            </table>
+          </ng-container>
+
+          <p style="text-align: center" *ngIf="program?.sponsors?.length === 0">
+            No School available
           </p>
         </div>
       </ng-container>
-
+      
+      <!-- Learners -->
       <ng-container *ngIf="contentId === 'learners'">
         <div class="table-container" style="overflow-x: auto">
-          <app-loader *ngIf="dataLoading"></app-loader>
-
-          <ng-container *ngIf="programSchools?.length > 0">
-            <table *ngFor="let school of programSchools">
+          <ng-container *ngIf="program?.learners?.length > 0">
+            <table>
               <tr class="table-header">
-                <th>Name</th>
-                <th>Head of School</th>
-                <th>Phone Number</th>
-                <th>Number of students</th>
+                <th>Full Name</th>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Grade</th>
               </tr>
               <ng-container>
-                <tr class="table-body">
-                  <td>{{ school.name }}</td>
-                  <td>none</td>
-                  <td>none</td>
-                  <td>none</td>
+                <tr class="table-body" *ngFor="let learner of program?.learners">
+                  <td>{{ learner.fullname }}</td>
+                  <td>{{ learner.username }}</td>
+                  <td>{{ learner.email ===  undefined ? '-' : learner.email }}</td>
+                  <td>{{ learner.grade ===  undefined ? '-' : learner.grade  }}</td>
                 </tr>
               </ng-container>
-              <ng-template>
+              <!-- <ng-template>
                 <p style="text-align: center">Empty School list!</p>
-              </ng-template>
+              </ng-template> -->
             </table>
           </ng-container>
 
-          <p style="text-align: center" *ngIf="programSchools?.length === 0">
-            No school available
+          <p style="text-align: center" *ngIf="program.learners?.length === 0">
+            No Learner available
           </p>
         </div>
       </ng-container>
     </div>
   </div>
 </section>
+
+<!-- Add course to program modal -->
+<app-add-course-modal *ngIf="addCourseToProgram" (addCourseToProgramModal)="closeAddCourseToProgramModal()" [programId]="currentProgramId.programId"></app-add-course-modal>
+
+<!-- <ng-container *ngIf="contentId === 'content'">
+  <aside>
+    <ul>
+      <li class="active">
+        <h5 class="body-2-medium">Course 1</h5>
+        <p>Updated May 23,2022 5:12PM</p>
+      </li>
+      <li>
+        <h5 class="body-2-medium">Course 2</h5>
+        <p>Updated May 23,2022 5:12PM</p>
+      </li>
+      <li>
+        <h5 class="body-2-medium">Quiz 1</h5>
+        <p>Updated May 23,2022 5:12PM</p>
+      </li>
+    </ul>
+  </aside>
+  <main></main>
+</ng-container> -->

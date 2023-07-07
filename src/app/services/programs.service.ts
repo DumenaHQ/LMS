@@ -10,6 +10,7 @@ export class ProgramsService {
 
   constructor(private http: HttpClient) {}
 
+  //-- GET STARTS --//
   // Get All Programs
   getAllPrograms() {
     return this.http.get(`${this.baseUrl}programs`, this.getHttpOptions());
@@ -46,14 +47,25 @@ export class ProgramsService {
       this.getHttpOptions()
     );
   }
+  //-- GET ENDS --//
 
+  //-- ADD STARTS --//
   // Add program
   addProgram(data: any) {
     return this.http.post(
       `${this.baseUrl}programs`,
       data,
-      this.getHttpOptions()
+      this.getHttpOptionsForMultipart()
     );
+  }
+
+  // Add course to program
+  addCourseToProgram(data: any, programId: any) {
+    return this.http.patch(
+      `${this.baseUrl}programs/${programId}/courses`,
+      data,
+      this.getHttpOptions()
+      );
   }
 
   // Add school to program
@@ -62,34 +74,70 @@ export class ProgramsService {
       `${this.baseUrl}programs/${programId}/schools`,
       data,
       this.getHttpOptions()
-    );
+      );
   }
 
+  // Add parent to program
+  addParentToProgram(data: any, programId: any) {
+    return this.http.patch(
+      `${this.baseUrl}programs/${programId}/parents`,
+      data,
+      this.getHttpOptions()
+      );
+  }
+    
   // Add learner to program
   addLearnerToProgram(data: any, programId: any) {
     return this.http.patch(
       `${this.baseUrl}programs/${programId}/learners`,
       data,
       this.getHttpOptions()
+      );
+  }
+  //-- ADD ENDS --//
+
+  //-- EDIT STARTS --//
+  editProgram(data: any, programId: any) {
+    return this.http.put(
+      `${this.baseUrl}programs/${programId}`,
+      data,
+      this.getHttpOptions()
     );
   }
-
+  //-- EDIT END --//
+    
+  //-- DELETE STARTS --//
   // Delete program
   deleteProgram(programId: any) {
     return this.http.delete(
       `${this.baseUrl}programs/${programId}`,
       this.getHttpOptions()
-    );
-  }
+      );
+    }
+  //-- DELETE ENDS --//
 
   // Get HttpOptions
   getHttpOptions() {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('token'),
+        Authorization: 'bearer ' + localStorage.getItem('token'),
       }),
+      // mode: 'cors' // enables CORS mode
     };
     return httpOptions;
   }
+
+  // Get HttpOptions for multipart
+  getHttpOptionsForMultipart() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'multipart/form-data',
+        Authorization: 'bearer ' + localStorage.getItem('token'),
+      }),
+      // mode: 'cors' // enables CORS mode
+    };
+    return httpOptions;
+  }
+
 }
