@@ -55,51 +55,27 @@
           allowfullscreen
         ></iframe> -->
       </div>
+
       <div class="course-descp">
         <div class="course-descp_header">
           <ul class="dis-flex">
-            <li class="body-2-medium active">Discussion</li>
+            <li class="body-2-medium active">Note</li>
             <!-- <li class="body-2-medium active">Course Description</li> -->
+            <div
+            lineNumbers
+            >
+            </div>
           </ul>
         </div>
         <div class="course-descp_body">
-          <p>
-            {{ modules[currentModuleIndex]?.further_reading }}
-          </p>
-          <!-- Objectives -->
-          <div class="obj">
-            <h4>Objectives</h4>
-            <ul>
-              <li class="" *ngFor="let objective of modules[currentModuleIndex]?.objectives | keyvalue">
-                <p>{{objective.value}}</p>
-              </li>
-            </ul>
-          </div>
-          <!-- Activities -->
-          <div class="acti">
-            <h4>Activities</h4>
-            <ul>
-              <li class="" *ngFor="let activity of modules[currentModuleIndex]?.class_activities | keyvalue">
-                <p>{{activity.value}}</p>
-              </li>
-            </ul>
-          </div>
-          <!-- <div class="activity">
-            <h4>Class Activity</h4>
-            <p>
-              Inventore ex repellat voluptate quisquam. Culpa omnis velit earum
-              qui expedita. Tempora qui qui rerum nesciunt perferendis atque
-              illum. Deleniti tempora harum aut necessitatibus. Natus sunt
-              praesentium.
-            </p>
-          </div> -->
+        
         </div>
       </div>
     </main>
     <aside>
       <div class="course-content">
         <div class="course-content_header ds-sect-header">
-          <h5>Course Content</h5>
+          <h5>Lessons</h5>
           <p class="total-length">Lessons ({{ course?.lesson_count }})</p>
         </div>
         <div class="course-content_list">
@@ -193,21 +169,61 @@
           </div>
           </div>
         </div>
-        <!-- <div class="course-content_tutor">
-          <h5>Course Content</h5>
+        <div class="course-content_tutor">
+          <h5>Support and Instructor Information</h5>
           <div class="course-content_tutor_profile">
             <img
-              src="../../../../assets/img/library/course-tutor.svg"
+              src="../../../../assets/img/logo.svg"
               alt="Course Tutor"
               class="image"
             />
-            <p class="body-1-medium name">Mikasa Ackerman</p>
+            <p class="body-1-medium name">DUMENA Education Team</p>
             <p class="body-1-regular details">
-              Doloremque corrupti laborum. Hic autem qui. Saepe dicta distinctio
-              recusandae laborum et. Id et tenetur quas id amet perferendis.
+              This course has been prepared with love by the DUMENA Education team.
             </p>
           </div>
-        </div> -->
+        </div>
+      </div>
+      <div style="padding-top: 50px;"></div>
+      <div class="course-descp" >
+        <div class="course-descp_header">
+          <ul class="dis-flex">
+            <li class="body-2-medium active">Discussion</li>
+            <!-- <li class="body-2-medium active">Course Description</li> -->
+          </ul>
+        </div>
+        <div class="course-descp_body">
+          <p>
+            {{ modules[currentModuleIndex]?.further_reading }}
+          </p>
+          <!-- Objectives -->
+          <div class="obj">
+            <h4>Objectives</h4>
+            <ul>
+              <li class="" *ngFor="let objective of modules[currentModuleIndex]?.objectives | keyvalue">
+                <p>{{objective.value}}</p>
+              </li>
+            </ul>
+          </div>
+          <!-- Activities -->
+          <div class="acti">
+            <h4>Activities</h4>
+            <ul>
+              <li class="" *ngFor="let activity of modules[currentModuleIndex]?.class_activities | keyvalue">
+                <p>{{activity.value}}</p>
+              </li>
+            </ul>
+          </div>
+          <!-- <div class="activity">
+            <h4>Class Activity</h4>
+            <p>
+              Inventore ex repellat voluptate quisquam. Culpa omnis velit earum
+              qui expedita. Tempora qui qui rerum nesciunt perferendis atque
+              illum. Deleniti tempora harum aut necessitatibus. Natus sunt
+              praesentium.
+            </p>
+          </div> -->
+        </div>
       </div>
     </aside>
   </div>
