@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ClassroomService } from 'src/app/services/classroom.service';
 
 @Component({
-  selector: 'app-display-learner-classooms',
-  templateUrl: './display-learner-classooms.component.html',
-  styleUrls: ['./display-learner-classooms.component.scss']
+  selector: 'app-display-admin-class-template',
+  templateUrl: './display-admin-class-template.component.html',
+  styleUrls: ['./display-admin-class-template.component.scss']
 })
-export class DisplayLearnerClassoomsComponent implements OnInit {
+export class DisplayAdminClassTemplateComponent implements OnInit {
 
-  classrooms: any;
+  classTemplates: any;
   dataLoading: boolean = true;
 
   constructor(
@@ -17,16 +17,12 @@ export class DisplayLearnerClassoomsComponent implements OnInit {
 
   ngOnInit(): void {
     // Get classrooms
-    this.classroomService.getClassrooms().subscribe({
+    this.classroomService.getClassroomTemplates().subscribe({
       next: (res: any) => {
-        this.classrooms = res.data.classes;
+        this.classTemplates = res.data.classTemplates;
         console.log({
           title: 'classrooms',
-          data: res.data.classes
-        });
-        
-        this.classrooms.forEach((p: any) => {
-          // this.setTimeframe(p.start_date);
+          data: res.data.classTemplates
         });
       },
       error: (e) => console.error(e),
@@ -35,5 +31,6 @@ export class DisplayLearnerClassoomsComponent implements OnInit {
       },
     });
   }
+
 
 }
