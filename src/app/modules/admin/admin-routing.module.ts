@@ -60,7 +60,7 @@ const routes: Routes = [
         },
       },
       {
-        path: 'class-templates/add-class-templates',
+        path: 'class-templates/add-class-template',
         component: AddAdminClassTemplateComponent,
         data: {
           title: 'Add Class Template',

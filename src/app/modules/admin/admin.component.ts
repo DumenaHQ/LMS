@@ -26,6 +26,12 @@ export class AdminComponent implements OnInit {
       icon: 'assets/img/svg/University.svg',
       subLinks: [],
     },
+    {
+      name: 'Classrooms',
+      link: '/admin/class-templates',
+      icon: 'assets/img/svg/forward-item.svg',
+      subLinks: [],
+    },
     // {
     //   name: 'Quizzes',
     //   link: '/admin/quizzes',
