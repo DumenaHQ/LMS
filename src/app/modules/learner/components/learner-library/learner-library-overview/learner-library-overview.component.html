@@ -5,7 +5,7 @@
 <section>
   <div class="filter-container">
     <div class="tabs dis-flex">
-      <button class="active">All Content</button>
+      <!-- <button class="active">All Content</button>
       <button
         [class.active]="quadrant == 'Developer'"
         (click)="tabChange('Developer')"
@@ -19,28 +19,28 @@
         Designer
       </button>
       <button>Maker</button>
-      <button>Innovator</button>
+      <button>Innovator</button> -->
     </div>
-    <div class="sort">
+    <!-- <div class="sort">
       <span>
         <img src="../../../assets/img/grid.svg" alt="" />
       </span>
       <span>
         <img src="../../../assets/img/funnel.svg" alt="" />
       </span>
-    </div>
+    </div> -->
   </div>
   <div class="courses-container">
     <!-- Courses -->
     <app-courses-card [quadrant]="quadrant"></app-courses-card>
     <!-- Pagination -->
-    <div class="pagination">
+    <!-- <div class="pagination">
       <ul class="dis-flex">
         <li class="icon"><i class="bx bx-chevron-left"></i></li>
         <li class="active">1</li>
         <li>2</li>
         <li class="icon"><i class="bx bx-chevron-right"></i></li>
       </ul>
-    </div>
+    </div> -->
   </div>
 </section>
