@@ -4,6 +4,9 @@ import { UserProfileComponent } from '../shared/user-profile/user-profile.compon
 import { AdminComponent } from './admin.component';
 import { AdminOverviewComponent } from './components/admin-overview/admin-overview.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
+import { DisplayAdminClassTemplateComponent } from './components/admin-class-templates/components/display-admin-class-template/display-admin-class-template.component';
+import { AddAdminClassTemplateComponent } from './components/admin-class-templates/components/add-admin-class-template/add-admin-class-template.component';
+import { DetailsDisplayAdminClassTemplateComponent } from './components/admin-class-templates/components/display-admin-class-template/details-display-admin-class-template/details-display-admin-class-template.component';
 
 const routes: Routes = [
   {
@@ -47,6 +50,30 @@ const routes: Routes = [
           import('./components/programs/programs.module').then(
             (m) => m.ProgramsModule
           ),
+      },
+      {
+        path: 'class-templates',
+        component: DisplayAdminClassTemplateComponent,
+        data: {
+          title: 'Class Templates',
+          description: 'Description Meta Tag Content',
+        },
+      },
+      {
+        path: 'class-templates/add-class-template',
+        component: AddAdminClassTemplateComponent,
+        data: {
+          title: 'Add Class Template',
+          description: 'Description Meta Tag Content',
+        },
+      },
+      {
+        path: 'class-templates/:classTemplateId/view-class-templates',
+        component: DetailsDisplayAdminClassTemplateComponent,
+        data: {
+          title: 'View Class Template',
+          description: 'Description Meta Tag Content',
+        },
       },
       { path: '', redirectTo: '/admin', pathMatch: 'full' },
     ],

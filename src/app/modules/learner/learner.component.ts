@@ -41,7 +41,7 @@ export class LearnerComponent implements OnInit {
       },
       {
         name: 'Classrooms',
-        link: '/school/classrooms',
+        link: '/learner/classrooms',
         icon: 'assets/img/svg/forward-item.svg',
         subLinks: [],
       },
