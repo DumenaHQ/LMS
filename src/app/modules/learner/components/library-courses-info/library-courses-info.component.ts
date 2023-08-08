@@ -41,4 +41,11 @@ export class LibraryCoursesInfoComponent implements OnInit {
       `/learner/library/${this.currentCourse.courseId}/${this.course?.modules[0].id}`,
     ]);
   }
+
+  startCourseThroughModule(courseId:string,moduleId:string) {
+    // Route users to first lesson
+    this.router.navigate([
+      `/learner/library/${courseId}/${moduleId}`,
+    ]);
+  }
 }
