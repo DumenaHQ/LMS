@@ -1,0 +1,127 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
+></app-alert-popup>
+
+<section class="ds-head dis-flex">
+  <h2 class="ds-head_title clickable" routerLink="/school/classrooms">Classrooms</h2>
+  <i class="bx bx-chevron-right icon"></i>
+  <p>
+    Add Classroom
+  </p>
+</section>
+
+
+<section class="set-info">
+  <div class="set-info_header">
+    <h3 class="text-primary-color">Set the Classroom Information</h3>
+    <p>
+        This information will be displayed to the learners when they are added to the class
+    </p>
+  </div>
+  <form [formGroup]="classroomForm">
+    <div class="form_control_container">
+      <div class="form_control">
+        <label for="name">Name of Classroom <strong class="label-required">*</strong></label>
+        <div class="form_control_field">
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Type here"
+            formControlName="name"
+          />
+        </div>
+      </div>
+      <div class="form_control description">
+        <label for="description">Classroom Template</label>
+        <div class="form_control_field">
+          <select name="" id="" formControlName="template">
+            <option value="" selected>Select a Template</option>
+            <option [value]="item.id" *ngFor="let item of templates">
+              {{ item.title }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form_control description">
+        <label for="description">Classroom details <strong class="label-required">*</strong></label>
+        <div class="form_control_field">
+          <textarea
+            name="description"
+            id="description"
+            cols="30"
+            rows="5"
+            placeholder="Type here"
+            spellcheck="true"
+            formControlName="description"
+          ></textarea>
+        </div>
+      </div>
+      
+      <!-- <div class="form_control">
+        <label for="thumbnail">Thumbnail</label>
+        <div class="">
+          <div
+            class="form_control_field select-image clickable"
+            (click)="fileThumbnail.click()"
+            appDragDrop
+            (fileDropped)="uploadThumbnail($event)"
+          >
+            <input
+              type="file"
+              #fileThumbnail
+              hidden
+              (change)="uploadThumbnail($event)"
+            />
+            <img
+              src="../../../../../../../assets/img/select-Image.svg"
+              alt=""
+            />
+            <p class="body-3-regular text-primary-color">
+              {{ selectedThumbnailName === '' ? 'Select a picture' : selectedThumbnailName }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="form_control">
+        <label for="thumbnail">Header Photo</label>
+        <div class="">
+          <div
+            class="form_control_field select-image clickable"
+            (click)="fileHeaderPhoto.click()"
+            appDragDrop
+            (fileDropped)="uploadHeaderPhoto($event)"
+          >
+            <input
+              type="file"
+              #fileHeaderPhoto
+              hidden
+              (change)="uploadHeaderPhoto($event)"
+            />
+            <img
+              src="../../../../../../../assets/img/select-Image.svg"
+              alt=""
+            />
+            <p class="body-3-regular text-primary-color">
+              {{ selectedHeaderPhotoName === '' ? 'Select a picture' : selectedHeaderPhotoName }}
+            </p>
+          </div>
+        </div>
+      </div> -->
+    </div>
+    <div class="form_btns dis-flex">
+      <ng-container *ngIf="!loading">
+        <button class="btn grey_btn" routerLink="/school/classrooms">Cancel</button>
+        <button class="btn prim_btn" (click)="createClassroom()">Save</button>
+      </ng-container>
+      <button
+        class="btn prim_btn"
+        [disabled]="loading"
+        *ngIf="loading"
+      >Processing...</button> 
+    </div>
+  </form>
+</section>

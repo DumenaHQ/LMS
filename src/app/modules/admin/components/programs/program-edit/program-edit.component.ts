@@ -17,10 +17,7 @@ export class ProgramEditComponent implements OnInit {
   alertColor: string = '';
   isAlert: boolean = false;
   loading: boolean = false;
-
-
-
-  
+ 
   constructor(
     private programsService: ProgramsService,
     private activatedRoute: ActivatedRoute,

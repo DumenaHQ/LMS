@@ -8,8 +8,7 @@ import { ProgramsService } from 'src/app/services/programs.service';
   styleUrls: ['./programs-details.component.scss'],
 })
 export class ProgramsDetailsComponent implements OnInit {
-
-
+  
   contentId: any = 'courses';
   currentProgramId: any;
   program: any;

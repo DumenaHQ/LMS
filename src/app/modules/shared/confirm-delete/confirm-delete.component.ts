@@ -12,7 +12,7 @@ export class ConfirmDeleteComponent implements OnInit {
   isAlert: boolean = false;
   alertMessage: string;
   alertColor: string;
-  @Input() data: any;
+  @Input() itemName: any;
   @Input() deleteUrl: any;
   @Input() deleteRoutePath: any;
   loading: boolean = false
@@ -32,14 +32,14 @@ export class ConfirmDeleteComponent implements OnInit {
         console.log(res);
         if (res.status === true) {
           this.showAlertPopup(res.message, 'success');
-
-          this.closeDeleteModal()
-
-          if(this.deleteRoutePath !== '') {
-            setTimeout(() => {
+          setTimeout(() => {
+            this.closeDeleteModal();
+            if(this.deleteRoutePath !== '') {
               this.router.navigate([this.deleteRoutePath]);
-            }, 3000);
-          }
+            } else {
+              window.location.reload();
+            }
+          }, 3000);
         }
       });
   }

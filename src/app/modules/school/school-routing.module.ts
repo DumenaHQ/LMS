@@ -7,6 +7,10 @@ import { SchoolPaymentComponent } from './components/school-payment/school-payme
 import { SchoolProgramsComponent } from './components/school-programs/school-programs.component';
 import { SchoolStudentsComponent } from './components/school-students/school-students.component';
 import { SchoolComponent } from './school.component';
+import { DisplaySchoolClassroomsComponent } from './components/school-classrooms/display-school-classrooms/display-school-classrooms.component';
+import { AddSchoolClassroomComponent } from './components/school-classrooms/add-school-classroom/add-school-classroom.component';
+import { DetailsDisplaySchoolClassroomComponent } from './components/school-classrooms/display-school-classrooms/details-display-school-classroom/details-display-school-classroom.component';
+import { EditSchoolClassroomComponent } from './components/school-classrooms/edit-school-classroom/edit-school-classroom.component';
 
 const routes: Routes = [
   {
@@ -26,6 +30,38 @@ const routes: Routes = [
         component: UserProfileComponent,
         data: {
           title: 'Profile',
+          description: 'Description Meta Tag Content',
+        },
+      },
+      {
+        path: 'classrooms',
+        component: DisplaySchoolClassroomsComponent,
+        data: {
+          title: 'Classrooms',
+          description: 'Description Meta Tag Content',
+        },
+      },
+      {
+        path: 'classrooms/add-classroom',
+        component: AddSchoolClassroomComponent,
+        data: {
+          title: 'Add Classroom',
+          description: 'Description Meta Tag Content',
+        },
+      },
+      {
+        path: 'classrooms/:classroomId/view-classroom',
+        component: DetailsDisplaySchoolClassroomComponent,
+        data: {
+          title: 'View Classroom',
+          description: 'Description Meta Tag Content',
+        },
+      },
+      {
+        path: 'classrooms/:classroomId/edit-classroom',
+        component: EditSchoolClassroomComponent,
+        data: {
+          title: 'Edit Classroom',
           description: 'Description Meta Tag Content',
         },
       },

@@ -40,6 +40,12 @@ export class LearnerComponent implements OnInit {
         subLinks: [],
       },
       {
+        name: 'Classrooms',
+        link: '/learner/classrooms',
+        icon: 'assets/img/svg/forward-item.svg',
+        subLinks: [],
+      },
+      {
         name: 'Programs',
         link: '/learner/programs',
         icon: 'assets/img/svg/gameboy.svg',

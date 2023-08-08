@@ -71,7 +71,7 @@ const routes: Routes = [
   },
   {
     path: 'learner',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     loadChildren: () =>
       import('./modules/learner/learner.module').then(
         (m: any) => m.LearnerModule

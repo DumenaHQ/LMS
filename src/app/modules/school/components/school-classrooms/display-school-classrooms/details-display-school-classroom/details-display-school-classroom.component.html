@@ -1,0 +1,193 @@
+<section class="ds-head dis-flex">
+    <h2 class="ds-head_title clickable" routerLink="/school/classrooms">Classrooms</h2>
+    <i class="bx bx-chevron-right icon"></i>
+    <p class="clickable" [title]="classroom?.name">
+      {{
+        classroom?.name.length > 20
+          ? classroom?.name.slice(0, 20) + "..."
+          : classroom?.name
+      }}
+    </p>
+  </section>
+  
+  <section class="course-details">
+    <div class="course-details_image">
+      <img src="../../../../../../assets/img/program-thumbnail.svg" alt="" />
+    </div>
+    <div class="course-details_header">
+      <div class="course-details_header_top">
+        <div class="left">
+          <h2>{{ classroom?.name }}</h2>
+          <div class="dis-flex left_bottom">
+            <button
+              [ngClass]="
+                classroom?.status === 'active' ? 'success_btn' : 'grey_btn'
+              "
+            >
+              {{ classroom?.status === "active" ? "Published" : "Draft" }}
+            </button>
+            <div class="icons dis-flex">
+              <span class="dis-flex"
+                ><img src="../../../assets/img/svg/calendar-2.svg" alt="" />
+                <p class="body-2-regular">
+                  Created {{ classroom?.createdAt | date: "mediumDate" }}
+                </p></span
+              >
+              <span class="dis-flex"
+                ><img src="../../../assets/img/svg/medal.svg" alt="" />
+                <p class="body-2-regular">3 Sections</p></span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="right dis-flex">
+          <button class="grey_btn" (click)="editClassroom()">Edit Classroom</button>
+          <button class="grey_btn settings">
+            <img src="../../../assets/img/svg/setting-grey.svg" alt="" />
+          </button>
+        </div>
+      </div>
+      <div class="course-details_header_bottom">
+        <p class="descript">
+          {{ classroom?.description }}
+        </p>
+        <ul class="numbers dis-flex">
+          <li>
+            <p class="body-2-bold">{{ classroom?.courses?.length }}</p>
+            <p class="body-3-regular">{{classroom?.courses?.length > 1 ? 'Courses' : 'Course'}}</p>
+          </li>
+          <!-- <li>
+            <p class="body-2-bold">{{ classroom?.schools?.length }}</p>
+            <p class="body-3-regular">{{classroom?.schools?.length > 1 ? 'Schools' : 'School'}}</p>
+          </li> -->
+          <!-- <li>
+            <p class="body-2-bold">{{ classroom?.learner_count }}</p>
+            <p class="body-3-regular">{{classroom?.learner_count > 1 ? 'Learners' : 'Learner'}}</p>
+          </li> -->
+        </ul>
+        <div class="completion">
+          <p class="body-2-bold title">Timeframe</p>
+          <p class="body-2-medium text-primary-color">0 Day</p>
+        </div>
+        <div class="students">
+          <p class="body-2-bold title">Total {{classroom?.learner_count > 1 ? 'Learners' : 'Learner'}} ({{ classroom?.learner_count }})</p>
+          <ul class="students_list dis-flex">
+            <li>
+              <img
+                src="../../../../../assets/img/children-avatar/child-avatar-1.png"
+                alt=""
+              />
+            </li>
+            <li>
+              <img
+                src="../../../../../assets/img/children-avatar/child-avatar-2.png"
+                alt=""
+              />
+            </li>
+            <li>
+              <img
+                src="../../../../../assets/img/children-avatar/child-avatar-3.png"
+                alt=""
+              />
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="course-details_body">
+      <div class="course-details_body_header">
+        <ul class="dis-flex">
+          <li
+            class="body-2-medium active"
+            [class.active]="contentId === 'courses'"
+            (click)="tabChange('courses')"
+          >
+            Courses
+          </li>
+          <li
+            class="body-2-medium"
+            [class.active]="contentId === 'learners'"
+            (click)="tabChange('learners')"
+          >
+            Learners
+          </li>
+        </ul>
+      </div>
+      <div class="course-details_body_content">
+        <!-- Courses -->
+        <ng-container *ngIf="contentId === 'courses'">
+          <div class="table-container" style="overflow-x: auto">
+            <ng-container *ngIf="classroom?.courses?.length > 0">
+              <table>
+                <tr class="table-header">
+                  <th>Title</th>
+                  <th>Number of lesson(s)</th>
+                  <th>Quadrant</th>
+                  <th>Duration</th>
+                </tr>
+                <ng-container>
+                  <tr class="table-body" *ngFor="let course of classroom?.courses">
+                    <td>{{ course?.title }}</td>
+                    <td>{{course?.lesson_count}}</td>
+                    <td>{{course?.course_quadrant}}</td>
+                    <td>{{course?.duration}}</td>
+                  </tr>
+                </ng-container>
+                <!-- <ng-template>
+                  <p style="text-align: center">Empty School list!</p>
+                </ng-template> -->
+              </table>
+            </ng-container>
+  
+            <div *ngIf="classroom?.courses?.length === 0" class="course-empty">
+              <p style="text-align: center" >
+                No Course available
+              </p>
+              <button type="button" class="btn sec_btn" (click)="openAddCourseToClassroomModal()" *ngIf="!classroom?.template">Add Course</button>
+            </div>
+          </div>
+        </ng-container>
+        
+        <!-- Learners -->
+        <ng-container *ngIf="contentId === 'learners'">
+          <div class="table-container" style="overflow-x: auto">
+            <ng-container *ngIf="classroom?.learners?.length > 0">
+              <table>
+                <tr class="table-header">
+                  <th>Full Name</th>
+                  <th>User Name</th>
+                  <th>Email</th>
+                  <th>Grade</th>
+                </tr>
+                <ng-container>
+                  <tr class="table-body" *ngFor="let learner of classroom?.learners">
+                    <td>{{ learner.fullname }}</td>
+                    <td>{{ learner.username }}</td>
+                    <td>{{ learner.email ===  undefined ? '-' : learner.email }}</td>
+                    <td>{{ learner.grade ===  undefined ? '-' : learner.grade  }}</td>
+                  </tr>
+                </ng-container>
+                <!-- <ng-template>
+                  <p style="text-align: center">Empty School list!</p>
+                </ng-template> -->
+              </table>
+            </ng-container>
+
+            <div *ngIf="classroom?.learners?.length === 0" class="course-empty">
+              <p style="text-align: center" >
+                No Learner available
+              </p>
+              <button type="button" class="btn sec_btn" (click)="openAddLearnerToClassroomModal()">Add Learner</button>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </section>
+
+
+<!-- Add course -->
+<app-add-school-classroom-courses *ngIf="addCourseToClassroom" (addCourseToClassroomModal)="closeAddCourseToClassroomModal()" [classroomId]="currentClassroomId.classroomId"></app-add-school-classroom-courses>
+
+<!-- Add course -->
+<app-add-school-classroom-learners *ngIf="addLearnerToClassroom" (addLearnerToClassroomModal)="closeAddLearnerToClassroomModal()" [classroomId]="currentClassroomId.classroomId"></app-add-school-classroom-learners>

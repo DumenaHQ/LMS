@@ -1,0 +1,63 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
+></app-alert-popup>
+
+<section class="ds-head dis-flex">
+    <h2 class="ds-head_title clickable" routerLink="/school/classrooms">Classrooms</h2>
+    <i class="bx bx-chevron-right icon"></i>
+    <p class="clickable" [title]="classroom?.name">
+      {{
+        classroom?.name.length > 20
+          ? classroom?.name.slice(0, 20) + "..."
+          : classroom?.name
+      }}
+    </p>
+    <i class="bx bx-chevron-right icon"></i>
+    <p class="clickable">
+      Edit-classroom
+    </p>
+</section>
+
+<section>
+  <form [formGroup]="classroomForm">
+    <div class="form_control_container">
+      <div class="form_control">
+        <label for="name">Name of Classroom</label>
+        <div class="form_control_field">
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Type here"
+            formControlName="name"
+          />
+        </div>
+      </div>
+      <div class="form_control description">
+        <label for="description">Classroom details</label>
+        <div class="form_control_field">
+          <textarea
+            name="description"
+            id="description"
+            cols="30"
+            rows="5"
+            placeholder="Type here"
+            spellcheck="true"
+            formControlName="description"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="form_btns">
+        <button class="btn prim_btn" *ngIf="!loading" (click)="editClassroom()">Save</button>
+        <button
+            class="btn prim_btn"
+            [disabled]="loading"
+            *ngIf="loading"
+        >Processing...</button> 
+    </div>
+  </form>
+</section>
