@@ -38,6 +38,7 @@
                 let module of course?.modules;
                 let modulesIndex = index
               "
+              (click)="startCourseThroughModule(course?.id,course?.modules[modulesIndex].id)"
             >
               <b>{{ modulesIndex + 1 }}.</b> {{ module.title }}
             </li>
