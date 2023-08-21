@@ -5,15 +5,23 @@
   [alertColor]="alertColor"
 ></app-alert-popup>
 
+<section class="ds-head dis-flex">
+  <h2 class="ds-head_title clickable" routerLink="/admin/courses">Courses</h2>
+  <i class="bx bx-chevron-right icon"></i>
+  <p class="clickable">
+    Add Course
+  </p>
+</section>
+
 <section class="set-info" app>
   <div class="set-info_header">
-    <button class="btn prim_btn" (click)="addCourse()">Add Course</button>
+    <!-- <button class="btn prim_btn" (click)="addCourse()">Add Course</button> -->
     <!-- <button class="btn sec_btn" style="margin: 0 1rem 1rem 1rem" [routerLink]="'id' + '/add-module'">
       Add Module
     </button> -->
-    <button class="btn sec_btn" style="margin: 0 1rem 1rem 1rem" routerLink="quiz">
+    <!-- <button class="btn sec_btn" style="margin: 0 1rem 1rem 1rem" routerLink="quiz">
       Add Quiz
-    </button>
+    </button> -->
     <h3 class="text-primary-color">Set the Course Information</h3>
     <p>
       This information will be displayed to the learners before they start the
@@ -52,69 +60,84 @@
         </div>
       </div>
     </div> -->
-    <div class="form_control">
-      <label for="title">Course Title</label>
-      <div class="form_control_field">
-        <input type="text" name="title" id="title" placeholder="Type here" formControlName="title" />
-      </div>
-    </div>
-    <div class="form_control">
-      <label for="description">Course Description</label>
-      <div class="form_control_field">
-        <textarea
-          name="description"
-          id="description"
-          cols="30"
-          rows="5"
-          placeholder="Type here"
-          spellcheck="true"
-          formControlName="description"
-        ></textarea>
-      </div>
-    </div>
-    <div class="form_control">
-      <label for="difficulty_level">Difficulty Level</label>
-      <div class="form_control_field">
-        <select name="difficulty_level" id="difficulty_level" formControlName="difficulty_level">
-          <option value="">Please Select</option>
-          <option value="Beginner">Beginner</option>
-          <option value="Intermediate">Intermediate</option>
-          <option value="Advanced">Advanced</option>
-        </select>
-      </div>
-    </div>
-    <div class="form_control">
-      <label for="course_quadrant">Course Quadrant</label>
-      <div class="form_control_field">
-        <input type="text" name="course_quadrant" id="course_quadrant" placeholder="Type here" formControlName="course_quadrant">
-      </div>
-    </div>
-    <div class="form_control">
-      <label for="tags">Tags</label>
-      <div class="form_control_field dis-flex">
-        <input
-          type="text"
-          name="tags"
-          id="tags"
-          placeholder="Type here"
-          formControlName="tags"
-        >
-        <button class="btn prim_btn" (click)="addTag()">Add</button>
-      </div>
-      <div class="tag_list dis-flex">
-        <div
-          class="tag_list_item dis-flex"
-          *ngFor="let tag of tagsList; let tagIndex = index"
-        >
-          <small [title]="tag">{{
-            tag.length > 12 ? tag.slice(0, 10) + "..." : tag
-          }}</small>
-          <i
-            class="bx bx-x icon clickable"
-            (click)="removeTag(tagIndex)"
-          ></i>
+    
+    <div class="form_control_container">
+      <div class="form_control">
+        <label for="title">Course Title <strong class="label-required">*</strong></label>
+        <div class="form_control_field">
+          <input type="text" name="title" id="title" placeholder="Type here" formControlName="title" />
         </div>
       </div>
+      <div class="form_control">
+        <label for="description">Course Description <strong class="label-required">*</strong></label>
+        <div class="form_control_field">
+          <textarea
+            name="description"
+            id="description"
+            cols="30"
+            rows="5"
+            placeholder="Type here"
+            spellcheck="true"
+            formControlName="description"
+          ></textarea>
+        </div>
+      </div>
+      <div class="form_control">
+        <label for="difficulty_level">Difficulty Level <strong class="label-required">*</strong></label>
+        <div class="form_control_field">
+          <select name="difficulty_level" id="difficulty_level" formControlName="difficulty_level">
+            <option value="">Please Select</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+          </select>
+        </div>
+      </div>
+      <div class="form_control">
+        <label for="course_quadrant">Course Quadrant <strong class="label-required">*</strong></label>
+        <div class="form_control_field">
+          <input type="text" name="course_quadrant" id="course_quadrant" placeholder="Type here" formControlName="course_quadrant">
+        </div>
+      </div>
+      <div class="form_control">
+        <label for="tags">Tags</label>
+        <div class="form_control_field dis-flex">
+          <input
+            type="text"
+            name="tags"
+            id="tags"
+            placeholder="Type here"
+            formControlName="tags"
+          >
+          <button class="btn prim_btn" (click)="addTag()">Add</button>
+        </div>
+        <div class="tag_list dis-flex">
+          <div
+            class="tag_list_item dis-flex"
+            *ngFor="let tag of tagsList; let tagIndex = index"
+          >
+            <small [title]="tag">{{
+              tag.length > 12 ? tag.slice(0, 10) + "..." : tag
+            }}</small>
+            <i
+              class="bx bx-x icon clickable"
+              (click)="removeTag(tagIndex)"
+            ></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form_btns dis-flex">
+      <ng-container *ngIf="!loading">
+        <button class="btn grey_btn" routerLink="/admin/courses">Cancel</button>
+        <button class="btn prim_btn" (click)="addCourse()" [disabled]="courseForm.invalid">Create</button>
+      </ng-container>
+      <button
+        class="btn prim_btn"
+        [disabled]="loading"
+        *ngIf="loading"
+      >Processing...</button> 
     </div>
   </form>
 </section>

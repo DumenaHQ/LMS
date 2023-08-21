@@ -10,7 +10,20 @@ export class QuizService {
 
   constructor(private http: HttpClient) {}
 
-  // Add Quiz to Course
+  // Get all quizs
+  getAllquizzes() {
+    return this.http.get(`${this.baseUrl}quizzes`, this.getHttpOptions());
+  }
+
+  // Get quiz by quiz id
+  getquizByQuizId(quizId: any) {
+    return this.http.get(
+      `${this.baseUrl}quizzes/${quizId}`,
+      this.getHttpOptions()
+    );
+  }
+
+  // Add Quiz to quiz
   addQuiz(data: any) {
     return this.http.post(
       `${this.baseUrl}quizzes`,

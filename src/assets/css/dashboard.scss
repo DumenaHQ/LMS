@@ -11,6 +11,32 @@ section:not(:last-child) {
   align-items: flex-start;
 }
 
+.label-required {
+  color: $error80;
+}
+
+.tag_list {
+  gap: $m-1;
+  // justify-content: space-around;
+  flex-wrap: wrap;
+  margin-top: $m-2;
+  &_item {
+    border: 1px solid $grey100;
+    border-radius: 20px;
+    padding: 0.2rem;
+    .icon {
+      font-size: 20px;
+      transition: all 0.2s ease-in;
+      padding: 0.1rem;
+      // margin-left: $s-1;
+      &:hover {
+        background-color: $divider-color2;
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
 // blank item
 .blank-item {
   margin: $m-6 auto;

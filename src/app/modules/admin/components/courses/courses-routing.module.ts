@@ -54,22 +54,22 @@ const routes: Routes = [
           description: 'Description Meta Tag Content',
         },
       },
-      {
-        path: 'create-course/quiz',
-        component: AddQuizComponent,
-        data: {
-          title: 'Quiz',
-          description: 'Description Meta Tag Content',
-        },
-      },
-      {
-        path: 'create-course/quiz/add-question',
-        component: AddQuizQuestionComponent,
-        data: {
-          title: 'Add Quiz',
-          description: 'Description Meta Tag Content',
-        },
-      },
+      // {
+      //   path: 'create-course/quiz',
+      //   component: AddQuizComponent,
+      //   data: {
+      //     title: 'Quiz',
+      //     description: 'Description Meta Tag Content',
+      //   },
+      // },
+      // {
+      //   path: 'create-course/quiz/add-question',
+      //   component: AddQuizQuestionComponent,
+      //   data: {
+      //     title: 'Add Quiz',
+      //     description: 'Description Meta Tag Content',
+      //   },
+      // },
       { path: '', redirectTo: 'courses', pathMatch: 'full' },
     ],
   },
