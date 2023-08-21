@@ -24,7 +24,7 @@
   </div>
   <div class="ds-flex">
     <main class="ds-grid">
-      <div class="course-video">
+      <div class="course-video" *ngIf="modules[currentModuleIndex]?.lessons[currentLessonIndex].lesson_video">
         <div class="c-video">
           <video
             class="video"
@@ -67,8 +67,10 @@
             </div>
           </ul>
         </div>
-        <div class="course-descp_body">
-        
+        <div class="course-descp_body"  >
+          <div [innerHTML]="renderMarkdown(modules[currentModuleIndex]?.lessons[currentLessonIndex].note)">
+            
+          </div>
         </div>
       </div>
     </main>
@@ -179,7 +181,7 @@
             />
             <p class="body-1-medium name">DUMENA Education Team</p>
             <p class="body-1-regular details">
-              This course has been prepared with love by the DUMENA Education team.
+              This course has been prepared by the DUMENA Education team.
             </p>
           </div>
         </div>
