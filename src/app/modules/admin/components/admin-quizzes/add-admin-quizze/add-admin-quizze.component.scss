@@ -19,11 +19,11 @@
   }
   form {
     .form_control_container {
-      display: grid;
-      grid-gap: $m-3;
-      grid-template-columns: repeat(2, 1fr);
-      // @media only screen and (min-width: 590px) {
-      // }
+        display: grid;
+        grid-gap: $m-3;
+        grid-template-columns: repeat(2, 1fr);
+        // @media only screen and (min-width: 590px) {
+        // }
     }
     .form_control {
       width: 100%;
@@ -74,11 +74,24 @@
           resize: none;
         }
       }
+      &.tags {
+        margin-bottom: $m-4;
+      }
     }
+
+    // form settings
+    .form_setting {
+        grid-column: 1 / 4;
+        border-top: 1px solid $inner-border;
+        padding: $m-4;
+        p {
+        margin: $m-1 0 $m-2 0;
+        }
+    }
+
     .form_btns {
-      gap: $m-2;
-      margin-top: $m-4;
+        gap: $m-2;
+        margin-top: $m-4;
     }
   }
 }
-

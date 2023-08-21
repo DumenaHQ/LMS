@@ -45,6 +45,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'quizzes',
+        loadChildren: () =>
+          import('./components/admin-quizzes/admin-quizzes.module').then(
+            (m) => m.AdminQuizzesModule
+          ),
+      },
+      {
         path: 'programs',
         loadChildren: () =>
           import('./components/programs/programs.module').then(

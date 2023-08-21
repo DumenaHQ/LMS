@@ -31,14 +31,10 @@ export class AddCourseComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.coursesService.getAllCourses().subscribe((res: any) => {
-      console.log(res);
-    });
-
     this.courseForm = this.formBuilder.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
-      tags: ['', Validators.required],
+      tags: [''],
       difficulty_level: ['', Validators.required],
       course_quadrant: ['', Validators.required],
     });

@@ -27,17 +27,17 @@ export class AdminComponent implements OnInit {
       subLinks: [],
     },
     {
+      name: 'Quizzes',
+      link: '/admin/quizzes',
+      icon: 'assets/img/svg/Book-open.svg',
+      subLinks: [],
+    },
+    {
       name: 'Classrooms',
       link: '/admin/class-templates',
       icon: 'assets/img/svg/forward-item.svg',
       subLinks: [],
     },
-    // {
-    //   name: 'Quizzes',
-    //   link: '/admin/quizzes',
-    //   icon: 'assets/img/svg/Book-open.svg',
-    //   subLinks: [],
-    // },
     {
       name: 'Programs',
       link: '/admin/programs',
