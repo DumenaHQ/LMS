@@ -1,8 +1,6 @@
-import { AfterContentInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService } from 'src/app/services/courses.service';
-import { RequireService } from './require_service';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-library-courses-lesson',
@@ -20,28 +18,15 @@ export class LibraryCoursesLessonComponent implements OnInit {
   currentLessonIndex: number = 0;
   lessonVideoUrl: string = ''
 
-
-  renderedNote: SafeHtml;
   // items: any[]
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private coursesService: CoursesService,
-    private requireService: RequireService,
-    private router: Router,
-    private sanitizer: DomSanitizer,
-    private cdr: ChangeDetectorRef
-  ) { }
-
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-
-    var MarkdownIt = this.requireService.markdownIt()
-    var md = new MarkdownIt();
-
- 
-
-
     // Get the current course Id from the url
     this.currentCourseId = this.activatedRoute.snapshot.params;
 
@@ -55,21 +40,20 @@ export class LibraryCoursesLessonComponent implements OnInit {
         console.log(this.course);
         console.log(this.modules);
         this.lessonVideoUrl = this.course.modules[0].lessons[0].lesson_video
-        this.renderedNote = this.sanitizer.bypassSecurityTrustHtml(md.render(this.course.modules[0].lessons[0].note));
-        console.log(this.renderedNote)
-
+        console.log(this.lessonVideoUrl);
+        
+        
       });
 
+      // this.items = [
+      //   { header: 'Header 1', body: 'Body 1' },
+      //   { header: 'Header 2', body: 'Body 2' },
+      //   { header: 'Header 3', body: 'Body 3' },
+      // ];
 
-    // this.items = [
-    //   { header: 'Header 1', body: 'Body 1' },
-    //   { header: 'Header 2', body: 'Body 2' },
-    //   { header: 'Header 3', body: 'Body 3' },
-    // ];
-
-    // this.items.forEach(item => {
-    //   item.isOpen = false;
-    // });
+      // this.items.forEach(item => {
+      //   item.isOpen = false;
+      // });
   }
 
   // Get Module lessons
@@ -84,8 +68,8 @@ export class LibraryCoursesLessonComponent implements OnInit {
     //     if(res.status === true) {
     //       this.isModuleLessons = true
     //     }
-
-
+        
+        
     //   });
   }
 
@@ -94,7 +78,7 @@ export class LibraryCoursesLessonComponent implements OnInit {
     // this.lessonVideoUrl = lessonVideo
     this.currentModuleIndex = moduleIndex
     this.currentLessonIndex = lessonIndex
-  }
+  } 
 
   playNextVideo() {
     this.currentLessonIndex++;
@@ -105,16 +89,8 @@ export class LibraryCoursesLessonComponent implements OnInit {
       this.videoPlayer.nativeElement.play();
       console.log(this.currentLessonIndex);
     }
-
   }
-
-  //Render Notes As HTML
-  renderMarkdown(note:string){
-    var MarkdownIt = this.requireService.markdownIt()
-    var md = new MarkdownIt();
-    this.renderedNote = this.sanitizer.bypassSecurityTrustHtml(md.render(note))
-  return this.renderedNote;
-}
+  
   // Start Video
   // startVideo(): void {
   //   this.videoClicked = !this.videoClicked;
