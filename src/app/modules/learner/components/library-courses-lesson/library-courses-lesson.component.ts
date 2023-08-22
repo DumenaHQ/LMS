@@ -55,7 +55,7 @@ export class LibraryCoursesLessonComponent implements OnInit {
         console.log(this.course);
         console.log(this.modules);
         this.lessonVideoUrl = this.course.modules[0].lessons[0].lesson_video
-        this.renderedNote = this.sanitizer.bypassSecurityTrustHtml(md.render(this.course.modules[0].lessons[0].note));
+        this.renderedNote = this.sanitizer.bypassSecurityTrustHtml(md.render(this.course.modules[0].lessons[0].note??"## No note"));
         console.log(this.renderedNote)
 
       });
@@ -112,7 +112,7 @@ export class LibraryCoursesLessonComponent implements OnInit {
   renderMarkdown(note:string){
     var MarkdownIt = this.requireService.markdownIt()
     var md = new MarkdownIt();
-    this.renderedNote = this.sanitizer.bypassSecurityTrustHtml(md.render(note))
+    this.renderedNote = this.sanitizer.bypassSecurityTrustHtml(md.render(note??"## No note"))
   return this.renderedNote;
 }
   // Start Video
