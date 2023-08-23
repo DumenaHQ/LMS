@@ -41,7 +41,7 @@
           </div>
         </div>
         <div class="right dis-flex">
-          <button class="grey_btn" (click)="editClassroom()">Edit Classroom</button>
+          <button class="btn" (click)="editClassroom()">Edit Classroom</button>
           <button class="grey_btn settings">
             <img src="../../../assets/img/svg/setting-grey.svg" alt="" />
           </button>
@@ -151,6 +151,12 @@
         <!-- Learners -->
         <ng-container *ngIf="contentId === 'learners'">
           <div class="table-container" style="overflow-x: auto">
+
+          <div style="padding: 1%;">
+            <button type="button" class="btn sec_btn" (click)="openAddLearnerToClassroomModal()">Add Learner</button>
+
+          </div>
+
             <ng-container *ngIf="classroom?.learners?.length > 0">
               <table>
                 <tr class="table-header">
