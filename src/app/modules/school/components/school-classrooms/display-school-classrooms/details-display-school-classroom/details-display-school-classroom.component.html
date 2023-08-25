@@ -152,7 +152,7 @@
         <ng-container *ngIf="contentId === 'learners'">
           <div class="table-container" style="overflow-x: auto">
 
-          <div style="padding: 1%;">
+          <div *ngIf="classroom?.learners?.length != 0" style="padding: 1%;">
             <button type="button" class="btn sec_btn" (click)="openAddLearnerToClassroomModal()">Add Learner</button>
 
           </div>
