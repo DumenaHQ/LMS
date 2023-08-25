@@ -56,7 +56,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'classrooms/:classroomId',
+        path: 'classrooms/:classroomId/view-classroom',
         component: DisplayDetailsLearnerClassoomComponent,
         data: {
           title: 'Classroom',
