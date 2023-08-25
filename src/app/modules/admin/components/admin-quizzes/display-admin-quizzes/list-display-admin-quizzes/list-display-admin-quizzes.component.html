@@ -1,0 +1,53 @@
+<div class="courses_dislist">
+    <table>
+      <tr class="table-header">
+        <th>Quiz name</th>
+        <th>Tags</th>
+        <th>Quiz Level</th>
+        <th>Quiz Type</th>
+        <th>Date Created</th>
+        <th>Action</th>
+      </tr>
+      <tr
+        class="table-body"
+        *ngFor="let item of allquizzes"
+      >
+        <td class="name">{{ item.title | titlecase }}</td>
+        <td>
+            <span *ngFor="let tag of item.tags; let last = last">
+                {{ tag }}
+                <ng-container *ngIf="!last">, </ng-container>
+            </span>
+        </td>
+        <td>{{ item.quiz_level }}</td>
+        <td>{{ item.quiz_type }}</td>
+        <td>{{ item.createdAt | date: 'mediumDate' }}</td>
+        <td class="actions">
+            
+            <div>
+                <img
+                  src="../../../../../../assets/img/action.svg"
+                  class="clickable"
+                  alt="image"
+                  (click)="actionBtn.click()"
+                />
+                <input
+                  type="checkbox"
+                  name="action-btn"
+                  id="action-btn"
+                  style="display: none"
+                  #actionBtn
+                />
+                <div class="dropdown">
+                  <small
+                    class="body-3-regular clickable"
+                    [routerLink]="[item.id, 'details']"
+                    >View</small
+                  >
+                </div>
+              </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  

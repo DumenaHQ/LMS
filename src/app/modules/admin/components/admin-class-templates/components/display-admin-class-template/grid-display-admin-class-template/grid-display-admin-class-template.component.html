@@ -1,0 +1,52 @@
+<div class="programs_disgrid">
+    <div class="program_card">
+      <div class="program_card_item" *ngFor="let classTemplate of classTemplates">
+        <img
+          src="../../../../../../assets/img/program-thumbnail-patterns.svg"
+          alt="image"
+          class="program_card_item_image clickable"
+        />
+  
+        <div class="program_card_item_details" *ngIf="classTemplate.title !== undefined">
+          <div class="program_card_item_details_right">
+            <div class="program_card_item_details_right_header">
+              <h5
+                class="title clickable"
+                [title]="classTemplate?.title"
+              >
+                {{
+                  classTemplate?.title.length > 20
+                    ? classTemplate?.title.slice(0, 20) + "..."
+                    : classTemplate?.title
+                }}
+              </h5>
+              <p>
+                {{ classTemplate?.syllabus }}
+              </p>
+            </div>
+            <ul class="dis-flex">
+              <li>
+                <p class="body-2-bold">{{ classTemplate?.course_count }}</p>
+                <p class="body-3-regular">{{classTemplate?.course_count > 1 ? 'Courses' : 'Course'}}</p>
+              </li>
+            </ul>
+          </div>
+  
+          <div class="program_card_item_details_left">
+            <div class="students">
+              <p class="body-2-regular title">Date Created</p>
+              <p class="body-3-regular">{{ classTemplate?.createdAt | date: 'mediumDate' }}</p>
+            </div>
+            <div class="students">
+              <p class="body-2-regular title">Status</p>
+              <p class="body-3-regular">{{ classTemplate?.status }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Delete confirmation -->
+  <!-- <app-confirm-delete *ngIf="deleteModal" (deleteModal)="closeDeleteModal()" [itemtitle]="classTemplatetitle" [deleteUrl]="deleteUrl" [deleteRoutePath]="deleteRoutePath"></app-confirm-delete> -->
+  

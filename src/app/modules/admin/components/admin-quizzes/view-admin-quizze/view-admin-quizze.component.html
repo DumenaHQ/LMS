@@ -1,0 +1,137 @@
+<section class="ds-head dis-flex">
+    <h2 class="ds-head_title clickable" routerLink="/admin/quizzes">Quizzes</h2>
+    <i class="bx bx-chevron-right icon"></i>
+    <p class="clickable" [title]="quiz?.title">
+      {{
+        quiz?.title.length > 40
+          ? quiz?.title.slice(0, 40)  + "..." 
+          : quiz?.title | titlecase
+      }}
+    </p>
+  </section>
+  
+  <section class="course-details">
+    <div class="course-details_header" style="margin-top: 0;">
+      <div class="course-details_header_top">
+        <div class="left">
+          <h2>{{quiz?.title}}</h2>
+          <div class="dis-flex left_bottom">
+            <button class="success_btn">Published</button>
+            <div class="icons dis-flex">
+              <span class="dis-flex"
+                ><img src="../../../../../../../assets/img/svg/calendar-2.svg" alt="" />
+                <p class="body-2-regular">Created {{quiz?.createdAt | date: 'mediumDate'}}</p></span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="right dis-flex">
+          <button class="grey_btn">Edit</button>
+          <button class="grey_btn">Preview as Learner</button>
+          <button class="grey_btn settings">
+            <img src="../../../../../../../assets/img/svg/setting-grey.svg" alt="" />
+          </button>
+        </div>
+      </div>
+      <div class="course-details_header_bottom">
+        <ul class="numbers dis-flex">
+          <li>
+            <p class="body-2-bold">Level</p>
+            <p class="body-3-regular">{{ quiz?.quiz_level }}</p>
+          </li>
+          <li>
+            <p class="body-2-bold">Type</p>
+            <p class="body-3-regular">{{ quiz?.quiz_type }}</p>
+          </li>
+        </ul>
+        <div class="completion">
+          <p class="body-2-bold title">Tags</p>
+          <p class="body-2-medium text-primary-color">
+            <span *ngFor="let tag of quiz?.tags; let last = last">
+                {{ tag }}<ng-container *ngIf="!last">, </ng-container>
+            </span>
+          </p>
+        </div>
+        <div class="completion">
+          <p class="body-2-bold title">Show Answers</p>
+          <p class="body-2-medium text-primary-color">
+            {{ quiz?.settings?.show_correct_answers === true ? 'Yes' : 'No'}}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="course-details_body">
+      <div class="course-details_body_header">
+        <ul class="dis-flex">
+          <li class="body-2-medium active">Quizzes</li>
+        </ul>
+      </div>
+      <ng-container *ngIf="isAddQuiz === false">
+        <div class="course-details_body_content" *ngIf="quiz?.questions.length > 0">
+          <aside>
+            <ul>
+              <li *ngFor="let question of quiz?.questions; let i = index" [ngClass]="{'active': questionIndex === i}" (click)="questionIndex = i">
+                <h5 class="body-2-medium">Question - {{ i + 1 }}</h5>
+              </li>
+            </ul>
+          </aside>
+          <main>
+            <button class="btn prim_btn" style="margin-bottom: 1rem;" (click)="addQuiz()">Add More Questions</button>
+            <div class="header">
+              <h5 class="body-2-medium ds-sect-header">Question</h5>
+              <p class="question">
+                {{ quiz?.questions[questionIndex].question }}
+              </p>
+            </div>
+            <ul>
+              <li *ngIf="quiz?.questions[questionIndex].optA" class="dis-flex">
+                <p>A.</p>
+                <div class="option_item_body dis-flex">
+                  <span>{{ quiz?.questions[questionIndex].optA }}</span>
+                  <span class="option_item_body_marked dis-flex" *ngIf="quiz?.questions[questionIndex].answer === 'A'">Marked as correct</span>
+                </div>
+              </li>
+              <li *ngIf="quiz?.questions[questionIndex].optB" class="dis-flex">
+                <p>B.</p>
+                <div class="option_item_body dis-flex">
+                  <span>{{ quiz?.questions[questionIndex].optB }}</span>
+                  <span class="option_item_body_marked dis-flex" *ngIf="quiz?.questions[questionIndex].answer === 'B'">Marked as correct</span>
+                </div>
+              </li>
+              <li *ngIf="quiz?.questions[questionIndex].optC" class="dis-flex">
+                <p>C.</p>
+                <div class="option_item_body dis-flex">
+                  <span>{{ quiz?.questions[questionIndex].optC }}</span>
+                  <span class="option_item_body_marked dis-flex" *ngIf="quiz?.questions[questionIndex].answer === 'C'">Marked as correct</span>
+                </div>
+              </li>
+              <li *ngIf="quiz?.questions[questionIndex].optD" class="dis-flex">
+                <p>D.</p>
+                <div class="option_item_body dis-flex">
+                  <span>{{ quiz?.questions[questionIndex].optD }}</span>
+                  <span class="option_item_body_marked dis-flex" *ngIf="quiz?.questions[questionIndex].answer === 'D'">Marked as correct</span>
+                </div>
+              </li>
+              <li *ngIf="quiz?.questions[questionIndex].optE" class="dis-flex">
+                <p>E.</p>
+                <div class="option_item_body dis-flex">
+                  <span>{{ quiz?.questions[questionIndex].optE }}</span>
+                  <span class="option_item_body_marked dis-flex" *ngIf="quiz?.questions[questionIndex].answer === 'E'">Marked as correct</span>
+                </div>
+              </li>
+            </ul>
+          </main>
+        </div>
+        <ng-container *ngIf="quiz?.questions.length === 0">
+          <div class="empty_content">
+              <p>Start by adding a Question</p>
+              <button class="btn prim_btn" (click)="addQuiz()">Add Question</button>
+          </div>
+        </ng-container>
+      </ng-container>
+
+      <app-add-admin-quizze-questions *ngIf="isAddQuiz === true" [quizId]="currentQuiz.quizId"></app-add-admin-quizze-questions>
+      
+    </div>
+  </section>
+  

@@ -1,1 +1,9 @@
 <router-outlet></router-outlet>
+<!-- Back to top -->
+<a
+  class="go-top clickable"
+  (click)="scrollToTop()"
+  [ngClass]="{ show: windowScrolled }"
+>
+  <i class="bx bx-chevron-up icon"></i>
+</a>
