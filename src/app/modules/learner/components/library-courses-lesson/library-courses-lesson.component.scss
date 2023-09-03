@@ -1,11 +1,6 @@
 @import '../../../../../assets/css/variables.scss';
 @import '../../../../../assets/css/mixins.scss';
-
-
-section:not(:last-child) {
-  margin-bottom: $m-3;
-}
-
+@import '../../../../../assets/css/dashboard.scss';
 
 // .body {
 //   display: grid;

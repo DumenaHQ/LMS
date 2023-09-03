@@ -11,7 +11,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 })
 export class LibraryCoursesLessonComponent implements OnInit {
   @ViewChild('videoPlayer') videoPlayer: ElementRef;
-  currentCourseId: any;
+  currentCourseParams: any;
   course: any;
   videoClicked: boolean = false;
   isModuleLessons: boolean = false;
@@ -19,8 +19,6 @@ export class LibraryCoursesLessonComponent implements OnInit {
   currentModuleIndex: number = 0;
   currentLessonIndex: number = 0;
   lessonVideoUrl: string = ''
-
-
   renderedNote: SafeHtml;
   // items: any[]
 
@@ -36,28 +34,21 @@ export class LibraryCoursesLessonComponent implements OnInit {
 
   ngOnInit(): void {
 
-    var MarkdownIt = this.requireService.markdownIt()
+    var MarkdownIt = this.requireService.markdownIt();
     var md = new MarkdownIt();
 
- 
-
-
     // Get the current course Id from the url
-    this.currentCourseId = this.activatedRoute.snapshot.params;
+    this.currentCourseParams = this.activatedRoute.snapshot.params;
 
     // Get current Course with the Id
     this.coursesService
-      .getCourse(this.currentCourseId.courseId)
+      .getCourse(this.currentCourseParams.courseId)
       .subscribe((res: any) => {
         // Get course
         this.course = res.data.course;
-        this.modules = this.course.modules
-        console.log(this.course);
-        console.log(this.modules);
+        this.modules = this.course.modules;
         this.lessonVideoUrl = this.course.modules[0].lessons[0].lesson_video
         this.renderedNote = this.sanitizer.bypassSecurityTrustHtml(md.render(this.course.modules[0].lessons[0].note??"## No note"));
-        console.log(this.renderedNote)
-
       });
 
 
@@ -76,7 +67,7 @@ export class LibraryCoursesLessonComponent implements OnInit {
   showModuleLessons() {
     this.isModuleLessons = true
     // this.coursesService
-    //   .getModuleLessons(this.currentCourseId.courseId, moduleId)
+    //   .getModuleLessons(this.currentCourseParams.courseId, moduleId)
     //   .subscribe((res: any) => {
     //     // Get course
     //     this.moduleLessons = res.data.module;

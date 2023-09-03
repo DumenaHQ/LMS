@@ -83,11 +83,10 @@ export class SchoolEnrollLearnersComponent implements OnInit {
             this.showAlertPopup(`${res.message}. An email has been sent containing the login credentials of ${this.userForm.value.fullname}`, 'success');
 
             // Close Modal
-            // this.closeAddLearnerModal();
-            
+            // this.closeAddLearnerModal(); 
             setTimeout(() => {
-                window.location.reload();
-              }, 4000);
+              window.location.reload();
+            }, 4000);
           }
         },
         (error: any) => {

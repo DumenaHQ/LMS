@@ -1,0 +1,120 @@
+@import '../../../../../assets/css/variables.scss';
+@import '../../../../../assets/css/mixins.scss';
+@import '../../../../../assets/css/dashboard.scss';
+
+.ds-head {
+    gap: $m-2;
+    justify-content: space-between;
+}
+
+.course-details_body {
+    margin-top: $m-4;
+    @include sect-bg($border-color: transparent);
+    &_header {
+        height: 3.5rem;
+        border-bottom: 1px solid $divider-color;
+        overflow: hidden;
+        ul {
+            // gap: $m-4;
+            // flex-wrap: wrap;
+            li {
+                line-height: 3.3rem;
+                cursor: pointer;
+                transition: all .2s;
+                &.active {
+                    color: $primary80;
+                    border-bottom: 2px solid $primary80;
+                }
+                &:hover {
+                    background-color: $grey40;
+                }
+            }
+        }
+    }
+    &_content {
+        display: flex;
+        aside {
+            flex-basis: 15%;
+            border-right: 1px solid $divider-color;
+            ul {
+                li {
+                    padding: $m-2 0;
+                    transition: all .2s ease-in;
+                    border-left: 3px solid transparent;
+                    cursor: pointer;
+                    &.active,
+                    &:hover {
+                        background-color: $divider-color;
+                    }
+                    &.active {
+                        border-color: $secondary80;
+                    }
+                    p {
+                        color: $primary20;
+                    }
+                }
+            }
+        }
+        main {
+            width: 100%;
+            padding-top: $m-4;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: $m-2;
+            .main-body {
+                padding: 0 $m-4;
+                .header {
+                    h2 {
+                        color: $primary80;
+                    }
+                    p {
+                        border: 1px solid $inner-border;
+                        border-radius: $border-radius1;
+                        padding: $m-2;
+                    }
+                }
+                ul {
+                    margin-top: $m-6;
+                    padding: 0 $m-4;
+                    li {
+                        width: 100%;
+                        &:not(:last-child) {
+                            margin-bottom: $m-2;
+                        }
+                        p {
+                            flex-basis: 5%;
+                        }
+                        .option_item_body {
+                            flex-basis: 95%;
+                            gap: $m-2;
+                            justify-content: space-between;
+                            border: 1px solid $inner-border;
+                            border-radius: $border-radius1;
+                            padding-left: $m-2;
+                            height: 35px;
+                            &_marked {
+                                height: 35px;
+                                border-left: 1px solid $inner-border;
+                                background-color: $secondary40;
+                                color: $secondary80;
+                                padding: 0 $m-2;
+                                border-radius: 0 $border-radius1 $border-radius1 0;
+                            }
+                        }
+                    }
+                }
+            }
+            .main-footer {
+                gap: $m-2;
+                justify-content: space-between;
+                border-top: 1px solid $inner-border;
+                padding: $m-4;
+                .grey_btn {
+                    color: $text-color2;
+                }
+            }
+        }
+    }
+}
