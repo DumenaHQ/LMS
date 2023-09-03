@@ -4,6 +4,7 @@ import { LibraryCoursesInfoComponent } from '../library-courses-info/library-cou
 import { LibraryCoursesLessonComponent } from '../library-courses-lesson/library-courses-lesson.component';
 import { LearnerLibraryOverviewComponent } from './learner-library-overview/learner-library-overview.component';
 import { LearnerLibraryComponent } from './learner-library.component';
+import { LibraryCoursesQuizComponent } from '../library-courses-quiz/library-courses-quiz.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,14 @@ const routes: Routes = [
         component: LibraryCoursesLessonComponent,
         data: {
           title: 'Library',
+          description: 'Description Meta Tag Content',
+        },
+      },
+      {
+        path: ':courseId/:lessonId/quiz',
+        component: LibraryCoursesQuizComponent,
+        data: {
+          title: 'Quiz',
           description: 'Description Meta Tag Content',
         },
       },

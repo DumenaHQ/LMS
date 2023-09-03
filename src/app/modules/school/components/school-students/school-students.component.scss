@@ -60,10 +60,6 @@ section:not(:last-child) {
   }
 }
 
-.children {
-}
-
-
 // Add Modal
 .modal {
   @include modal($modal-area-width: 390px);

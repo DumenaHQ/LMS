@@ -9,6 +9,7 @@ import { CoursesCardComponent } from '../courses-card/courses-card.component';
 import { LibraryCoursesInfoComponent } from '../library-courses-info/library-courses-info.component';
 import { LibraryCoursesLessonComponent } from '../library-courses-lesson/library-courses-lesson.component';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
+import { LibraryCoursesQuizComponent } from '../library-courses-quiz/library-courses-quiz.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { SharedModule } from 'src/app/modules/shared/shared.module';
     LearnerLibraryOverviewComponent,
     LibraryCoursesInfoComponent,
     LibraryCoursesLessonComponent,
+    LibraryCoursesQuizComponent,
     CoursesCardComponent,
   ],
   imports: [

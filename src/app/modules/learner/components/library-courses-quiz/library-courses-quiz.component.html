@@ -1,0 +1,78 @@
+<section class="ds-head dis-flex">
+    <div class=" dis-flex">
+        <i class="bx bx-chevron-right icon" style="transform: rotate(180deg);"></i>
+        <p class="ds-head_title clickable" (click)="goToLibrary()">Go back to Course</p>
+    </div>
+    <button class="btn prim_btn">Submit</button>
+</section>
+
+<div class="course-details_body">
+    <div class="course-details_body_header">
+      <ul class="dis-flex">
+        <li class="body-2-medium active">Quiz Infomation</li>
+      </ul>
+    </div>
+    <ng-container>
+      <div class="course-details_body_content">
+        <aside>
+          <ul>
+            <li>
+              <h5 class="body-2-medium">Question - {{ 'i + 1' }}</h5>
+            </li>
+          </ul>
+        </aside>
+        <main>
+            <div class="main-body">
+                <div class="header">
+                  <h2 class="ds-sect-header">Question 1</h2>
+                  <p class="question">
+                    {{ 'Question number one' }}
+                  </p>
+                </div>
+                <ul>
+                  <li class="dis-flex">
+                    <p>A.</p>
+                    <div class="option_item_body dis-flex">
+                      <span>{{ 'Option A' }}</span>
+                      <span class="option_item_body_marked dis-flex">Mark as correct</span>
+                    </div>
+                  </li>
+                  <li class="dis-flex">
+                    <p>B.</p>
+                    <div class="option_item_body dis-flex">
+                      <span>{{ 'Option B' }}</span>
+                      <span class="option_item_body_marked dis-flex">Mark as correct</span>
+                    </div>
+                  </li>
+                  <li class="dis-flex">
+                    <p>C.</p>
+                    <div class="option_item_body dis-flex">
+                      <span>{{ 'Option C' }}</span>
+                      <span class="option_item_body_marked dis-flex">Mark as correct</span>
+                    </div>
+                  </li>
+                  <li class="dis-flex">
+                    <p>D.</p>
+                    <div class="option_item_body dis-flex">
+                      <span>{{ 'Option D' }}</span>
+                      <span class="option_item_body_marked dis-flex">Mark as correct</span>
+                    </div>
+                  </li>
+                  <li class="dis-flex">
+                    <p>E.</p>
+                    <div class="option_item_body dis-flex">
+                      <span>{{ 'Option E' }}</span>
+                      <span class="option_item_body_marked dis-flex">Mark as correct</span>
+                    </div>
+                  </li>
+                </ul>
+            </div>
+
+          <div class="main-footer dis-flex">
+            <button class="btn grey_btn">Previous</button>
+            <button class="btn grey_btn">Next</button>
+          </div>
+        </main>
+      </div>
+    </ng-container>    
+  </div>
