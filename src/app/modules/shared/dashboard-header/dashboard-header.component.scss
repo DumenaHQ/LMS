@@ -9,7 +9,7 @@ header {
   background-color: $white-color;
   border-bottom: 1px solid $divider-color;
   justify-content: space-between;
-  z-index: 150;
+  z-index: 100;
   @media only screen and (max-width: 997px) {
     width: 100%;
   }

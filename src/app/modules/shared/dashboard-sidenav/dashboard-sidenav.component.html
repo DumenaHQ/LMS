@@ -16,10 +16,36 @@
       >
         <img [src]="i.icon" alt="image" />{{ i.name }}
       </li>
-      <li class="logout clickable" (click)="logout()">
+      <li class="logout clickable" (click)="openLogoutModal()">
         <img src="../../../../assets/img/svg/Logout.svg" alt="image" />
         Log Out
       </li>
     </ul>
   </nav>
+</div>
+
+<!-- Confirm delete modal -->
+<div class="modal confirm-logout-modal" *ngIf="isLogoutModal">
+    <div class="modal_area">
+      <div class="modal-details" style="text-align: left">
+        <h2 class="text-primary-color">Confirm logout</h2>
+        <p>
+          Are you sure you want to logout?
+        </p>
+      </div>
+      <!-- Buttons -->
+      <div class="modal-btns dis-flex">
+        <button type="button" class="btn skip_btn" (click)="closeLogoutModal()">
+          Cancel
+        </button>
+        <button
+          class="btn prim_btn"
+          [disabled]="loading"
+          (click)="logout()"
+        >
+          <span *ngIf="!loading">Yes</span>
+          <span *ngIf="loading">Processing...</span>
+        </button>
+      </div>
+    </div>
 </div>
