@@ -9,6 +9,8 @@ import { AuthService } from 'src/app/services/auth.service';
 export class DashboardSidenavComponent implements OnInit {
   @Input() navLink: any;
   @Output() hamClick: EventEmitter<any> = new EventEmitter();
+  loading: boolean = false;
+  isLogoutModal: boolean = false;
 
   constructor(private authService: AuthService) {}
 
@@ -18,8 +20,19 @@ export class DashboardSidenavComponent implements OnInit {
     this.hamClick.emit();
   }
 
+  // open logout modal
+  openLogoutModal() {
+    this.isLogoutModal = true;
+  }
+  
+  // close logout modal
+  closeLogoutModal() {
+    this.isLogoutModal = false;
+  }
   // Logout
   logout() {
+    this.loading = true;
+
     this.authService.logOut();
   }
 }

@@ -15,7 +15,7 @@ export class ConfirmDeleteComponent implements OnInit {
   @Input() itemName: any;
   @Input() deleteUrl: any;
   @Input() deleteRoutePath: any;
-  loading: boolean = false
+  loading: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) { }
 

@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
-// import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ComingSoonComponent } from './components/coming-soon/coming-soon.component';
 import { SharedModule } from './modules/shared/shared.module';

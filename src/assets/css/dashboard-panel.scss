@@ -11,11 +11,12 @@
     min-height: 100vh;
     position: fixed;
     left: 0;
+    z-index: 150;
     border-right: 1px solid $divider-color;
     .sidenav {
       // height: 100%;
       background-color: $white-color;
-      position: relative;
+      // position: relative;
     }
     @media only screen and (max-width: 997px) {
       position: fixed;
@@ -23,7 +24,6 @@
       left: -100%;
       width: 200px;
       transition: all 0.5s;
-      z-index: 150;
       &.show-menu {
         left: 0;
       }

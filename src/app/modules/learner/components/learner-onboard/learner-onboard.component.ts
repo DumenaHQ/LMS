@@ -124,12 +124,12 @@ export class LearnerOnboardComponent implements OnInit {
     },
     {
       id: 7,
-      value: 'Coding',
+      value: 'Gaming',
       selected: false,
     },
     {
       id: 8,
-      value: 'Designing',
+      value: 'AI',
       selected: false,
     },
   ];

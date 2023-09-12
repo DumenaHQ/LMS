@@ -13,42 +13,10 @@
     <app-loader *ngIf="dataLoading"></app-loader>
 
     <ng-container *ngIf="students?.length > 0">
-      <section class="grouping dis-flex">
-        <!-- Filter -->
-        <div class="filter s-f">
-          <div class="body-3-regular dis-flex">
-            <span class="title">Filter:</span>
-            <span class="dropdown-btn dis-flex clickable"
-              >All Students <i class="bx bx-chevron-down"></i
-            ></span>
-          </div>
-          <!-- <div class="dropdown">
-            <p class="clickable">Hello</p>
-          </div> -->
-        </div>
-
-        <div class="right dis-flex">
-          <!-- Sort -->
-          <div class="sort s-f">
-            <div class="body-3-regular dis-flex">
-              <span class="title">Sort:</span>
-              <span class="dropdown-btn dis-flex clickable"
-                >Last viewed <i class="bx bx-chevron-down"></i
-              ></span>
-            </div>
-          </div>
-          <!-- New Course Button -->
-          <button class="btn prim_btn" (click)="openAddLearnerModal()">
-            New Student
-          </button>
-        </div>
-      </section>
-
-      <section class="all-students">
-        <app-school-display-students
-          [students]="students"
-        ></app-school-display-students>
-      </section>
+      <app-school-display-students
+        [students]="students"
+        (addLearnerModal)="openAddLearnerModal()"
+      ></app-school-display-students>
     </ng-container>
 
     <!-- Course Blank -->
