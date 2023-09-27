@@ -29,7 +29,7 @@ export class SchoolOverviewComponent implements OnInit {
     this.user = userData.user;
 
     // Get school learners from localstorage
-    this.schoolService.getSchoolLearners(this.user.id).subscribe({
+    this.schoolService.getSchoolLearners(this.user.id, undefined).subscribe({
       next: (res: any) => {
         this.students = res.data.students;
       },

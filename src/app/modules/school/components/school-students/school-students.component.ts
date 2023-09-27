@@ -22,9 +22,13 @@ export class SchoolStudentsComponent implements OnInit {
     // Get User data from localstorage
     let userData = this.authService.getUser();
     this.user = userData.user;
+    this.getAllStudents();
+  }
 
-    // Get school learners from localstorage
-    this.schoolService.getSchoolLearners(this.user.id).subscribe({
+  // Get all students
+  getAllStudents() {
+    let grade = undefined;
+    this.schoolService.getSchoolLearners(this.user.id, grade).subscribe({
       next: (res: any) => {
         this.students = res.data.students;
       },
