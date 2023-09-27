@@ -14,7 +14,6 @@
 
     <ng-container *ngIf="students?.length > 0">
       <app-school-display-students
-        [students]="students"
         (addLearnerModal)="openAddLearnerModal()"
       ></app-school-display-students>
     </ng-container>

@@ -18,11 +18,18 @@ export class SchoolService {
     ) {}
 
   // Get All school learners
-  getSchoolLearners(userId: string) {
-    return this.http.get(
-      `${this.baseUrl}schools/${userId}/learners`,
-      this.getHttpOptions('application/json')
-    );
+  getSchoolLearners(userId: string, grade: any) {
+    if(grade === null || grade === undefined) {
+      return this.http.get(
+        `${this.baseUrl}schools/${userId}/learners`,
+        this.getHttpOptions('application/json')
+      );
+    } else {
+      return this.http.get(
+        `${this.baseUrl}schools/${userId}/learners?grade=${grade}`,
+        this.getHttpOptions('application/json')
+      );
+    }
   }
 
   // Get download learners list
