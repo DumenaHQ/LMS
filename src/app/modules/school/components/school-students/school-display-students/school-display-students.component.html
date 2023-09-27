@@ -3,7 +3,7 @@
   <div class="filter s-f">
     <div class="body-3-regular dis-flex">
       <span class="title">Filter:</span>
-      <select [(ngModel)]="selectedGrade" (change)="filterStudents()" class="s-f-select grade-select" style="border: none; outline: none; background-color: transparent;">
+      <select [(ngModel)]="selectedGrade" (change)="getAllStudents()" class="s-f-select grade-select" style="border: none; outline: none; background-color: transparent;">
         <option value="">All Grades</option>
         <option [value]="grade.id" *ngFor="let grade of grades">{{ grade.name }}</option>
       </select>
@@ -36,48 +36,53 @@
       <th>Date Enrolled</th>
       <th></th>
     </tr>
-    <tr class="table-body" *ngFor="let student of students">
-      <td class="name">
-        <div class="dis-flex">
-          <img
-            src="../../../../../../assets/img/children-avatar/child-avatar-1.png"
-            alt=""
-          />
-          <div>
-            <p>{{ student.fullname | titlecase }}</p>
-            <p>{{ student.username }}</p>
+    <ng-container *ngIf="students?.length > 0">
+      <tr class="table-body" *ngFor="let student of students">
+        <td class="name">
+          <div class="dis-flex">
+            <img
+              src="../../../../../../assets/img/children-avatar/child-avatar-1.png"
+              alt=""
+            />
+            <div>
+              <p>{{ student.fullname | titlecase }}</p>
+              <p>{{ student.username }}</p>
+            </div>
           </div>
-        </div>
-      </td>
-      <td class="contact-info">
-        <p>{{ student.email | titlecase }}</p>
-        <p>{{ student.phone }}</p>
-      </td>
-      <td class="grade">
-        <p>{{ student.grade }}</p>
-      </td>
-      <td class="dateEnrolled">
-        <p>{{ student.createdAt | date: "mediumDate" }}</p>
-      </td>
-      <td class="actions">
-        <img src="../../../../../../assets/img/action.svg" alt="" class="clickable" (click)="actionBtn.click()" />
-        <input
-            type="checkbox"
-            name="action-btn"
-            id="action-btn"
-            style="display: none"
-            #actionBtn
-          />
-          <div class="dropdown">
-            <small
-              class="body-3-regular delete clickable"
-              (click)="openDeleteModal(student)"
-              >Delete</small
-            >
-          </div>
-      </td>
-    </tr>
+        </td>
+        <td class="contact-info">
+          <p>{{ student.email | titlecase }}</p>
+          <p>{{ student.phone }}</p>
+        </td>
+        <td class="grade">
+          <p>{{ student.grade }}</p>
+        </td>
+        <td class="dateEnrolled">
+          <p>{{ student.createdAt | date: "mediumDate" }}</p>
+        </td>
+        <td class="actions">
+          <img src="../../../../../../assets/img/action.svg" alt="" class="clickable" (click)="actionBtn.click()" />
+          <input
+              type="checkbox"
+              name="action-btn"
+              id="action-btn"
+              style="display: none"
+              #actionBtn
+            />
+            <div class="dropdown">
+              <small
+                class="body-3-regular delete clickable"
+                (click)="openDeleteModal(student)"
+                >Delete</small
+              >
+            </div>
+        </td>
+      </tr>
+    </ng-container>
   </table>
+  <div style="text-align: center; padding: 1rem;" *ngIf="students?.length === 0">
+    <span>No Students found</span>
+  </div>
 </div>
 
 <!-- Delete confirmation -->
