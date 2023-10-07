@@ -152,6 +152,9 @@
         <ng-container *ngIf="contentId === 'learners'">
           <div class="table-container" style="overflow-x: auto">
             <ng-container *ngIf="classroom?.learners?.length > 0">
+              <div class="dis-flex" style="justify-content: flex-end; margin-bottom: 1.5rem;">
+                <button type="button" class="btn sec_btn" (click)="openAddLearnerToClassroomModal()">Add Learner</button>
+              </div>
               <table>
                 <tr class="table-header">
                   <th>Full Name</th>
