@@ -11,7 +11,6 @@ import { DragDropDirective } from 'src/app/directives/drag-drop.directive';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddQuizComponent } from './add-quiz/add-quiz.component';
-import { AddQuizQuestionComponent } from './add-quiz-question/add-quiz-question.component';
 import { DisplayCoursesComponent } from './display-courses/display-courses.component';
 import { AddCourseComponent } from './add-course/add-course.component';
 import { AddCourseModuleComponent } from './add-course/add-course-module/add-course-module.component';
@@ -26,7 +25,6 @@ import { DisplayCourseModulesComponent } from './add-course/display-course-modul
     CoursesBlankComponent,
     CourseDetailsComponent,
     AddQuizComponent,
-    AddQuizQuestionComponent,
     DisplayCoursesComponent,
     AddCourseComponent,
     AddCourseModuleComponent,
