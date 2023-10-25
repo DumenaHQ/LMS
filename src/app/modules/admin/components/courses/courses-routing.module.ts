@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AddQuizQuestionComponent } from './add-quiz-question/add-quiz-question.component';
-import { AddQuizComponent } from './add-quiz/add-quiz.component';
 import { CourseDetailsComponent } from './display-courses/course-details/course-details.component';
 import { CoursesComponent } from './courses.component';
 import { DisplayCoursesComponent } from './display-courses/display-courses.component';
@@ -54,22 +52,6 @@ const routes: Routes = [
           description: 'Description Meta Tag Content',
         },
       },
-      // {
-      //   path: 'create-course/quiz',
-      //   component: AddQuizComponent,
-      //   data: {
-      //     title: 'Quiz',
-      //     description: 'Description Meta Tag Content',
-      //   },
-      // },
-      // {
-      //   path: 'create-course/quiz/add-question',
-      //   component: AddQuizQuestionComponent,
-      //   data: {
-      //     title: 'Add Quiz',
-      //     description: 'Description Meta Tag Content',
-      //   },
-      // },
       { path: '', redirectTo: 'courses', pathMatch: 'full' },
     ],
   },

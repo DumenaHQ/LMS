@@ -1,85 +1,77 @@
 @import '../../../../../../assets/css/variables.scss';
 @import '../../../../../../assets/css/mixins.scss';
+@import '../../../../../../assets/css/dashboard.scss';
 
-@mixin hover {
-  transition: all .2s;
-  &:hover {
-    border-color: $primary80;
-  }
+// Modal
+.modal {
+    @include modal($modal-area-width: 600px);
+    &_area {
+      padding: $m-4 0 !important;
+      // close button
+      &_header {
+        padding: 0 $m-3 $m-2 $m-3;
+      }
+    }
+
+    .table-container {
+        &_header {
+            padding: $m-2;
+            border: 1px solid $divider-color;
+        }
+        .input_field {
+            padding: 0 $m-1;
+            background: #F7F7F7;
+            border-radius: $border-radius1;
+            border: 2px solid $white-color;
+            margin-right: $m-1;
+            @media only screen and (min-width: 755px) {
+              min-width: 400px;
+            }
+            img {
+              margin-right: $m-1;
+              width: 20px;
+              height: 20px;
+            }
+            input {
+              width: 100%;
+              padding: $m-1 0;
+              border: none;
+              outline: none;
+              background-color: transparent;
+              font-size: 16px;
+              font-weight: 500;
+              color: rgba(45, 43, 109, 0.6);
+              &::placeholder {
+                color: rgba(45, 43, 109, 0.6);
+              }
+            }
+        }
+        table {
+            tr {
+                &.table-header {
+                  border-radius: 0;
+                  th:last-child {
+                    border-radius: 0;
+                  }
+                  th:first-child {
+                    border-radius: 0;
+                  }
+                }
+            }
+        }
+    }
+    .btns {
+        justify-content: flex-end;
+        padding: $m-2 $m-3 0 $m-3;
+      }
+    }
+    
+.enroll_title {
+  padding: 0 $m-2 $m-2 $m-2;
 }
 
-.set-info {
-  @include sect-bg($border-color: transparent);
-  &_header {
-    margin-bottom: $m-4;
-    p {
-      margin-top: $m-1;
-    }
-  }
-  form {
-    display: grid;
-    grid-gap: $m-4;
-    .form_control {
-      width: 100%;
-      label {
-        display: inline-block;
-        color: $primary80;
-        margin-bottom: $m-2;
-        font-size: 18px;
-        font-weight: 700;
-      }
-      &_field {
-        width: 100%;
-        border: 1px solid $inner-border;
-        border-radius: $border-radius1;
-        padding: 0 $m-2;
-        @include hover();
-        input,
-        textarea,
-        select,
-        &.select-image {
-          padding: $m-2 0;
-          width: 100%;
-          background-color: transparent;
-          border: none;
-          outline: none;
-          height: 100%;
-          &::placeholder {
-            font-size: 16px;
-          }
-        }
-        &.select-image {
-          padding:  0;
-          display: grid;
-          place-items: center;
-          grid-gap: $m-1;
-          height: 100%;
-          width: 100%;
-          border: 1px solid $inner-border;
-          border-radius: $border-radius1;
-          padding: 16% $m-2;
-          @include hover();
-          img {
-            width: 34px;
-            height: 34px;
-          }
-        }
-        textarea {
-          resize: none;
-        }
-      }
-      &.tags {
-        margin-bottom: $m-4;
-      }
-    }
-
-    // form settings
-    .form_setting {
-      border-top: 1px solid $inner-border;
-      padding: $m-4;
-      p {
-        margin: $m-1 0 $m-2 0;
-      }
-    }
-  }
+.form-btns {
+  gap: $m-2;
+  padding: 0 $m-2;
+  margin-top: $m-2;
 }

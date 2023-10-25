@@ -16,6 +16,8 @@ export class CourseDetailsComponent implements OnInit {
   currentModuleIndex: number = 0;
   isWatchLessonModal: boolean = false;
   lessonVideoUrl: string;
+  contentId: any = 'courses';
+  addQuizToCourse: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -48,10 +50,25 @@ export class CourseDetailsComponent implements OnInit {
 
     this.lessonVideoUrl = lessonUrl;
   }
+
+  // open add quiz to course modal
+  openAddQuizToCourse() {
+    this.addQuizToCourse = true;
+  }
+
+  // Close add quiz to course modal
+  closeAddQuizToCourse() {
+    this.addQuizToCourse = false;
+  }
   
   // close logout modal
   closeWatchLessonModal() {
     this.isWatchLessonModal = false;
+  }
+
+  // Tab change
+  tabChange(ids: any) {
+    this.contentId = ids;
   }
 
 }
