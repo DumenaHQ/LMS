@@ -75,7 +75,7 @@ const routes: Routes = [
         },
       },
       {
-        path: 'class-templates/:classTemplateId/view-class-templates',
+        path: 'class-templates/:classTemplateId/view-class-template',
         component: DetailsDisplayAdminClassTemplateComponent,
         data: {
           title: 'View Class Template',
