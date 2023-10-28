@@ -132,7 +132,7 @@
                   <tr class="table-body" *ngFor="let learner of classroom?.learners">
                     <td>{{ learner.fullname }}</td>
                     <td>{{ learner.username }}</td>
-                    <td>{{ learner.email ===  undefined ? '-' : learner.email }}</td>
+                    <td>{{ learner.parent_email ===  undefined ? '-' : learner.parent_email }}</td>
                     <td>{{ learner.grade ===  undefined ? '-' : learner.grade  }}</td>
                   </tr>
                 </ng-container>
