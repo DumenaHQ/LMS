@@ -46,6 +46,12 @@ export class ParentComponent implements OnInit {
         subLinks: [],
       },
       {
+        name: 'Classrooms',
+        link: '/parent/classrooms',
+        icon: 'assets/img/svg/forward-item.svg',
+        subLinks: [],
+      },
+      {
         name: 'Payments',
         link: '/parent/payment',
         icon: 'assets/img/svg/wallet.svg',

@@ -17,6 +17,11 @@ import { PaymentHistoryComponent } from './components/payment-history/payment-hi
 import { ParentOnboardComponent } from './components/parent-onboard/parent-onboard.component';
 import { ParentEnrollLearnersComponent } from './components/parent-enroll-learners/parent-enroll-learners.component';
 import { ParentProgramsComponent } from './components/parent-programs/parent-programs.component';
+import { DisplayParentClassroomsComponent } from './components/parent-classrooms/display-parent-classrooms/display-parent-classrooms.component';
+import { GridDisplayParentClassroomsComponent } from './components/parent-classrooms/display-parent-classrooms/grid-display-parent-classrooms/grid-display-parent-classrooms.component';
+import { DetailsDisplayParentClassroomComponent } from './components/parent-classrooms/display-parent-classrooms/details-display-parent-classroom/details-display-parent-classroom.component';
+import { BlankDisplayParentClassroomComponent } from './components/parent-classrooms/display-parent-classrooms/blank-display-parent-classroom/blank-display-parent-classroom.component';
+import { AddParentClassroomLearnersComponent } from './components/parent-classrooms/add-parent-classroom-learners/add-parent-classroom-learners.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +38,11 @@ import { ParentProgramsComponent } from './components/parent-programs/parent-pro
     ParentOnboardComponent,
     ParentEnrollLearnersComponent,
     ParentProgramsComponent,
+    DisplayParentClassroomsComponent,
+    GridDisplayParentClassroomsComponent,
+    DetailsDisplayParentClassroomComponent,
+    BlankDisplayParentClassroomComponent,
+    AddParentClassroomLearnersComponent,
   ],
   imports: [
     CommonModule,

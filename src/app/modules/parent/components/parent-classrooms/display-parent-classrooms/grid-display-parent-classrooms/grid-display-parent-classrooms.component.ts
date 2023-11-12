@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { ClassroomService } from 'src/app/services/classroom.service';
 
 @Component({
-  selector: 'app-grid-display-school-classrooms',
-  templateUrl: './grid-display-school-classrooms.component.html',
-  styleUrls: ['./grid-display-school-classrooms.component.scss']
+  selector: 'app-grid-display-parent-classrooms',
+  templateUrl: './grid-display-parent-classrooms.component.html',
+  styleUrls: ['./grid-display-parent-classrooms.component.scss']
 })
-export class GridDisplaySchoolClassroomsComponent implements OnInit {
+export class GridDisplayParentClassroomsComponent implements OnInit {
 
   @Input() classrooms: any;
   @Input() days: any;
@@ -26,7 +26,7 @@ export class GridDisplaySchoolClassroomsComponent implements OnInit {
 
   // Display program
   displayClassroom(classroomId: string) {
-    this.router.navigate([`/school/classrooms/${classroomId}/view-classroom`]);
+    this.router.navigate([`/parent/classrooms/${classroomId}/view-classroom`]);
   }
 
   // Open Confirm Delete Modal
@@ -38,7 +38,7 @@ export class GridDisplaySchoolClassroomsComponent implements OnInit {
     this.deleteModal = true;
 
     this.deleteUrl = `classes/${classroom.id}`
-    this.deleteRoutePath = '/school/classrooms'
+    this.deleteRoutePath = '/parent/classrooms'
   }
 
   // Close Confirm Delete Modal
@@ -61,3 +61,4 @@ export class GridDisplaySchoolClassroomsComponent implements OnInit {
   }
 
 }
+

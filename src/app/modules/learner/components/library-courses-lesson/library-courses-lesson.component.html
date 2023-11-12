@@ -1,5 +1,5 @@
 <section class="ds-head dis-flex">
-  <h2 class="ds-head_title clickable" routerLink="/learner/library">Library</h2>
+  <h2 class="ds-head_title">Library</h2>
   <i class="bx bx-chevron-right icon"></i>
   <p class="clickable" [routerLink]="['/learner/library', course?.id]">
     {{
@@ -20,56 +20,67 @@
 
 <section class="">
   <div class="dis-flex course-header">
-    <h3 class="course-title">{{ modules[currentModuleIndex]?.lessons[currentLessonIndex].title}}</h3>
+    <h3 class="course-title">{{ modules[currentModuleIndex]?.lessons[currentLessonIndex]?.title}}</h3>
   </div>
   <div class="ds-flex">
     <main class="ds-grid">
-      <div class="course-video" *ngIf="modules[currentModuleIndex]?.lessons[currentLessonIndex].lesson_video">
+      <div class="course-video" *ngIf="modules[currentModuleIndex]?.lessons[currentLessonIndex]?.lesson_video">
         <div class="c-video">
           <video
             class="video"
-            [src]="modules[currentModuleIndex]?.lessons[currentLessonIndex].lesson_video"
+            [src]="modules[currentModuleIndex]?.lessons[currentLessonIndex]?.lesson_video"
             controls
             controlsList="nodownload"
             #videoPlayer
             autoplay
             (ended)="playNextVideo()"
             ></video>
-            <!-- autoplay -->
-          <!-- <div class="controls">
-            <div class="bar">
-              <div class="juice"></div>
-            </div>
-            <div class="buttons">
-              <button id="play-pause"></button>
-            </div>
-          </div> -->
-          <!-- <span class="play_icon" (click)="startVideo()" *ngIf="!videoClicked">
-            <img src="../../../../../assets/img/svg/white-play.svg" alt="image" />
-          </span> -->
         </div>
-        <!-- <iframe
-          [src]="currentCourseLesson?.video_url"
-          [title]="currentCourseLesson?.title"
-          autoplay="0"
-          allowfullscreen
-        ></iframe> -->
       </div>
 
       <div class="course-descp">
-        <div class="course-descp_header">
-          <ul class="dis-flex">
-            <li class="body-2-medium active">Note</li>
-            <!-- <li class="body-2-medium active">Course Description</li> -->
-            <div
-            lineNumbers
-            >
+        <div class="course-descp" >
+          <div class="course-descp_header">
+            <ul class="dis-flex">
+              <li class="body-2-medium active">Discussion</li>
+              <!-- <li class="body-2-medium active">Course Description</li> -->
+            </ul>
+          </div>
+          <div class="course-descp_body">
+            <p>
+              {{ modules[currentModuleIndex]?.further_reading }}
+            </p>
+            <!-- Objectives -->
+            <div class="obj">
+              <h4>Objectives</h4>
+              <ul *ngIf="modules[currentModuleIndex]?.objectives.length > 0">
+                <li class="" *ngFor="let objective of modules[currentModuleIndex]?.objectives | keyvalue">
+                  <p>{{objective.value}}</p>
+                </li>
+              </ul>
+              <p *ngIf="modules[currentModuleIndex]?.objectives.length === 0">None</p>
             </div>
-          </ul>
-        </div>
-        <div class="course-descp_body"  >
-          <div [innerHTML]="renderMarkdown(modules[currentModuleIndex]?.lessons[currentLessonIndex].note??'## No note')">
-            
+            <!-- Activities -->
+            <div class="acti">
+              <h4>Activities</h4>
+              <ul *ngIf="modules[currentModuleIndex]?.class_activities.length > 0">
+                <li class="" *ngFor="let activity of modules[currentModuleIndex]?.class_activities | keyvalue">
+                  <p>{{activity.value}}</p>
+                </li>
+              </ul>
+              <p *ngIf="modules[currentModuleIndex]?.class_activities.length === 0">None</p>
+            </div>
+            <!-- Further Reading Links -->
+            <div class="further_reading_links">
+              <h4>Further Reading Links</h4>
+              <ul *ngIf="modules[currentModuleIndex]?.further_reading_links.length > 0">
+                <li class="" style="display: flex; align-items: center; gap: 2rem; margin-bottom: 1rem;" *ngFor="let readingLinks of modules[currentModuleIndex]?.further_reading_links">
+                  <h5>{{readingLinks.caption}}</h5>
+                  <p>{{readingLinks.url}}</p>
+                </li>
+              </ul>
+              <p *ngIf="modules[currentModuleIndex]?.further_reading_links.length === 0">None</p>
+            </div>
           </div>
         </div>
       </div>
@@ -80,31 +91,8 @@
           <h5>Lessons</h5>
           <p class="total-length">Lessons ({{ course?.lesson_count }})</p>
         </div>
+
         <div class="course-content_list">
-          <!-- <div
-            class="course-content_list_item"
-            *ngFor="
-              let childItem of course?.lessons;
-              let indexOfelement = index
-            "
-            [class.active]="currentCourseId.lessonId == childItem.id"
-            (click)="changeLesson(childItem?.id)"
-          >
-            <h5 class="heading">Lesson {{ indexOfelement + 1 }}</h5>
-            <p
-              class="body-1-medium title"
-              [title]="childItem.title | titlecase"
-            >
-              {{ childItem.title | titlecase }}
-            </p>
-            <span class="dis-flex length">
-              <img
-                src="../../../../assets/img/library/video-play-black.svg"
-                alt="image"
-              />
-              <p class="body-3-regular">{{ childItem.duration }}</p>
-            </span>
-          </div> -->
           <div
             class="course-content_list_item"
             *ngFor="let module of modules; let moduleIndex = index"
@@ -171,6 +159,7 @@
           </div>
           </div>
         </div>
+
         <div class="course-content_tutor">
           <h5>Support and Instructor Information</h5>
           <div class="course-content_tutor_profile">
@@ -183,38 +172,6 @@
             <p class="body-1-regular details">
               This course has been prepared by the DUMENA Education team.
             </p>
-          </div>
-        </div>
-      </div>
-      <div style="padding-top: 50px;"></div>
-      <div class="course-descp" >
-        <div class="course-descp_header">
-          <ul class="dis-flex">
-            <li class="body-2-medium active">Discussion</li>
-            <!-- <li class="body-2-medium active">Course Description</li> -->
-          </ul>
-        </div>
-        <div class="course-descp_body">
-          <p>
-            {{ modules[currentModuleIndex]?.further_reading }}
-          </p>
-          <!-- Objectives -->
-          <div class="obj">
-            <h4>Objectives</h4>
-            <ul>
-              <li class="" *ngFor="let objective of modules[currentModuleIndex]?.objectives | keyvalue">
-                <p>{{objective.value}}</p>
-              </li>
-            </ul>
-          </div>
-          <!-- Activities -->
-          <div class="acti">
-            <h4>Activities</h4>
-            <ul>
-              <li class="" *ngFor="let activity of modules[currentModuleIndex]?.class_activities | keyvalue">
-                <p>{{activity.value}}</p>
-              </li>
-            </ul>
           </div>
         </div>
       </div>
