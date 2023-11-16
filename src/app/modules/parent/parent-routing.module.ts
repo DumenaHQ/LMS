@@ -12,6 +12,7 @@ import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.
 import { ParentComponent } from './parent.component';
 import { DisplayParentClassroomsComponent } from './components/parent-classrooms/display-parent-classrooms/display-parent-classrooms.component';
 import { DetailsDisplayParentClassroomComponent } from './components/parent-classrooms/display-parent-classrooms/details-display-parent-classroom/details-display-parent-classroom.component';
+import { AddParentClassroomComponent } from './components/parent-classrooms/add-parent-classroom/add-parent-classroom.component';
 
 const routes: Routes = [
   {
@@ -79,6 +80,14 @@ const routes: Routes = [
         component: DisplayParentClassroomsComponent,
         data: {
           title: 'Classrooms',
+          description: 'Description Meta Tag Content',
+        },
+      },
+      {
+        path: 'classrooms/add-classroom',
+        component: AddParentClassroomComponent,
+        data: {
+          title: 'Add Classroom',
           description: 'Description Meta Tag Content',
         },
       },

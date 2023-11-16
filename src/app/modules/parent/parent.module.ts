@@ -22,6 +22,7 @@ import { GridDisplayParentClassroomsComponent } from './components/parent-classr
 import { DetailsDisplayParentClassroomComponent } from './components/parent-classrooms/display-parent-classrooms/details-display-parent-classroom/details-display-parent-classroom.component';
 import { BlankDisplayParentClassroomComponent } from './components/parent-classrooms/display-parent-classrooms/blank-display-parent-classroom/blank-display-parent-classroom.component';
 import { AddParentClassroomLearnersComponent } from './components/parent-classrooms/add-parent-classroom-learners/add-parent-classroom-learners.component';
+import { AddParentClassroomComponent } from './components/parent-classrooms/add-parent-classroom/add-parent-classroom.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { AddParentClassroomLearnersComponent } from './components/parent-classro
     DetailsDisplayParentClassroomComponent,
     BlankDisplayParentClassroomComponent,
     AddParentClassroomLearnersComponent,
+    AddParentClassroomComponent,
   ],
   imports: [
     CommonModule,
