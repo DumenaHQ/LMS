@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ClassroomService } from 'src/app/services/classroom.service';
 
 @Component({
-  selector: 'app-display-learner-classooms',
-  templateUrl: './display-learner-classooms.component.html',
-  styleUrls: ['./display-learner-classooms.component.scss']
+  selector: 'app-display-parent-classrooms',
+  templateUrl: './display-parent-classrooms.component.html',
+  styleUrls: ['./display-parent-classrooms.component.scss']
 })
-export class DisplayLearnerClassoomsComponent implements OnInit {
+export class DisplayParentClassroomsComponent implements OnInit {
 
   classrooms: any;
   dataLoading: boolean = true;
@@ -21,7 +21,7 @@ export class DisplayLearnerClassoomsComponent implements OnInit {
       next: (res: any) => {
         this.classrooms = res.data.classes;
         console.log({
-          title: 'Classrooms',
+          title: 'classrooms',
           data: res.data.classes
         });
         
@@ -35,5 +35,6 @@ export class DisplayLearnerClassoomsComponent implements OnInit {
       },
     });
   }
+
 
 }

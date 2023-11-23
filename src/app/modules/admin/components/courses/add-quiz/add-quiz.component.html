@@ -1,42 +1,83 @@
-<section class="set-info" app>
-  <div class="set-info_header">
-    <button class="btn prim_btn" (click)="addQuiz()">Add Course</button>
-    <button class="btn prim_btn" routerLink="add-question">Add Question</button>
-    <h3 class="text-primary-color">Set the Quiz Information</h3>
-    <p>
-      This information will be displayed to the learners before they take the
-      quiz
-    </p>
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
+></app-alert-popup>
+
+<div class="modal">
+  <div class="modal_area">
+    <span class="modal_area_close" (click)="closeAddQuizToCourse()">
+      <i class="bx bx-x icon clickable"></i>
+    </span>
+
+    <div class="enroll auth_content">
+      <h4
+        class="text-primary-color enroll_title"
+      >
+        Add Quiz to this Course
+      </h4>
+      <form
+        class="enroll_form auth_content_form"
+      >
+
+        <!-- Single enrollment starts *ngIf="billingId == 'single'" -->
+        <div class="col-2">
+          <div class="table-container" >
+            <div class="table-container_header dis-flex">
+              <div class="input_field dis-flex">
+                <img
+                  src="../../../../../../assets/img/svg/Search.svg"
+                  alt="image"
+                />
+                <input type="text" placeholder="Search by Title" name="search" [(ngModel)]="quizName"
+                (input)="search()" />
+              </div>
+            </div>
+            <div style="overflow: auto; max-height: 300px;">
+              <app-loader *ngIf="dataLoading"></app-loader>
+              <p style="margin-bottom: 1rem; padding: 1rem 1rem 0 1rem;"><strong>Note:</strong> Select only one quiz</p>
+              <table *ngIf="quizzes?.length > 0">
+                <tr class="table-header">
+                  <th>Title</th>
+                  <th>Number of question</th>
+                  <th class="dis-flex actions">
+                    <!-- Mark all <input type="checkbox" name="" id="" /> -->
+                  </th>
+                </tr>
+                <tr class="table-body" *ngFor="let quiz of quizzes">
+                  <td>{{ quiz.title }}</td>
+                  <td>{{ quiz.question_count }}</td>
+                  <td><input type="checkbox" name="quiz" [id]="quiz.id" (change)="selectQuiz($event, quiz)" /></td>
+                </tr>
+              </table>
+              <ng-container *ngIf="quizzes?.length === 0">
+                <p style="text-align: center">No quiz!</p>
+              </ng-container>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="form-btns dis-flex">
+            <span
+              class="grey_btn clickable"
+              (click)="closeAddQuizToCourse()"
+              >Cancel</span
+            >
+            <div class="continue">
+              <button
+                class="btn prim_btn clickable"
+                [disabled]="loading || selectedQuizzes.length === 0"
+                (click)="addQuizToCourse()"
+              >
+                <span *ngIf="!loading">Add</span>
+                <span *ngIf="loading">Processing...</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Single enrollment ends -->
+      </form>
+    </div>
   </div>
-  <form>
-    <div class="form_control">
-      <label for="title">Quiz Title</label>
-      <div class="form_control_field">
-        <input type="text" id="title" placeholder="Type here" />
-      </div>
-    </div>
-    <div class="form_control tags">
-      <label for="tags">Tags</label>
-      <div class="form_control_field">
-        <textarea
-          name=""
-          id="tags"
-          cols="30"
-          rows="5"
-          placeholder="Type here"
-          spellcheck="true"
-        ></textarea>
-      </div>
-    </div>
-    <div class="form_setting">
-      <div class="">
-        <h3 class="text-primary-color">Quiz Settings</h3>
-        <p>Configure your quiz settings</p>
-      </div>
-      <label class="">
-        <input type="checkbox" id="" />
-        Show the correct answer
-      </label>
-    </div>
-  </form>
-</section>
+</div>

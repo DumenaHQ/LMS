@@ -33,12 +33,12 @@ export class LearnerComponent implements OnInit {
         icon: 'assets/img/svg/Layout.svg',
         subLinks: [],
       },
-      {
-        name: 'Library',
-        link: '/learner/library',
-        icon: 'assets/img/svg/University.svg',
-        subLinks: [],
-      },
+      // {
+      //   name: 'Library',
+      //   link: '/learner/library',
+      //   icon: 'assets/img/svg/University.svg',
+      //   subLinks: [],
+      // },
       {
         name: 'Classrooms',
         link: '/learner/classrooms',

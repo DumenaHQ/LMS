@@ -68,105 +68,152 @@
   <div class="course-details_body">
     <div class="course-details_body_header">
       <ul class="dis-flex">
-        <li class="body-2-medium active">Content</li>
-        <li class="body-2-medium">Statistics</li>
+        <li class="body-2-medium active"
+          [class.active]="contentId === 'courses'"
+          (click)="tabChange('courses')"
+        >
+          Content
+        </li>
+        <li class="body-2-medium"
+          [class.active]="contentId === 'quizzes'"
+          (click)="tabChange('quizzes')"
+        >
+          Quizzes
+        </li>
       </ul>
     </div>
     <div class="course-details_body_content">
-      <aside>
-        <ul>
-          <!-- class="active" -->
-          <li *ngFor="let module of course?.modules; let moduleIndex = index" [ngClass]="{'active': currentModuleIndex === moduleIndex}" (click)="getModuleIndex(moduleIndex)" [title]="module?.title">
-            <h5 class="body-2-medium">
-              {{
-                module?.title.length > 20
-                  ? module?.title.slice(0, 20)  + "..." 
-                  : module?.title | titlecase
-              }}
-            </h5>
-            <p class="body-3-regular" style="font-style: italic;">Added on {{ module?.date_added | date: 'mediumDate' }}</p>
-            <p>{{module?.lesson_count}} {{module?.lesson_count > 1 ? 'Lessons' : 'Lesson'}}</p>
-          </li>
-        </ul>
-      </aside>
-      <main>
-        <ng-container *ngIf="course?.modules[currentModuleIndex]">
-          <div class="main-header">
-            <h4 class="title">{{ course?.modules[currentModuleIndex]?.title }}</h4>
-          </div>
-          <div class="main-content">
-            <!-- Objectives -->
-            <div>
-              <h5 class="">Objectives</h5>
-              <ul>
-                <li class="" *ngFor="let objective of course?.modules[currentModuleIndex]?.objectives | keyvalue">
-                  <p>{{objective.value}}</p>
-                </li>
-              </ul>
+      <!-- Courses -->
+      <ng-container *ngIf="contentId === 'courses'">
+        <aside>
+          <ul>
+            <!-- class="active" -->
+            <li *ngFor="let module of course?.modules; let moduleIndex = index" [ngClass]="{'active': currentModuleIndex === moduleIndex}" (click)="getModuleIndex(moduleIndex)" [title]="module?.title">
+              <h5 class="body-2-medium">
+                {{
+                  module?.title.length > 20
+                    ? module?.title.slice(0, 20)  + "..." 
+                    : module?.title | titlecase
+                }}
+              </h5>
+              <p class="body-3-regular" style="font-style: italic;">Added on {{ module?.date_added | date: 'mediumDate' }}</p>
+              <p>{{module?.lesson_count}} {{module?.lesson_count > 1 ? 'Lessons' : 'Lesson'}}</p>
+            </li>
+          </ul>
+        </aside>
+        <main>
+          <ng-container *ngIf="course?.modules[currentModuleIndex]">
+            <div class="main-header">
+              <h4 class="title">{{ course?.modules[currentModuleIndex]?.title }}</h4>
             </div>
-
-            <!-- Class Activities -->
-            <div>
-              <h5 class="">Class Activities</h5>
-              <ul>
-                <li class="" *ngFor="let activity of course?.modules[currentModuleIndex]?.class_activities | keyvalue">
-                  <p>{{ activity.value }}</p>
-                </li>
-              </ul>
-            </div>
-
-            <!-- Lessons -->
-            <div class="table-container" style="overflow-x: auto">
-              <h5 class="">Lessons</h5>
-              <ng-container *ngIf="course?.modules[currentModuleIndex].lessons.length > 0">
-                <table>
-                  <tr class="table-header">
-                    <th>Title</th>
-                    <th>Duration</th>
-                    <th>Action</th>
-                  </tr>
-                  <ng-container>
-                    <tr class="table-body" *ngFor="let lesson of course?.modules[currentModuleIndex].lessons">
-                      <td>{{ lesson?.title }}</td>
-                      <td>{{ lesson?.duration }}</td>
-                      <td>
-                        <Button class="btn tert_btn" (click)="openWatchLessonModal(lesson?.lesson_video)">View</Button>
-                      </td>
+            <div class="main-content">
+              <!-- Objectives -->
+              <div>
+                <h5 class="">Objectives</h5>
+                <ul>
+                  <li class="" *ngFor="let objective of course?.modules[currentModuleIndex]?.objectives | keyvalue">
+                    <p>{{objective.value}}</p>
+                  </li>
+                </ul>
+              </div>
+  
+              <!-- Class Activities -->
+              <div>
+                <h5 class="">Class Activities</h5>
+                <ul>
+                  <li class="" *ngFor="let activity of course?.modules[currentModuleIndex]?.class_activities | keyvalue">
+                    <p>{{ activity.value }}</p>
+                  </li>
+                </ul>
+              </div>
+  
+              <!-- Lessons -->
+              <div class="table-container" style="overflow-x: auto">
+                <h5 class="">Lessons</h5>
+                <ng-container *ngIf="course?.modules[currentModuleIndex].lessons.length > 0">
+                  <table>
+                    <tr class="table-header">
+                      <th>Title</th>
+                      <th>Duration</th>
+                      <th>Action</th>
                     </tr>
-                  </ng-container>
-                </table>
-              </ng-container>
-    
-              <div *ngIf="course?.modules[currentModuleIndex].lessons.length === 0" class="course-empty">
-                <p style="text-align: center" >
-                  No Lesson available
-                </p>
-                <!-- <button type="button" class="btn sec_btn">Add Course</button> -->
+                    <ng-container>
+                      <tr class="table-body" *ngFor="let lesson of course?.modules[currentModuleIndex].lessons">
+                        <td>{{ lesson?.title }}</td>
+                        <td>{{ lesson?.duration }}</td>
+                        <td>
+                          <Button class="btn tert_btn" (click)="openWatchLessonModal(lesson?.lesson_video)">View</Button>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </table>
+                </ng-container>
+      
+                <div *ngIf="course?.modules[currentModuleIndex].lessons.length === 0" class="course-empty">
+                  <p style="text-align: center" >
+                    No Lesson available
+                  </p>
+                  <!-- <button type="button" class="btn sec_btn">Add Course</button> -->
+                </div>
+              </div>
+  
+              <!-- Further Reading -->
+              <div>
+                <h5 class="">Further Reading</h5>
+                <ul>
+                  <li class="" *ngFor="let link of course?.modules[currentModuleIndex]?.further_reading_links">
+                    <div class="dis-flex">
+                      <p>{{ link.caption }}</p> 
+                      <span style="margin: 0 1rem;">-</span>
+                      <p> <a [href]="link.url" target="_blank" style="text-decoration: underline;">{{ link.url }}</a></p>
+                    </div>
+                  </li>
+  
+                  <div *ngIf="course?.modules[currentModuleIndex]?.further_reading_links.length === 0" class="course-empty">
+                    <p style="text-align: center" >
+                      None
+                    </p>
+                  </div>
+                </ul>
               </div>
             </div>
+          </ng-container>
+        </main>
+      </ng-container>
 
-            <!-- Further Reading -->
-            <div>
-              <h5 class="">Further Reading</h5>
-              <ul>
-                <li class="" *ngFor="let link of course?.modules[currentModuleIndex]?.further_reading_links">
-                  <div class="dis-flex">
-                    <p>{{ link.caption }}</p> 
-                    <span style="margin: 0 1rem;">-</span>
-                    <p> <a [href]="link.url" target="_blank" style="text-decoration: underline;">{{ link.url }}</a></p>
-                  </div>
-                </li>
-
-                <div *ngIf="course?.modules[currentModuleIndex]?.further_reading_links.length === 0" class="course-empty">
-                  <p style="text-align: center" >
-                    None
-                  </p>
-                </div>
-              </ul>
-            </div>
+      <!-- Quizzes -->
+      <ng-container *ngIf="contentId === 'quizzes'">
+        <main>
+          <div class="table-container" style="overflow-x: auto">
+            <button class="btn prim_btn" (click)="openAddQuizToCourse()">Add Quiz</button>
+            <!-- <ng-container *ngIf="course?.modules[currentModuleIndex].lessons.length > 0">
+              <table>
+                <tr class="table-header">
+                  <th>Title</th>
+                  <th>Duration</th>
+                  <th>Action</th>
+                </tr>
+                <ng-container>
+                  <tr class="table-body" *ngFor="let lesson of course?.modules[currentModuleIndex].lessons">
+                    <td>{{ lesson?.title }}</td>
+                    <td>{{ lesson?.duration }}</td>
+                    <td>
+                      <Button class="btn tert_btn" (click)="openWatchLessonModal(lesson?.lesson_video)">View</Button>
+                    </td>
+                  </tr>
+                </ng-container>
+              </table>
+            </ng-container> -->
+  
+            <!-- <div *ngIf="course?.modules[currentModuleIndex].lessons.length === 0" class="course-empty">
+              <p style="text-align: center" >
+                No Quiz available
+              </p>
+              <button type="button" class="btn sec_btn">Add Quiz</button>
+            </div> -->
           </div>
-        </ng-container>
-      </main>
+        </main>
+      </ng-container>
     </div>
   </div>
 </section>
@@ -197,5 +244,7 @@
     </div>
   </div>
 </div>
+
+<app-add-quiz [courseId]="currentCourseParams.courseId" (addQuizToCourseModal)="closeAddQuizToCourse()" *ngIf="addQuizToCourse"></app-add-quiz>
 
 
