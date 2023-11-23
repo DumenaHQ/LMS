@@ -26,7 +26,6 @@ export class AddParentClassroomLearnersComponent implements OnInit {
   file: File;
   arrayBuffer: any;
   learnersList: any;
-  schoolLearners: any;
   parentLearners: any;
   dataLoading: boolean = true;
   studentName: any;
@@ -165,7 +164,7 @@ export class AddParentClassroomLearnersComponent implements OnInit {
   // Search students
   search() {
     if (this.studentName != "") {
-      this.schoolLearners = this.schoolLearners.filter((res: any) => {
+      this.parentLearners = this.parentLearners.filter((res: any) => {
         return res.fullname.toLocaleLowerCase().match(this.studentName.toLocaleLowerCase());
       });
     } else if (this.studentName == "") {
