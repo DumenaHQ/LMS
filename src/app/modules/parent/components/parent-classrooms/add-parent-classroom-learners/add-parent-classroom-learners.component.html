@@ -82,7 +82,7 @@
                 </div>
                 <div style="overflow: auto; max-height: 300px;">
                   <app-loader *ngIf="dataLoading"></app-loader>
-                  <table *ngIf="schoolLearners?.length > 0">
+                  <table *ngIf="parentLearners?.length > 0">
                     <tr class="table-header">
                       <th>Student name</th>
                       <th>Username</th>
@@ -91,14 +91,14 @@
                         <!-- Mark all <input type="checkbox" name="" id="" /> -->
                       </th>
                     </tr>
-                    <tr class="table-body" *ngFor="let student of schoolLearners">
+                    <tr class="table-body" *ngFor="let student of parentLearners">
                       <td>{{student.fullname}}</td>
                       <td>{{student.username}}</td>
                       <td>{{student.grade}}</td>
                       <td><input type="checkbox" name="student" [id]="student.id" (change)="selectStudent($event, student)" /></td>
                     </tr>
                   </table>
-                  <ng-container *ngIf="schoolLearners?.length === 0">
+                  <ng-container *ngIf="parentLearners?.length === 0">
                     <p style="text-align: center">No learner!</p>
                   </ng-container>
                 </div>
