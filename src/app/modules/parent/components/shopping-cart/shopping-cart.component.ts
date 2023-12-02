@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { OrderService } from 'src/app/services/order.service';
@@ -24,12 +24,14 @@ export class ShoppingCartComponent implements OnInit {
   alertMessage: string = '';
   alertColor: string = '';
   isAlert: boolean = false;
+  reference: any;
 
   constructor(
     private orderService: OrderService,
     private authService: AuthService,
     private router: Router,
-    private ngZOne: NgZone
+    private ngZOne: NgZone,
+    private changeDectetorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -38,52 +40,68 @@ export class ShoppingCartComponent implements OnInit {
     this.user = userData.user;
 
     // Get cart products from local storage
-    this.plans = this.orderService.loadCart()
-    this.getGrandTotal()
+    // this.plans = this.orderService.loadCart()
+    this.getOrders();
   }
 
-  // Find Sum
-  getGrandTotal() {
-    // this.value = data;
-    this.grandTotal = this.plans.reduce((sum: any, product: any) => sum += product.amount, 0)
-    
-    return this.grandTotal
-  }
-
-  // Add Order
-  addOrder() {
-    // Start loading
-    this.loading = true;
-
-    let payload = {
-      items: this.plans,
-    };
-
-    // Add order
-    this.orderService.addOrder(payload).subscribe((res: any) => {
-      console.log(res);
-
-      // Send data to paystack
-      this.payWithPaystack(res.data.order);
-
-      // Remove cart item from localstorage
-      localStorage.removeItem('cart_item');
+  // Get orders
+  getOrders() {
+    this.orderService.getOrders().subscribe({
+      next: (res: any) => {
+        console.log(res);
+        this.plans = res.data.orders;
+        this.reference = res.data.orders[0].reference;
+        this.getGrandTotal(res.data.orders);
+        
+      },
+      error: (e) => console.error(e),
     });
   }
 
+  // Find Sum
+  getGrandTotal(plan: any) {
+    // this.value = data;
+    this.grandTotal = this.plans.reduce((sum: any, product: any) => sum += product.total_amount, 0)
+    
+    return this.grandTotal;
+  }
+
+  // Add Order
+  // addOrder() {
+  //   // Start loading
+  //   this.loading = true;
+
+  //   let payload = {
+  //     items: this.plans,
+  //   };
+
+  //   // Add order
+  //   this.orderService.addOrder(payload).subscribe((res: any) => {
+  //     console.log(res);
+
+  //     // Send data to paystack
+  //     this.payWithPaystack(res.data.order);
+
+  //     // Remove cart item from localstorage
+  //     localStorage.removeItem('cart_item');
+  //   });
+  // }
+
   // Pay with Paystack
-  payWithPaystack(result: any) {
+  payWithPaystack() {
     let url = this.baseUrl;
     let router = this.router;
     let userRole = this.user.role;
     let zone = this.ngZOne;
+    // let reference = this.reference;
+    // let amount = this.grandTotal;
     // @ts-ignore
     let handler = PaystackPop.setup({
       key: this.key,
       email: this.user.email,
-      amount: result.total_amount * 100,
+      amount: this.grandTotal * 100,
       currency: 'NGN',
-      ref: result.reference,
+      ref: this.reference,
       callback: function (response: any) {
         var reference = response.reference;
         if (response.status === 'success') {
@@ -101,14 +119,16 @@ export class ShoppingCartComponent implements OnInit {
               // if payment is successful, route user to children page
               if (data.status == true) {
                 zone.run(() => {
-                  router.navigate([userRole + '/children']);
+                  // router.navigate([userRole + '/children']);
+                  this.getOrders();
                 });
               }
             });
         }
       },
-      onClose: function () {
-        alert('Transaction was not completed!');
+      onClose: () => {
+        this.showAlert('Transaction was not completed', 'error');
+        this.changeDectetorRef.detectChanges();
       },
     });
     handler.openIframe();
@@ -117,7 +137,7 @@ export class ShoppingCartComponent implements OnInit {
   // Remove item from localstorage
   removeItemFromLocalStorage(plan: any): void {
     this.orderService.removePlan(plan)
-    this.getGrandTotal()
+    // this.getGrandTotal()
     // Show alert
     this.showAlert('Item removed from cart', 'success')
   }
