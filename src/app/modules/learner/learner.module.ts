@@ -13,6 +13,7 @@ import { DisplayLearnerClassoomsComponent } from './components/learner-classroom
 import { DisplayDetailsLearnerClassoomComponent } from './components/learner-classrooms/display-details-learner-classoom/display-details-learner-classoom.component';
 import { BlankDisplayLearnerClassroomComponent } from './components/learner-classrooms/display-learner-classooms/blank-display-learner-classroom/blank-display-learner-classroom.component';
 import { GridDisplayLearnerClassroomsComponent } from './components/learner-classrooms/display-learner-classooms/grid-display-learner-classrooms/grid-display-learner-classrooms.component';
+import { BlankDisplayLearnerProgramComponent } from './components/learner-programs/display-learner-programs/blank-display-learner-program/blank-display-learner-program.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { GridDisplayLearnerClassroomsComponent } from './components/learner-clas
     DisplayDetailsLearnerClassoomComponent,
     BlankDisplayLearnerClassroomComponent,
     GridDisplayLearnerClassroomsComponent,
+    BlankDisplayLearnerProgramComponent,
   ],
   imports: [
     CommonModule,

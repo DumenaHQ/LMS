@@ -32,10 +32,28 @@ export class QuizService {
     );
   }
 
+  // Submit quiz
+  submitQuiz(quizId: string, data: any) {
+    return this.http.patch(
+      `${this.baseUrl}quizzes/${quizId}/submit-answers`,
+      data,
+      this.getHttpOptions()
+    );
+  }
+  
   // Add questions to quiz
   addQuestionsToQuiz(quizId: string, data: any) {
     return this.http.post(
       `${this.baseUrl}quizzes/${quizId}/questions`,
+      data,
+      this.getHttpOptions()
+    );
+  }
+
+  // Add quiz to course
+  addQuizToCourse(quizId: string, data: any) {
+    return this.http.put(
+      `${this.baseUrl}quizzes/${quizId}/attach`,
       data,
       this.getHttpOptions()
     );

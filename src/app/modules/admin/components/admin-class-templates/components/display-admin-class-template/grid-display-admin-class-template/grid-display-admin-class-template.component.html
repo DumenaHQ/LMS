@@ -5,6 +5,7 @@
           src="../../../../../../assets/img/program-thumbnail-patterns.svg"
           alt="image"
           class="program_card_item_image clickable"
+          (click)="displayClassTemplate(classTemplate?.id)"
         />
   
         <div class="program_card_item_details" *ngIf="classTemplate.title !== undefined">
@@ -13,6 +14,7 @@
               <h5
                 class="title clickable"
                 [title]="classTemplate?.title"
+                (click)="displayClassTemplate(classTemplate?.id)"
               >
                 {{
                   classTemplate?.title.length > 20
