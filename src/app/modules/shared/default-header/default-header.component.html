@@ -5,37 +5,23 @@
     </span>
     <nav class="dis-flex" [class.open-menu]="hamClick">
       <ul class="nav_list">
-        <li
-          class="nav_list_item"
-          routerLinkActive="active"
-          routerLink=""
-          [routerLinkActiveOptions]="{ exact: true }"
-          (click)="hamClick = false"
-        >
+        <li class="nav_list_item" routerLinkActive="active" routerLink="" [routerLinkActiveOptions]="{ exact: true }"
+          (click)="hamClick = false">
           Home
         </li>
-        <li 
+        <!-- <li 
           class="nav_list_item"
           routerLinkActive="active"
           routerLink="/about"
           (click)="hamClick = false"
         >
           About Us
-        </li>
-        <li
-          class="nav_list_item"
-          routerLinkActive="active"
-          routerLink="/pricing"
-          (click)="hamClick = false"
-        >
+        </li> -->
+        <li class="nav_list_item" routerLinkActive="active" routerLink="/pricing" (click)="hamClick = false">
           Pricing
         </li>
-        <li
-          class="nav_list_item"
-          routerLinkActive="active"
-          routerLink="/robotics-championship"
-          (click)="hamClick = false"
-        >
+        <li class="nav_list_item" routerLinkActive="active" routerLink="/robotics-championship"
+          (click)="hamClick = false">
           Championship
         </li>
         <!-- <li class="nav_list_item" (click)="hamClick = false">Parents</li>
@@ -49,14 +35,11 @@
     </nav>
     <!-- Hamburger -->
     <div class="hamburger clickable" (click)="hamClick = !hamClick">
-      <img
-        [src]="
+      <img [src]="
           hamClick
             ? '../../../../assets/img/svg/Hamburger-close.svg'
             : '../../../../assets/img/svg/Hamburger-open.svg'
-        "
-        alt=""
-      />
+        " alt="" />
     </div>
   </div>
 </header>
