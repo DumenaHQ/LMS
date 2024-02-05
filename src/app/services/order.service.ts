@@ -17,6 +17,11 @@ export class OrderService {
     return this.http.get(this.baseUrl + 'orders', this.getHttpOptions());
   }
 
+  // Get Order
+  getActiveOrder() {
+    return this.http.get(this.baseUrl + 'orders/active-order', this.getHttpOptions());
+  }
+
   // Add Order
   addOrder(data: any) {
     return this.http.post(this.baseUrl + 'orders', data, this.getHttpOptions());

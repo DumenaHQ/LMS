@@ -68,9 +68,7 @@ export class AddParentClassroomLearnersComponent implements OnInit {
     this.loading = true;
 
     let payload = {
-      learners: this.selectedLearners.map((learner: any) => {
-        return learner.user_id
-      }),
+      learners: this.selectedLearners
     };
     
     this.classroomService
@@ -190,7 +188,7 @@ export class AddParentClassroomLearnersComponent implements OnInit {
         });
       }
       else {
-        this.selectedLearners.push({user_id: student.id});
+        this.selectedLearners.push({name: student.fullname, user_id: student.id});
       } 
   }
 

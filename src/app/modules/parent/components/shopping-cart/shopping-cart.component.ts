@@ -4,6 +4,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { OrderService } from 'src/app/services/order.service';
 import { PaymentService } from 'src/app/services/payment.service';
 import { environment } from 'src/environments/environment';
+type Tabs = 'active' | 'all';
+
 
 @Component({
   selector: 'app-shopping-cart',
@@ -11,6 +13,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./shopping-cart.component.scss'],
 })
 export class ShoppingCartComponent implements OnInit {
+  activeTab: Tabs = 'active';
   baseUrl: string = environment.baseUrl;
   key = environment.paystackKey;
   user: any;
@@ -20,7 +23,8 @@ export class ShoppingCartComponent implements OnInit {
   value: any;
   isVoucher: boolean = false;
   loading: boolean = false;
-  plans: any;
+  activePlans: any;
+  allPlans: any;
   alertMessage: string = '';
   alertColor: string = '';
   isAlert: boolean = false;
@@ -41,29 +45,37 @@ export class ShoppingCartComponent implements OnInit {
 
     // Get cart products from local storage
     // this.plans = this.orderService.loadCart()
-    this.getOrders();
+    this.getAllOrders();
+    this.getActiveOrder();
   }
 
-  // Get orders
-  getOrders() {
+  // Get all orders
+  getAllOrders() {
     this.orderService.getOrders().subscribe({
       next: (res: any) => {
-        console.log(res);
-        this.plans = res.data.orders;
+        this.allPlans = res.data.orders;
         this.reference = res.data.orders[0].reference;
-        this.getGrandTotal(res.data.orders);
+      },
+      error: (e) => console.error(e),
+    });
+  }
+
+  // Get active order
+  getActiveOrder() {
+    this.orderService.getActiveOrder().subscribe({
+      next: (res: any) => {
+        this.activePlans = res.data.order;
+        // this.reference = res.data.orders[0].reference;
+        this.grandTotal = res.data.order.total_amount
         
       },
       error: (e) => console.error(e),
     });
   }
 
-  // Find Sum
-  getGrandTotal(plan: any) {
-    // this.value = data;
-    this.grandTotal = this.plans.reduce((sum: any, product: any) => sum += product.total_amount, 0)
-    
-    return this.grandTotal;
+  // Set active Tab
+  setActiveTab(tab: Tabs) {
+    this.activeTab = tab;
   }
 
   // Add Order
