@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CoursesService } from 'src/app/services/courses.service';
+import { QuizService } from 'src/app/services/quiz.service';
 
 @Component({
   selector: 'app-library-courses-quiz',
@@ -10,24 +11,45 @@ import { CoursesService } from 'src/app/services/courses.service';
 export class LibraryCoursesQuizComponent implements OnInit {
   currentCourseParams: any;
   course: any;
+  quiz: any;
+  currentQuestionIndex: number = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private coursesService: CoursesService,
+    private quizzesService: QuizService,
   ) { }
 
   ngOnInit(): void {
     this.currentCourseParams = this.activatedRoute.snapshot.params;
 
-    console.log(this.currentCourseParams);
-    
-    // Get current Course with the Id
-    this.coursesService
-      .getCourse(this.currentCourseParams.courseId)
+    this.getQuizByQuizId(this.currentCourseParams.quizId);
+  }
+
+  // Get quiz by quiz Id
+  getQuizByQuizId(quizId: any) {
+    this.quizzesService
+      .getquizByQuizId(quizId)
       .subscribe((res: any) => {
-        // Get course
-        this.course = res.data.course;
+        console.log(res);
+        this.quiz = res.data.quiz;
       });
+  }
+
+  // Get question Index
+  // Get Module lessons
+  getQuestionIndex(questionIndex: number) {
+    this.currentQuestionIndex = questionIndex;    
+  }
+
+  // Next question
+  nextQuestion() {
+    this.currentQuestionIndex++;
+  }
+
+  // Previous question
+  previousQuestion() {
+    this.currentQuestionIndex--;
   }
 
   // Go back

@@ -1,5 +1,6 @@
 <section class="ds-head dis-flex">
     <div class=" dis-flex">
+        <h2 class="ds-head_title">Quiz</h2>
         <i class="bx bx-chevron-right icon" style="transform: rotate(180deg);"></i>
         <p class="ds-head_title clickable" (click)="goToLibrary()">Go back to Course</p>
     </div>
@@ -7,6 +8,7 @@
 </section>
 
 <div class="course-details_body">
+    <h4 style="margin-bottom: 1.5rem;">Title: {{ quiz?.title }}</h4>
     <div class="course-details_body_header">
       <ul class="dis-flex">
         <li class="body-2-medium active">Quiz Infomation</li>
@@ -16,52 +18,52 @@
       <div class="course-details_body_content">
         <aside>
           <ul>
-            <li>
-              <h5 class="body-2-medium">Question - {{ 'i + 1' }}</h5>
+            <li *ngFor="let question of quiz?.questions; let questionIndex = index" [ngClass]="{'active': currentQuestionIndex === questionIndex}" (click)="getQuestionIndex(questionIndex)">
+              <h5 class="body-2-medium">Question - {{ questionIndex + 1 }}</h5>
             </li>
           </ul>
         </aside>
         <main>
-            <div class="main-body">
+            <div class="main-body" *ngIf="quiz?.questions[currentQuestionIndex]">
                 <div class="header">
-                  <h2 class="ds-sect-header">Question 1</h2>
+                  <h2 class="ds-sect-header">Question {{ currentQuestionIndex + 1 }}</h2>
                   <p class="question">
-                    {{ 'Question number one' }}
+                    {{ quiz?.questions[currentQuestionIndex]?.question }}
                   </p>
                 </div>
                 <ul>
-                  <li class="dis-flex">
+                  <li class="dis-flex" *ngIf="quiz?.questions[currentQuestionIndex]?.optA">
                     <p>A.</p>
                     <div class="option_item_body dis-flex">
-                      <span>{{ 'Option A' }}</span>
+                      <span>{{ quiz?.questions[currentQuestionIndex]?.optA }}</span>
                       <span class="option_item_body_marked dis-flex">Mark as correct</span>
                     </div>
                   </li>
-                  <li class="dis-flex">
+                  <li class="dis-flex" *ngIf="quiz?.questions[currentQuestionIndex]?.optB">
                     <p>B.</p>
                     <div class="option_item_body dis-flex">
-                      <span>{{ 'Option B' }}</span>
+                      <span>{{ quiz?.questions[currentQuestionIndex]?.optB }}</span>
                       <span class="option_item_body_marked dis-flex">Mark as correct</span>
                     </div>
                   </li>
-                  <li class="dis-flex">
+                  <li class="dis-flex" *ngIf="quiz?.questions[currentQuestionIndex]?.optC">
                     <p>C.</p>
                     <div class="option_item_body dis-flex">
-                      <span>{{ 'Option C' }}</span>
+                      <span>{{ quiz?.questions[currentQuestionIndex]?.optC }}</span>
                       <span class="option_item_body_marked dis-flex">Mark as correct</span>
                     </div>
                   </li>
-                  <li class="dis-flex">
+                  <li class="dis-flex" *ngIf="quiz?.questions[currentQuestionIndex]?.optD">
                     <p>D.</p>
                     <div class="option_item_body dis-flex">
-                      <span>{{ 'Option D' }}</span>
+                      <span>{{ quiz?.questions[currentQuestionIndex]?.optD }}</span>
                       <span class="option_item_body_marked dis-flex">Mark as correct</span>
                     </div>
                   </li>
-                  <li class="dis-flex">
+                  <li class="dis-flex" *ngIf="quiz?.questions[currentQuestionIndex]?.optE">
                     <p>E.</p>
                     <div class="option_item_body dis-flex">
-                      <span>{{ 'Option E' }}</span>
+                      <span>{{ quiz?.questions[currentQuestionIndex]?.optE }}</span>
                       <span class="option_item_body_marked dis-flex">Mark as correct</span>
                     </div>
                   </li>
@@ -69,8 +71,8 @@
             </div>
 
           <div class="main-footer dis-flex">
-            <button class="btn grey_btn">Previous</button>
-            <button class="btn grey_btn">Next</button>
+            <button class="btn grey_btn" [disabled]="currentQuestionIndex === 0" (click)="previousQuestion()">Previous</button>
+            <button class="btn grey_btn" [disabled]="currentQuestionIndex === quiz?.questions.length - 1" (click)="nextQuestion()">Next</button>
           </div>
         </main>
       </div>
