@@ -1,5 +1,21 @@
 @import '../../../../../assets/css/dashboard.scss';
 
+.tab {
+  justify-content: space-around;
+  gap: $m-2;
+  border-bottom: 2px solid $divider-color;
+  margin-bottom: $m-4;
+  &_item {
+    transition: all 0.2s ease-in;
+    border-bottom: 2px solid transparent;
+    &.active,
+    &:hover {
+      border-bottom: 2px solid $primary80;
+    }
+    
+  }
+}
+
 .cart {
     @include sect-bg($border-color: transparent);
     &_body {
@@ -124,7 +140,26 @@
         }
       }
     }
+}
+
+.table-body {
+  td.status {
+    .active,
+    .pending {
+      font-weight: 500;
+      padding: 0.3rem 0.8rem;
+      border-radius: $border-radius1;
+    }
+    .active {
+      color: $success80;
+      background-color: $success20;
+    }
+    .pending {
+      color: $warning80;
+      background-color: $warning20;
+    }
   }
+}
   
 
   
