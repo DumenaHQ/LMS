@@ -36,7 +36,7 @@ const routes: Routes = [
         },
       },
       {
-        path: ':courseId/:lessonId/quiz/:quizId',
+        path: ':courseId/:lessonId/quiz',
         component: LibraryCoursesQuizComponent,
         data: {
           title: 'Quiz',

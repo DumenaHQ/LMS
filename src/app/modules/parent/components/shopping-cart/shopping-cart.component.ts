@@ -1,11 +1,9 @@
-import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { OrderService } from 'src/app/services/order.service';
 import { PaymentService } from 'src/app/services/payment.service';
 import { environment } from 'src/environments/environment';
-type Tabs = 'active' | 'all';
-
 
 @Component({
   selector: 'app-shopping-cart',
@@ -13,7 +11,6 @@ type Tabs = 'active' | 'all';
   styleUrls: ['./shopping-cart.component.scss'],
 })
 export class ShoppingCartComponent implements OnInit {
-  activeTab: Tabs = 'active';
   baseUrl: string = environment.baseUrl;
   key = environment.paystackKey;
   user: any;
@@ -23,19 +20,16 @@ export class ShoppingCartComponent implements OnInit {
   value: any;
   isVoucher: boolean = false;
   loading: boolean = false;
-  activePlans: any;
-  allPlans: any;
+  plans: any;
   alertMessage: string = '';
   alertColor: string = '';
   isAlert: boolean = false;
-  reference: any;
 
   constructor(
     private orderService: OrderService,
     private authService: AuthService,
     private router: Router,
-    private ngZOne: NgZone,
-    private changeDectetorRef: ChangeDetectorRef
+    private ngZOne: NgZone
   ) {}
 
   ngOnInit(): void {
@@ -44,76 +38,52 @@ export class ShoppingCartComponent implements OnInit {
     this.user = userData.user;
 
     // Get cart products from local storage
-    // this.plans = this.orderService.loadCart()
-    this.getAllOrders();
-    this.getActiveOrder();
+    this.plans = this.orderService.loadCart()
+    this.getGrandTotal()
   }
 
-  // Get all orders
-  getAllOrders() {
-    this.orderService.getOrders().subscribe({
-      next: (res: any) => {
-        this.allPlans = res.data.orders;
-        this.reference = res.data.orders[0].reference;
-      },
-      error: (e) => console.error(e),
-    });
-  }
-
-  // Get active order
-  getActiveOrder() {
-    this.orderService.getActiveOrder().subscribe({
-      next: (res: any) => {
-        this.activePlans = res.data.order;
-        // this.reference = res.data.orders[0].reference;
-        this.grandTotal = res.data.order.total_amount
-        
-      },
-      error: (e) => console.error(e),
-    });
-  }
-
-  // Set active Tab
-  setActiveTab(tab: Tabs) {
-    this.activeTab = tab;
+  // Find Sum
+  getGrandTotal() {
+    // this.value = data;
+    this.grandTotal = this.plans.reduce((sum: any, product: any) => sum += product.amount, 0)
+    
+    return this.grandTotal
   }
 
   // Add Order
-  // addOrder() {
-  //   // Start loading
-  //   this.loading = true;
+  addOrder() {
+    // Start loading
+    this.loading = true;
 
-  //   let payload = {
-  //     items: this.plans,
-  //   };
+    let payload = {
+      items: this.plans,
+    };
 
-  //   // Add order
-  //   this.orderService.addOrder(payload).subscribe((res: any) => {
-  //     console.log(res);
+    // Add order
+    this.orderService.addOrder(payload).subscribe((res: any) => {
+      console.log(res);
 
-  //     // Send data to paystack
-  //     this.payWithPaystack(res.data.order);
+      // Send data to paystack
+      this.payWithPaystack(res.data.order);
 
-  //     // Remove cart item from localstorage
-  //     localStorage.removeItem('cart_item');
-  //   });
-  // }
+      // Remove cart item from localstorage
+      localStorage.removeItem('cart_item');
+    });
+  }
 
   // Pay with Paystack
-  payWithPaystack() {
+  payWithPaystack(result: any) {
     let url = this.baseUrl;
     let router = this.router;
     let userRole = this.user.role;
     let zone = this.ngZOne;
-    // let reference = this.reference;
-    // let amount = this.grandTotal;
     // @ts-ignore
     let handler = PaystackPop.setup({
       key: this.key,
       email: this.user.email,
-      amount: this.grandTotal * 100,
+      amount: result.total_amount * 100,
       currency: 'NGN',
-      ref: this.reference,
+      ref: result.reference,
       callback: function (response: any) {
         var reference = response.reference;
         if (response.status === 'success') {
@@ -131,16 +101,14 @@ export class ShoppingCartComponent implements OnInit {
               // if payment is successful, route user to children page
               if (data.status == true) {
                 zone.run(() => {
-                  // router.navigate([userRole + '/children']);
-                  this.getOrders();
+                  router.navigate([userRole + '/children']);
                 });
               }
             });
         }
       },
-      onClose: () => {
-        this.showAlert('Transaction was not completed', 'error');
-        this.changeDectetorRef.detectChanges();
+      onClose: function () {
+        alert('Transaction was not completed!');
       },
     });
     handler.openIframe();
@@ -149,7 +117,7 @@ export class ShoppingCartComponent implements OnInit {
   // Remove item from localstorage
   removeItemFromLocalStorage(plan: any): void {
     this.orderService.removePlan(plan)
-    // this.getGrandTotal()
+    this.getGrandTotal()
     // Show alert
     this.showAlert('Item removed from cart', 'success')
   }

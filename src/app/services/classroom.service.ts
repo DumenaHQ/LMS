@@ -47,15 +47,6 @@ export class ClassroomService {
       this.getHttpOptions()
       );
   }
-
-  // Subscribe learner to classroom
-  subscribeLearnerToClassroom(data: any, classroomId: any) {
-    return this.http.post(
-      `${this.baseUrl}classes/${classroomId}/subscribe`,
-      data,
-      this.getHttpOptions()
-      );
-  }
   
   // Edit Classroom
   editClassroom(data: any, classroomId: any) {

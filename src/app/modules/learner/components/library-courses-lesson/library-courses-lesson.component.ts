@@ -44,7 +44,7 @@ export class LibraryCoursesLessonComponent implements OnInit {
         // Get course
         this.course = res.data.course;
         this.modules = this.course.modules;
-        this.lessonVideoUrl = this.course?.modules[0]?.lessons[0]?.lesson_video;
+        this.lessonVideoUrl = this.course.modules[0].lessons[0].lesson_video;
       });
   }
 
@@ -61,8 +61,8 @@ export class LibraryCoursesLessonComponent implements OnInit {
 
   playNextVideo() {
     this.currentLessonIndex++;
-    this.lessonVideoUrl = this.course?.modules[this.currentModuleIndex]?.lessons[this.currentLessonIndex]?.lesson_video
-    if (this.currentLessonIndex < this.course?.modules[this.currentModuleIndex]?.lessons.length - 1) {
+    this.lessonVideoUrl = this.course.modules[this.currentModuleIndex].lessons[this.currentLessonIndex].lesson_video
+    if (this.currentLessonIndex < this.course.modules[this.currentModuleIndex].lessons.length - 1) {
       this.videoPlayer.nativeElement.src = this.lessonVideoUrl;
       this.videoPlayer.nativeElement.load();
       this.videoPlayer.nativeElement.play();

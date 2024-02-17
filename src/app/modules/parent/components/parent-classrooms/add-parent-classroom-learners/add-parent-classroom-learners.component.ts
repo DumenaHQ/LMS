@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClassroomService } from 'src/app/services/classroom.service';
 import * as XLSX from 'xlsx';
@@ -36,7 +35,6 @@ export class AddParentClassroomLearnersComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private classroomService: ClassroomService,
-    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -48,6 +46,7 @@ export class AddParentClassroomLearnersComponent implements OnInit {
     this.authService.getParentChildren(this.user.id).subscribe({
       next: (res: any) => {
         this.parentLearners = res.data.learners;
+        console.log(this.parentLearners);
       },
       error: (e) => console.error(e),
       complete: () => {
@@ -68,11 +67,11 @@ export class AddParentClassroomLearnersComponent implements OnInit {
     this.loading = true;
 
     let payload = {
-      learners: this.selectedLearners
+      learners: this.selectedLearners,
     };
-    
+
     this.classroomService
-      .subscribeLearnerToClassroom(payload, this.classroomId)
+      .addLearnerToClassroom(payload, this.classroomId)
       .subscribe({
         next: (res: any) => {
           console.log(res);
@@ -81,10 +80,9 @@ export class AddParentClassroomLearnersComponent implements OnInit {
             this.showAlertPopup(res.message, 'success');
             // close modal
             setTimeout(() => {
-              this.router.navigate(['/parent/payment/cart']);
-              // this.closeAddLearnerToClassroomModal()
+              this.closeAddLearnerToClassroomModal()
 
-              // window.location.reload()
+              window.location.reload()
             }, 3000);
           }
         },
@@ -181,15 +179,16 @@ export class AddParentClassroomLearnersComponent implements OnInit {
     // If doesn't exist add new student
     if(event.target.checked === false) {
       this.selectedLearners.forEach((element: any, index: any) => {
-          if(element.user_id === student.id) {
+          if(element.username === student.username) {
             this.selectedLearners.splice(index, 1)
           }
           return this.selectedLearners
         });
       }
       else {
-        this.selectedLearners.push({name: student.fullname, user_id: student.id});
-      } 
+        this.selectedLearners.push({username: student.username, user_id: student.id});
+      }
+      
   }
 
   // Close Add Modal
