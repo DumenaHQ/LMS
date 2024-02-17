@@ -13,8 +13,13 @@ export class OrderService {
   constructor(private http: HttpClient) {}
 
   // Get Order
-  getOrder() {
+  getOrders() {
     return this.http.get(this.baseUrl + 'orders', this.getHttpOptions());
+  }
+
+  // Get Order
+  getActiveOrder() {
+    return this.http.get(this.baseUrl + 'orders/active-order', this.getHttpOptions());
   }
 
   // Add Order

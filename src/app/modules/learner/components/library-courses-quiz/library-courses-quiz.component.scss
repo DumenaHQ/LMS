@@ -38,7 +38,7 @@
             border-right: 1px solid $divider-color;
             ul {
                 li {
-                    padding: $m-2 0;
+                    padding: $m-2 $m-2;
                     transition: all .2s ease-in;
                     border-left: 3px solid transparent;
                     cursor: pointer;
@@ -97,10 +97,12 @@
                             &_marked {
                                 height: 35px;
                                 border-left: 1px solid $inner-border;
-                                background-color: $secondary40;
                                 color: $secondary80;
                                 padding: 0 $m-2;
                                 border-radius: 0 $border-radius1 $border-radius1 0;
+                                &.selected {
+                                    background-color: $secondary40;
+                                }
                             }
                         }
                     }
@@ -116,5 +118,13 @@
                 }
             }
         }
+    }
+}
+
+// Confirm delete modal
+.modal {
+    @include modal($modal-area-width: 500px);
+    &_area {
+        padding: $m-6 $m-3; 
     }
 }
