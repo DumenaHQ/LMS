@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ClassroomService } from 'src/app/services/classroom.service';
 
@@ -28,8 +28,22 @@ export class AddAdminClassTemplateComponent implements OnInit {
     // Program form
     this.classTemplateForm = this.formBuilder.group({
       title: ['', [Validators.required]],
-      syllabus: ['', [Validators.required]],
+      objectives: new FormArray([])
     });
+
+    this.addObjective();
+  }
+
+  get objectives() {
+    return this.classTemplateForm.get('objectives') as FormArray;
+  }
+
+  addObjective() {
+    this.objectives.push(new FormControl('', Validators.required));
+  }
+
+  removeObjective(index: number) {
+    this.objectives.removeAt(index);
   }
 
   // Create Class Template
@@ -49,11 +63,8 @@ export class AddAdminClassTemplateComponent implements OnInit {
 
     let payload = {
       title: this.classTemplateForm.value.title,
-      syllabus: this.classTemplateForm.value.syllabus,
+      objectives: this.classTemplateForm.value.objectives,
     }
-
-    console.log(payload);
-    
 
     // Send users data
     this.classroomService.addClassroomTemplate(payload).subscribe(
