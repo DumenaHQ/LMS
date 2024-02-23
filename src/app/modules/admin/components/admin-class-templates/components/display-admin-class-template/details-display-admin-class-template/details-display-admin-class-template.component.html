@@ -43,7 +43,7 @@
         </div>
       </div>
       <div class="right dis-flex">
-        <button class="grey_btn" (click)="editProgram()">Edit Class Template</button>
+        <button class="grey_btn" (click)="editClassTemplate()">Edit Class Template</button>
         <button class="grey_btn settings">
           <img src="../../../assets/img/svg/setting-grey.svg" alt="" />
         </button>
@@ -165,7 +165,7 @@
             <button
               type="button"
               class="btn sec_btn"
-              (click)="openAddCourseToProgramModal()"
+              (click)="openAddCourseToClassModal()"
             >
               Add Course
             </button>
@@ -235,7 +235,7 @@
 </section>
 
 <!-- Add course to program modal -->
-<!-- <app-add-course-modal *ngIf="addCourseToProgram" (addCourseToProgramModal)="closeAddCourseToProgramModal()" [programId]="currentProgramId.programId"></app-add-course-modal> -->
+<app-add-course-modal *ngIf="addCourseToClass" (addCourseToProgramModal)="closeAddCourseToClassModal()" [classId]="currentClassId.classTemplateId"></app-add-course-modal>
 
 <!-- <ng-container *ngIf="contentId === 'content'">
     <aside>

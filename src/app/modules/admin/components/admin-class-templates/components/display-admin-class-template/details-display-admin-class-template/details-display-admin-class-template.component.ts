@@ -11,10 +11,10 @@ import { ClassTemplateDetailModel } from './interfaces/class-template.model';
 export class DetailsDisplayAdminClassTemplateComponent implements OnInit {
   
   contentId: any = 'courses';
-  currentProgramId: any;
+  currentClassId: any;
   classroomTemplate!: ClassTemplateDetailModel;
   dataLoading: boolean = true;
-  addCourseToProgram: boolean = false;
+  addCourseToClass: boolean = false;
 
   constructor(
     // private programsService: ProgramsService,
@@ -26,11 +26,11 @@ export class DetailsDisplayAdminClassTemplateComponent implements OnInit {
 
   ngOnInit(): void {
     // Get Current Program
-    this.currentProgramId = this.activatedRoute.snapshot.params;
+    this.currentClassId = this.activatedRoute.snapshot.params;
 
     // Get programs
     this.classroomService
-      .getClassroomTemplateById(this.currentProgramId.classTemplateId)
+      .getClassroomTemplateById(this.currentClassId.classTemplateId)
       .subscribe({
         next: (res: any) => {
           this.classroomTemplate = res.data.classTemplate;
@@ -43,19 +43,19 @@ export class DetailsDisplayAdminClassTemplateComponent implements OnInit {
       });
   }
 
-  // Open add course to program modal
-  openAddCourseToProgramModal() {
-    this.addCourseToProgram = true
+  // Open add course to class modal
+  openAddCourseToClassModal() {
+    this.addCourseToClass = true
   }
 
-  // Close add course to program modal
-  closeAddCourseToProgramModal() {
-    this.addCourseToProgram = false
+  // Close add course to class modal
+  closeAddCourseToClassModal() {
+    this.addCourseToClass = false
   }
 
-  // Edit program
-  editProgram() {
-    this.router.navigate([`/admin/programs/${this.currentProgramId.programId}/edit-program`]);
+  // Edit class
+  editClassTemplate() {
+    // this.router.navigate([`/admin/programs/${this.currentClassId.classTemplateId}/edit-program`]);
   }
 
   // Tab change

@@ -8,3 +8,11 @@
     grid-gap: 1rem;
     place-items: center;
 }
+
+.modal {
+    @include modal($modal-area-width: 500px);
+    // position: absolute;
+    &_area {
+      padding: $m-6 $m-3;
+    }
+}

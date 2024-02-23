@@ -33,7 +33,8 @@ export class ClassroomService {
   // Add course to classroom
   addCourseToClassroom(data: any, classroomId: any) {
     return this.http.patch(
-      `${this.baseUrl}classes/${classroomId}/courses`,
+      `${this.baseUrl}classes/templates/${classroomId}/courses`,
+      // `${this.baseUrl}classes/${classroomId}/courses`,
       data,
       this.getHttpOptions()
       );
