@@ -78,23 +78,18 @@ export class AddCourseModalToClassComponent implements OnInit {
       courses: this.selectedCourses,
     };
 
-    console.log(payload);
-    
-
     this.classroomService
       .addCourseToClassroom(payload, this.classId)
       .subscribe({
         next: (res: any) => {
-          console.log(res);
-
           if (res.status === true) {
             this.showAlertPopup(res.message, 'success');
             // close modal
             setTimeout(() => {
               this.closeAddCourseToProgramModal()
 
-              // window.location.reload()
-              this.changeDectetorRef.detectChanges();
+              window.location.reload()
+              // this.changeDectetorRef.detectChanges();
             }, 3000);
           }
         },

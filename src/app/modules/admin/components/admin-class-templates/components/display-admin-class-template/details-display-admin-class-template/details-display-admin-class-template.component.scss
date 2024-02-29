@@ -16,3 +16,18 @@
       padding: $m-6 $m-3;
     }
 }
+
+.course-details_body_content {
+  display: block;
+  padding: 1rem;
+
+  .open-add-course-hold {
+    display: flex;
+    justify-content: right;
+    margin-bottom: 1rem;
+  }
+
+  .table-container {
+    padding: 0;
+  }
+}
