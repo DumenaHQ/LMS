@@ -1,0 +1,63 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
+></app-alert-popup>
+
+<section class="ds-head dis-flex">
+    <h2 class="ds-head_title clickable" routerLink="/admin/class-templates">Class Templates</h2>
+    <i class="bx bx-chevron-right icon"></i>
+    <p class="clickable" [title]="classTemplate?.title" [routerLink]="['/admin/class-templates/', currentClassTemplateId.classTemplateId, 'view-class-template']">
+      {{
+        classTemplate?.title.length > 20
+          ? classTemplate?.title.slice(0, 20) + "..."
+          : classTemplate?.title
+      }}
+    </p>
+    <i class="bx bx-chevron-right icon"></i>
+    <p class="clickable">
+      Edit-class-template
+    </p>
+</section>
+
+<section>
+  <form [formGroup]="classTemplateForm">
+    <div class="form_control_container">
+      <div class="form_control">
+        <label for="title">Template Title</label>
+        <div class="form_control_field">
+          <input
+            type="text"
+            id="title"
+            title="title"
+            placeholder="Type here"
+            formControlName="title"
+          />
+        </div>
+      </div>
+      <div class="form_control description">
+        <label for="syllabus">Syllabus</label>
+        <div class="form_control_field">
+          <textarea
+            title="syllabus"
+            id="syllabus"
+            cols="30"
+            rows="5"
+            placeholder="Type here"
+            spellcheck="true"
+            formControlName="syllabus"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="form_btns">
+        <button class="btn prim_btn" *ngIf="!loading" (click)="editClassroom()">Save</button>
+        <button
+            class="btn prim_btn"
+            [disabled]="loading"
+            *ngIf="loading"
+        >Processing...</button> 
+    </div>
+  </form>
+</section>
