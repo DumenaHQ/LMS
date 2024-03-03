@@ -7,6 +7,7 @@ import { TransactionsComponent } from './components/transactions/transactions.co
 import { DisplayAdminClassTemplateComponent } from './components/admin-class-templates/components/display-admin-class-template/display-admin-class-template.component';
 import { AddAdminClassTemplateComponent } from './components/admin-class-templates/components/add-admin-class-template/add-admin-class-template.component';
 import { DetailsDisplayAdminClassTemplateComponent } from './components/admin-class-templates/components/display-admin-class-template/details-display-admin-class-template/details-display-admin-class-template.component';
+import { EditAdminClassTemplateComponent } from './components/admin-class-templates/components/edit-admin-class-template/edit-admin-class-template.component';
 
 const routes: Routes = [
   {
@@ -79,6 +80,14 @@ const routes: Routes = [
         component: DetailsDisplayAdminClassTemplateComponent,
         data: {
           title: 'View Class Template',
+          description: 'Description Meta Tag Content',
+        },
+      },
+      {
+        path: 'class-templates/:classTemplateId/edit-class-template',
+        component: EditAdminClassTemplateComponent,
+        data: {
+          title: 'Edit Class Template',
           description: 'Description Meta Tag Content',
         },
       },

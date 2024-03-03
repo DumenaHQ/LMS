@@ -6,16 +6,16 @@
 ></app-alert-popup>
 
 <div class="modal">
-  <div class="modal_area">
-    <span class="modal_area_close" (click)="closeAddQuizToCourse()">
+  <div class="modal_area remove-padd">
+    <span class="modal_area_close" (click)="closeAddCourseToTemplateModal()">
       <i class="bx bx-x icon clickable"></i>
     </span>
 
     <div class="enroll auth_content">
       <h4
-        class="text-primary-color enroll_title"
+        class="text-primary-color enroll_title add-padd"
       >
-        Add Quiz to this Course
+        Add Course(s) to this Template
       </h4>
       <form
         class="enroll_form auth_content_form"
@@ -30,44 +30,42 @@
                   src="../../../../../../assets/img/svg/Search.svg"
                   alt="image"
                 />
-                <input type="text" placeholder="Search by Title" name="search" [(ngModel)]="quizName"
+                <input type="text" placeholder="Search by Title" name="search" [(ngModel)]="courseName"
                 (input)="search()" />
               </div>
             </div>
             <div style="overflow: auto; max-height: 300px;">
               <app-loader *ngIf="dataLoading"></app-loader>
-              <table *ngIf="quizzes?.length > 0">
+              <table *ngIf="courses?.length > 0">
                 <tr class="table-header">
                   <th>Title</th>
-                  <th>Number of question</th>
+                  <th>Number of lesson</th>
                   <th class="dis-flex actions">
-                    <!-- Mark all <input type="checkbox" name="" id="" /> -->
                   </th>
                 </tr>
-                <tr class="table-body" *ngFor="let quiz of quizzes">
-                  <td>{{ quiz.title }}</td>
-                  <td>{{ quiz.question_count }}</td>
-                  <td><input type="radio" name="quiz" [id]="quiz.id" (change)="selectQuiz($event, quiz)" /></td>
+                <tr class="table-body" *ngFor="let course of courses">
+                  <td>{{ course.title }}</td>
+                  <td>{{ course.lesson_count }}</td>
+                  <td><input type="checkbox" name="course" [id]="course.id" (change)="selectCourse($event, course)" /></td>
                 </tr>
               </table>
-              <ng-container *ngIf="quizzes?.length === 0">
-                <p style="text-align: center">No quiz!</p>
+              <ng-container *ngIf="courses?.length === 0">
+                <p style="text-align: center">No Course!</p>
               </ng-container>
             </div>
           </div>
 
-          <!-- Submit Button -->
           <div class="form-btns dis-flex">
             <span
               class="grey_btn clickable"
-              (click)="closeAddQuizToCourse()"
+              (click)="closeAddCourseToTemplateModal()"
               >Cancel</span
             >
             <div class="continue">
               <button
                 class="btn prim_btn clickable"
-                [disabled]="loading || selectedQuizzes.length === 0"
-                (click)="addQuizToCourse()"
+                [disabled]="loading"
+                (click)="addCourseToProgram()"
               >
                 <span *ngIf="!loading">Add</span>
                 <span *ngIf="loading">Processing...</span>

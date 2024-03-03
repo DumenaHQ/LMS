@@ -82,6 +82,24 @@ export class ClassroomService {
     );
   }
 
+  // Add course to classroom template
+  addCourseToClassroomTemplate(data: any, templateId: any) {
+    return this.http.patch(
+      `${this.baseUrl}classes/templates/${templateId}/courses`,
+      data,
+      this.getHttpOptions()
+      );
+  }
+
+  // Edit classroom template
+  editClassroomTemplate(data: any, templateId: any) {
+    return this.http.put(
+      `${this.baseUrl}classes/templates/${templateId}`,
+      data,
+      this.getHttpOptions()
+      );
+  }
+
   //--- TEMPLATES ENDS --//
 
 
