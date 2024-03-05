@@ -55,7 +55,7 @@ export class DetailsDisplayAdminClassTemplateComponent implements OnInit {
 
   // Edit class
   editClassTemplate() {
-    // this.router.navigate([`/admin/programs/${this.currentClassId.classTemplateId}/edit-program`]);
+    this.router.navigate([`/admin/class-templates/${this.currentClassId.classTemplateId}/edit-class-template`]);
   }
 
   // Tab change

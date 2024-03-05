@@ -2,5 +2,10 @@
     "cSpell.words": [
         "DUMENA",
         "titlecase"
-    ]
+    ],
+    "angular-schematics.schematicsDefaultOptions": {
+        "angular-*": {
+            "externalTemplate": true
+        }
+    }
 }

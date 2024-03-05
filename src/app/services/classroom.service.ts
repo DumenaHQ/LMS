@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { ClassTemplateDetailModel } from '../modules/admin/components/class-template/display-admin-class-template/details-display-admin-class-template/interfaces/class-template.model';
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +70,15 @@ export class ClassroomService {
   addClassroomTemplate(data: any) {
     return this.http.post(
       `${this.baseUrl}classes/templates`,
+      data, 
+      this.getHttpOptions()
+    );
+  }
+
+  // Add classroom template
+  updateClassroomTemplate(classroomTemplate: ClassTemplateDetailModel, data: any) {
+    return this.http.put(
+      `${this.baseUrl}classes/templates/${classroomTemplate.id}`,
       data, 
       this.getHttpOptions()
     );

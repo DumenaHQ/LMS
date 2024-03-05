@@ -39,7 +39,7 @@ export class AddAdminClassTemplateComponent implements OnInit {
   }
 
   addObjective() {
-    this.objectives.push(new FormControl('', Validators.required));
+    this.objectives.push(new FormControl(''));
   }
 
   removeObjective(index: number) {
@@ -63,7 +63,7 @@ export class AddAdminClassTemplateComponent implements OnInit {
 
     let payload = {
       title: this.classTemplateForm.value.title,
-      objectives: this.classTemplateForm.value.objectives,
+      objectives: this.classTemplateForm.value.objectives.filter((obj: any) => obj !== ''),
     }
 
     // Send users data
