@@ -1,0 +1,189 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
+></app-alert-popup>
+
+<section class="new_data">
+  <div class="blank-item_btn">
+    <button class="btn prim_btn" (click)="openAddTeacherModal()">
+      Add Teacher
+    </button>
+  </div>
+</section>
+
+<section class="grouping dis-flex">
+  <!-- Filter -->
+  <div class="filter s-f">
+    <div class="body-3-regular dis-flex">
+      <span class="title">Filter:</span>
+      <span class="dropdown dis-flex clickable"
+        >All Teachers <i class="bx bx-chevron-down"></i
+      ></span>
+    </div>
+  </div>
+
+  <div class="right dis-flex">
+    <!-- Sort -->
+    <div class="sort s-f">
+      <div class="body-3-regular dis-flex">
+        <span class="title">Sort:</span>
+        <span class="dropdown dis-flex clickable"
+          >Last modified <i class="bx bx-chevron-down"></i
+        ></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="programs">
+  <app-loader *ngIf="dataLoading"></app-loader>
+  <div class="programs_disgrid" *ngIf="(teachers || []).length > 0">
+    <div class="program_card">
+      <div class="program_card_item" *ngFor="let teacher of teachers">
+        <img
+          src="../../../../../assets/img/robotics-champ/rob-hero-img.png"
+          alt="image"
+          class="program_card_item_image clickable"
+          (click)="displayProgram(teacher?.schoolID || '')"
+        />
+
+        <div class="program_card_item_details">
+          <div class="program_card_item_details_right">
+            <div class="program_card_item_details_right_header dis-flex">
+              <div class="">
+                <h5
+                  class="title clickable"
+                  [title]="teacher?.fullname"
+                  (click)="displayProgram(teacher?.schoolID || '')"
+                >
+                  {{
+                    (teacher?.fullname || '').length > 20
+                      ? (teacher?.fullname || '').slice(0, 20) + "..."
+                      : teacher?.fullname
+                  }}
+                </h5>
+                <p>
+                  <!-- {{ teacher?.description }} -->
+                </p>
+              </div>
+              <ng-container *ngIf="teacher?.isUserOnboarded === false">
+                  <button class="btn prim_btn" *ngIf="user.role === 'parent'" [disabled]="loading">
+                    <span>Follow</span>
+                    <!-- <span *ngIf="loading">Processing...</span> -->
+                  </button>
+                  <button class="btn prim_btn" *ngIf="user.role === 'school'" [disabled]="loading"  (click)="addSchoolToProgram(teacher?.schoolID || '')">
+                    <span>Join</span>
+                    <!-- <span *ngIf="loading">Processing...</span> -->
+                  </button>
+              </ng-container>
+              <button class="btn grey_btn" *ngIf="teacher?.isUserOnboarded === true">
+                <span *ngIf="user.role === 'parent'">Followed</span>
+                <span *ngIf="user.role === 'school'">Joined</span>
+              </button>
+            </div>
+            <ul class="dis-flex">
+              <li>
+                <p class="body-2-bold">{{ 0 }}</p>
+                <p class="body-3-regular">{{0 > 1 ? 'Courses' : 'Course'}}</p>
+              </li>
+              <li>
+                <p class="body-2-bold">{{  0 }}</p>
+                <p class="body-3-regular">{{ 0 > 1 ? 'Schools' : 'School'}}</p>
+              </li>
+              <li>
+                <p class="body-2-bold">{{ 0 }}</p>
+                <p class="body-3-regular">{{0 > 1 ? 'Learners' : 'Learner'}}</p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="program_card_item_details_left">
+            <div class="students">
+              <p class="body-2-regular title">Total {{0 > 1 ? 'Learners' : 'Learner'}} ({{ 0 }})</p>
+              <ul class="students_list dis-flex">
+                <li>
+                  <img
+                    src="../../../../../assets/img/children-avatar/child-avatar-1.png"
+                    alt=""
+                  />
+                </li>
+                <li>
+                  <img
+                    src="../../../../../assets/img/children-avatar/child-avatar-2.png"
+                    alt=""
+                  />
+                </li>
+                <li>
+                  <img
+                    src="../../../../../assets/img/children-avatar/child-avatar-3.png"
+                    alt=""
+                  />
+                </li>
+              </ul>
+            </div>
+            <div class="completion">
+              <p class="body-2-regular title">Start date</p>
+              <p class="body-2-medium">
+                {{ teacher?.updatedAt | date: "mediumDate" }}
+              </p>
+              <!-- {{ days > 1 ? days : "0" }} day{{ days < 2 ? "" : "s" }} -->
+            </div>
+            <!-- <div class="status">
+              <span
+                [ngClass]="
+                  program?.status === 'active' ? 'success_btn' : 'grey_btn'
+                "
+                >{{
+                  program?.status === "active" ? "Published" : "Draft"
+                }}</span
+              >
+            </div> -->
+          </div>
+        </div>
+
+        <!-- <div class="actions">
+          <img
+            src="../../../../../assets/img/action.svg"
+            class="clickable"
+            alt="image"
+            (click)="actionBtn.click()"
+          />
+          <input
+            type="checkbox"
+            name="action-btn"
+            id="action-btn"
+            style="display: none"
+            #actionBtn
+          />
+          <div class="dropdown">
+            <small
+              class="body-3-regular delete clickable"
+              (click)="deleteProgram(program)"
+              >Delete</small
+            >
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Blank -->
+  <div class="dis-flex" *ngIf="teachers?.length === 0">
+    <div class="blank-item">
+      <img
+        src="../../../../../assets/img/undraw_empty_street_sfxm 1.svg"
+        alt=""
+        class="blank-item_image"
+      />
+      <div class="blank-item_details">
+        <h2 class="text-primary-color">No Teachers</h2>
+        <!-- <p>
+          Numquam quasi et sit earum. Culpa dicta quod officia doloribus animi
+          fuga voluptatem. Iure vel hic et porro sequi.
+        </p> -->
+      </div>
+    </div>
+  </div>
+</section>
