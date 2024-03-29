@@ -111,6 +111,13 @@
           >
             Learners
           </li>
+          <li
+            class="body-2-medium"
+            [class.active]="contentId === 'teacher'"
+            (click)="tabChange('teacher')"
+          >
+            Teacher
+          </li>
         </ul>
       </div>
       <div class="course-details_body_content">
@@ -184,6 +191,36 @@
             </div>
           </div>
         </ng-container>
+
+        <!-- Teacher -->
+        <ng-container *ngIf="contentId === 'teacher'">
+          <div class="table-container" style="overflow-x: auto">
+            <ng-container *ngIf="classroom?.learners?.length > 0">
+              <table>
+                <tr class="table-header">
+                  <th>Full Name</th>
+                  <th>Email</th>
+                  <td>Action</td>
+                </tr>
+                <ng-container>
+                  <tr class="table-body" *ngFor="let learner of classroom?.learners">
+                    <td>{{ learner.fullname }}</td>
+                    <td>{{ learner.email ===  undefined ? '-' : learner.email }}</td>
+                    <td>
+                      <button type="button" class="danger_btn" style="background-color: transparent;" (click)="openDeleteModal(learner)">Remove</button>
+                    </td>
+                  </tr>
+                </ng-container>
+              </table>
+            </ng-container>
+
+            <div *ngIf="classroom?.learners?.length === 0" class="course-empty">
+              <p style="text-align: center" >
+                No Teacher available
+              </p>
+            </div>
+          </div>
+        </ng-container>
       </div>
     </div>
   </section>
@@ -194,3 +231,6 @@
 
 <!-- Add course -->
 <app-add-school-classroom-learners *ngIf="addLearnerToClassroom" (addLearnerToClassroomModal)="closeAddLearnerToClassroomModal()" [classroomId]="currentClassroomId.classroomId"></app-add-school-classroom-learners>
+
+<!-- Delete confirmation -->
+<app-confirm-delete *ngIf="deleteModal" (deleteModal)="closeDeleteModal()" [itemName]="teacherName" [deleteUrl]="deleteUrl" [deleteRoutePath]="deleteRoutePath"></app-confirm-delete>

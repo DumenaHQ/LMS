@@ -16,6 +16,7 @@ export class EditSchoolClassroomComponent implements OnInit {
   alertColor: string = '';
   isAlert: boolean = false;
   loading: boolean = false;
+  teachers: any;
  
   constructor(
     private classroomService: ClassroomService,
@@ -25,49 +26,55 @@ export class EditSchoolClassroomComponent implements OnInit {
   ) { }
 
   // classroom form
-  classroomForm = this.formBuilder.group({
+  formGroup = this.formBuilder.group({
     name: [''],
     description: [''],
+    teacher: [''],
   });
 
   ngOnInit(): void {
     // Get Current classroom
     this.currentClassroom = this.activatedRoute.snapshot.params;
-
-    // Get classrooms
-    this.classroomService
-      .getClassroomById(this.currentClassroom.classroomId)
-      .subscribe({
-        next: (res: any) => {
-          this.classroom = res.data.class;
-          console.log({
-            title: 'Classroom',
-            data: res
-          });
-          
-          this.initForm();
-        },
-        error: (e) => console.error(e),
-      });
-
+    this.getClassroom();
   }
 
   // Initialize form
   initForm() {
-    // classroom form
-    this.classroomForm = this.formBuilder.group({
+    this.formGroup = this.formBuilder.group({
       name: [this.classroom.name],
       description: [this.classroom.description],
+      teacher: [this.classroom.teacher],
     });
+  }
+
+  // Get Classroom
+  getClassroom() {
+    this.classroomService
+      .getClassroomById(this.currentClassroom.classroomId)
+      .subscribe({
+        next: (res: any) => {
+          this.classroom = res.data.class;          
+          this.initForm();
+        },
+        error: (e) => console.error(e),
+      });    
+  }
+
+  // Get Teachers
+  getTeachers() {
+
   }
 
   editClassroom() {
     // Set loading to true
     this.loading = true;
 
+    const { value } = this.formGroup
+
     let payload = {
-      name: this.classroomForm.value.name,
-      description: this.classroomForm.value.description
+      name: value.name,
+      description: value.description,
+      teacher_id: value.teacher
     }
       
     // Send users data

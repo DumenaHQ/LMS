@@ -22,7 +22,7 @@
 </section>
 
 <section>
-  <form [formGroup]="classroomForm">
+  <form [formGroup]="formGroup">
     <div class="form_control_container">
       <div class="form_control">
         <label for="name">Name of Classroom</label>
@@ -48,6 +48,17 @@
             spellcheck="true"
             formControlName="description"
           ></textarea>
+        </div>
+      </div>
+      <div class="form_control">
+        <label for="teacher">Teacher</label>
+        <div class="form_control_field">
+          <select name="teacher" id="teacher" formControlName="teacher">
+            <option value="" selected>Select a Teacher</option>
+            <option [value]="item.id" *ngFor="let item of teachers">
+              {{ item.name }}
+            </option>
+          </select>
         </div>
       </div>
     </div>

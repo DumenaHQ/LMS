@@ -21,7 +21,7 @@
         This information will be displayed to the learners when they are added to the class
     </p>
   </div>
-  <form [formGroup]="classroomForm">
+  <form [formGroup]="formGroup">
     <div class="form_control_container">
       <div class="form_control">
         <label for="name">Name of Classroom <strong class="label-required">*</strong></label>
@@ -58,6 +58,17 @@
             spellcheck="true"
             formControlName="description"
           ></textarea>
+        </div>
+      </div>
+      <div class="form_control description">
+        <label for="description">Teacher</label>
+        <div class="form_control_field">
+          <select name="" id="" formControlName="teacher">
+            <option value="" selected>Select a Teacher</option>
+            <option [value]="item.id" *ngFor="let item of teachers">
+              {{ item.name }}
+            </option>
+          </select>
         </div>
       </div>
       
