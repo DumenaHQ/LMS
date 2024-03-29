@@ -36,6 +36,17 @@
           />
         </div>
       </div>
+      <div class="form_control">
+        <label for="template">Classroom Template</label>
+        <div class="form_control_field">
+          <select name="template" id="template" formControlName="template">
+            <option value="" selected>Select a Template</option>
+            <option [value]="item.id" *ngFor="let item of templates">
+              {{ item.title }}
+            </option>
+          </select>
+        </div>
+      </div>
       <div class="form_control description">
         <label for="description">Classroom details</label>
         <div class="form_control_field">
@@ -56,7 +67,7 @@
           <select name="teacher" id="teacher" formControlName="teacher">
             <option value="" selected>Select a Teacher</option>
             <option [value]="item.id" *ngFor="let item of teachers">
-              {{ item.name }}
+              {{ item.fullname }}
             </option>
           </select>
         </div>

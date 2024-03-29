@@ -1,6 +1,6 @@
-@import '../../../../../../../assets/css/variables.scss';
-@import '../../../../../../../assets/css/mixins.scss';
-@import '../../../../../../../assets/css/dashboard.scss';
+@import '../../../../../../assets/css/variables.scss';
+@import '../../../../../../assets/css/mixins.scss';
+@import '../../../../../../assets/css/dashboard.scss';
 
 @mixin hover {
   transition: all .2s;
@@ -42,6 +42,16 @@
         margin-bottom: $m-2;
         font-size: 18px;
         font-weight: 700;
+      }
+      .objective_wrapper {
+        margin-bottom: $m-2;
+        .objective_item{
+          gap: $m-2;
+          display: flex;
+        }
+      }
+      .add_objective {
+        margin-top: $m-2;
       }
       &_field {
         width: 100%;

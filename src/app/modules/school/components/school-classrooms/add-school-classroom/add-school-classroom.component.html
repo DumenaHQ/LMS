@@ -36,9 +36,9 @@
         </div>
       </div>
       <div class="form_control description">
-        <label for="description">Classroom Template</label>
+        <label for="template">Classroom Template</label>
         <div class="form_control_field">
-          <select name="" id="" formControlName="template">
+          <select name="template" id="template" formControlName="template">
             <option value="" selected>Select a Template</option>
             <option [value]="item.id" *ngFor="let item of templates">
               {{ item.title }}
@@ -66,7 +66,7 @@
           <select name="" id="" formControlName="teacher">
             <option value="" selected>Select a Teacher</option>
             <option [value]="item.id" *ngFor="let item of teachers">
-              {{ item.name }}
+              {{ item.fullname }}
             </option>
           </select>
         </div>
