@@ -12,6 +12,8 @@ import { DisplayAdminClassTemplateComponent } from './components/admin-class-tem
 import { GridDisplayAdminClassTemplateComponent } from './components/admin-class-templates/components/display-admin-class-template/grid-display-admin-class-template/grid-display-admin-class-template.component';
 import { BlankDisplayAdminClassTemplateComponent } from './components/admin-class-templates/components/display-admin-class-template/blank-display-admin-class-template/blank-display-admin-class-template.component';
 import { DetailsDisplayAdminClassTemplateComponent } from './components/admin-class-templates/components/display-admin-class-template/details-display-admin-class-template/details-display-admin-class-template.component';
+import { AddCourseAdminClassTemplateComponent } from './components/admin-class-templates/components/add-course-admin-class-template/add-course-admin-class-template.component';
+import { EditAdminClassTemplateComponent } from './components/admin-class-templates/components/edit-admin-class-template/edit-admin-class-template.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,7 @@ import { DetailsDisplayAdminClassTemplateComponent } from './components/admin-cl
     DisplayAdminClassTemplateComponent, 
     GridDisplayAdminClassTemplateComponent, 
     BlankDisplayAdminClassTemplateComponent, 
-    DetailsDisplayAdminClassTemplateComponent
+    DetailsDisplayAdminClassTemplateComponent, AddCourseAdminClassTemplateComponent, EditAdminClassTemplateComponent
   ],
   imports: [CommonModule, AdminRoutingModule, SharedModule, ReactiveFormsModule, FormsModule],
 })
