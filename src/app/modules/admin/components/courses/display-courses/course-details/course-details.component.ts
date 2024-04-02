@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CoursesService } from 'src/app/services/courses.service';
+import { QuizService } from 'src/app/services/quiz.service';
 
 
 @Component({
@@ -18,10 +19,12 @@ export class CourseDetailsComponent implements OnInit {
   lessonVideoUrl: string;
   contentId: any = 'courses';
   addQuizToCourse: boolean = false;
+  quizzes: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private coursesService: CoursesService
+    private coursesService: CoursesService,
+    private quizzesService: QuizService
   ) { }
 
   ngOnInit(): void {
@@ -30,10 +33,27 @@ export class CourseDetailsComponent implements OnInit {
     this.currentCourseParams = this.activatedRoute.snapshot.params;
 
     // Get Course
+    this.getCourse();
+  }
+  
+  // Get Course
+  getCourse() {
     this.coursesService.getCourse(this.currentCourseParams.courseId).subscribe({
       next: (res: any) => {
         this.course = res.data.course;
         console.log(this.course);
+        this.getCourseModuleQuiz(res.data.course.modules[this.currentModuleIndex].quiz_id);
+      },
+      error: (e) => console.error(e),
+    });
+  }
+  
+  // Get coure module quiz
+  getCourseModuleQuiz(quizId: any) {
+    this.quizzesService.getquizByQuizId(quizId).subscribe({
+      next: (res: any) => {
+        this.quizzes = res.data.quiz;
+        console.log('quizzes', res);
       },
       error: (e) => console.error(e),
     });

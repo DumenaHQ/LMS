@@ -1,0 +1,11 @@
+@import '../../../../../../../../assets/css/variables.scss';
+@import '../../../../../../../../assets/css/mixins.scss';
+@import '../../../../../../../../assets/css/dashboard.scss';
+@import '../../../../../../../../assets/css/program.scss';
+
+
+.course-empty {
+    display: grid;
+    grid-gap: 1rem;
+    place-items: center;
+}

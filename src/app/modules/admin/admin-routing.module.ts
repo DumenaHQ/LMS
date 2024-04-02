@@ -4,6 +4,7 @@ import { UserProfileComponent } from '../shared/user-profile/user-profile.compon
 import { AdminComponent } from './admin.component';
 import { AdminOverviewComponent } from './components/admin-overview/admin-overview.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
+import { EditAdminClassTemplateComponent } from './components/admin-class-templates/components/edit-admin-class-template/edit-admin-class-template.component';
 
 const routes: Routes = [
   {
@@ -58,6 +59,14 @@ const routes: Routes = [
       {
         path: 'class-templates',
         loadChildren: () => import('./components/class-template/class-template.module').then((m) => m.ClassTemplateModule),
+      },
+      {
+        path: 'class-templates/:classTemplateId/edit-class-template',
+        component: EditAdminClassTemplateComponent,
+        data: {
+          title: 'Edit Class Template',
+          description: 'Description Meta Tag Content',
+        },
       },
       { path: '', redirectTo: '/admin', pathMatch: 'full' },
     ],

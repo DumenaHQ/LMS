@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 import { ClassroomService } from 'src/app/services/classroom.service';
+import { TeachersService } from 'src/app/services/teachers.service';
 
 @Component({
   selector: 'app-edit-school-classroom',
@@ -16,48 +18,78 @@ export class EditSchoolClassroomComponent implements OnInit {
   alertColor: string = '';
   isAlert: boolean = false;
   loading: boolean = false;
+  teachers: any;
+  user: any;
+  templates: any;
  
   constructor(
     private classroomService: ClassroomService,
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private teachersService: TeachersService,
+    private authService: AuthService
   ) { }
 
   // classroom form
-  classroomForm = this.formBuilder.group({
+  formGroup = this.formBuilder.group({
     name: [''],
+    template: [''],
     description: [''],
+    teacher: [''],
   });
 
   ngOnInit(): void {
+    let userData = this.authService.getUser();
+    this.user = userData.user;
+    
     // Get Current classroom
     this.currentClassroom = this.activatedRoute.snapshot.params;
-
-    // Get classrooms
-    this.classroomService
-      .getClassroomById(this.currentClassroom.classroomId)
-      .subscribe({
-        next: (res: any) => {
-          this.classroom = res.data.class;
-          console.log({
-            title: 'Classroom',
-            data: res
-          });
-          
-          this.initForm();
-        },
-        error: (e) => console.error(e),
-      });
-
+    this.getClassroom();
+    this.getClassroomTemplates();
+    this.getTeachers();
   }
 
   // Initialize form
   initForm() {
-    // classroom form
-    this.classroomForm = this.formBuilder.group({
-      name: [this.classroom.name],
-      description: [this.classroom.description],
+    this.formGroup = this.formBuilder.group({
+      name: [this.classroom?.name],
+      template: [this.classroom?.template?.id],
+      description: [this.classroom?.description],
+      teacher: [this.classroom?.teacher?.id],
+    });
+  }
+
+  // Get Classroom
+  getClassroom() {
+    this.classroomService
+      .getClassroomById(this.currentClassroom.classroomId)
+      .subscribe({
+        next: (res: any) => {
+          this.classroom = res.data.class;          
+          this.initForm();
+        },
+        error: (e) => console.error(e),
+      });    
+  }
+
+  // Get classroom templates
+  getClassroomTemplates() {
+    this.classroomService.getClassroomTemplates().subscribe({
+      next: (res: any) => {
+        this.templates = res.data.classTemplates;
+      },
+      error: (e) => console.error(e),
+    });
+  }
+
+  // Get Teachers
+  getTeachers() {
+    this.teachersService.fetchTeachers(this.user.id).subscribe({
+      next: (res: any) => {
+        this.teachers = res.data.teachers;
+      },
+      error: (e) => console.error(e),
     });
   }
 
@@ -65,16 +97,17 @@ export class EditSchoolClassroomComponent implements OnInit {
     // Set loading to true
     this.loading = true;
 
+    const { value } = this.formGroup
+
     let payload = {
-      name: this.classroomForm.value.name,
-      description: this.classroomForm.value.description
+      name: value.name,
+      template: value.template,
+      description: value.description,
+      teacher_id: value.teacher
     }
-      
-    // Send users data
+
     this.classroomService.editClassroom(payload, this.currentClassroom.classroomId).subscribe(
       (res: any) => {
-        console.log(res);
-
         // Show alert
         if (res.status === true) {
           this.alertMessage = res.message;

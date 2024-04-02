@@ -101,6 +101,7 @@
             </li>
           </ul>
         </aside>
+        
         <main>
           <ng-container *ngIf="course?.modules[currentModuleIndex]">
             <div class="main-header">
@@ -186,31 +187,29 @@
         <main>
           <div class="table-container" style="overflow-x: auto">
             <button class="btn prim_btn" (click)="openAddQuizToCourse()">Add Quiz</button>
-            <!-- <ng-container *ngIf="course?.modules[currentModuleIndex].lessons.length > 0">
+            <ng-container *ngIf="quizzes">
               <table>
                 <tr class="table-header">
                   <th>Title</th>
-                  <th>Duration</th>
-                  <th>Action</th>
+                  <th>Number of questions</th>
+                  <th>Level</th>
                 </tr>
                 <ng-container>
-                  <tr class="table-body" *ngFor="let lesson of course?.modules[currentModuleIndex].lessons">
-                    <td>{{ lesson?.title }}</td>
-                    <td>{{ lesson?.duration }}</td>
-                    <td>
-                      <Button class="btn tert_btn" (click)="openWatchLessonModal(lesson?.lesson_video)">View</Button>
-                    </td>
+                  <tr class="table-body">
+                    <td>{{ quizzes?.title }}</td>
+                    <td>{{ quizzes?.questions.length }}</td>
+                    <td>{{ quizzes?.quiz_level }}</td>
                   </tr>
                 </ng-container>
               </table>
-            </ng-container> -->
+            </ng-container> 
   
-            <!-- <div *ngIf="course?.modules[currentModuleIndex].lessons.length === 0" class="course-empty">
+            <div *ngIf="!quizzes" class="course-empty">
               <p style="text-align: center" >
                 No Quiz available
               </p>
               <button type="button" class="btn sec_btn">Add Quiz</button>
-            </div> -->
+            </div>
           </div>
         </main>
       </ng-container>
@@ -245,6 +244,6 @@
   </div>
 </div>
 
-<app-add-quiz [courseId]="currentCourseParams.courseId" (addQuizToCourseModal)="closeAddQuizToCourse()" *ngIf="addQuizToCourse"></app-add-quiz>
+<app-add-quiz [courseId]="currentCourseParams.courseId" [moduleId]="course?.modules[currentModuleIndex].id" (addQuizToCourseModal)="closeAddQuizToCourse()" *ngIf="addQuizToCourse"></app-add-quiz>
 
 

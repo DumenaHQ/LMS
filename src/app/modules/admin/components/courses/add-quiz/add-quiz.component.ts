@@ -9,6 +9,7 @@ import { QuizService } from 'src/app/services/quiz.service';
 export class AddQuizComponent implements OnInit {
 
   @Input() courseId: any;
+  @Input() moduleId: any;
   @Output() addQuizToCourseModal: EventEmitter<any> = new EventEmitter();
   loading: boolean = false;
   isAlert: boolean = false;
@@ -71,7 +72,9 @@ export class AddQuizComponent implements OnInit {
   addQuizToCourse() {
     let payload = {
       course_id: this.courseId,
-    };    
+      quiz_level: "module", // ["course", "lesson"] optional field
+      quiz_level_id: this.moduleId
+    };       
 
     this.quizService.addQuizToCourse(this.selectedQuizzes[0], payload).subscribe(
       (res: any) => {

@@ -40,7 +40,7 @@ import { AddSchoolClassroomCoursesComponent } from './components/school-classroo
     DetailsDisplaySchoolClassroomComponent,
     EditSchoolClassroomComponent,
     AddSchoolClassroomLearnersComponent,
-    AddSchoolClassroomCoursesComponent
+    AddSchoolClassroomCoursesComponent,
   ],
   imports: [
     CommonModule,

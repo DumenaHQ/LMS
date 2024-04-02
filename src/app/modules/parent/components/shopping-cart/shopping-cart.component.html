@@ -8,47 +8,84 @@
 <section class="ds-head dis-flex">
   <h2 class="ds-head_title clickable" routerLink="/parent/payment">Payments</h2>
   <i class="bx bx-chevron-right icon"></i>
-  <p class="clickable">Shopping Cart</p>
+  <p>Cart</p>
 </section>
 
 <section class="cart">
   <h5>Items in your Cart</h5>
   <div class="cart_body">
-    <div class="cart_body_list du-grid">
-      <div style="overflow-x: auto; padding-right: 1.5rem">
+    <div class="cart_body_list">
+      <div class="tab dis-flex">
+        <p class="tab_item active clickable" [ngClass]="{ active: activeTab === 'active' }"
+        (click)="setActiveTab('active')">Active</p>
+        <p class="tab_item clickable" [ngClass]="{ active: activeTab === 'all' }"
+        (click)="setActiveTab('all')">All</p>
+      </div>
+
+      <!-- Active Orders -->
+      <div style="overflow-x: auto; padding-right: 1.5rem" *ngIf="activeTab === 'active'">
         <table>
           <tr class="table-header">
-            <th>Child's Name</th>
             <th>Plan</th>
+            <th>No of Children</th>
             <th>Amount(NGN)</th>
-            <th>Action</th>
+            <th>Status</th>
           </tr>
-          <ng-container>
+          <ng-container  *ngIf="activePlans; else empty">
             <tr
               class="table-body"
-              *ngFor="let plan of plans; let i = index"
             >
-              <td>{{ plan.name | titlecase }}</td>
-              <td>{{ plan.slug.split("-")[0] | titlecase }}</td>
-              <td>
-                {{ plan.amount | number }}/{{
-                  plan.billing_id == "monthly" ? "month" : "year"
-                }}
+              <td>{{ activePlans.item_type }}</td>
+              <td>{{ activePlans.items.length }}</td>
+              <td>{{ activePlans.total_amount | number }}</td>
+              <td class="status">
+                <span>{{ activePlans.status }}</span>
               </td>
-              <td>
+            </tr>
+          </ng-container>
+          <ng-template #empty>
+            <div style="text-align: center">
+              <p>Empty Cart!</p>
+            </div>
+          </ng-template>
+        </table>
+      </div>
+
+      <!-- All Orders -->
+      <div style="overflow-x: auto; padding-right: 1.5rem" *ngIf="activeTab === 'all'">
+        <table>
+          <tr class="table-header">
+            <th>Plan</th>
+            <th>No of Children</th>
+            <th>Amount(NGN)</th>
+            <th>Status</th>
+            <!-- <th>Action</th> -->
+          </tr>
+          <ng-container *ngIf="allPlans.length > 0; else empty">
+            <tr
+              class="table-body"
+              *ngFor="let plan of allPlans; let i = index"
+            >
+              <td>{{ plan.item_type }}</td>
+              <td>{{ plan.items.length }}</td>
+              <td>{{ plan.total_amount | number }}</td>
+              <td class="status">
+                <span *ngIf="plan.status === 'active'" class="active">{{ plan.status }}</span>
+                <span *ngIf="plan.status === 'pending'" class="pending">{{ plan.status }}</span>
+              </td>
+              <!-- <td>
                 <i
                   class="bx bx-x clickable"
                   style="color: #e92c2c; font-size: 20px"
                   title="Remove"
                   (click)="removeItemFromLocalStorage(plan)"
                 ></i>
-              </td>
+              </td> -->
             </tr>
           </ng-container>
-          <ng-template>
+          <ng-template #empty>
             <div style="text-align: center">
               <p>Empty Cart!</p>
-              <button routerLink="/parent/children"></button>
             </div>
           </ng-template>
         </table>
@@ -155,7 +192,7 @@
         </div>
         <button
           class="btn prim_btn clickable"
-          (click)="addOrder()"
+          (click)="payWithPaystack()"
           [disabled]="loading"
         >
           <span *ngIf="!loading">Proceed to Payment</span>
