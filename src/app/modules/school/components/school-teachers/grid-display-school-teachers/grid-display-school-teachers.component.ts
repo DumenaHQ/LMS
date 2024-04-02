@@ -41,7 +41,6 @@ export class GridDisplaySchoolTeachersComponent  implements OnInit {
     ).subscribe({
       next: (res: any) => {
         this.teachers = res.data.teachers;
-        console.log(this.teachers);
       },
       error: (e) => console.error(e),
       complete: () => {
@@ -55,37 +54,6 @@ export class GridDisplaySchoolTeachersComponent  implements OnInit {
     this.router.navigate(['/school/teachers/add']);
   }
 
-  // Add Parent to Program
-  // addParentToProgram(programId: string) {
-  //   this.loading = true;
-
-  //   let payload = {
-  //     parents: [
-  //       {
-  //         user_id: this.user.id,
-  //         name: this.user.fullname,
-  //       },
-  //     ],
-  //   };
-    
-  //   this.programsService.addParentToProgram(payload, programId).subscribe({
-  //     next: (res: any) => {
-  //       console.log(res);
-
-  //       if (res.status === true) {
-  //         this.showAlertPopup(res.message, 'success');
-
-  //         setTimeout(() => {
-  //           this.router.navigate([`/parent/programs/${programId}`]);
-  //         }, 3000);
-  //       }
-  //     },
-  //     error: (e) => console.error(e),
-  //     complete: () => {
-  //       this.loading = false;
-  //     },
-  //   });
-  // }
 
   // Add School to program
   addSchoolToProgram(programId: string) {
@@ -99,24 +67,6 @@ export class GridDisplaySchoolTeachersComponent  implements OnInit {
         },
       ],
     };
-
-    // this.programsService.addSchoolToProgram(payload, programId).subscribe({
-    //   next: (res: any) => {
-    //     console.log(res);
-
-    //     if (res.status === true) {
-    //       this.showAlertPopup(res.message, 'success');
-
-    //       setTimeout(() => {
-    //         this.router.navigate([`/school/programs/${programId}`]);
-    //       }, 3000);
-    //     }
-    //   },
-    //   error: (e) => console.error(e),
-    //   complete: () => {
-    //     this.loading = false;
-    //   },
-    // });
   }
 
   // Display program
