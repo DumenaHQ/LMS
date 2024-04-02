@@ -89,6 +89,12 @@ const routes: Routes = [
     loadChildren: () =>
       import('./modules/school/school.module').then((m: any) => m.SchoolModule),
   },
+  {
+    path: 'instructor',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./modules/instructor/instructor.module').then((m: any) => m.InstructorModule),
+  },
   { path: '', redirectTo: '/', pathMatch: 'full' },
   {
     path: '**',

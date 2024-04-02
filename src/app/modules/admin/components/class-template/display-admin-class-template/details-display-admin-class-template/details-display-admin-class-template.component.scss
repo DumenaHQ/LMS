@@ -1,0 +1,33 @@
+@import '../../../../../../../assets/css/variables.scss';
+@import '../../../../../../../assets/css/mixins.scss';
+@import '../../../../../../../assets/css/dashboard.scss';
+@import '../../../../../../../assets/css/program.scss';
+
+.course-empty {
+    display: grid;
+    grid-gap: 1rem;
+    place-items: center;
+}
+
+.modal {
+    @include modal($modal-area-width: 500px);
+    // position: absolute;
+    &_area {
+      padding: $m-6 $m-3;
+    }
+}
+
+.course-details_body_content {
+  display: block;
+  padding: 1rem;
+
+  .open-add-course-hold {
+    display: flex;
+    justify-content: right;
+    margin-bottom: 1rem;
+  }
+
+  .table-container {
+    padding: 0;
+  }
+}

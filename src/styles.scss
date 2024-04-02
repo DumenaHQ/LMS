@@ -47,6 +47,9 @@ input::placeholder,
 textarea::placeholder {
   font-family: 'Lato', sans-serif;
 }
+.form_error {
+  color: $error80;
+}
 
 /* Buttons Starts */
 .btn {

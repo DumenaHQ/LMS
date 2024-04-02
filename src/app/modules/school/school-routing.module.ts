@@ -97,6 +97,14 @@ const routes: Routes = [
           description: 'Description Meta Tag Content',
         },
       },
+      {
+        path: 'teachers',
+        loadChildren: () => import('../school/components/school-teachers/school-teacher.module').then((m) => m.SchoolTeacherModule),
+        data: {
+          title: 'Teachers',
+          description: 'Description Meta Tag Content',
+        },
+      },
       { path: '', redirectTo: '/school', pathMatch: 'full' },
     ],
   },

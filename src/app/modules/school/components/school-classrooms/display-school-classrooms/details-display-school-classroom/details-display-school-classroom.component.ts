@@ -16,6 +16,11 @@ export class DetailsDisplaySchoolClassroomComponent implements OnInit {
   addCourseToClassroom: boolean = false;
   addLearnerToClassroom: boolean = false;
 
+  deleteModal: boolean = false;
+  deleteUrl: string;
+  deleteRoutePath: string;
+  teacherName: any;
+
   constructor(
     private classroomService: ClassroomService,
     private activatedRoute: ActivatedRoute,
@@ -64,6 +69,22 @@ export class DetailsDisplaySchoolClassroomComponent implements OnInit {
   // Close add learner to classroom modal
   closeAddLearnerToClassroomModal() {
     this.addLearnerToClassroom = false;
+  }
+
+  // Remove teacher
+  // Open Confirm Delete Modal
+  openDeleteModal(teacher: any) {
+    // this.teacherName = teacher.username;
+    
+    this.deleteModal = true;
+
+    this.deleteUrl = `classes/${this.currentClassroomId.classroomId}/teacher/remove`;
+    this.deleteRoutePath = '';
+  }
+
+  // Close Confirm Delete Modal
+  closeDeleteModal() {
+    this.deleteModal = false;
   }
 
   // Edit classroom
