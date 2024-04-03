@@ -10,6 +10,10 @@ import { TeachersService } from 'src/app/services/teachers.service';
   styleUrls: ['./add-edit-teacher.component.scss'],
 })
 export class AddEditTeacherComponent implements OnInit {
+  isAlert: boolean = false;
+  alertMessage: string;
+  alertColor: string;
+
   teacherForm: FormGroup;
   loading: boolean = false;
   formSubmitAttempted: boolean = false;
@@ -39,11 +43,13 @@ export class AddEditTeacherComponent implements OnInit {
         "password": this.teacherForm.value.password,
     };
 
-      this.teachersService.createTeacher(payload).subscribe(
-        (res) => {
+      this.teachersService.createTeacherForSchool(payload).subscribe(
+        (res: any) => {
           if (res) {
             this.teacherForm.reset();
             this.formSubmitAttempted = false;
+
+            this.showAlertPopup(res.message, 'success');
 
             setTimeout(() => {
               this.router.navigate([`school/teachers`])
@@ -55,5 +61,19 @@ export class AddEditTeacherComponent implements OnInit {
         }
       );
     }
+  }
+
+  
+  showAlertPopup(message: string, color: string) {
+    // Set message
+    this.alertMessage = message;
+    // Set color
+    this.alertColor = color;
+    // Show Alert
+    this.isAlert = true;
+    // Hide Alert
+    setTimeout(() => {
+      this.isAlert = false;
+    }, 3000);
   }
 }

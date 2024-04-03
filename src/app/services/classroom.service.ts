@@ -31,6 +31,7 @@ export class ClassroomService {
   addCourseToClassroom(data: any, classroomId: any) {
     return this.http.patch(
       `${this.baseUrl}classes/templates/${classroomId}/courses`,
+      // `${this.baseUrl}classes/${classroomId}/courses`,
       data,
       this.getHttpOptions()
       );
@@ -81,6 +82,7 @@ export class ClassroomService {
       );
   }
 
+  // Add classroom template
   editClassroomTemplate(data: any, templateId: any) {
     return this.http.put(
       `${this.baseUrl}classes/templates/${templateId}`,
@@ -96,6 +98,7 @@ export class ClassroomService {
       this.getHttpOptions()
     );
   }
+
   //--- TEMPLATES ENDS --//
 
   // Get HttpOptions

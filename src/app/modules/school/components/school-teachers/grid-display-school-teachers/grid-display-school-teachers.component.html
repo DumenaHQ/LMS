@@ -5,6 +5,9 @@
   [alertColor]="alertColor"
 ></app-alert-popup>
 
+  <!-- Delete confirmation -->
+  <app-confirm-delete *ngIf="deleteModal" (deleteModal)="closeDeleteModal()" [itemName]="teacherName" [deleteUrl]="deleteUrl" [deleteRoutePath]="deleteRoutePath"></app-confirm-delete>
+
 <section class="new_data">
   <div class="blank-item_btn">
     <button class="btn prim_btn" (click)="openAddTeacherModal()">
@@ -68,16 +71,7 @@
                   <!-- {{ teacher?.description }} -->
                 </p>
               </div>
-              <ng-container *ngIf="teacher?.isUserOnboarded === false">
-                  <button class="btn prim_btn" *ngIf="user.role === 'parent'" [disabled]="loading">
-                    <span>Follow</span>
-                    <!-- <span *ngIf="loading">Processing...</span> -->
-                  </button>
-                  <button class="btn prim_btn" *ngIf="user.role === 'school'" [disabled]="loading"  (click)="addSchoolToProgram(teacher?.schoolID || '')">
-                    <span>Join</span>
-                    <!-- <span *ngIf="loading">Processing...</span> -->
-                  </button>
-              </ng-container>
+
               <button class="btn grey_btn" *ngIf="teacher?.isUserOnboarded === true">
                 <span *ngIf="user.role === 'parent'">Followed</span>
                 <span *ngIf="user.role === 'school'">Joined</span>
@@ -87,10 +81,6 @@
               <li>
                 <p class="body-2-bold">{{ 0 }}</p>
                 <p class="body-3-regular">{{0 > 1 ? 'Courses' : 'Course'}}</p>
-              </li>
-              <li>
-                <p class="body-2-bold">{{  0 }}</p>
-                <p class="body-3-regular">{{ 0 > 1 ? 'Schools' : 'School'}}</p>
               </li>
               <li>
                 <p class="body-2-bold">{{ 0 }}</p>
@@ -124,9 +114,9 @@
               </ul>
             </div>
             <div class="completion">
-              <p class="body-2-regular title">Start date</p>
+              <p class="body-2-regular title">Registered Date</p>
               <p class="body-2-medium">
-                {{ teacher?.updatedAt | date: "mediumDate" }}
+                {{ teacher?.createdAt | date: "mediumDate" }}
               </p>
               <!-- {{ days > 1 ? days : "0" }} day{{ days < 2 ? "" : "s" }} -->
             </div>
@@ -143,7 +133,7 @@
           </div>
         </div>
 
-        <!-- <div class="actions">
+        <div class="actions">
           <img
             src="../../../../../assets/img/action.svg"
             class="clickable"
@@ -160,11 +150,11 @@
           <div class="dropdown">
             <small
               class="body-3-regular delete clickable"
-              (click)="deleteProgram(program)"
+              (click)="openDeleteModal(teacher)"
               >Delete</small
             >
           </div>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>

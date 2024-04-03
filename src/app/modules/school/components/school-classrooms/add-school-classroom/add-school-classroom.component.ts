@@ -69,7 +69,7 @@ export class AddSchoolClassroomComponent implements OnInit {
 
   // Get teachers
   getTeachers() {
-    this.teachersService.fetchTeachers(this.user.id).subscribe({
+    this.teachersService.fetchTeachersInSchool(this.user.id).subscribe({
       next: (res: any) => {
         this.teachers = res.data.teachers;
       },
