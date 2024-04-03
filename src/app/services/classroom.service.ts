@@ -56,6 +56,10 @@ export class ClassroomService {
     return this.http.put(`${this.baseUrl}classes/${classroomId}`, data, this.getHttpOptions());
   }
 
+  getQuizResultsByQuizId(classroomId: string, quizId: string) {
+    return this.http.get(`${this.baseUrl}classes/${classroomId}/quizes/${quizId}/result`, this.getHttpOptions());
+  }
+
   //--- TEMPLATES STARTS --//
   getClassroomTemplates() {
     return this.http.get(`${this.baseUrl}classes/templates`, this.getHttpOptions());

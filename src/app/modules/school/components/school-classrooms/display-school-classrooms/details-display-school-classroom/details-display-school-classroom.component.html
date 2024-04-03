@@ -123,7 +123,7 @@
       <div class="course-details_body_content">
         <!-- Courses -->
         <ng-container *ngIf="contentId === 'courses'">
-          <div class="table-container" style="overflow-x: auto">
+          <div class="table-container" style="overflow-x: auto" *ngIf="!courseQuizResult">
             <ng-container *ngIf="classroom?.courses?.length > 0">
               <table>
                 <tr class="table-header">
@@ -131,6 +131,8 @@
                   <th>Number of lesson(s)</th>
                   <th>Quadrant</th>
                   <th>Duration</th>
+                  <th>Action</th>
+
                 </tr>
                 <ng-container>
                   <tr class="table-body" *ngFor="let course of classroom?.courses">
@@ -138,11 +140,11 @@
                     <td>{{course?.lesson_count}}</td>
                     <td>{{course?.course_quadrant}}</td>
                     <td>{{course?.duration}}</td>
+                    <td>
+                      <button class="btn sec_btn" (click)="openViewCourseQuizResult(course)">Quiz Result</button>
+                    </td>
                   </tr>
                 </ng-container>
-                <!-- <ng-template>
-                  <p style="text-align: center">Empty School list!</p>
-                </ng-template> -->
               </table>
             </ng-container>
   
@@ -153,16 +155,16 @@
               <button type="button" class="btn sec_btn" (click)="openAddCourseToClassroomModal()" *ngIf="!classroom?.template">Add Course</button>
             </div>
           </div>
+
+          <app-view-course-quiz-results *ngIf="courseQuizResult" [classroomId]="currentClassroomId.classroomId" [course]="course"></app-view-course-quiz-results>
         </ng-container>
         
         <!-- Learners -->
         <ng-container *ngIf="contentId === 'learners'">
           <div class="table-container" style="overflow-x: auto">
-
-          <div *ngIf="classroom?.learners?.length != 0" style="padding: 1%;">
-            <button type="button" class="btn sec_btn" (click)="openAddLearnerToClassroomModal()">Add Learner</button>
-
-          </div>
+            <!-- <div *ngIf="classroom?.learners?.length != 0" style="padding: 1%;">
+              <button type="button" class="btn sec_btn" (click)="openAddLearnerToClassroomModal()">Add Learner</button>
+            </div> -->
 
             <ng-container *ngIf="classroom?.learners?.length > 0">
               <div class="dis-flex" style="justify-content: flex-end; margin-bottom: 1.5rem;">
@@ -201,7 +203,7 @@
         <!-- Teacher -->
         <ng-container *ngIf="contentId === 'teacher'">
           <div class="table-container" style="overflow-x: auto">
-            <ng-container *ngIf="classroom?.learners?.length > 0">
+            <ng-container *ngIf="classroom?.teacher">
               <table>
                 <tr class="table-header">
                   <th>Full Name</th>
@@ -209,18 +211,18 @@
                   <td>Action</td>
                 </tr>
                 <ng-container>
-                  <tr class="table-body" *ngFor="let learner of classroom?.learners">
-                    <td>{{ learner.fullname }}</td>
-                    <td>{{ learner.email ===  undefined ? '-' : learner.email }}</td>
+                  <tr class="table-body">
+                    <td>{{ classroom?.teacher?.fullname }}</td>
+                    <td>{{ classroom?.teacher?.email ===  undefined ? '-' : classroom?.teacher?.email }}</td>
                     <td>
-                      <button type="button" class="danger_btn" style="background-color: transparent;" (click)="openDeleteModal(learner)">Remove</button>
+                      <button type="button" class="danger_btn" style="background-color: transparent;" (click)="openDeleteModal(classroom?.teacher)">Remove</button>
                     </td>
                   </tr>
                 </ng-container>
               </table>
             </ng-container>
 
-            <div *ngIf="classroom?.learners?.length === 0" class="course-empty">
+            <div *ngIf="!classroom?.teacher" class="course-empty">
               <p style="text-align: center" >
                 No Teacher available
               </p>
