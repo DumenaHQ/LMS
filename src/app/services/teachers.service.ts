@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { TeacherlModel } from '../modules/school/components/school-teachers/models/teacher.model';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ export class TeachersService {
 
   constructor(private http: HttpClient) {}
 
-  createTeacher(data: any) {
+  createTeacherForSchool(data: any) {
     return this.http.post(
       `${this.baseUrl}users/teacher`,
       data,
@@ -18,7 +19,14 @@ export class TeachersService {
     );
   }
 
-  fetchTeachers(data: any) {
+  deleteTeacherFromSchool(data: TeacherlModel) {
+    return this.http.delete(
+      `${this.baseUrl}users/teacher/${data.id}`,
+      this.getHttpOptions()
+    );
+  }
+
+  fetchTeachersInSchool(data: any) {
     return this.http.get(
       `${this.baseUrl}schools/${data.id}/teachers`,
       this.getHttpOptions()

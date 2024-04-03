@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProgramsService } from 'src/app/services/programs.service';
@@ -11,21 +16,25 @@ import { TeacherlModel } from '../models/teacher.model';
   styleUrls: ['./grid-display-school-teachers.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GridDisplaySchoolTeachersComponent  implements OnInit {
-
+export class GridDisplaySchoolTeachersComponent implements OnInit {
   dataLoading: boolean = true;
   teachers!: TeacherlModel[];
   user: any;
   loading: boolean = false;
   isAlert: boolean = false;
   alertMessage: string;
-  alertColor: string
+  alertColor: string;
+
+  deleteModal: boolean = false;
+  deleteUrl: string;
+  deleteRoutePath: string;
+  teacherName!: string;
 
   constructor(
     private teachersService: TeachersService,
     private router: Router,
     private authService: AuthService,
-    private cd: ChangeDetectorRef,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -33,27 +42,30 @@ export class GridDisplaySchoolTeachersComponent  implements OnInit {
     let userData = this.authService.getUser();
     this.user = userData.user;
 
-    // Get programs
-    this.teachersService.fetchTeachers(
-      {
+    this.fetchTeachers();
+  }
+
+  fetchTeachers() {
+    // Get teachers
+    this.teachersService
+      .fetchTeachersInSchool({
         id: this.user.id,
-      }
-    ).subscribe({
-      next: (res: any) => {
-        this.teachers = res.data.teachers;
-      },
-      error: (e) => console.error(e),
-      complete: () => {
-        this.dataLoading = false;
-        this.cd.detectChanges();
-      },
-    });
+      })
+      .subscribe({
+        next: (res: any) => {
+          this.teachers = res.data.teachers;
+        },
+        error: (e) => console.error(e),
+        complete: () => {
+          this.dataLoading = false;
+          this.cd.detectChanges();
+        },
+      });
   }
 
   openAddTeacherModal() {
     this.router.navigate(['/school/teachers/add']);
   }
-
 
   // Add School to program
   addSchoolToProgram(programId: string) {
@@ -74,18 +86,20 @@ export class GridDisplaySchoolTeachersComponent  implements OnInit {
     this.router.navigate([`/${this.user.role}/teachers/${programId}`]);
   }
 
-  // Delete program
-  deleteProgram(program: any) {
-    // this.programsService.deleteProgram(program.id).subscribe({
-    //   next: (res: any) => {
-    //     console.log(res);
-    //     this.teachers;
-    //   },
-    //   error: (e) => console.error(e),
-    //   // complete: () => {
-    //   //   this.dataLoading = false;
-    //   // },
-    // });
+  // Open Confirm Delete Modal
+  openDeleteModal(teacher: TeacherlModel) {
+    console.log(teacher);
+    this.teacherName = teacher.fullname || '';
+
+    this.deleteModal = true;
+
+    this.deleteUrl = `users/teacher/${teacher.id}`;
+    this.deleteRoutePath = '';
+  }
+
+  // Close Confirm Delete Modal
+  closeDeleteModal() {
+    this.deleteModal = false;
   }
 
   // Show alert

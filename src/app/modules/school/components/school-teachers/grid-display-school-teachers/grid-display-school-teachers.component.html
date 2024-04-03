@@ -5,6 +5,9 @@
   [alertColor]="alertColor"
 ></app-alert-popup>
 
+  <!-- Delete confirmation -->
+  <app-confirm-delete *ngIf="deleteModal" (deleteModal)="closeDeleteModal()" [itemName]="teacherName" [deleteUrl]="deleteUrl" [deleteRoutePath]="deleteRoutePath"></app-confirm-delete>
+
 <section class="new_data">
   <div class="blank-item_btn">
     <button class="btn prim_btn" (click)="openAddTeacherModal()">
@@ -130,7 +133,7 @@
           </div>
         </div>
 
-        <!-- <div class="actions">
+        <div class="actions">
           <img
             src="../../../../../assets/img/action.svg"
             class="clickable"
@@ -147,11 +150,11 @@
           <div class="dropdown">
             <small
               class="body-3-regular delete clickable"
-              (click)="deleteProgram(program)"
+              (click)="openDeleteModal(teacher)"
               >Delete</small
             >
           </div>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>
