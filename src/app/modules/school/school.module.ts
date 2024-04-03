@@ -21,6 +21,7 @@ import { DetailsDisplaySchoolClassroomComponent } from './components/school-clas
 import { EditSchoolClassroomComponent } from './components/school-classrooms/edit-school-classroom/edit-school-classroom.component';
 import { AddSchoolClassroomLearnersComponent } from './components/school-classrooms/add-school-classroom-learners/add-school-classroom-learners.component';
 import { AddSchoolClassroomCoursesComponent } from './components/school-classrooms/add-school-classroom-courses/add-school-classroom-courses.component';
+import { ViewCourseQuizResultsComponent } from './components/school-classrooms/display-school-classrooms/details-display-school-classroom/view-course-quiz-results/view-course-quiz-results.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { AddSchoolClassroomCoursesComponent } from './components/school-classroo
     EditSchoolClassroomComponent,
     AddSchoolClassroomLearnersComponent,
     AddSchoolClassroomCoursesComponent,
+    ViewCourseQuizResultsComponent,
   ],
   imports: [
     CommonModule,

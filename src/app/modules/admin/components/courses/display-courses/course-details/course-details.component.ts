@@ -28,7 +28,6 @@ export class CourseDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     // Get Current Program
     this.currentCourseParams = this.activatedRoute.snapshot.params;
 
@@ -41,19 +40,17 @@ export class CourseDetailsComponent implements OnInit {
     this.coursesService.getCourse(this.currentCourseParams.courseId).subscribe({
       next: (res: any) => {
         this.course = res.data.course;
-        console.log(this.course);
-        this.getCourseModuleQuiz(res.data.course.modules[this.currentModuleIndex].quiz_id);
+        this.getCourseQuiz(res.data.course.quiz_id);
       },
       error: (e) => console.error(e),
     });
   }
   
-  // Get coure module quiz
-  getCourseModuleQuiz(quizId: any) {
+  // Get coure quiz
+  getCourseQuiz(quizId: any) {
     this.quizzesService.getquizByQuizId(quizId).subscribe({
       next: (res: any) => {
         this.quizzes = res.data.quiz;
-        console.log('quizzes', res);
       },
       error: (e) => console.error(e),
     });
