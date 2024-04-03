@@ -42,7 +42,62 @@
 
 <section class="programs">
   <app-loader *ngIf="dataLoading"></app-loader>
-  <div class="programs_disgrid" *ngIf="(teachers || []).length > 0">
+  <div class="courses_dislist" style="overflow-x: auto" *ngIf="!dataLoading">
+    <table>
+      <tr class="table-header">
+        <th>Name</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Date Enrolled</th>
+        <th></th>
+      </tr>
+      <ng-container *ngIf="(teachers || []).length > 0">
+        <tr class="table-body" *ngFor="let teacher of teachers">
+          <td class="name">
+            <div class="dis-flex">
+              <img
+                src="../../../../../../assets/img/children-avatar/child-avatar-1.png"
+                alt=""
+              />
+              <div>
+                <p>{{ teacher.fullname | titlecase }}</p>
+              </div>
+            </div>
+          </td>
+          <td class="contact-info">
+            <p>{{ teacher.email | lowercase }}</p>
+          </td>
+          <td class="grade">
+            <p [className]="teacher.isUserOnboarded ? 'success-status' : 'error-status'">{{ teacher.isUserOnboarded ? "Onboarded" : "Not Onboarded" }}</p>
+          </td>
+          <td class="dateEnrolled">
+            <p>{{ teacher.createdAt | date: "mediumDate" }}</p>
+          </td>
+          <td class="actions">
+            <img src="../../../../../../assets/img/action.svg" alt="" class="clickable" (click)="actionBtn.click()" />
+            <input
+                type="checkbox"
+                name="action-btn"
+                id="action-btn"
+                style="display: none"
+                #actionBtn
+              />
+              <div class="dropdown">
+                <small
+                  class="body-3-regular delete clickable"
+                  (click)="openDeleteModal(teacher)"
+                  >Delete</small
+                >
+              </div>
+          </td>
+        </tr>
+      </ng-container>
+    </table>
+    <div style="text-align: center; padding: 1rem;" *ngIf="teachers?.length === 0">
+      <span>No Teachers found</span>
+    </div>
+  </div>
+  <!-- <div class="programs_disgrid" *ngIf="(teachers || []).length > 0">
     <div class="program_card">
       <div class="program_card_item" *ngFor="let teacher of teachers">
         <img
@@ -68,7 +123,6 @@
                   }}
                 </h5>
                 <p>
-                  <!-- {{ teacher?.description }} -->
                 </p>
               </div>
 
@@ -118,18 +172,7 @@
               <p class="body-2-medium">
                 {{ teacher?.createdAt | date: "mediumDate" }}
               </p>
-              <!-- {{ days > 1 ? days : "0" }} day{{ days < 2 ? "" : "s" }} -->
             </div>
-            <!-- <div class="status">
-              <span
-                [ngClass]="
-                  program?.status === 'active' ? 'success_btn' : 'grey_btn'
-                "
-                >{{
-                  program?.status === "active" ? "Published" : "Draft"
-                }}</span
-              >
-            </div> -->
           </div>
         </div>
 
@@ -157,7 +200,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!-- Blank -->
   <div class="dis-flex" *ngIf="teachers?.length === 0">
