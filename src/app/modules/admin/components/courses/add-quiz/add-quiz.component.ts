@@ -72,14 +72,12 @@ export class AddQuizComponent implements OnInit {
   addQuizToCourse() {
     let payload = {
       course_id: this.courseId,
-      quiz_level: "module", // ["course", "lesson"] optional field
-      quiz_level_id: this.moduleId
+      quiz_level: "course", // ["course", "module", "lesson"] optional field
+      quiz_level_id: this.courseId
     };       
 
     this.quizService.addQuizToCourse(this.selectedQuizzes[0], payload).subscribe(
       (res: any) => {
-        console.log(res);
-        
         this.showAlertPopup(res.message, 'success');
 
         setTimeout(() => {
