@@ -156,7 +156,7 @@
             </div>
           </div>
 
-          <app-view-course-quiz-results *ngIf="courseQuizResult" [classroomId]="currentClassroomId.classroomId" [course]="course"></app-view-course-quiz-results>
+          <app-view-course-quiz-results *ngIf="courseQuizResult" [classroomId]="currentClassroomId.classroomId" [course]="course" (courseQuizResult)="closeViewCourseQuizResult()"></app-view-course-quiz-results>
         </ng-container>
         
         <!-- Learners -->

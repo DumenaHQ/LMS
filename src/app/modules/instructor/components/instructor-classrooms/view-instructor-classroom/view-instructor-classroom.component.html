@@ -85,7 +85,7 @@
       <div class="course-details_body_content">
         <!-- Courses -->
         <ng-container *ngIf="contentId === 'courses'">
-          <div class="table-container" style="overflow-x: auto">
+          <div class="table-container" style="overflow-x: auto" *ngIf="!courseQuizResult">
             <ng-container *ngIf="classroom?.courses?.length > 0">
               <table>
                 <tr class="table-header">
@@ -93,6 +93,7 @@
                   <th>Number of lesson(s)</th>
                   <th>Quadrant</th>
                   <th>Duration</th>
+                  <th>Action</th>
                 </tr>
                 <ng-container>
                   <tr class="table-body" *ngFor="let course of classroom?.courses">
@@ -100,6 +101,9 @@
                     <td>{{course?.lesson_count}}</td>
                     <td>{{course?.course_quadrant}}</td>
                     <td>{{course?.duration}}</td>
+                    <td>
+                      <button class="btn sec_btn" (click)="openViewCourseQuizResult(course)">Quiz Result</button>
+                    </td>
                   </tr>
                 </ng-container>
               </table>
@@ -111,6 +115,8 @@
               </p>
             </div>
           </div>
+
+          <app-view-quiz-result *ngIf="courseQuizResult" [classroomId]="currentClassroomId.classroomId" [course]="course" (courseQuizResult)="closeViewCourseQuizResult()"></app-view-quiz-result>
         </ng-container>
         
         <!-- Learners -->
@@ -123,6 +129,7 @@
                   <th>User Name</th>
                   <th>Email</th>
                   <th>Grade</th>
+                  
                 </tr>
                 <ng-container>
                   <tr class="table-body" *ngFor="let learner of classroom?.learners">

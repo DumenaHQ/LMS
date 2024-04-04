@@ -10,6 +10,7 @@ import { DisplayInstructorClassroomsComponent } from './components/instructor-cl
 import { ViewInstructorClassroomComponent } from './components/instructor-classrooms/view-instructor-classroom/view-instructor-classroom.component';
 import { GridDisplayComponent } from './components/instructor-classrooms/display-instructor-classrooms/grid-display/grid-display.component';
 import { BlankDisplayComponent } from './components/instructor-classrooms/display-instructor-classrooms/blank-display/blank-display.component';
+import { ViewQuizResultComponent } from './components/instructor-classrooms/view-instructor-classroom/view-quiz-result/view-quiz-result.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { BlankDisplayComponent } from './components/instructor-classrooms/displa
     DisplayInstructorClassroomsComponent,
     ViewInstructorClassroomComponent,
     GridDisplayComponent,
-    BlankDisplayComponent
+    BlankDisplayComponent,
+    ViewQuizResultComponent
   ],
   imports: [
     CommonModule,

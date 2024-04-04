@@ -1,10 +1,10 @@
 <div class="quiz-result">
-    <section class="ds-head dis-flex">
-      <div class=" dis-flex">
-        <i class="bx bx-chevron-right icon" style="transform: rotate(180deg);"></i>
-        <p class="ds-head_title clickable" (click)="goBack()">Go back to Courses</p>
-        <h2 class="ds-head_title" style="margin-left: 2rem;">Quiz Report</h2>
-      </div>
+      <section class="ds-head dis-flex">
+        <div class=" dis-flex">
+            <i class="bx bx-chevron-right icon" style="transform: rotate(180deg);"></i>
+            <p class="ds-head_title clickable" (click)="goBack()">Go back to Courses</p>
+            <h2 class="ds-head_title" style="margin-left: 2rem;">Quiz Report</h2>
+        </div>
     </section>
 
     <h5 style="margin-bottom: 2rem;"><b>Course Title:</b> {{ course.title }}</h5>
@@ -27,11 +27,11 @@
             </ng-container>
           </table>
         </ng-container>
+    </div>
     
-        <div class="course-empty">
-          <p style="text-align: center" *ngIf="quizResults.data.quizResult.length === 0">
-            No record available
-          </p>
-        </div>
+    <div class="course-empty">
+      <p style="text-align: center" *ngIf="errorMessage">
+        You haven't taken the quiz yet
+      </p>
     </div>
 </div>
