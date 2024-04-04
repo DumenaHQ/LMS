@@ -6,6 +6,11 @@
   display: block;
 }
 
+.blank-item_btn {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .grouping {
   // margin-top: -$m-3; // Reduce the gap btw the Section title and this container
   // margin-bottom: $m-3;
