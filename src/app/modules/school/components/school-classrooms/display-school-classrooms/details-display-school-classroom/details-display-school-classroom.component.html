@@ -241,4 +241,4 @@
 <app-add-school-classroom-learners *ngIf="addLearnerToClassroom" (addLearnerToClassroomModal)="closeAddLearnerToClassroomModal()" [classroomId]="currentClassroomId.classroomId"></app-add-school-classroom-learners>
 
 <!-- Delete confirmation -->
-<app-confirm-delete *ngIf="deleteModal" (deleteModal)="closeDeleteModal()" [itemName]="teacherName" [deleteUrl]="deleteUrl" [deleteRoutePath]="deleteRoutePath"></app-confirm-delete>
+<app-confirm-delete *ngIf="deleteModal" (deleteModal)="closeDeleteModal()" [itemName]="teacherName" [deleteUrl]="deleteUrl" [deleteRoutePath]="deleteRoutePath" [deleteType]="'patch'"></app-confirm-delete>

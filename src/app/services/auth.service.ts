@@ -95,11 +95,19 @@ export class AuthService {
   }
 
   // Delete
-  deleteItem(deleteUrl: string) {
-    return this.http.delete(
-      `${this.baseUrl}${deleteUrl}`,
-      this.getHttpOptions()
-    );
+  deleteItem(deleteUrl: string, deleteType: any) {
+    if(deleteType === 'patch') { 
+      return this.http.patch(
+        `${this.baseUrl}${deleteUrl}`,
+        {},
+        this.getHttpOptions()
+      );
+    } else {
+      return this.http.delete(
+        `${this.baseUrl}${deleteUrl}`,
+        this.getHttpOptions()
+      );
+    }
   }
 
   // Send password reset email

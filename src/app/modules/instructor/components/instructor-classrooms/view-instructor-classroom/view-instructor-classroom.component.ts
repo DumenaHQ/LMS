@@ -33,10 +33,6 @@ export class ViewInstructorClassroomComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           this.classroom = res.data.class;
-          console.log({
-            title: 'Classroom',
-            data: res
-          });
           this.changeDectetorRef.detectChanges();
         },
         error: (e) => console.error(e),
