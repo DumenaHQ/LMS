@@ -55,7 +55,6 @@ textarea::placeholder {
   color: $success80;
   background-color: $success20;
   border-radius: $border-radius1;
-  border: 1px solid $success80;
   padding: $m-1 $m-2;
   display: inline-block;
   font-size: 12px;
@@ -63,10 +62,9 @@ textarea::placeholder {
 }
 
 .error-status {
-  color: $error80;
-  background-color: $error20;
+  color: $secondary100;
+  background-color: $secondary40;
   border-radius: $border-radius1;
-  border: 1px solid $error80;
   padding: $m-1 $m-2;
   display: inline-block;
   font-size: 12px;
