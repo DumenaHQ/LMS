@@ -41,7 +41,7 @@ export class SchoolComponent implements OnInit {
     {
       name: 'Teachers',
       link: '/school/teachers',
-      icon: 'assets/img/svg/forward-item.svg',
+      icon: 'assets/img/svg/people-blue.svg',
       subLinks: [],
     },
     // {

@@ -23,6 +23,13 @@ export class QuizService {
     );
   }
 
+  getLearnerQuizResult(quizId: any, learnerId: any) {
+    return this.http.get(
+      `${this.baseUrl}quizzes/${quizId}/learners/${learnerId}/result`,
+      this.getHttpOptions()
+    );
+  }
+
   // Add Quiz to quiz
   addQuiz(data: any) {
     return this.http.post(

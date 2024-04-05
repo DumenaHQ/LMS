@@ -3,11 +3,12 @@ import { Observable } from 'rxjs';
 import { ClassroomService } from 'src/app/services/classroom.service';
 
 @Component({
-  selector: 'app-view-course-quiz-results',
-  templateUrl: './view-course-quiz-results.component.html',
-  styleUrls: ['./view-course-quiz-results.component.scss']
+  selector: 'app-view-quiz-result',
+  templateUrl: './view-quiz-result.component.html',
+  styleUrls: ['./view-quiz-result.component.scss']
 })
-export class ViewCourseQuizResultsComponent implements OnInit {
+export class ViewQuizResultComponent implements OnInit {
+
   @Input() classroomId: any;
   @Input() course: any;
   @Output() courseQuizResult = new EventEmitter<any>();

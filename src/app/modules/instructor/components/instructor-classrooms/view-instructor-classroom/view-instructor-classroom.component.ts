@@ -15,6 +15,8 @@ export class ViewInstructorClassroomComponent implements OnInit {
   dataLoading: boolean = true;
   addCourseToClassroom: boolean = false;
   addLearnerToClassroom: boolean = false;
+  courseQuizResult: boolean = false;
+  course: any;
 
   constructor(
     private classroomService: ClassroomService,
@@ -33,14 +35,19 @@ export class ViewInstructorClassroomComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           this.classroom = res.data.class;
-          console.log({
-            title: 'Classroom',
-            data: res
-          });
           this.changeDectetorRef.detectChanges();
         },
         error: (e) => console.error(e),
       });
+  }
+
+  openViewCourseQuizResult(course: any) {
+    this.course = course;
+    this.courseQuizResult = true;
+  }
+
+  closeViewCourseQuizResult() {
+    this.courseQuizResult = false;
   }
 
   // Tab change

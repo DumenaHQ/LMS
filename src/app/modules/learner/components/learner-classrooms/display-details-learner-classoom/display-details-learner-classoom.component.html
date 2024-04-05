@@ -85,7 +85,7 @@
       <div class="course-details_body_content">
         <!-- Courses -->
         <ng-container *ngIf="contentId === 'courses'">
-          <div class="table-container" style="overflow-x: auto">
+          <div class="table-container" style="overflow-x: auto" *ngIf="!courseQuizResult">
             <ng-container *ngIf="classroom?.courses?.length > 0">
               <table>
                 <tr class="table-header">
@@ -103,6 +103,7 @@
                     <td>{{course?.duration}}</td>
                     <td>
                         <button class="btn sec_btn" (click)="takeCourse(course?.id)">Start</button>
+                        <button class="btn sec_btn" style="margin-left: 2rem;" (click)="openViewCourseQuizResult(course)">Quiz Result</button>
                     </td>
                   </tr>
                 </ng-container>
@@ -115,6 +116,8 @@
               </p>
             </div>
           </div>
+
+          <app-view-quiz-result *ngIf="courseQuizResult" [course]="course" (courseQuizResult)="closeViewCourseQuizResult()"></app-view-quiz-result>
         </ng-container>
         
         <!-- Learners -->
