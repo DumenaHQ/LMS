@@ -29,7 +29,6 @@ export class AddEditTeacherComponent implements OnInit {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
     });
   }
 
@@ -40,7 +39,6 @@ export class AddEditTeacherComponent implements OnInit {
         "fullname": `${this.teacherForm.value.firstName} ${this.teacherForm.value.lastName}`,
         "email":  this.teacherForm.value.email,
         "user_type": "instructor",
-        "password": this.teacherForm.value.password,
     };
 
       this.teachersService.createTeacherForSchool(payload).subscribe(
