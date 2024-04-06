@@ -29,7 +29,7 @@ export class TeachersService {
   fetchTeachersInSchool(data: any) {
     return this.http.get(
       `${this.baseUrl}schools/${data.id}/teachers`,
-      this.getHttpOptions()
+      // this.getHttpOptions()
     );
   }
 
