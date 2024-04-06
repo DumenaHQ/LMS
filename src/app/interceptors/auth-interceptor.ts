@@ -1,20 +1,24 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import {
   HttpInterceptor,
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpResponse,
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { AlertType, AppAlertService } from '../services/app-alerts/app-alert.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private appAlertService: AppAlertService,
+  ) {
+  }
 
   intercept(
     req: HttpRequest<any>,
@@ -27,7 +31,10 @@ export class AuthInterceptor implements HttpInterceptor {
       const authReq = req.clone({
         setHeaders: { Authorization: `Bearer ${authToken}` },
       });
-      return next.handle(authReq).pipe(catchError(this.handleError));
+
+      return next.handle(authReq).pipe(catchError((err) => {
+        return this.handleError(err);
+      }));
     }
 
     // Handle cases where there's no token
@@ -42,8 +49,14 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private handleError(error: any): Observable<any> {
-    if (error.status === 401) {
-      this.router.navigate(['/login']);
+    if (error.status === 401) {        
+        // Handle 401 errors (unauthorized access)
+        this.appAlertService.showAlert(
+          'Your session has expired. Please login again.',
+          AlertType.Error,
+        );
+
+        this.router.navigate(['/login']);
       return throwError(error);
     }
     return throwError(error);
