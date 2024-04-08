@@ -55,7 +55,7 @@ export class GridDisplaySchoolTeachersComponent implements OnInit {
         next: (res: any) => {
           this.teachers = res.data.teachers;
         },
-        error: (e) => console.error(e),
+        // error: (e) => console.error(e),
         complete: () => {
           this.dataLoading = false;
           this.cd.detectChanges();
