@@ -64,6 +64,7 @@
                       <div class="captions-regular dis-flex">
                         <span class="title">Filter:</span>
                         <select name="grade" (change)="getAllStudents($event)" class="s-f-select grade-select" style="border: none; outline: none; background-color: transparent;">
+                          <option value="">All Grades</option>
                           <option [value]="grade.id" *ngFor="let grade of grades">{{ grade.name }}</option>
                         </select>
                       </div>
