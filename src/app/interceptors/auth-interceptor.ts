@@ -9,36 +9,32 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const authToken = this.getAuthToken();
+    const authToken = this.authService.getToken();
 
     // Clone the request and add the Authorization header
     if (authToken) {
       const authReq = req.clone({
         setHeaders: { Authorization: `Bearer ${authToken}` },
       });
-      return next.handle(authReq).pipe(catchError(this.handleError));
+      return next.handle(authReq).pipe(catchError((error) => {
+        return this.handleError(error);
+      }));
     }
 
     // Handle cases where there's no token
     return next.handle(req);
-  }
-
-  // Replace this with your method to retrieve the authentication token
-  private getAuthToken(): string | null {
-    // Implement logic to get token from storage or service
-    // This example gets it from localStorage for simplicity
-    return localStorage.getItem('token');
   }
 
   private handleError(error: any): Observable<any> {
