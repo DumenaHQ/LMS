@@ -29,9 +29,11 @@ export class AddSchoolClassroomLearnersComponent implements OnInit {
   learnersList: any;
   schoolLearners: any;
   parentLearners: any;
-  dataLoading: boolean = true;
+  dataLoading: boolean = false;
   studentName: any;
   selectedLearners: any[] = [];
+
+  grades: any = [];
   
 
   constructor(
@@ -45,31 +47,28 @@ export class AddSchoolClassroomLearnersComponent implements OnInit {
     let userData = this.authService.getUser();
     this.user = userData.user;
 
-    // Get school learners from localstorage
-    if(this.user.role === 'school') {
-      this.schoolService.getSchoolLearners(this.user.id, undefined).subscribe({
-        next: (res: any) => {
-          this.schoolLearners = res.data.students;
-        },
-        error: (e) => console.error(e),
-        complete: () => {
-          this.dataLoading = false;
-        },
-      });
-    } else {
-      // Get parent learners from localstorage
-      this.authService.getParentChildren(this.user.id).subscribe({
-        next: (res: any) => {
-          this.parentLearners = res.data.learners;
-          console.log(this.parentLearners);
-        },
-        error: (e) => console.error(e),
-        complete: () => {
-          this.dataLoading = false;
-        },
-      });
-    }
+    this.getAllStudents(undefined);
+  }
 
+  // Get all students
+  getAllStudents(event: any) {
+    this.dataLoading = true;
+    let grade = event?.target?.value === '' ? undefined : event?.target?.value;
+    const school_id = this.user.id;
+    this.schoolService.getSchoolLearners(school_id, grade).subscribe({
+      next: (res: any) => {
+        this.schoolLearners = res.data.students;     
+        if(this.grades.length === 0) {
+          this.grades = res.data.grades.map((grade: any) => ({ 
+            id: grade, name: grade 
+          }));
+        }
+      },
+      error: (e) => console.error(e),
+      complete: () => {
+        this.dataLoading = false;
+      }
+    });
   }
 
   // Tab change

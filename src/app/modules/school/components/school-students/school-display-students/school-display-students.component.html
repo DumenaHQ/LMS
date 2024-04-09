@@ -31,7 +31,7 @@
   <table>
     <tr class="table-header">
       <th>Name</th>
-      <th>Contact Info</th>
+      <th>Email</th>
       <th>Grade</th>
       <th>Date Enrolled</th>
       <th></th>
@@ -51,8 +51,8 @@
           </div>
         </td>
         <td class="contact-info">
-          <p>{{ student.email | titlecase }}</p>
-          <p>{{ student.phone }}</p>
+          <p>{{ (student.email | titlecase) || "-" }}</p>
+          <!-- <p>{{ student.phone }}</p> -->
         </td>
         <td class="grade">
           <p>{{ student.grade }}</p>

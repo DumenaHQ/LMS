@@ -17,20 +17,7 @@ export class SchoolDisplayStudentsComponent implements OnInit {
   deleteRoutePath: string;
   selectedGrade: string = '';
 
-  grades: any = [
-    { id: 1, name: 'Grade 1' },
-    { id: 2, name: 'Grade 2' },
-    { id: 3, name: 'Grade 3' },
-    { id: 4, name: 'Grade 4' },
-    { id: 5, name: 'Grade 5' },
-    { id: 6, name: 'Grade 6' },
-    { id: 7, name: 'Grade 7' },
-    { id: 8, name: 'Grade 8' },
-    { id: 9, name: 'Grade 9' },
-    { id: 10, name: 'Grade 10' },
-    { id: 11, name: 'Grade 11' },
-    { id: 12, name: 'Grade 12' },
-  ]
+  grades: any = [];
 
   constructor(
     private authService: AuthService,
@@ -48,9 +35,15 @@ export class SchoolDisplayStudentsComponent implements OnInit {
   // Get all students
   getAllStudents() {
     let grade = this.selectedGrade === '' ? undefined : this.selectedGrade;
-    this.schoolService.getSchoolLearners(this.user.id, grade).subscribe({
+    const school_id = this.user.id;
+    this.schoolService.getSchoolLearners(school_id, grade).subscribe({
       next: (res: any) => {
         this.students = res.data.students;
+        if(this.grades.length === 0) {
+          this.grades = res.data.grades.map((grade: any) => ({ 
+            id: grade, name: grade 
+          }));
+        }
       },
       error: (e) => console.error(e),
     });
