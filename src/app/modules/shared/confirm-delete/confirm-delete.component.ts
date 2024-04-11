@@ -15,6 +15,7 @@ export class ConfirmDeleteComponent implements OnInit {
   @Input() itemName: any;
   @Input() deleteUrl: any;
   @Input() deleteRoutePath: any;
+  @Input() deleteType: any;
   loading: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) { }
@@ -27,7 +28,7 @@ export class ConfirmDeleteComponent implements OnInit {
     this.loading = true
 
     this.authService
-      .deleteItem(this.deleteUrl)
+      .deleteItem(this.deleteUrl, this.deleteType)
       .subscribe((res: any) => {
         console.log(res);
         if (res.status === true) {

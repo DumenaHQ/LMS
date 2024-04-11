@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { ClassTemplateDetailModel } from '../modules/admin/components/class-template/display-admin-class-template/details-display-admin-class-template/interfaces/class-template.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,17 +12,14 @@ export class ClassroomService {
 
   constructor(private http: HttpClient) { }
 
-  // Get Classrooms
   getClassrooms() {
     return this.http.get(`${this.baseUrl}classes`, this.getHttpOptions());
   }
 
-  // Get Classroom by Id
   getClassroomById(classroomId: string) {
     return this.http.get(`${this.baseUrl}classes/${classroomId}`, this.getHttpOptions());
   }
   
-  // Add Classroom
   addClassroom(data: any) {
     return this.http.post(
       `${this.baseUrl}classes`,
@@ -30,16 +28,15 @@ export class ClassroomService {
     );
   }
 
-  // Add course to classroom
   addCourseToClassroom(data: any, classroomId: any) {
     return this.http.patch(
-      `${this.baseUrl}classes/${classroomId}/courses`,
+      `${this.baseUrl}classes/templates/${classroomId}/courses`,
+      // `${this.baseUrl}classes/${classroomId}/courses`,
       data,
       this.getHttpOptions()
       );
   }
 
-  // Add learner to classroom
   addLearnerToClassroom(data: any, classroomId: any) {
     return this.http.patch(
       `${this.baseUrl}classes/${classroomId}/learners`,
@@ -48,7 +45,6 @@ export class ClassroomService {
       );
   }
 
-  // Subscribe learner to classroom
   subscribeLearnerToClassroom(data: any, classroomId: any) {
     return this.http.post(
       `${this.baseUrl}classes/${classroomId}/subscribe`,
@@ -57,23 +53,23 @@ export class ClassroomService {
       );
   }
   
-  // Edit Classroom
   editClassroom(data: any, classroomId: any) {
     return this.http.put(`${this.baseUrl}classes/${classroomId}`, data, this.getHttpOptions());
   }
 
+  getQuizResultsByQuizId(classroomId: string, quizId: string) {
+    return this.http.get(`${this.baseUrl}classes/${classroomId}/quizes/${quizId}/result`, this.getHttpOptions());
+  }
+
   //--- TEMPLATES STARTS --//
-  // Get Classroom templates 
   getClassroomTemplates() {
     return this.http.get(`${this.baseUrl}classes/templates`, this.getHttpOptions());
   }
 
-  // Get Classroom template by Id
   getClassroomTemplateById(templateId: string) {
     return this.http.get(`${this.baseUrl}classes/templates/${templateId}`, this.getHttpOptions());
   }
 
-  // Add classroom template
   addClassroomTemplate(data: any) {
     return this.http.post(
       `${this.baseUrl}classes/templates`,
@@ -81,10 +77,33 @@ export class ClassroomService {
       this.getHttpOptions()
     );
   }
+  
+  addCourseToClassroomTemplate(data: any, templateId: any) {
+    return this.http.patch(
+      `${this.baseUrl}classes/templates/${templateId}/courses`,
+      data,
+      this.getHttpOptions()
+      );
+  }
+
+  // Add classroom template
+  editClassroomTemplate(data: any, templateId: any) {
+    return this.http.put(
+      `${this.baseUrl}classes/templates/${templateId}`,
+      data,
+      this.getHttpOptions()
+      );
+    }
+
+  updateClassroomTemplate(classroomTemplate: ClassTemplateDetailModel, data: any) {
+    return this.http.put(
+      `${this.baseUrl}classes/templates/${classroomTemplate.id}`,
+      data, 
+      this.getHttpOptions()
+    );
+  }
 
   //--- TEMPLATES ENDS --//
-
-
 
   // Get HttpOptions
   getHttpOptions() {

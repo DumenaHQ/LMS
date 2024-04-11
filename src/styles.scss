@@ -47,6 +47,29 @@ input::placeholder,
 textarea::placeholder {
   font-family: 'Lato', sans-serif;
 }
+.form_error {
+  color: $error80;
+}
+
+.success-status {
+  color: $success80;
+  background-color: $success20;
+  border-radius: $border-radius1;
+  padding: $m-1 $m-2;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.error-status {
+  color: $secondary100;
+  background-color: $secondary40;
+  border-radius: $border-radius1;
+  padding: $m-1 $m-2;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 500;
+}
 
 /* Buttons Starts */
 .btn {

@@ -15,6 +15,8 @@ export class DisplayDetailsLearnerClassoomComponent implements OnInit {
   dataLoading: boolean = true;
   addCourseToClassroom: boolean = false;
   addLearnerToClassroom: boolean = false;
+  courseQuizResult: boolean = false;
+  course: any;
 
   constructor(
     private classroomService: ClassroomService,
@@ -40,19 +42,23 @@ export class DisplayDetailsLearnerClassoomComponent implements OnInit {
           this.changeDectetorRef.detectChanges();
         },
         error: (e) => console.error(e),
-        // complete: () => {
-        //   this.dataLoading = false;
-        // },
       });
   }
 
   // Take course
-  takeCourse(courseId: string) {
-    console.log(courseId);
-    
+  takeCourse(courseId: string) {    
     this.router.navigate([
       `/learner/library/${courseId}`,
     ]);
+  }
+
+  openViewCourseQuizResult(course: any) {
+    this.course = course;
+    this.courseQuizResult = true;
+  }
+
+  closeViewCourseQuizResult() {
+    this.courseQuizResult = false;
   }
 
   // Tab change

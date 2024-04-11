@@ -1,0 +1,75 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
+></app-alert-popup>
+
+<section class="ds-head dis-flex">
+  <h2 class="ds-head_title clickable" routerLink="/admin/class-templates">Class Template</h2>
+  <i class="bx bx-chevron-right icon"></i>
+  <p>
+    Add Class Template
+  </p>
+</section>
+
+
+<section class="set-info">
+  <div class="set-info_header">
+    <h3 class="text-primary-color">Set the Class Template Information</h3>
+    <p>
+        This information will be displayed to the learners when they are added to the class
+    </p>
+  </div>
+  <form [formGroup]="classTemplateForm">
+    <div class="form_control_container">
+      <div class="form_control">
+        <label for="title">Title <strong class="label-required">*</strong></label>
+        <div class="form_control_field">
+          <input
+            type="text"
+            id="title"
+            name="title"
+            placeholder="Type here"
+            formControlName="title"
+          />
+        </div>
+        <div class="form_error" *ngIf=" isFormSubmitted && classTemplateForm.get('title')?.invalid">
+          <div *ngIf=" isFormSubmitted && classTemplateForm.get('title')?.errors?.required">
+            Title is required.
+          </div>
+        </div>
+      </div>
+      <div class="form_control syllabus">
+        <label for="objectives">Objectives <strong class="label-required">*</strong></label>
+        <div formArrayName="objectives">
+          <div *ngFor="let objective of objectives.controls; let i = index" class="objective_wrapper">
+            <div class="objective_item">
+              <div class="form_control_field">
+                <input type="text" id="objective-{{i}}" formControlName="{{i}}">
+              </div>
+              <button [disabled]="objectives.controls.length === 1" [ngClass]="objectives.controls.length === 1 ? 'btn grey_btn' : 'btn danger_btn'" (click)="removeObjective(i)">Remove</button>
+            </div>
+            <div class="form_error" *ngIf="isFormSubmitted && objectives.controls[i].invalid">
+              <div *ngIf="isFormSubmitted && objectives.controls[i].errors?.required">
+                Objective is required.
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="add_objective success_btn" (click)="addObjective()">Add Objective</button>
+      </div>
+    </div>
+    <div class="form_btns dis-flex">
+      <ng-container *ngIf="!loading">
+        <button class="btn grey_btn" routerLink="/admin/classrooms">Cancel</button>
+        <button class="btn prim_btn" (click)="createClassTemplate()">Save</button>
+      </ng-container>
+      <button
+        class="btn prim_btn"
+        [disabled]="loading"
+        *ngIf="loading"
+      >Processing...</button> 
+    </div>
+  </form>
+</section>

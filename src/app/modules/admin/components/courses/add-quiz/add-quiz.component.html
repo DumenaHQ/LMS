@@ -36,7 +36,6 @@
             </div>
             <div style="overflow: auto; max-height: 300px;">
               <app-loader *ngIf="dataLoading"></app-loader>
-              <p style="margin-bottom: 1rem; padding: 1rem 1rem 0 1rem;"><strong>Note:</strong> Select only one quiz</p>
               <table *ngIf="quizzes?.length > 0">
                 <tr class="table-header">
                   <th>Title</th>
@@ -48,7 +47,7 @@
                 <tr class="table-body" *ngFor="let quiz of quizzes">
                   <td>{{ quiz.title }}</td>
                   <td>{{ quiz.question_count }}</td>
-                  <td><input type="checkbox" name="quiz" [id]="quiz.id" (change)="selectQuiz($event, quiz)" /></td>
+                  <td><input type="radio" name="quiz" [id]="quiz.id" (change)="selectQuiz($event, quiz)" /></td>
                 </tr>
               </table>
               <ng-container *ngIf="quizzes?.length === 0">

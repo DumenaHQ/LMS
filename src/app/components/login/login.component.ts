@@ -116,6 +116,11 @@ export class LoginComponent implements OnInit {
         // Navigate to School Dashboard
         this.router.navigate(['/school']);
         break;
+      // If Instructor
+      case 'instructor':
+        // Navigate to School Dashboard
+        this.router.navigate(['/instructor']);
+        break;
     }
   }
 

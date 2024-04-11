@@ -16,6 +16,13 @@ export class DetailsDisplaySchoolClassroomComponent implements OnInit {
   addCourseToClassroom: boolean = false;
   addLearnerToClassroom: boolean = false;
 
+  deleteModal: boolean = false;
+  deleteUrl: string;
+  deleteRoutePath: string;
+  teacherName: any;
+  courseQuizResult: boolean = false;
+  course: any;
+
   constructor(
     private classroomService: ClassroomService,
     private activatedRoute: ActivatedRoute,
@@ -26,17 +33,16 @@ export class DetailsDisplaySchoolClassroomComponent implements OnInit {
   ngOnInit(): void {
     // Get Current classroom
     this.currentClassroomId = this.activatedRoute.snapshot.params;
-
-    // Get classrooms
+    this.getClassrooms();    
+  }
+  
+  // Get classrooms
+  getClassrooms() {
     this.classroomService
       .getClassroomById(this.currentClassroomId.classroomId)
       .subscribe({
         next: (res: any) => {
           this.classroom = res.data.class;
-          console.log({
-            title: 'Classroom',
-            data: res
-          });
           this.changeDectetorRef.detectChanges();
         },
         error: (e) => console.error(e),
@@ -66,9 +72,34 @@ export class DetailsDisplaySchoolClassroomComponent implements OnInit {
     this.addLearnerToClassroom = false;
   }
 
+  // Remove teacher
+  // Open Confirm Delete Modal
+  openDeleteModal(teacher: any) {
+    // this.teacherName = teacher.username;
+    
+    this.deleteModal = true;
+
+    this.deleteUrl = `classes/${this.currentClassroomId.classroomId}/teacher/remove`;
+    this.deleteRoutePath = '';
+  }
+
+  // Close Confirm Delete Modal
+  closeDeleteModal() {
+    this.deleteModal = false;
+  }
+
   // Edit classroom
   editClassroom() {
     this.router.navigate([`/school/classrooms/${this.currentClassroomId.classroomId}/edit-classroom`]);
+  }
+
+  openViewCourseQuizResult(course: any) {
+    this.course = course;
+    this.courseQuizResult = true;
+  }
+
+  closeViewCourseQuizResult() {
+    this.courseQuizResult = false;
   }
 
   // Tab change

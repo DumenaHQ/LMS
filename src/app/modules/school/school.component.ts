@@ -38,6 +38,12 @@ export class SchoolComponent implements OnInit {
       icon: 'assets/img/svg/forward-item.svg',
       subLinks: [],
     },
+    {
+      name: 'Teachers',
+      link: '/school/teachers',
+      icon: 'assets/img/svg/people-blue.svg',
+      subLinks: [],
+    },
     // {
     //   name: 'Payment',
     //   link: '/school/payment',

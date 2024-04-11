@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 import { ClassroomService } from 'src/app/services/classroom.service';
+import { TeachersService } from 'src/app/services/teachers.service';
 
 @Component({
   selector: 'app-add-school-classroom',
@@ -10,7 +12,7 @@ import { ClassroomService } from 'src/app/services/classroom.service';
 })
 export class AddSchoolClassroomComponent implements OnInit {
 
-  classroomForm: FormGroup;
+  formGroup: FormGroup;
   loading: boolean = false;
   returnUrl = '';
   isSignedin: boolean = false;
@@ -21,28 +23,38 @@ export class AddSchoolClassroomComponent implements OnInit {
   selectedHeaderPhotoName: string = '';
   file: File;
   templates: any;
+  teachers: any;
   isFormSubmitted: boolean = false;
+  user: any;
 
   // previewImage: any;
   // showPreviewImage: boolean = false;
 
   constructor(
+    private teachersService: TeachersService,
     private classroomService: ClassroomService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    // Program form
-    this.classroomForm = this.formBuilder.group({
+    let userData = this.authService.getUser();
+    this.user = userData.user;
+    
+    this.initForm();
+    this.getClassroomTemplates();
+    this.getTeachers();
+  }
+
+  // Initialize form
+  initForm() {
+    this.formGroup = this.formBuilder.group({
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
       template: [''],
-      thumbnail: [''],
-      header_photo: [''],
+      teacher: [''],
     });
-
-    this.getClassroomTemplates();
   }
 
   // Get classroom templates
@@ -50,7 +62,16 @@ export class AddSchoolClassroomComponent implements OnInit {
     this.classroomService.getClassroomTemplates().subscribe({
       next: (res: any) => {
         this.templates = res.data.classTemplates;
-        console.log(res);
+      },
+      error: (e) => console.error(e),
+    });
+  }
+
+  // Get teachers
+  getTeachers() {
+    this.teachersService.fetchTeachersInSchool(this.user.id).subscribe({
+      next: (res: any) => {
+        this.teachers = res.data.teachers;
       },
       error: (e) => console.error(e),
     });
@@ -62,9 +83,7 @@ export class AddSchoolClassroomComponent implements OnInit {
     // Set file name
     this.selectedThumbnailName = this.file.name;
 
-    console.log(this.selectedThumbnailName);
-
-    this.classroomForm.patchValue({thumbnail: this.selectedThumbnailName})
+    this.formGroup.patchValue({thumbnail: this.selectedThumbnailName})
     
   }
 
@@ -73,9 +92,7 @@ export class AddSchoolClassroomComponent implements OnInit {
     this.file = event.target.files[0] as File;
     // Set file name
     this.selectedHeaderPhotoName = this.file.name;
-    
-    console.log(this.selectedHeaderPhotoName);
-    this.classroomForm.patchValue({header_photo: this.selectedHeaderPhotoName})
+    this.formGroup.patchValue({header_photo: this.selectedHeaderPhotoName})
 
   }
 
@@ -89,37 +106,23 @@ export class AddSchoolClassroomComponent implements OnInit {
     this.isFormSubmitted = true;
 
     // If Form is invalid
-    if (this.classroomForm.invalid) {
+    if (this.formGroup.invalid) {
       this.loading = false;
 
       return;
     }
 
-    // var formData: any = new FormData();
-    // formData.append('name', this.classroomForm.value.name);
-    // formData.append('description', this.classroomForm.value.description);
-    // // formData.append('thumbnail', this.classroomForm.value.thumbnail);
-    // // formData.append('header_photo', this.classroomForm.value.header_photo);
-
-    // for (var pair of formData.entries()) {
-    //   console.log(pair[0] + ', ' + pair[1]);
-    //   console.log(pair)
-    // }
+    const { value } = this.formGroup
 
     let payload = {
-      name: this.classroomForm.value.name,
-      description: this.classroomForm.value.description,
-      template: this.classroomForm.value.template
+      name: value.name,
+      description: value.description,
+      template: value.template,
+      teacher_id: value.teacher,
     }
 
-    console.log(payload);
-    
-
-    // Send users data
     this.classroomService.addClassroom(payload).subscribe(
       (res: any) => {
-        console.log(res);
-
         // Show alert
         if (res.status === true) {
           this.showAlertPopup(res.message, 'success');

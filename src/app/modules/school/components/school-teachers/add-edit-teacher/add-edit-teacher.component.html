@@ -1,0 +1,120 @@
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertColor"
+></app-alert-popup>
+
+<section class="ds-head dis-flex">
+  <h2 class="ds-head_title clickable" routerLink="/school/classrooms">
+    Teachers
+  </h2>
+  <i class="bx bx-chevron-right icon"></i>
+  <p>Add Teacher</p>
+</section>
+
+<section class="set-info">
+  <div class="set-info_header">
+    <h3 class="text-primary-color">Set Teacher Information</h3>
+    <p>This information will be displayed to the school</p>
+  </div>
+  <form [formGroup]="teacherForm">
+    <div class="form_control_container">
+      <div class="form_control">
+        <label for="first_name"
+          >First Name <strong class="label-required">*</strong></label
+        >
+        <div class="form_control_field">
+          <input
+            type="text"
+            id="first_name"
+            name="first_name"
+            placeholder=""
+            formControlName="firstName"
+          />
+        </div>
+        <div class="form_error">
+          <div
+            *ngIf="
+              formSubmitAttempted &&
+              teacherForm.get('firstName')?.errors?.required
+            "
+          >
+            First name is required.
+          </div>
+        </div>
+      </div>
+
+      <div class="form_control">
+        <label for="last_name"
+          >Last Name <strong class="label-required">*</strong></label
+        >
+        <div class="form_control_field">
+          <input
+            type="text"
+            id="last_name"
+            name="last_name"
+            placeholder=""
+            formControlName="lastName"
+          />
+        </div>
+        <div class="form_error">
+          <div
+            *ngIf="
+              formSubmitAttempted &&
+              teacherForm.get('lastName')?.errors?.required
+            "
+          >
+            Last name is required.
+          </div>
+        </div>
+      </div>
+
+      <div class="form_control">
+        <label for="email"
+          >Email <strong class="label-required">*</strong></label
+        >
+        <div class="form_control_field">
+          <input
+            type="text"
+            id="email"
+            name="email"
+            placeholder=""
+            formControlName="email"
+          />
+        </div>
+
+        <div class="form_error">
+          <div
+            *ngIf="
+              formSubmitAttempted &&
+              teacherForm.get('email')?.errors?.required
+            "
+          >
+            Email is required.
+          </div>
+          <div
+            *ngIf="
+              formSubmitAttempted &&
+                teacherForm.get('email')?.errors?.email
+            "
+          >
+            Enter valid email.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form_btns dis-flex">
+      <ng-container *ngIf="!loading">
+        <button class="btn grey_btn" routerLink="/school/teachers">
+          Cancel
+        </button>
+        <button class="btn prim_btn" (click)="createTeacher()">Save</button>
+      </ng-container>
+      <button class="btn prim_btn" [disabled]="loading" *ngIf="loading">
+        Processing...
+      </button>
+    </div>
+  </form>
+</section>

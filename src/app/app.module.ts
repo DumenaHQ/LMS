@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +15,7 @@ import { SetNewPasswordComponent } from './components/set-new-password/set-new-p
 import { PasswordResetComponent } from './components/password-reset/password-reset.component';
 import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
 import { VerifyCheckComponent } from './components/verify-check/verify-check.component';
+import { AuthInterceptor } from './interceptors/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,9 @@ import { VerifyCheckComponent } from './components/verify-check/verify-check.com
     ReactiveFormsModule,
     SharedModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

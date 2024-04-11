@@ -7,3 +7,10 @@
 >
   <i class="bx bx-chevron-up icon"></i>
 </a>
+
+<!-- Alert message -->
+<app-alert-popup
+  *ngIf="alertShowing"
+  [alertMessage]="alertMessage"
+  [alertColor]="alertType"
+></app-alert-popup>
