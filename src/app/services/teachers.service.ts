@@ -15,7 +15,6 @@ export class TeachersService {
     return this.http.post(
       `${this.baseUrl}users/teacher`,
       data,
-      this.getHttpOptions()
     );
   }
 
@@ -29,7 +28,6 @@ export class TeachersService {
   fetchTeachersInSchool(data: any) {
     return this.http.get(
       `${this.baseUrl}schools/${data.id}/teachers`,
-      // this.getHttpOptions()
     );
   }
 
