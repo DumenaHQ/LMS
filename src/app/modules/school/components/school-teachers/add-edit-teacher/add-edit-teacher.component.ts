@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
+import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { TeachersService } from 'src/app/services/teachers.service';
 
 @Component({
@@ -21,6 +22,7 @@ export class AddEditTeacherComponent implements OnInit {
   constructor(
     private teacherFormBuilder: FormBuilder,
     private teachersService: TeachersService,
+    private appAlertService: AppAlertService,
     private router: Router,
   ) {}
 
@@ -47,7 +49,10 @@ export class AddEditTeacherComponent implements OnInit {
             this.teacherForm.reset();
             this.formSubmitAttempted = false;
 
-            this.showAlertPopup(res.message, 'success');
+            this.appAlertService.showAlert(
+              res.message,
+              AlertType.Success
+            );
 
             setTimeout(() => {
               this.router.navigate([`school/teachers`])
@@ -55,7 +60,10 @@ export class AddEditTeacherComponent implements OnInit {
           }
         },
         (error) => {
-          console.log(error);
+          this.appAlertService.showAlert(
+            error.error.error.errors[0].message || 'Something went wrong. Please try again.',
+            AlertType.Error
+          );
         }
       );
     }
