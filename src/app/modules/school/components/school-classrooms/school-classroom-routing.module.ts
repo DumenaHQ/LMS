@@ -15,7 +15,7 @@ const routes: Routes = [
     },
   },
   {
-    path: 'classrooms/add-classroom',
+    path: 'add-classroom',
     component: AddSchoolClassroomComponent,
     data: {
       title: 'Add Classroom',
@@ -23,7 +23,7 @@ const routes: Routes = [
     },
   },
   {
-    path: 'classrooms/:classroomId/view-classroom',
+    path: ':classroomId/view-classroom',
     component: DetailsDisplaySchoolClassroomComponent,
     data: {
       title: 'View Classroom',
@@ -31,7 +31,7 @@ const routes: Routes = [
     },
   },
   {
-    path: 'classrooms/:classroomId/edit-classroom',
+    path: ':classroomId/edit-classroom',
     component: EditSchoolClassroomComponent,
     data: {
       title: 'Edit Classroom',
