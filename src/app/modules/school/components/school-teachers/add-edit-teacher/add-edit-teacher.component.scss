@@ -2,6 +2,9 @@
 @import '../../../../../../assets/css/mixins.scss';
 @import '../../../../../../assets/css/dashboard.scss';
 
+@import '../../../../../../assets/css/auth.scss';
+@import '../../../../../../assets/css/default.scss';
+
 @mixin hover {
   transition: all .2s;
   &:hover {

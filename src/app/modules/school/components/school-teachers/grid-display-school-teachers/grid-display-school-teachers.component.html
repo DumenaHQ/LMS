@@ -43,6 +43,7 @@
 <section class="programs">
   <app-loader *ngIf="dataLoading"></app-loader>
   <div class="courses_dislist" style="overflow-x: auto" *ngIf="!dataLoading">
+    <ng-container *ngIf="(teachers || []).length > 0">
     <table>
       <tr class="table-header">
         <th>Name</th>
@@ -51,7 +52,6 @@
         <th>Date Enrolled</th>
         <th></th>
       </tr>
-      <ng-container *ngIf="(teachers || []).length > 0">
         <tr class="table-body" *ngFor="let teacher of teachers">
           <td class="name">
             <div class="dis-flex">
@@ -91,8 +91,8 @@
               </div>
           </td>
         </tr>
-      </ng-container>
-    </table>
+      </table>
+    </ng-container>
     <!-- <div style="text-align: center; padding: 1rem;" *ngIf="teachers?.length === 0">
       <span>No Teachers found</span>
     </div> -->
