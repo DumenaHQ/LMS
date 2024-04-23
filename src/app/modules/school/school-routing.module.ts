@@ -34,38 +34,6 @@ const routes: Routes = [
         },
       },
       {
-        path: 'classrooms',
-        component: DisplaySchoolClassroomsComponent,
-        data: {
-          title: 'Classrooms',
-          description: 'Description Meta Tag Content',
-        },
-      },
-      {
-        path: 'classrooms/add-classroom',
-        component: AddSchoolClassroomComponent,
-        data: {
-          title: 'Add Classroom',
-          description: 'Description Meta Tag Content',
-        },
-      },
-      {
-        path: 'classrooms/:classroomId/view-classroom',
-        component: DetailsDisplaySchoolClassroomComponent,
-        data: {
-          title: 'View Classroom',
-          description: 'Description Meta Tag Content',
-        },
-      },
-      {
-        path: 'classrooms/:classroomId/edit-classroom',
-        component: EditSchoolClassroomComponent,
-        data: {
-          title: 'Edit Classroom',
-          description: 'Description Meta Tag Content',
-        },
-      },
-      {
         path: 'students',
         component: SchoolStudentsComponent,
         data: {
@@ -96,6 +64,14 @@ const routes: Routes = [
           title: 'Programs',
           description: 'Description Meta Tag Content',
         },
+      },
+      {
+        path: 'classrooms',
+        loadChildren: () => import('../school/components/school-classrooms/school-classroom.module').then((m) => m.SchoolClassroomModule),
+        data: {
+          title: 'Classrooms',
+          description: 'Description Meta Tag Content',
+        }
       },
       {
         path: 'teachers',
