@@ -80,16 +80,14 @@
         <div class="form_error">
           <div
             *ngIf="
-              formSubmitAttempted &&
-              teacherForm.get('email')?.errors?.required
+              formSubmitAttempted && teacherForm.get('email')?.errors?.required
             "
           >
             Email is required.
           </div>
           <div
             *ngIf="
-              formSubmitAttempted &&
-                teacherForm.get('email')?.errors?.email
+              formSubmitAttempted && teacherForm.get('email')?.errors?.email
             "
           >
             Enter valid email.
@@ -97,6 +95,11 @@
         </div>
       </div>
     </div>
+
+    <br />
+    <p class="message col-2" *ngIf="errorMessage.length > 0">
+      {{ errorMessage }}
+    </p>
 
     <div class="form_btns dis-flex">
       <ng-container *ngIf="!loading">
