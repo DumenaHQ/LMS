@@ -24,7 +24,7 @@ export class ClassroomService {
     return this.http.post(
       `${this.baseUrl}classes`,
       data, 
-      this.getHttpOptions()
+      this.getMultipartHttpOptions()
     );
   }
 
@@ -54,7 +54,7 @@ export class ClassroomService {
   }
   
   editClassroom(data: any, classroomId: any) {
-    return this.http.put(`${this.baseUrl}classes/${classroomId}`, data, this.getHttpOptions());
+    return this.http.put(`${this.baseUrl}classes/${classroomId}`, data, this.getMultipartHttpOptions());
   }
 
   getQuizResultsByQuizId(classroomId: string, quizId: string) {
@@ -110,6 +110,17 @@ export class ClassroomService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
+        Authorization: 'bearer ' + localStorage.getItem('token'),
+      }),
+      // mode: 'cors' // enables CORS mode
+    };
+    return httpOptions;
+  }
+
+  getMultipartHttpOptions() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'multipart/form-data',
         Authorization: 'bearer ' + localStorage.getItem('token'),
       }),
       // mode: 'cors' // enables CORS mode
