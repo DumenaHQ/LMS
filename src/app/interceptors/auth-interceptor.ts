@@ -60,6 +60,11 @@ export class AuthInterceptor implements HttpInterceptor {
       this.router.navigate(['/login']);
       return throwError(error);
     }
+
+    this.appAlertService.showAlert(
+      error.error ? error.error.error.errors[0].message : error.message,
+      AlertType.Error
+    );
     return throwError(error);
   }
 }

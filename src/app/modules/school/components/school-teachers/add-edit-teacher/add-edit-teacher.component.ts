@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
+import {
+  AlertType,
+  AppAlertService,
+} from 'src/app/services/app-alerts/app-alert.service';
 import { TeachersService } from 'src/app/services/teachers.service';
 
 @Component({
@@ -13,6 +17,7 @@ export class AddEditTeacherComponent implements OnInit {
   isAlert: boolean = false;
   alertMessage: string;
   alertColor: string;
+  errorMessage = '';
 
   teacherForm: FormGroup;
   loading: boolean = false;
@@ -21,7 +26,8 @@ export class AddEditTeacherComponent implements OnInit {
   constructor(
     private teacherFormBuilder: FormBuilder,
     private teachersService: TeachersService,
-    private router: Router,
+    private appAlertService: AppAlertService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -36,32 +42,30 @@ export class AddEditTeacherComponent implements OnInit {
     this.formSubmitAttempted = true;
     if (this.teacherForm.valid) {
       const payload = {
-        "fullname": `${this.teacherForm.value.firstName} ${this.teacherForm.value.lastName}`,
-        "email":  this.teacherForm.value.email,
-        "user_type": "instructor",
-    };
+        fullname: `${this.teacherForm.value.firstName} ${this.teacherForm.value.lastName}`,
+        email: this.teacherForm.value.email,
+        user_type: 'instructor',
+      };
 
-      this.teachersService.createTeacherForSchool(payload).subscribe(
-        (res: any) => {
+      this.teachersService
+        .createTeacherForSchool(payload)
+        .subscribe((res: any) => {
           if (res) {
             this.teacherForm.reset();
             this.formSubmitAttempted = false;
 
-            this.showAlertPopup(res.message, 'success');
+            this.appAlertService.showAlert(res.message, AlertType.Success);
 
             setTimeout(() => {
-              this.router.navigate([`school/teachers`])
+              this.router.navigate([`school/teachers`]);
             }, 3000);
           }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        }, (error) => {
+          this.errorMessage = error.error.error.errors[0].message;
+        });
     }
   }
 
-  
   showAlertPopup(message: string, color: string) {
     // Set message
     this.alertMessage = message;
