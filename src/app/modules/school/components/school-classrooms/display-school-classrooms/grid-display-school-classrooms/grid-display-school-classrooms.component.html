@@ -11,40 +11,35 @@
         <div class="program_card_item_details" *ngIf="classroom.name !== undefined">
           <div class="program_card_item_details_right">
             <div class="program_card_item_details_right_header">
-              <h5
-                class="title clickable"
-                [title]="classroom?.name"
-                (click)="displayClassroom(classroom?.id)"
-              >
-                {{
-                  classroom?.name.length > 20
-                    ? classroom?.name.slice(0, 20) + "..."
-                    : classroom?.name
-                }}
-              </h5>
-              <p>
-                {{ classroom?.description }}
-              </p>
+              <div class="" style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                <h5
+                  class="title clickable"
+                  [title]="classroom?.name"
+                  (click)="displayClassroom(classroom?.id)"
+                >
+                  {{
+                    classroom?.name | truncate
+                  }}
+                </h5>
+              <p [className]="checkActiveSession(classroom) ? 'success-status' : 'error-status'">{{ (activeSession ? activeSession.title : "On Break") | uppercase }}</p>
+              </div>
             </div>
             <ul class="dis-flex">
               <li>
-                <p class="body-2-bold">{{ classroom?.course_count }}</p>
-                <p class="body-3-regular">{{classroom?.course_count > 1 ? 'Courses' : 'Course'}}</p>
+                <p class="body-2-bold">{{ classroom?.course_count || '0' }}</p>
+                <p class="body-3-regular">{{(classroom?.course_count ?? 0) > 1 ? 'Courses' : 'Course'}}</p>
               </li>
-              <!-- <li>
-                <p class="body-2-bold">{{ classroom?.school_count }}</p>
-                <p class="body-3-regular">{{classroom?.school_count > 1 ? 'Schools' : 'School'}}</p>
-              </li> -->
+
               <li>
-                <p class="body-2-bold">{{ classroom?.learner_count }}</p>
-                <p class="body-3-regular">{{classroom?.learner_count > 1 ? 'Learners' : 'Learner'}}</p>
+                <p class="body-2-bold">{{ classroom?.learner_count || '0' }}</p>
+                <p class="body-3-regular">{{(classroom?.learner_count || 0) > 1 ? 'Learners' : 'Learner'}}</p>
               </li>
             </ul>
           </div>
   
           <div class="program_card_item_details_left">
             <div class="students">
-              <p class="body-2-regular title">Total {{classroom?.learner_count > 1 ? 'Learners' : 'Learner'}} ({{ classroom?.learner_count }})</p>
+              <p class="body-2-regular title">Total {{(classroom?.learner_count || 0) > 1 ? 'Learners' : 'Learner'}} ({{ classroom?.learner_count || '0' }})</p>
               <ul class="students_list dis-flex">
                 <li>
                   <img

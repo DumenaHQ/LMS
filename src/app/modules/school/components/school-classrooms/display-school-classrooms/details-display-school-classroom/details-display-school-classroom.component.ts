@@ -1,20 +1,21 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClassroomService } from 'src/app/services/classroom.service';
+import { ClassroomModel, Term } from '../models/classroom.model';
 
 @Component({
   selector: 'app-details-display-school-classroom',
   templateUrl: './details-display-school-classroom.component.html',
-  styleUrls: ['./details-display-school-classroom.component.scss']
+  styleUrls: ['./details-display-school-classroom.component.scss'],
 })
 export class DetailsDisplaySchoolClassroomComponent implements OnInit {
-
   contentId: any = 'courses';
   currentClassroomId: any;
-  classroom: any;
+  classroom?: ClassroomModel;
   dataLoading: boolean = true;
   addCourseToClassroom: boolean = false;
   addLearnerToClassroom: boolean = false;
+  activeSession?: Term;
 
   deleteModal: boolean = false;
   deleteUrl: string;
@@ -33,9 +34,17 @@ export class DetailsDisplaySchoolClassroomComponent implements OnInit {
   ngOnInit(): void {
     // Get Current classroom
     this.currentClassroomId = this.activatedRoute.snapshot.params;
-    this.getClassrooms();    
+    this.getClassrooms();
   }
-  
+
+  // Check Active Session
+  checkActiveSession(classroom?: ClassroomModel) {
+    this.activeSession =
+      this.classroomService.checkClassActiveSession(classroom);
+
+    return this.activeSession;
+  }
+
   // Get classrooms
   getClassrooms() {
     this.classroomService
@@ -66,7 +75,7 @@ export class DetailsDisplaySchoolClassroomComponent implements OnInit {
   openAddLearnerToClassroomModal() {
     this.addLearnerToClassroom = true;
   }
-  
+
   // Close add learner to classroom modal
   closeAddLearnerToClassroomModal() {
     this.addLearnerToClassroom = false;
@@ -76,7 +85,7 @@ export class DetailsDisplaySchoolClassroomComponent implements OnInit {
   // Open Confirm Delete Modal
   openDeleteModal(teacher: any) {
     // this.teacherName = teacher.username;
-    
+
     this.deleteModal = true;
 
     this.deleteUrl = `classes/${this.currentClassroomId.classroomId}/teacher/remove`;
@@ -90,7 +99,9 @@ export class DetailsDisplaySchoolClassroomComponent implements OnInit {
 
   // Edit classroom
   editClassroom() {
-    this.router.navigate([`/school/classrooms/${this.currentClassroomId.classroomId}/edit-classroom`]);
+    this.router.navigate([
+      `/school/classrooms/${this.currentClassroomId.classroomId}/edit-classroom`,
+    ]);
   }
 
   openViewCourseQuizResult(course: any) {
@@ -106,5 +117,4 @@ export class DetailsDisplaySchoolClassroomComponent implements OnInit {
   tabChange(ids: any) {
     this.contentId = ids;
   }
-
 }

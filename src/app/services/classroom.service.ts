@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ClassTemplateDetailModel } from '../modules/admin/components/class-template/display-admin-class-template/details-display-admin-class-template/interfaces/class-template.model';
+import { ClassroomModel } from '../modules/school/components/school-classrooms/display-school-classrooms/models/classroom.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +13,20 @@ export class ClassroomService {
   baseUrl: string = environment.baseUrl;
 
   constructor(private http: HttpClient) { }
+
+  checkClassActiveSession(classroom?: ClassroomModel) {
+    return classroom && (classroom.terms || []).find((term) => {
+      const now = new Date();
+
+      // Check if current date is between start date and end date
+       return (
+        term.start_date &&
+        term.end_date &&
+        new Date(term.start_date) <= now &&
+        new Date(term.end_date) >= now
+      );
+    });
+  }
 
   getClassrooms() {
     return this.http.get(`${this.baseUrl}classes`, this.getHttpOptions());

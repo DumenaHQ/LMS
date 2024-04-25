@@ -6,19 +6,15 @@
 ></app-alert-popup>
 
 <section class="ds-head dis-flex">
-    <h2 class="ds-head_title clickable" routerLink="/school/classrooms">Classrooms</h2>
-    <i class="bx bx-chevron-right icon"></i>
-    <p class="clickable" [title]="classroom?.name">
-      {{
-        classroom?.name.length > 20
-          ? classroom?.name.slice(0, 20) + "..."
-          : classroom?.name
-      }}
-    </p>
-    <i class="bx bx-chevron-right icon"></i>
-    <p class="clickable">
-      Edit-classroom
-    </p>
+  <h2 class="ds-head_title clickable" routerLink="/school/classrooms">
+    Classrooms
+  </h2>
+  <i class="bx bx-chevron-right icon"></i>
+  <p class="clickable" [title]="classroom?.name">
+    {{ classroom?.name | truncate }}
+  </p>
+  <i class="bx bx-chevron-right icon"></i>
+  <p class="clickable">Edit-classroom</p>
 </section>
 
 <section>
@@ -35,6 +31,15 @@
             formControlName="name"
           />
         </div>
+        <div class="form_error">
+          <div
+            *ngIf="
+              formSubmitAttempted && formGroup.get('name')?.errors?.required
+            "
+          >
+            Name is required.
+          </div>
+        </div>
       </div>
       <div class="form_control">
         <label for="template">Classroom Template</label>
@@ -45,6 +50,15 @@
               {{ item.title }}
             </option>
           </select>
+        </div>
+        <div class="form_error">
+          <div
+            *ngIf="
+              formSubmitAttempted && formGroup.get('template')?.errors?.required
+            "
+          >
+            Template is required.
+          </div>
         </div>
       </div>
       <div class="form_control description">
@@ -60,6 +74,16 @@
             formControlName="description"
           ></textarea>
         </div>
+        <div class="form_error">
+          <div
+            *ngIf="
+              formSubmitAttempted &&
+              formGroup.get('description')?.errors?.required
+            "
+          >
+            Description is required.
+          </div>
+        </div>
       </div>
       <div class="form_control">
         <label for="teacher">Teacher</label>
@@ -71,7 +95,18 @@
             </option>
           </select>
         </div>
+
+        <div class="form_error">
+          <div
+            *ngIf="
+              formSubmitAttempted && formGroup.get('teacher')?.errors?.required
+            "
+          >
+            Teacher is required.
+          </div>
+        </div>
       </div>
+
       <div class="form_control">
         <label for="thumbnail">Header Photo</label>
         <div class="">
@@ -92,12 +127,26 @@
               alt=""
             />
             <p class="body-3-regular text-primary-color">
-              {{ selectedHeaderPhotoName === '' ? 'Select a picture' : selectedHeaderPhotoName }}
+              {{
+                selectedHeaderPhotoName === ""
+                  ? "Select a picture"
+                  : selectedHeaderPhotoName
+              }}
             </p>
+          </div>
+          <div class="form_error">
+            <div
+              *ngIf="
+                formSubmitAttempted &&
+                formGroup.get('header_photo')?.errors?.required
+              "
+            >
+              Header Photo is required.
+            </div>
           </div>
         </div>
       </div>
-      
+
       <div class="form_control">
         <label for="thumbnail">Thumbnail</label>
         <div class="">
@@ -118,19 +167,87 @@
               alt=""
             />
             <p class="body-3-regular text-primary-color">
-              {{ selectedThumbnailName === '' ? 'Select a picture' : selectedThumbnailName }}
+              {{
+                selectedThumbnailName === ""
+                  ? "Select a picture"
+                  : selectedThumbnailName
+              }}
             </p>
+          </div>
+
+          <div class="form_error">
+            <div
+              *ngIf="
+                formSubmitAttempted &&
+                formGroup.get('thumbnail')?.errors?.required
+              "
+            >
+            Thumbnail is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h4 class="" style="margin-top: 14px">Active Term</h4>
+      <div class=""></div>
+      <div class="form_control">
+        <label for="active_term_start_date">Starte Date</label>
+
+        <div class="form_control_field">
+          <div class="">
+            <input
+              type="date"
+              name="active_term_start_date"
+              id=""
+              formControlName="active_term_start_date"
+            />
+          </div>
+
+          <div class="form_error">
+            <div
+              *ngIf="
+                formSubmitAttempted &&
+                formGroup.get('active_term_start_date')?.errors?.required
+              "
+            >
+              Start Date is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form_control">
+        <label for="active_term_start_date">End Date</label>
+        <div class="form_control_field">
+          <div class="">
+            <input
+              type="date"
+              name="active_term_start_date"
+              id=""
+              formControlName="active_term_end_date"
+            />
+          </div>
+
+          <div class="form_error">
+            <div
+              *ngIf="
+                formSubmitAttempted &&
+                formGroup.get('active_term_end_date')?.errors?.required
+              "
+            >
+              End Date is required.
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div class="form_btns">
-        <button class="btn prim_btn" *ngIf="!loading" (click)="editClassroom()">Save</button>
-        <button
-            class="btn prim_btn"
-            [disabled]="loading"
-            *ngIf="loading"
-        >Processing...</button> 
+      <button class="btn prim_btn" *ngIf="!loading" (click)="editClassroom()">
+        Save
+      </button>
+      <button class="btn prim_btn" [disabled]="loading" *ngIf="loading">
+        Processing...
+      </button>
     </div>
   </form>
 </section>
