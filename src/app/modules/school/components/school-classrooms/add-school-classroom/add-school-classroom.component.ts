@@ -98,16 +98,10 @@ export class AddSchoolClassroomComponent implements OnInit {
 
   // Create program
   createClassroom() {
-    // Set loading to true
     this.loading = true;
-
-    // Set submitted to true
     this.isFormSubmitted = true;
-
-    // If Form is invalid
     if (this.formGroup.invalid) {
       this.loading = false;
-
       return;
     }
 
@@ -124,26 +118,20 @@ export class AddSchoolClassroomComponent implements OnInit {
       formData.append('thumbnail', this.thumbnailFile);
     }
 
-    this.classroomService.addClassroom(formData).subscribe(
-      (res: any) => {
-        // Show alert
+    this.classroomService.addClassroom(formData)
+      .then(res => {
         if (res.status === true) {
           this.showAlertPopup(res.message, 'success');
           setTimeout(() => {
             this.router.navigate(['school/classrooms']);
           }, 3000);
         }
-        
-      },
-      (error: any) => {
+      })
+      .catch(error => {
         console.log(error);
-        // Show error message
         this.showAlertPopup(error.error.message, 'error');
-
-        // Set loading to false
         this.loading = false;
-      }
-    );
+      });
   }
 
   // Show alert

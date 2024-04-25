@@ -20,12 +20,20 @@ export class ClassroomService {
     return this.http.get(`${this.baseUrl}classes/${classroomId}`, this.getHttpOptions());
   }
   
-  addClassroom(data: any) {
-    return this.http.post(
-      `${this.baseUrl}classes`,
-      data, 
-      this.getMultipartHttpOptions()
-    );
+  addClassroom(formData: FormData): Promise<any> {
+    const headers = new Headers();
+    headers.append('Authorization', 'bearer ' + localStorage.getItem('token'));
+    return fetch(`${this.baseUrl}classes`, {
+      method: 'POST',
+      headers: headers,
+      body: formData
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    });
   }
 
   addCourseToClassroom(data: any, classroomId: any) {
@@ -53,8 +61,20 @@ export class ClassroomService {
       );
   }
   
-  editClassroom(data: any, classroomId: any) {
-    return this.http.put(`${this.baseUrl}classes/${classroomId}`, data, this.getMultipartHttpOptions());
+  editClassroom(formData: FormData, classroomId: any) {
+    const headers = new Headers();
+    headers.append('Authorization', 'bearer ' + localStorage.getItem('token'));
+    return fetch(`${this.baseUrl}classes/${classroomId}`, {
+      method: 'PUT',
+      headers: headers,
+      body: formData
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    });
   }
 
   getQuizResultsByQuizId(classroomId: string, quizId: string) {
@@ -105,22 +125,33 @@ export class ClassroomService {
 
   //--- TEMPLATES ENDS --//
 
+  makeHttpRequest(body?: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', `${this.baseUrl}classes`);
+      // xhr.setRequestHeader('Content-Type', 'multipart/form-data');
+      xhr.setRequestHeader('Authorization', 'bearer ' + localStorage.getItem('token'));
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            resolve(JSON.parse(xhr.responseText));
+          } else {
+            reject(xhr.statusText);
+          }
+        }
+      };
+      xhr.onerror = () => {
+        reject(xhr.statusText);
+      };
+      xhr.send(JSON.stringify(body));
+    });
+  }
+
   // Get HttpOptions
   getHttpOptions() {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: 'bearer ' + localStorage.getItem('token'),
-      }),
-      // mode: 'cors' // enables CORS mode
-    };
-    return httpOptions;
-  }
-
-  getMultipartHttpOptions() {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'multipart/form-data',
         Authorization: 'bearer ' + localStorage.getItem('token'),
       }),
       // mode: 'cors' // enables CORS mode

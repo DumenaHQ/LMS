@@ -136,9 +136,8 @@ export class EditSchoolClassroomComponent implements OnInit {
       formData.append('thumbnail', this.thumbnailFile);
     }
 
-    this.classroomService.editClassroom(formData, this.currentClassroom.classroomId).subscribe(
-      (res: any) => {
-        // Show alert
+    this.classroomService.editClassroom(formData, this.currentClassroom.classroomId)
+      .then(res => {
         if (res.status === true) {
           this.alertMessage = res.message;
           this.showAlertPopup(res.message, 'success');
@@ -150,16 +149,15 @@ export class EditSchoolClassroomComponent implements OnInit {
 
         // Set loading to false
         this.loading = false;
-      },
-      (error: any) => {
+      })
+      .catch(error => {
         console.log(error);
+        // Show error message
         this.showAlertPopup(error.error.message, 'error');
 
         // Set loading to false
         this.loading = false;
-
-      }
-    );
+      });
   }
 
 
