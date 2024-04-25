@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClassroomService } from 'src/app/services/classroom.service';
 import { TeachersService } from 'src/app/services/teachers.service';
+import { ClassroomModel } from '../display-school-classrooms/models/classroom.model';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-edit-school-classroom',
@@ -12,11 +14,13 @@ import { TeachersService } from 'src/app/services/teachers.service';
 })
 export class EditSchoolClassroomComponent implements OnInit {
 
+  // classroom: ClassroomModel;
   classroom: any;
   currentClassroom: any;
   alertMessage: string = '';
   alertColor: string = '';
   isAlert: boolean = false;
+  formSubmitAttempted: boolean = false;
   loading: boolean = false;
   teachers: any;
   user: any;
@@ -44,6 +48,8 @@ export class EditSchoolClassroomComponent implements OnInit {
     teacher: [''],
     header_photo: [''],
     thumbnail: [''],
+    active_term_start_date: [''],
+    active_term_end_date: [''],
   });
 
   ngOnInit(): void {
@@ -60,12 +66,14 @@ export class EditSchoolClassroomComponent implements OnInit {
   // Initialize form
   initForm() {
     this.formGroup = this.formBuilder.group({
-      name: [this.classroom?.name ],
-      template: [this.classroom?.template?.id],
-      description: [this.classroom?.description],
-      teacher: [this.classroom?.teacher?.id],
-      header_photo: [this.classroom?.header_photo],
-      thumbnail: [this.classroom?.thumbnail],
+      name: [this.classroom?.name, [Validators.required]],
+      template: [this.classroom?.template?.id, [Validators.required]],
+      description: [this.classroom?.description, [Validators.required]],
+      teacher: [this.classroom?.teacher?.id, [Validators.required]],
+      header_photo: [this.classroom?.header_photo, [Validators.required]],
+      thumbnail: [this.classroom?.thumbnail, [Validators.required]],
+      active_term_start_date: [moment(this.classroom?.active_term_start_date).format('YYYY-MM-DD'), [Validators.required]],
+      active_term_end_date: [moment(this.classroom?.active_term_end_date).format('YYYY-MM-DD'), [Validators.required]],
     });
   }
 
@@ -119,16 +127,34 @@ export class EditSchoolClassroomComponent implements OnInit {
   }
 
   editClassroom() {
+    if (this.formGroup.invalid) {
+      this.formSubmitAttempted = true;
+      return;
+    }
+    
     // Set loading to true
     this.loading = true;
 
     const { value } = this.formGroup;
+
+    if (!value.active_term_start_date || !value.active_term_end_date) {
+      return;
+    }
+
+    const startDate = value.active_term_start_date;
+    const endDate = value.active_term_end_date;
+
+    const start = startDate && new Date(startDate);
+    const end = endDate && new Date(endDate);
+
 
     var formData: any = new FormData();
     formData.append('name', value.name);
     formData.append('description', value.description);
     formData.append('template', value.template);
     formData.append('teacher_id', value.teacher);
+    formData.append('active_term_start_date', new Date(start).toISOString());
+    formData.append('active_term_end_date', new Date(end).toISOString());
     if (this.headerPhotoFile) {
       formData.append('header_photo', this.headerPhotoFile);
     }

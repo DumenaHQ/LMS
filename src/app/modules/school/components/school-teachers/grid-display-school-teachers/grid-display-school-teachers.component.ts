@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProgramsService } from 'src/app/services/programs.service';
 import { TeachersService } from 'src/app/services/teachers.service';
-import { TeacherlModel } from '../models/teacher.model';
+import { TeacherModel } from '../models/teacher.model';
 
 @Component({
   selector: 'app-grid-display-school-teachers',
@@ -18,7 +18,7 @@ import { TeacherlModel } from '../models/teacher.model';
 })
 export class GridDisplaySchoolTeachersComponent implements OnInit {
   dataLoading: boolean = true;
-  teachers!: TeacherlModel[];
+  teachers!: TeacherModel[];
   user: any;
   loading: boolean = false;
   isAlert: boolean = false;
@@ -87,7 +87,7 @@ export class GridDisplaySchoolTeachersComponent implements OnInit {
   }
 
   // Open Confirm Delete Modal
-  openDeleteModal(teacher: TeacherlModel) {
+  openDeleteModal(teacher: TeacherModel) {
     console.log(teacher);
     this.teacherName = teacher.fullname || '';
 
