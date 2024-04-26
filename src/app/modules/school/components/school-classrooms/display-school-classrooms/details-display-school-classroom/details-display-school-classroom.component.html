@@ -12,7 +12,7 @@
   
   <section class="course-details">
     <div class="course-details_image">
-      <img src="../../../../../../assets/img/program-thumbnail.svg" alt="" />
+      <img [src]="classroom?.header_photo ? classroom?.header_photo : 'assets/img/program-thumbnail.svg'" alt="Header_photo" />
     </div>
     <div class="course-details_header">
       <div class="course-details_header_top">

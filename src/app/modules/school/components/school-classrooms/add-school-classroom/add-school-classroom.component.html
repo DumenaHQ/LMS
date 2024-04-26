@@ -60,43 +60,7 @@
           ></textarea>
         </div>
       </div>
-      <div class="form_control description">
-        <label for="description">Teacher</label>
-        <div class="form_control_field">
-          <select name="" id="" formControlName="teacher">
-            <option value="" selected>Select a Teacher</option>
-            <option [value]="item.id" *ngFor="let item of teachers">
-              {{ item.fullname }}
-            </option>
-          </select>
-        </div>
-      </div>
-      
-      <!-- <div class="form_control">
-        <label for="thumbnail">Thumbnail</label>
-        <div class="">
-          <div
-            class="form_control_field select-image clickable"
-            (click)="fileThumbnail.click()"
-            appDragDrop
-            (fileDropped)="uploadThumbnail($event)"
-          >
-            <input
-              type="file"
-              #fileThumbnail
-              hidden
-              (change)="uploadThumbnail($event)"
-            />
-            <img
-              src="../../../../../../../assets/img/select-Image.svg"
-              alt=""
-            />
-            <p class="body-3-regular text-primary-color">
-              {{ selectedThumbnailName === '' ? 'Select a picture' : selectedThumbnailName }}
-            </p>
-          </div>
-        </div>
-      </div>
+
       <div class="form_control">
         <label for="thumbnail">Header Photo</label>
         <div class="">
@@ -121,7 +85,33 @@
             </p>
           </div>
         </div>
-      </div> -->
+      </div>
+      
+      <div class="form_control">
+        <label for="thumbnail">Thumbnail</label>
+        <div class="">
+          <div
+            class="form_control_field select-image clickable"
+            (click)="fileThumbnail.click()"
+            appDragDrop
+            (fileDropped)="uploadThumbnail($event)"
+          >
+            <input
+              type="file"
+              #fileThumbnail
+              hidden
+              (change)="uploadThumbnail($event)"
+            />
+            <img
+              src="../../../../../../../assets/img/select-Image.svg"
+              alt=""
+            />
+            <p class="body-3-regular text-primary-color">
+              {{ selectedThumbnailName === '' ? 'Select a picture' : selectedThumbnailName }}
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="form_btns dis-flex">
       <ng-container *ngIf="!loading">

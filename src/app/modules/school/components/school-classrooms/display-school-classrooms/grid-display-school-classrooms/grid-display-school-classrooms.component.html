@@ -2,8 +2,8 @@
     <div class="program_card">
       <div class="program_card_item" *ngFor="let classroom of classrooms">
         <img
-          src="../../../../../../assets/img/program-thumbnail-patterns.svg"
-          alt="image"
+          [src]="classroom?.thumbnail ? classroom?.thumbnail : 'assets/img/program-thumbnail-patterns.svg'"
+          alt="Thumbnail"
           class="program_card_item_image clickable"
           (click)="displayClassroom(classroom?.id)"
         />

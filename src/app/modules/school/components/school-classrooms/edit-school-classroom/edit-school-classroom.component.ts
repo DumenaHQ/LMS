@@ -21,6 +21,11 @@ export class EditSchoolClassroomComponent implements OnInit {
   teachers: any;
   user: any;
   templates: any;
+  selectedThumbnailName: string = '';
+  selectedHeaderPhotoName: string = '';
+  thumbnailFile: File;
+  headerPhotoFile: File;
+
  
   constructor(
     private classroomService: ClassroomService,
@@ -37,6 +42,8 @@ export class EditSchoolClassroomComponent implements OnInit {
     template: [''],
     description: [''],
     teacher: [''],
+    header_photo: [''],
+    thumbnail: [''],
   });
 
   ngOnInit(): void {
@@ -53,10 +60,12 @@ export class EditSchoolClassroomComponent implements OnInit {
   // Initialize form
   initForm() {
     this.formGroup = this.formBuilder.group({
-      name: [this.classroom?.name],
+      name: [this.classroom?.name ],
       template: [this.classroom?.template?.id],
       description: [this.classroom?.description],
       teacher: [this.classroom?.teacher?.id],
+      header_photo: [this.classroom?.header_photo],
+      thumbnail: [this.classroom?.thumbnail],
     });
   }
 
@@ -93,20 +102,41 @@ export class EditSchoolClassroomComponent implements OnInit {
     });
   }
 
+  uploadThumbnail(event: any) {
+    const file = event.target.files[0];
+    this.thumbnailFile = file;
+    this.selectedThumbnailName = file.name;
+
+    this.formGroup.patchValue({thumbnail: this.selectedThumbnailName}); 
+    
+  }
+
+  uploadHeaderPhoto(event: any) {
+    const file = event.target.files[0];
+    this.headerPhotoFile = file;
+    this.selectedHeaderPhotoName = file.name;
+    this.formGroup.patchValue({header_photo: this.selectedHeaderPhotoName})
+  }
+
   editClassroom() {
     // Set loading to true
     this.loading = true;
 
-    const { value } = this.formGroup
+    const { value } = this.formGroup;
 
-    let payload = {
-      name: value.name,
-      template: value.template,
-      description: value.description,
-      teacher_id: value.teacher
+    var formData: any = new FormData();
+    formData.append('name', value.name);
+    formData.append('description', value.description);
+    formData.append('template', value.template);
+    formData.append('teacher_id', value.teacher);
+    if (this.headerPhotoFile) {
+      formData.append('header_photo', this.headerPhotoFile);
+    }
+    if (this.thumbnailFile) {
+      formData.append('thumbnail', this.thumbnailFile);
     }
 
-    this.classroomService.editClassroom(payload, this.currentClassroom.classroomId).subscribe(
+    this.classroomService.editClassroom(formData, this.currentClassroom.classroomId).subscribe(
       (res: any) => {
         // Show alert
         if (res.status === true) {

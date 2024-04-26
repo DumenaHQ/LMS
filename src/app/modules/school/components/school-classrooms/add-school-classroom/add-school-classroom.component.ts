@@ -21,7 +21,8 @@ export class AddSchoolClassroomComponent implements OnInit {
   isAlert: boolean = false;
   selectedThumbnailName: string = '';
   selectedHeaderPhotoName: string = '';
-  file: File;
+  thumbnailFile: File;
+  headerPhotoFile: File;
   templates: any;
   teachers: any;
   isFormSubmitted: boolean = false;
@@ -53,7 +54,8 @@ export class AddSchoolClassroomComponent implements OnInit {
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
       template: [''],
-      teacher: [''],
+      header_photo: [''],
+      thumbnail: [''],
     });
   }
 
@@ -77,23 +79,20 @@ export class AddSchoolClassroomComponent implements OnInit {
     });
   }
 
-  // Upload File
   uploadThumbnail(event: any) {
-    this.file = event.target.files[0] as File;
-    // Set file name
-    this.selectedThumbnailName = this.file.name;
+    const file = event.target.files[0];
+    this.thumbnailFile = file;
+    this.selectedThumbnailName = file.name;
 
-    this.formGroup.patchValue({thumbnail: this.selectedThumbnailName})
+    this.formGroup.patchValue({thumbnail: this.selectedThumbnailName}); 
     
   }
 
-  // Upload File
   uploadHeaderPhoto(event: any) {
-    this.file = event.target.files[0] as File;
-    // Set file name
-    this.selectedHeaderPhotoName = this.file.name;
+    const file = event.target.files[0];
+    this.headerPhotoFile = file;
+    this.selectedHeaderPhotoName = file.name;
     this.formGroup.patchValue({header_photo: this.selectedHeaderPhotoName})
-
   }
 
 
@@ -112,16 +111,20 @@ export class AddSchoolClassroomComponent implements OnInit {
       return;
     }
 
-    const { value } = this.formGroup
+    const { value } = this.formGroup;
 
-    let payload = {
-      name: value.name,
-      description: value.description,
-      template: value.template,
-      teacher_id: value.teacher,
+    var formData: any = new FormData();
+    formData.append('name', value.name);
+    formData.append('description', value.description);
+    formData.append('template', value.template);
+    if (this.headerPhotoFile) {
+      formData.append('header_photo', this.headerPhotoFile);
+    }
+    if (this.thumbnailFile) {
+      formData.append('thumbnail', this.thumbnailFile);
     }
 
-    this.classroomService.addClassroom(payload).subscribe(
+    this.classroomService.addClassroom(formData).subscribe(
       (res: any) => {
         // Show alert
         if (res.status === true) {
@@ -139,11 +142,6 @@ export class AddSchoolClassroomComponent implements OnInit {
 
         // Set loading to false
         this.loading = false;
-
-        // Set Timeout
-        // setTimeout(() => {
-        //   this.showError = false
-        // }, 3000);
       }
     );
   }
