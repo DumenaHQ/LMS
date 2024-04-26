@@ -17,6 +17,7 @@ import { ConfirmDeleteComponent } from './confirm-delete/confirm-delete.componen
 import { DisplayProgramsComponent } from './programs/display-programs/display-programs.component';
 import { DisplayProgramDetailsComponent } from './programs/display-program-details/display-program-details.component';
 import { AddProgramLearnersComponent } from './programs/add-program-learners/add-program-learners.component';
+import { TruncatePipe } from 'src/app/pipes/truncate.pipe';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,9 @@ import { AddProgramLearnersComponent } from './programs/add-program-learners/add
     DisplayProgramDetailsComponent,
     AddProgramLearnersComponent,
     // PricingPlanComponent,
+
+    // Pipes
+    TruncatePipe,
   ],
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
   exports: [
@@ -52,6 +56,9 @@ import { AddProgramLearnersComponent } from './programs/add-program-learners/add
     DisplayProgramsComponent,
     DisplayProgramDetailsComponent,
     AddProgramLearnersComponent,
+    
+    // Pipes
+    TruncatePipe,
   ],
 })
 export class SharedModule {}

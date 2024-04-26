@@ -82,67 +82,34 @@ export class AddParentClassroomComponent implements OnInit {
 
   // Create program
   createClassroom() {
-    // Set loading to true
     this.loading = true;
 
-    // Set submitted to true
     this.isFormSubmitted = true;
 
-    // If Form is invalid
     if (this.classroomForm.invalid) {
       this.loading = false;
 
       return;
     }
 
-    // var formData: any = new FormData();
-    // formData.append('name', this.classroomForm.value.name);
-    // formData.append('description', this.classroomForm.value.description);
-    // // formData.append('thumbnail', this.classroomForm.value.thumbnail);
-    // // formData.append('header_photo', this.classroomForm.value.header_photo);
-
-    // for (var pair of formData.entries()) {
-    //   console.log(pair[0] + ', ' + pair[1]);
-    //   console.log(pair)
-    // }
-
-    let payload = {
-      name: this.classroomForm.value.name,
-      description: this.classroomForm.value.description,
-      template: this.classroomForm.value.template
-    }
-
-    console.log(payload);
+    var formData: any = new FormData();
+    formData.append('name', this.classroomForm.value.name);
+    formData.append('description', this.classroomForm.value.description);
     
-
-    // Send users data
-    this.classroomService.addClassroom(payload).subscribe(
-      (res: any) => {
-        console.log(res);
-
-        // Show alert
+    this.classroomService.addClassroom(formData)
+      .then(res => {
         if (res.status === true) {
           this.showAlertPopup(res.message, 'success');
           setTimeout(() => {
             this.router.navigate(['parent/classrooms']);
           }, 3000);
         }
-        
-      },
-      (error: any) => {
+      })
+      .catch(error => {
         console.log(error);
-        // Show error message
         this.showAlertPopup(error.error.message, 'error');
-
-        // Set loading to false
         this.loading = false;
-
-        // Set Timeout
-        // setTimeout(() => {
-        //   this.showError = false
-        // }, 3000);
-      }
-    );
+      });
   }
 
   // Show alert
