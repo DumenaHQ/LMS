@@ -9,6 +9,7 @@ export type ClassroomModel = {
   readonly course_count?:  number;
   readonly thumbnail?:     string;
   readonly name?:          string;
+  readonly description?:   string;
   readonly header_photo?:  string;
   readonly active_term?:   Term;
 }

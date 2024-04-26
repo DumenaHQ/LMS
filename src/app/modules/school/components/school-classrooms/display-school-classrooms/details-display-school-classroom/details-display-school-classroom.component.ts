@@ -15,7 +15,6 @@ export class DetailsDisplaySchoolClassroomComponent implements OnInit {
   dataLoading: boolean = true;
   addCourseToClassroom: boolean = false;
   addLearnerToClassroom: boolean = false;
-  activeSession?: Term;
 
   deleteModal: boolean = false;
   deleteUrl: string;
@@ -35,14 +34,6 @@ export class DetailsDisplaySchoolClassroomComponent implements OnInit {
     // Get Current classroom
     this.currentClassroomId = this.activatedRoute.snapshot.params;
     this.getClassrooms();
-  }
-
-  // Check Active Session
-  checkActiveSession(classroom?: ClassroomModel) {
-    this.activeSession =
-      this.classroomService.checkClassActiveSession(classroom);
-
-    return this.activeSession;
   }
 
   // Get classrooms
