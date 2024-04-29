@@ -14,20 +14,6 @@ export class ClassroomService {
 
   constructor(private http: HttpClient) { }
 
-  checkClassActiveSession(classroom?: ClassroomModel) {
-    return classroom && (classroom.terms || []).find((term) => {
-      const now = new Date();
-
-      // Check if current date is between start date and end date
-       return (
-        term.start_date &&
-        term.end_date &&
-        new Date(term.start_date) <= now &&
-        new Date(term.end_date) >= now
-      );
-    });
-  }
-
   getClassrooms() {
     return this.http.get(`${this.baseUrl}classes`, this.getHttpOptions());
   }
