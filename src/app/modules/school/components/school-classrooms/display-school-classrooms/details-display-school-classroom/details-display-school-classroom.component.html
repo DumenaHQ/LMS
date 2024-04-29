@@ -34,7 +34,7 @@
           </p>
 
           <div class="icons dis-flex">
-            <span class="dis-flex"
+            <span class="dis-flex" *ngIf="classroom?.active_term"
               >
               <!-- <img src="../../../assets/img/svg/calendar-2.svg" alt="" /> -->
               <div class="">
@@ -279,3 +279,5 @@
   [deleteRoutePath]="deleteRoutePath"
   [deleteType]="'patch'"
 ></app-confirm-delete>
+
+<app-confirm-session-date [loading]="updatingClassDate" [classroom]="classroom" *ngIf="this.classroom?.active_term?.defaultDateChanged === false" (confirmSessionDateAction)="confirmSessionDates($event)"></app-confirm-session-date>
