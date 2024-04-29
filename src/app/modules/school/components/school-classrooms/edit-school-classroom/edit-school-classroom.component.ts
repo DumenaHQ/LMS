@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClassroomService } from 'src/app/services/classroom.service';
 import { TeachersService } from 'src/app/services/teachers.service';
-import { ClassroomModel } from '../display-school-classrooms/models/classroom.model';
+import { ClassroomModel, Term } from '../display-school-classrooms/models/classroom.model';
 import * as moment from 'moment';
 
 @Component({
@@ -52,11 +52,19 @@ export class EditSchoolClassroomComponent implements OnInit {
   });
 
   get minDate(): string {
-    return moment((this.classroom?.terms || [])[0]?.start_date).format('YYYY-MM-DD');
+    const termsSorted = (this.classroom?.terms || []).sort(
+      (a: Term, b: Term) => moment(a.start_date).diff(b.start_date),
+    );
+
+    return moment(termsSorted[0]?.start_date).format('YYYY-MM-DD');
   }
  
   get maxDate(): string {
-    return moment((this.classroom?.terms || [])[2]?.end_date).format('YYYY-MM-DD');
+    const termsSorted = (this.classroom?.terms || []).sort(
+      (a: Term, b: Term) => moment(a.end_date).diff(b.end_date),
+    );
+
+    return moment(termsSorted[2]?.end_date).format('YYYY-MM-DD');
   }
 
   ngOnInit(): void {
