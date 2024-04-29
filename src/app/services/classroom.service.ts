@@ -77,7 +77,7 @@ export class ClassroomService {
       );
   }
   
-  editClassroom(formData: FormData, classroomId: any) {
+  editClassroom(formData: FormData, classroomId: any): Promise<any> {
     const headers = new Headers();
     headers.append('Authorization', 'bearer ' + localStorage.getItem('token'));
     return fetch(`${this.baseUrl}classes/${classroomId}`, {
