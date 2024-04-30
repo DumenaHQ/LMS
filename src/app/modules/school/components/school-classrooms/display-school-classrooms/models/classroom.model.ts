@@ -11,6 +11,10 @@ export type ClassroomModel = {
   readonly name?:          string;
   readonly header_photo?:  string;
   readonly active_term?:   Term;
+  readonly courses?:       any;
+  readonly template?:      any;
+  readonly teacher?:       Teacher;
+  readonly learners?:       any;
 }
 
 export type Term = {
@@ -19,3 +23,17 @@ export type Term = {
   readonly start_date?: Date;
   readonly end_date?:   Date;
 }
+
+export type Teacher = {
+  readonly fullname?:      string;
+  readonly email?:    string;
+  readonly id?: string;
+}
+
+// export type Learner = {
+//   readonly fullname?:      string;
+//   readonly email?:    string;
+//   readonly id?: string;
+//   readonly username?: string;
+//   readonly grade?: string;
+// }

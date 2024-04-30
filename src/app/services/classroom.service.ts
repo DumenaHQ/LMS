@@ -141,28 +141,6 @@ export class ClassroomService {
 
   //--- TEMPLATES ENDS --//
 
-  makeHttpRequest(body?: any): Promise<any> {
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.open('POST', `${this.baseUrl}classes`);
-      // xhr.setRequestHeader('Content-Type', 'multipart/form-data');
-      xhr.setRequestHeader('Authorization', 'bearer ' + localStorage.getItem('token'));
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-          if (xhr.status >= 200 && xhr.status < 300) {
-            resolve(JSON.parse(xhr.responseText));
-          } else {
-            reject(xhr.statusText);
-          }
-        }
-      };
-      xhr.onerror = () => {
-        reject(xhr.statusText);
-      };
-      xhr.send(JSON.stringify(body));
-    });
-  }
-
   // Get HttpOptions
   getHttpOptions() {
     const httpOptions = {
