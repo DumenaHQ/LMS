@@ -79,6 +79,11 @@ export class AuthService {
   enrollLearner(data: any, url: string) {
     return this.http.post(`${this.baseUrl}${url}`, data, this.getHttpOptions());
   }
+  
+  // School Analytics
+  fetchSchoolAnalytics() {
+    return this.http.get(`${this.baseUrl}schools/analytics`);
+  }
 
   // Activate email
   confirmEmail(model: any) {
