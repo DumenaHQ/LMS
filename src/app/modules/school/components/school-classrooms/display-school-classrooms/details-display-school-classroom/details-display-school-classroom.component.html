@@ -27,25 +27,25 @@
           <p
             *ngIf="classroom"
             [className]="
-              checkActiveSession(classroom) ? 'success_btn' : 'grey_btn'
+              classroom.active_term ? 'success_btn' : 'grey_btn'
             "
           >
-            {{ (activeSession ? activeSession.title : "On Break") | uppercase }}
+            {{ (classroom.active_term ? classroom.active_term.title : "On Break") | uppercase }}
           </p>
 
           <div class="icons dis-flex">
-            <span class="dis-flex"
+            <span class="dis-flex" *ngIf="classroom?.active_term"
               >
               <!-- <img src="../../../assets/img/svg/calendar-2.svg" alt="" /> -->
               <div class="">
                 <p class="body-2-regular">
                   Starts:
-                  {{ activeSession?.start_date | date : "mediumDate" }}
+                  {{ classroom?.active_term?.start_date | date : "mediumDate" }}
                 </p>
 
                 <p>
                   Ends:
-                  {{ activeSession?.end_date | date : "mediumDate" }}
+                  {{ classroom?.active_term?.end_date | date : "mediumDate" }}
                 </p>
               </div></span
             >
@@ -67,7 +67,7 @@
     </div>
     <div class="course-details_header_bottom">
       <p class="descript">
-        <!-- {{ classroom?.description }} -->
+        {{ classroom?.description }}
       </p>
       <!-- <ul class="numbers dis-flex">
         <li>
@@ -242,3 +242,5 @@
   [deleteRoutePath]="deleteRoutePath"
   [deleteType]="'patch'"
 ></app-confirm-delete>
+
+<app-confirm-session-date [loading]="updatingClassDate" [classroom]="classroom" *ngIf="this.classroom?.active_term?.defaultDateChanged === false" (confirmSessionDateAction)="confirmSessionDates($event)"></app-confirm-session-date>

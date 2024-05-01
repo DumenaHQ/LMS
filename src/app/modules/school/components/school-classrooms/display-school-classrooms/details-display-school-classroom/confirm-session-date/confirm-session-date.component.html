@@ -1,0 +1,36 @@
+<div class="modal confirm-delete-modal">
+  <div class="modal_area" *ngIf="classroom">
+    <h5></h5>
+
+    <div class="modal-details" style="text-align: left">
+      <h2 class="text-primary-color">Confirm Session Dates</h2>
+      <p>
+        Please confirm if this is correct?
+        <br /><br />
+        Session Starts:
+        <strong class="text-primary-color">
+          {{ classroom.active_term?.start_date | date }}
+        </strong>
+        <br />
+        Session Ends:
+        <strong class="text-primary-color">
+          {{ classroom.active_term?.end_date | date }}
+        </strong>
+      </p>
+    </div>
+    <!-- Buttons -->
+    <div class="modal-btns dis-flex">
+      <button type="button" class="btn skip_btn" (click)="confirmAction(false)">
+        Change
+      </button>
+      <button
+        class="btn prim_btn"
+        [disabled]="loading"
+        (click)="confirmAction(true)"
+      >
+        <span *ngIf="!loading">Confirm</span>
+        <span *ngIf="loading">Processing...</span>
+      </button>
+    </div>
+  </div>
+</div>
