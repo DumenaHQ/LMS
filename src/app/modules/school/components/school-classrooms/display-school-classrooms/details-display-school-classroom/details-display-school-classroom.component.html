@@ -83,10 +83,6 @@
             <p class="body-3-regular">{{classroom?.learner_count > 1 ? 'Learners' : 'Learner'}}</p>
           </li>
       </ul> -->
-      <!-- <div class="completion">
-        <p class="body-2-bold title">Timeframe</p>
-        <p class="body-2-medium text-primary-color">0 Day</p>
-      </div> -->
       <div class="students">
         <p class="body-2-bold title">
           Total
@@ -115,6 +111,10 @@
           </li>
         </ul>
       </div>
+      <div class="completion">
+        <p class="body-2-bold title">Instructor</p>
+        <p class="body-2-medium text-primary-color">{{ classroom?.teacher?.fullname }}</p>
+      </div>
     </div>
   </div>
   <div class="course-details_body">
@@ -134,18 +134,11 @@
         >
           Learners
         </li>
-        <li
-          class="body-2-medium"
-          [class.active]="contentId === 'teacher'"
-          (click)="tabChange('teacher')"
-        >
-          Teacher
-        </li>
       </ul>
     </div>
     <div class="course-details_body_content">
       <!-- Courses -->
-      <!-- <ng-container *ngIf="contentId === 'courses'">
+      <ng-container *ngIf="contentId === 'courses'">
           <div class="table-container" style="overflow-x: auto" *ngIf="!courseQuizResult">
             <ng-container *ngIf="classroom?.courses?.length > 0">
               <table>
@@ -180,10 +173,10 @@
           </div>
 
           <app-view-course-quiz-results *ngIf="courseQuizResult" [classroomId]="currentClassroomId.classroomId" [course]="course" (courseQuizResult)="closeViewCourseQuizResult()"></app-view-course-quiz-results>
-        </ng-container> -->
+        </ng-container>
 
       <!-- Learners -->
-      <!-- <ng-container *ngIf="contentId === 'learners'">
+      <ng-container *ngIf="contentId === 'learners'">
           <div class="table-container" style="overflow-x: auto">
             <div *ngIf="classroom?.learners?.length != 0" style="padding: 1%;">
               <button type="button" class="btn sec_btn" (click)="openAddLearnerToClassroomModal()">Add Learner</button>
@@ -221,37 +214,7 @@
               <button type="button" class="btn sec_btn" (click)="openAddLearnerToClassroomModal()">Add Learner</button>
             </div>
           </div>
-        </ng-container> -->
-
-      <!-- Teacher -->
-      <!-- <ng-container *ngIf="contentId === 'teacher'">
-          <div class="table-container" style="overflow-x: auto">
-            <ng-container *ngIf="classroom?.teacher">
-              <table>
-                <tr class="table-header">
-                  <th>Full Name</th>
-                  <th>Email</th>
-                  <td>Action</td>
-                </tr>
-                <ng-container>
-                  <tr class="table-body">
-                    <td>{{ classroom?.teacher?.fullname }}</td>
-                    <td>{{ classroom?.teacher?.email ===  undefined ? '-' : classroom?.teacher?.email }}</td>
-                    <td>
-                      <button type="button" class="danger_btn" style="background-color: transparent;" (click)="openDeleteModal(classroom?.teacher)">Remove</button>
-                    </td>
-                  </tr>
-                </ng-container>
-              </table>
-            </ng-container>
-
-            <div *ngIf="!classroom?.teacher" class="course-empty">
-              <p style="text-align: center" >
-                No Teacher available
-              </p>
-            </div>
-          </div>
-        </ng-container> -->
+        </ng-container>
     </div>
   </div>
 </section>
