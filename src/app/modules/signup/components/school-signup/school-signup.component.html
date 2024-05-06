@@ -53,27 +53,7 @@
           </p>
         </div>
       </div>
-      <div
-        class="form-field col-2"
-        [ngClass]="{
-          'is-invalid': isFormSubmitted && userForm.controls.fullname.errors
-        }"
-      >
-        <label for="full_name">Contant Person's Name</label>
-        <div class="input-field">
-          <input type="text" name="full_name" formControlName="fullname" />
-          <i class="bx bx-error-circle icon info-icon"></i>
-        </div>
-        <!-- Error -->
-        <div *ngIf="isFormSubmitted && userForm.controls.fullname.errors">
-          <p
-            class="body-3-regular error-msg"
-            *ngIf="userForm.controls.fullname.errors.required"
-          >
-          Contant person name is required
-          </p>
-        </div>
-      </div>
+      
       <div
         class="form-field col-2"
         [ngClass]="{
@@ -101,6 +81,112 @@
           </p>
         </div>
       </div>
+
+      <div
+      class="form-field col-2"
+      [ngClass]="{
+        'is-invalid': isFormSubmitted && userForm.controls.address.errors
+      }"
+    >
+      <label for="address">School Address</label>
+      <div class="input-field">
+        <input type="text" name="address" formControlName="address" />
+        <i class="bx bx-error-circle icon info-icon"></i>
+      </div>
+      <!-- Error -->
+      <div *ngIf="isFormSubmitted && userForm.controls.address.errors">
+        <p
+          class="body-3-regular error-msg"
+          *ngIf="userForm.controls.address.errors.required"
+        >
+          Address is required
+        </p>
+      </div>
+    </div>
+      
+      <div
+        class="form-field col-2"
+        [ngClass]="{
+          'is-invalid':
+            isFormSubmitted && userForm.controls.resident_state.errors
+        }"
+      >
+        <label for="resident_state">School Location</label>
+        <div class="input-field">
+          <select
+            name=""
+            id=""
+            name="resident_state"
+            formControlName="resident_state"
+          >
+            <option value="" selected disabled hidden>-- Your State --</option>
+            <option [value]="i.name" *ngFor="let i of statesInNigeria">
+              {{ i.name }}
+            </option>
+          </select>
+          <i class="bx bx-error-circle icon info-icon"></i>
+        </div>
+        <!-- Error -->
+        <div *ngIf="isFormSubmitted && userForm.controls.resident_state.errors">
+          <p
+            class="body-3-regular error-msg"
+            *ngIf="userForm.controls.resident_state.errors.required"
+          >
+            School location is required
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="form-field col-2"
+        [ngClass]="{
+          'is-invalid': isFormSubmitted && userForm.controls.fullname.errors
+        }"
+      >
+        <label for="full_name">Contact Person's Name</label>
+        <div class="input-field">
+          <input type="text" name="full_name" formControlName="fullname" />
+          <i class="bx bx-error-circle icon info-icon"></i>
+        </div>
+        <!-- Error -->
+        <div *ngIf="isFormSubmitted && userForm.controls.fullname.errors">
+          <p
+            class="body-3-regular error-msg"
+            *ngIf="userForm.controls.fullname.errors.required"
+          >
+          Contact person name is required
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="form-field"
+        [ngClass]="{
+          'is-invalid': isFormSubmitted && userForm.controls.contactPersonEmail.errors
+        }"
+      >
+        <label for="email">Contact Email Address</label>
+        <div class="input-field">
+          <input type="email" name="email" formControlName="email" />
+          <i class="bx bx-error-circle icon info-icon"></i>
+        </div>
+        <!-- Error -->
+        <div *ngIf="isFormSubmitted && userForm.controls.contactPersonEmail.errors">
+          <p
+            class="body-3-regular error-msg"
+            *ngIf="userForm.controls.contactPersonEmail.errors.required"
+          >
+            Email is required
+          </p>
+          <p
+            class="body-3-regular error-msg"
+            *ngIf="userForm.controls.contactPersonEmail.errors.email"
+          >
+            Invalid email address
+          </p>
+        </div>
+      </div>
+
       <div
         class="form-field"
         [ngClass]="{
@@ -128,59 +214,7 @@
           </p>
         </div>
       </div>
-      <div
-        class="form-field"
-        [ngClass]="{
-          'is-invalid':
-            isFormSubmitted && userForm.controls.resident_state.errors
-        }"
-      >
-        <label for="resident_state">State</label>
-        <div class="input-field">
-          <select
-            name=""
-            id=""
-            name="resident_state"
-            formControlName="resident_state"
-          >
-            <option value="" selected disabled hidden>-- Your State --</option>
-            <option [value]="i.name" *ngFor="let i of statesInNigeria">
-              {{ i.name }}
-            </option>
-          </select>
-          <i class="bx bx-error-circle icon info-icon"></i>
-        </div>
-        <!-- Error -->
-        <div *ngIf="isFormSubmitted && userForm.controls.resident_state.errors">
-          <p
-            class="body-3-regular error-msg"
-            *ngIf="userForm.controls.resident_state.errors.required"
-          >
-            State is required
-          </p>
-        </div>
-      </div>
-      <div
-        class="form-field col-2"
-        [ngClass]="{
-          'is-invalid': isFormSubmitted && userForm.controls.address.errors
-        }"
-      >
-        <label for="address">Address</label>
-        <div class="input-field">
-          <input type="text" name="address" formControlName="address" />
-          <i class="bx bx-error-circle icon info-icon"></i>
-        </div>
-        <!-- Error -->
-        <div *ngIf="isFormSubmitted && userForm.controls.address.errors">
-          <p
-            class="body-3-regular error-msg"
-            *ngIf="userForm.controls.address.errors.required"
-          >
-            Address is required
-          </p>
-        </div>
-      </div>
+
       <div
         class="form-field col-2"
         [ngClass]="{
