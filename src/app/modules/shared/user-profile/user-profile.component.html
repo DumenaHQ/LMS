@@ -16,22 +16,6 @@
           "
           alt="Avatar"
         />
-        <div class="btns-area dis-flex" *ngIf="isEdit">
-          <button class="btn tert_btn" (click)="isEdit = false">Cancel</button>
-          <button
-            class="btn prim_btn"
-            (click)="editProfile()"
-            [disabled]="loading"
-          >
-            <span *ngIf="!loading">Save Changes</span>
-            <span *ngIf="loading">Processing...</span>
-          </button>
-        </div>
-        <div class="btns-area dis-flex" *ngIf="!isEdit">
-          <button class="btn tert_btn" (click)="isEdit = true">
-            Update profile
-          </button>
-        </div>
       </div>
       <form [formGroup]="userForm">
         <div class="form-control col-2">
@@ -104,6 +88,23 @@
           <div class="form-control_field">
             <textarea name="" id="" cols="30" rows="5"></textarea>
           </div>
+        </div>
+
+        <div class="btns-area dis-flex" *ngIf="isEdit">
+          <button class="btn tert_btn" (click)="isEdit = false">Cancel</button>
+          <button
+            class="btn prim_btn"
+            (click)="editProfile()"
+            [disabled]="loading"
+          >
+            <span *ngIf="!loading">Save Changes</span>
+            <span *ngIf="loading">Processing...</span>
+          </button>
+        </div>
+        <div class="btns-area dis-flex" *ngIf="!isEdit">
+          <button class="btn tert_btn" (click)="isEdit = true">
+            Update profile
+          </button>
         </div>
       </form>
     </ng-container>
