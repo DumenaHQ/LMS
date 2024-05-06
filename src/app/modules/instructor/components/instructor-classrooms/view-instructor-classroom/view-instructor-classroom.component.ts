@@ -12,7 +12,7 @@ export class ViewInstructorClassroomComponent implements OnInit {
 
   contentId: any = 'courses';
   currentClassroomId: any;
-  classroom: any;
+  classroom?: ClassroomModel;
   dataLoading: boolean = true;
   addCourseToClassroom: boolean = false;
   addLearnerToClassroom: boolean = false;
