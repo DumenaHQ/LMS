@@ -52,7 +52,7 @@ export class AddSchoolClassroomComponent implements OnInit {
   initForm() {
     this.formGroup = this.formBuilder.group({
       name: ['', [Validators.required]],
-      description: ['', [Validators.required]],
+      description: [''],
       template: [''],
       header_photo: [''],
       thumbnail: [''],
