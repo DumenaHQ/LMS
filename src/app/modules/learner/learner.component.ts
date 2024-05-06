@@ -45,12 +45,12 @@ export class LearnerComponent implements OnInit {
         icon: 'assets/img/svg/forward-item.svg',
         subLinks: [],
       },
-      {
-        name: 'Programs',
-        link: '/learner/programs',
-        icon: 'assets/img/svg/gameboy.svg',
-        subLinks: [],
-      },
+      // {
+      //   name: 'Programs',
+      //   link: '/learner/programs',
+      //   icon: 'assets/img/svg/gameboy.svg',
+      //   subLinks: [],
+      // },
       {
         name: 'Profile',
         link: `/${this.user.role}/profile/${this.userNamePath}`,
