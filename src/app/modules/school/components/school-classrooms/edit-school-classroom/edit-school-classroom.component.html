@@ -119,6 +119,7 @@
             (click)="fileHeaderPhoto.click()"
             appDragDrop
             (fileDropped)="uploadHeaderPhoto($event)"
+            style="position: relative;"
           >
             <input
               type="file"
@@ -127,8 +128,9 @@
               (change)="uploadHeaderPhoto($event)"
             />
             <img
-              src="../../../../../../../assets/img/select-Image.svg"
+              [src]="headerPhotoUrl || '../../../../../../../assets/img/select-Image.svg'"
               alt=""
+              [style]="headerPhotoUrl ? 'position: absolute; top: 0; width: 100%; height: 100%;' : ''"
             />
             <p class="body-3-regular text-primary-color">
               {{
@@ -159,6 +161,7 @@
             (click)="fileThumbnail.click()"
             appDragDrop
             (fileDropped)="uploadThumbnail($event)"
+            style="position: relative;"
           >
             <input
               type="file"
@@ -167,8 +170,9 @@
               (change)="uploadThumbnail($event)"
             />
             <img
-              src="../../../../../../../assets/img/select-Image.svg"
+              [src]="thumbnailUrl || '../../../../../../../assets/img/select-Image.svg'"
               alt=""
+              [style]="thumbnailUrl ? 'position: absolute; top: 0; width: 100%; height: 100%;' : ''"
             />
             <p class="body-3-regular text-primary-color">
               {{
