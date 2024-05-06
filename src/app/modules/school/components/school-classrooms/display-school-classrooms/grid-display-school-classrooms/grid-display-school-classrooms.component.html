@@ -1,12 +1,11 @@
 <div class="programs_disgrid">
     <div class="program_card">
       <div class="program_card_item" *ngFor="let classroom of classrooms">
-        <img
-          [src]="classroom?.thumbnail ? classroom?.thumbnail : 'assets/img/program-thumbnail-patterns.svg'"
-          alt="Thumbnail"
-          class="program_card_item_image clickable"
+        <div 
+          class="program_card_item_image clickable" 
+          [style.backgroundImage]="classroom?.thumbnail ? 'url(' + classroom?.thumbnail + ')' : 'url(assets/img/program-thumbnail-patterns.svg)'"
           (click)="displayClassroom(classroom?.id)"
-        />
+        ></div>
   
         <div class="program_card_item_details" *ngIf="classroom.name !== undefined">
           <div class="program_card_item_details_right">
