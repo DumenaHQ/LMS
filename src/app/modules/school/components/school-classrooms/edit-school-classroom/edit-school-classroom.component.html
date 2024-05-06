@@ -5,21 +5,23 @@
   [alertColor]="alertColor"
 ></app-alert-popup>
 
-<section class="ds-head dis-flex">
+<app-loader *ngIf="dataLoading"></app-loader>
+
+<section class="ds-head dis-flex" *ngIf="classroom">
   <h2 class="ds-head_title clickable" routerLink="/school/classrooms">
     Classrooms
   </h2>
   <i class="bx bx-chevron-right icon"></i>
-  <p class="clickable" [title]="classroom?.name">
-    {{ classroom?.name | truncate }}
+  <p class="clickable" [title]="classroom.name">
+    {{ classroom.name | truncate }}
   </p>
   <i class="bx bx-chevron-right icon"></i>
   <p class="clickable">Edit-classroom</p>
 </section>
 
-<section>
+<section *ngIf="classroom">
   <form [formGroup]="formGroup">
-    <div class="form_control_container">
+    <div class="form_control_container" *ngIf="teachers">
       <div class="form_control">
         <label for="name">Name of Classroom</label>
         <div class="form_control_field">
@@ -200,6 +202,8 @@
               name="active_term_start_date"
               id=""
               formControlName="active_term_start_date"
+              [min]="minDate"
+              [max]="maxDate"
             />
           </div>
 
@@ -225,6 +229,8 @@
               name="active_term_start_date"
               id=""
               formControlName="active_term_end_date"
+              [min]="minDate"
+              [max]="maxDate"
             />
           </div>
 
@@ -240,6 +246,7 @@
           </div>
         </div>
       </div>
+      
     </div>
     <div class="form_btns">
       <button class="btn prim_btn" *ngIf="!loading" (click)="editClassroom()">
