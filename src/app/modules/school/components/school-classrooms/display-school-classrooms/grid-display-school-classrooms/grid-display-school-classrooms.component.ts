@@ -12,7 +12,6 @@ export class GridDisplaySchoolClassroomsComponent implements OnInit {
   @Input() classrooms?: ClassroomModel[];
   @Input() days: any;
   classroomName: any;
-  activeSession?: Term;
 
   deleteModal: boolean = false;
   deleteUrl: string;
@@ -24,13 +23,6 @@ export class GridDisplaySchoolClassroomsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
-
-  // Check Active Session
-  checkActiveSession(classroom?: ClassroomModel) {
-    this.activeSession = this.classroomService.checkClassActiveSession(classroom);
-
-    return this.activeSession;
-  }
 
   // Display program
   displayClassroom(classroomId?: string) {
