@@ -53,6 +53,10 @@
  // Courses Display List
  .courses_dislist {
   width: 100%;
+  &_password {
+    gap: $m-1;
+    margin-bottom: $m-2;
+  }
   table {
     tr {
       &.table-body {

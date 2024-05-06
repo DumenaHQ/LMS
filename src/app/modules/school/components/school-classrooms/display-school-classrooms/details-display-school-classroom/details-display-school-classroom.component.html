@@ -9,15 +9,7 @@
 </section>
 
 <section class="course-details">
-  <div class="course-details_image">
-    <img
-      [src]="
-        classroom?.header_photo
-          ? classroom?.header_photo
-          : 'assets/img/program-thumbnail.svg'
-      "
-      alt="Header_photo"
-    />
+  <div class="course-details_image" [style.backgroundImage]="classroom?.header_photo ? 'url(' + classroom?.header_photo + ')' : 'url(assets/img/program-thumbnail.svg)'">
   </div>
   <div class="course-details_header">
     <div class="course-details_header_top" style="align-items: center">
@@ -40,12 +32,12 @@
               <div class="">
                 <p class="body-2-regular">
                   Starts:
-                  {{ classroom?.active_term?.start_date | date : "mediumDate" }}
+                  {{ classroom!.active_term?.start_date | date : "mediumDate" }}
                 </p>
 
                 <p>
                   Ends:
-                  {{ classroom?.active_term?.end_date | date : "mediumDate" }}
+                  {{ classroom!.active_term?.end_date | date : "mediumDate" }}
                 </p>
               </div></span
             >
@@ -68,50 +60,34 @@
       </div>
     </div>
     <div class="course-details_header_bottom">
-      <!-- <p class="descript">
-        {{ classroom?.description }}
-      </p> -->
-      <!-- <ul class="numbers dis-flex">
-        <li>
-          <p class="body-2-bold">{{ classroom?.courses?.length }}</p>
-            <p class="body-3-regular">{{classroom?.courses?.length > 1 ? 'Courses' : 'Course'}}</p>
-        </li>
-        <li>
-            <p class="body-2-bold">{{ classroom?.schools?.length }}</p>
-            <p class="body-3-regular">{{classroom?.schools?.length > 1 ? 'Schools' : 'School'}}</p>
-          </li>
-        <li>
-            <p class="body-2-bold">{{ classroom?.learner_count }}</p>
-            <p class="body-3-regular">{{classroom?.learner_count > 1 ? 'Learners' : 'Learner'}}</p>
-          </li>
-      </ul> -->
-      <div class="students">
+      <div class="students dis-flex">
         <p class="body-2-bold title">
           Total
-          {{ (classroom?.learner_count || 0) > 1 ? "Learners" : "Learner" }} ({{
-            classroom?.learner_count
-          }})
+          {{ (classroom?.learner_count || 0) > 1 ? "Learners:" : "Learner:" }}
         </p>
-        <ul class="students_list dis-flex">
-          <li>
-            <img
-              src="../../../../../assets/img/children-avatar/child-avatar-1.png"
-              alt=""
-            />
-          </li>
-          <li>
-            <img
-              src="../../../../../assets/img/children-avatar/child-avatar-2.png"
-              alt=""
-            />
-          </li>
-          <li>
-            <img
-              src="../../../../../assets/img/children-avatar/child-avatar-3.png"
-              alt=""
-            />
-          </li>
-        </ul>
+        <div class="students_value dis-flex">
+          <p class="body-2-medium text-primary-color">({{ classroom?.learner_count }})</p>
+          <ul class="students_list dis-flex">
+            <li>
+              <img
+                src="../../../../../assets/img/children-avatar/child-avatar-1.png"
+                alt=""
+              />
+            </li>
+            <li>
+              <img
+                src="../../../../../assets/img/children-avatar/child-avatar-2.png"
+                alt=""
+              />
+            </li>
+            <li>
+              <img
+                src="../../../../../assets/img/children-avatar/child-avatar-3.png"
+                alt=""
+              />
+            </li>
+          </ul>
+        </div>
       </div>
       <div class="completion">
         <p class="body-2-bold title">Instructor</p>

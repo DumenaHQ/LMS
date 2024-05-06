@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ClassroomModel, Term } from 'src/app/modules/school/components/school-classrooms/display-school-classrooms/models/classroom.model';
 import { ClassroomService } from 'src/app/services/classroom.service';
 
 @Component({
@@ -17,6 +18,7 @@ export class ViewInstructorClassroomComponent implements OnInit {
   addLearnerToClassroom: boolean = false;
   courseQuizResult: boolean = false;
   course: any;
+  activeSession?: Term;
 
   constructor(
     private classroomService: ClassroomService,
@@ -39,6 +41,14 @@ export class ViewInstructorClassroomComponent implements OnInit {
         },
         error: (e) => console.error(e),
       });
+  }
+
+  // Check Active Session
+  checkActiveSession(classroom?: ClassroomModel) {
+    this.activeSession =
+      this.classroomService.checkClassActiveSession(classroom);
+
+    return this.activeSession;
   }
 
   openViewCourseQuizResult(course: any) {
