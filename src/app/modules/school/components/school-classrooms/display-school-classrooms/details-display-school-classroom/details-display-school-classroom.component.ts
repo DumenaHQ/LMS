@@ -18,6 +18,7 @@ export class DetailsDisplaySchoolClassroomComponent implements OnInit {
   addLearnerToClassroom: boolean = false;
 
   updatingClassDate: boolean = false;
+  activeSession?: Term;
 
   deleteModal: boolean = false;
   deleteUrl: string;
