@@ -221,7 +221,7 @@ export class SchoolSignupComponent implements OnInit {
       school: this.userForm.value.school,
       address: this.userForm.value.address,
       event: this.userEvent.event,
-      contact_person_email: this.userForm.value.contactPersonEmail,
+      contact_email: this.userForm.value.contactPersonEmail,
     };
 
     // Send users data
