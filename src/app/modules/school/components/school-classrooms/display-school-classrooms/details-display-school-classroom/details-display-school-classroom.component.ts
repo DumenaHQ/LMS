@@ -82,7 +82,8 @@ export class DetailsDisplaySchoolClassroomComponent implements OnInit {
 
           // Set Timeout
           setTimeout(() => {
-            this.router.navigate([`/school/classrooms/`]);
+            // this.router.navigate([`/school/classrooms/`]);
+            window.location.reload();
           }, 3000);
         }
 

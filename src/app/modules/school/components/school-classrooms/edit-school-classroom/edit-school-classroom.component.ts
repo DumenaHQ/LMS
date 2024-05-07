@@ -6,6 +6,7 @@ import { ClassroomService } from 'src/app/services/classroom.service';
 import { TeachersService } from 'src/app/services/teachers.service';
 import { ClassroomModel, Term } from '../display-school-classrooms/models/classroom.model';
 import * as moment from 'moment';
+import { UtilsService } from 'src/app/services/utils/utils.service';
 
 @Component({
   selector: 'app-edit-school-classroom',
@@ -29,6 +30,8 @@ export class EditSchoolClassroomComponent implements OnInit {
   selectedHeaderPhotoName: string = '';
   thumbnailFile: File;
   headerPhotoFile: File;
+  thumbnailUrl?: string;
+  headerPhotoUrl?: string;
 
   constructor(
     private classroomService: ClassroomService,
@@ -36,7 +39,8 @@ export class EditSchoolClassroomComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private teachersService: TeachersService,
-    private authService: AuthService
+    private authService: AuthService,
+    private utilsService: UtilsService,
   ) {}
 
   // classroom form
@@ -139,6 +143,9 @@ export class EditSchoolClassroomComponent implements OnInit {
   uploadThumbnail(event: any) {
     const file = event.target.files[0];
     this.thumbnailFile = file;
+    this.utilsService.imageToBase64(file).then((value: string) => {
+      this.thumbnailUrl = value;
+    });
     this.selectedThumbnailName = file.name;
 
     this.formGroup.patchValue({ thumbnail: this.selectedThumbnailName });
@@ -147,6 +154,9 @@ export class EditSchoolClassroomComponent implements OnInit {
   uploadHeaderPhoto(event: any) {
     const file = event.target.files[0];
     this.headerPhotoFile = file;
+    this.utilsService.imageToBase64(file).then((value: string) => {
+      this.headerPhotoUrl = value;
+    });
     this.selectedHeaderPhotoName = file.name;
     this.formGroup.patchValue({ header_photo: this.selectedHeaderPhotoName });
   }
