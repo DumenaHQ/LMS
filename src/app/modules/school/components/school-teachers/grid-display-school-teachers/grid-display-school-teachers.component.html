@@ -68,7 +68,7 @@
             <p>{{ teacher.email | lowercase }}</p>
           </td>
           <td class="grade">
-            <p [className]="teacher.isUserOnboarded ? 'success-status' : 'error-status'">{{ teacher.isUserOnboarded ? "Onboarded" : "Not Onboarded" }}</p>
+            <p [className]="teacher.status === 'active' ? 'success-status' : 'error-status'">{{ teacher.status === "active" ? "Active" : "Inactive" }}</p>
           </td>
           <td class="dateEnrolled">
             <p>{{ teacher.createdAt | date: "mediumDate" }}</p>
