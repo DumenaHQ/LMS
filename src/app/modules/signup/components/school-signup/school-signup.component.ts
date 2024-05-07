@@ -213,7 +213,7 @@ export class SchoolSignupComponent implements OnInit {
     // Set payload
     let payload = {
       fullname: this.userForm.value.fullname,
-      email: this.userForm.value.email,
+      school_email: this.userForm.value.email,
       user_type: 'school',
       password: this.userForm.value.password,
       phone: this.userForm.value.phone,
@@ -221,7 +221,7 @@ export class SchoolSignupComponent implements OnInit {
       school: this.userForm.value.school,
       address: this.userForm.value.address,
       event: this.userEvent.event,
-      contact_email: this.userForm.value.contactPersonEmail,
+      email: this.userForm.value.contactPersonEmail,
     };
 
     // Send users data
