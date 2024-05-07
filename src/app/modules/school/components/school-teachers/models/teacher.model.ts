@@ -6,4 +6,5 @@ export type TeacherModel = {
     readonly fullname?:        string;
     readonly email?:           string;
     readonly isUserOnboarded?: boolean;
+    readonly status?: string;
 }

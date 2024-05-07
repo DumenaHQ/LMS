@@ -52,8 +52,8 @@ export class AddSchoolClassroomComponent implements OnInit {
   initForm() {
     this.formGroup = this.formBuilder.group({
       name: ['', [Validators.required]],
-      description: [''],
       template: [''],
+      teacher: [''],
       header_photo: [''],
       thumbnail: [''],
     });
@@ -109,8 +109,8 @@ export class AddSchoolClassroomComponent implements OnInit {
 
     var formData: any = new FormData();
     formData.append('name', value.name);
-    formData.append('description', value.description);
     formData.append('template', value.template);
+    formData.append('teacher_id', value.teacher);
     if (this.headerPhotoFile) {
       formData.append('header_photo', this.headerPhotoFile);
     }
