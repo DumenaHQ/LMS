@@ -35,8 +35,8 @@
   <table>
     <tr class="table-header">
       <th>Name</th>
-      <th>Email</th>
-      <th>Grade</th>
+      <th>Parent Email</th>
+      <th>Username</th>
       <th>Date Enrolled</th>
       <th></th>
     </tr>
@@ -49,17 +49,17 @@
               alt=""
             />
             <div>
-              <p>{{ student.fullname | titlecase }}</p>
-              <p>{{ student.username }}</p>
+              <p>{{ student.fullname }}</p>
+              <p>Grade: {{ student.grade }}</p>
             </div>
           </div>
         </td>
         <td class="contact-info">
-          <p>{{ (student.email | titlecase) || "-" }}</p>
+          <p>{{ (student.parent_email | titlecase) || "-" }}</p>
           <!-- <p>{{ student.phone }}</p> -->
         </td>
         <td class="grade">
-          <p>{{ student.grade }}</p>
+          <p>{{ student.username }}</p>
         </td>
         <td class="dateEnrolled">
           <p>{{ student.createdAt | date: "mediumDate" }}</p>

@@ -20,7 +20,7 @@
                     classroom?.name | truncate
                   }}
                 </h5>
-              <p [className]="checkActiveSession(classroom) ? 'success-status' : 'error-status'">{{ (activeSession ? activeSession.title : "On Break") | uppercase }}</p>
+              <p [className]="classroom.active_term ? 'success-status' : 'error-status'">{{ (classroom.active_term ? classroom.active_term.title : "On Break") | uppercase }}</p>
               </div>
             </div>
             <ul class="dis-flex">

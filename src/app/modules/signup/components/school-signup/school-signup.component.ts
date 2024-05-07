@@ -191,6 +191,7 @@ export class SchoolSignupComponent implements OnInit {
       resident_state: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       phone: ['', [Validators.required, Validators.minLength(11)]],
+      contactPersonEmail: ['', [Validators.required, Validators.email]],
     });
   }
 
@@ -220,6 +221,7 @@ export class SchoolSignupComponent implements OnInit {
       school: this.userForm.value.school,
       address: this.userForm.value.address,
       event: this.userEvent.event,
+      contact_email: this.userForm.value.contactPersonEmail,
     };
 
     // Send users data

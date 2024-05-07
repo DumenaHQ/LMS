@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClassroomService } from 'src/app/services/classroom.service';
 import { ClassroomModel, Term } from '../models/classroom.model';
+import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 
 @Component({
   selector: 'app-details-display-school-classroom',
@@ -15,6 +16,8 @@ export class DetailsDisplaySchoolClassroomComponent implements OnInit {
   dataLoading: boolean = true;
   addCourseToClassroom: boolean = false;
   addLearnerToClassroom: boolean = false;
+
+  updatingClassDate: boolean = false;
   activeSession?: Term;
 
   deleteModal: boolean = false;
@@ -28,7 +31,8 @@ export class DetailsDisplaySchoolClassroomComponent implements OnInit {
     private classroomService: ClassroomService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private changeDectetorRef: ChangeDetectorRef
+    private changeDectetorRef: ChangeDetectorRef,
+    private appAlertService: AppAlertService
   ) {}
 
   ngOnInit(): void {
@@ -37,12 +41,64 @@ export class DetailsDisplaySchoolClassroomComponent implements OnInit {
     this.getClassrooms();
   }
 
-  // Check Active Session
-  checkActiveSession(classroom?: ClassroomModel) {
-    this.activeSession =
-      this.classroomService.checkClassActiveSession(classroom);
+  confirmSessionDates(defaultSessionConfirmed: boolean) {
+    if (defaultSessionConfirmed) {
+      this.confirmDefaultSessionDates();
+    } else {
+      this.editClassroom();
+    }
+  }
 
-    return this.activeSession;
+  confirmDefaultSessionDates() {
+    if (!this.classroom?.active_term?.start_date || !this.classroom?.active_term.end_date) {
+      this.appAlertService.showAlert(
+        'Something went wrong.\nPlease contact admin.',
+        AlertType.Error,
+      );
+
+      return;
+    }
+
+    this.updatingClassDate = true;
+
+    const startDate = this.classroom?.active_term?.start_date;
+    const endDate = this.classroom?.active_term.end_date;
+
+    const start = startDate && new Date(startDate);
+    const end = endDate && new Date(endDate);
+
+    var formData: any = new FormData();
+    formData.append('active_term_start_date', new Date(start).toISOString());
+    formData.append('active_term_end_date', new Date(end).toISOString());
+
+    this.classroomService.editClassroom(formData, this.currentClassroomId.classroomId)
+    // this.classroomService.editClassroom(formData, this.classroom?.id)
+      .then(res => {
+        if (res.status === true) {
+          this.appAlertService.showAlert(
+            res.message,
+            AlertType.Success,
+          );
+
+          // Set Timeout
+          setTimeout(() => {
+            // this.router.navigate([`/school/classrooms/`]);
+            window.location.reload();
+          }, 3000);
+        }
+
+        this.updatingClassDate = false;
+      })
+      .catch(error => {
+        console.log(error);
+        // Show error message
+        this.appAlertService.showAlert(
+          error.message,
+          AlertType.Error,
+        );
+
+        this.updatingClassDate = false;
+      });
   }
 
   // Get classrooms

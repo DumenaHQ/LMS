@@ -4,24 +4,25 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClassroomService } from 'src/app/services/classroom.service';
 import { TeachersService } from 'src/app/services/teachers.service';
-import { ClassroomModel } from '../display-school-classrooms/models/classroom.model';
+import { ClassroomModel, Term } from '../display-school-classrooms/models/classroom.model';
 import * as moment from 'moment';
+import { UtilsService } from 'src/app/services/utils/utils.service';
 
 @Component({
   selector: 'app-edit-school-classroom',
   templateUrl: './edit-school-classroom.component.html',
-  styleUrls: ['./edit-school-classroom.component.scss']
+  styleUrls: ['./edit-school-classroom.component.scss'],
 })
 export class EditSchoolClassroomComponent implements OnInit {
-
   // classroom: ClassroomModel;
-  classroom: any;
+  classroom?: ClassroomModel;
   currentClassroom: any;
   alertMessage: string = '';
   alertColor: string = '';
   isAlert: boolean = false;
   formSubmitAttempted: boolean = false;
   loading: boolean = false;
+  dataLoading: boolean = false;
   teachers: any;
   user: any;
   templates: any;
@@ -29,16 +30,18 @@ export class EditSchoolClassroomComponent implements OnInit {
   selectedHeaderPhotoName: string = '';
   thumbnailFile: File;
   headerPhotoFile: File;
+  thumbnailUrl?: string;
+  headerPhotoUrl?: string;
 
- 
   constructor(
     private classroomService: ClassroomService,
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private router: Router,
     private teachersService: TeachersService,
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+    private utilsService: UtilsService,
+  ) {}
 
   // classroom form
   formGroup = this.formBuilder.group({
@@ -52,10 +55,26 @@ export class EditSchoolClassroomComponent implements OnInit {
     active_term_end_date: [''],
   });
 
+  get minDate(): string {
+    const termsSorted = (this.classroom?.terms || []).sort(
+      (a: Term, b: Term) => moment(a.start_date).diff(b.start_date),
+    );
+
+    return moment(termsSorted[0]?.start_date).format('YYYY-MM-DD');
+  }
+ 
+  get maxDate(): string {
+    const termsSorted = (this.classroom?.terms || []).sort(
+      (a: Term, b: Term) => moment(a.end_date).diff(b.end_date),
+    );
+
+    return moment(termsSorted[2]?.end_date).format('YYYY-MM-DD');
+  }
+
   ngOnInit(): void {
     let userData = this.authService.getUser();
     this.user = userData.user;
-    
+
     // Get Current classroom
     this.currentClassroom = this.activatedRoute.snapshot.params;
     this.getClassroom();
@@ -65,29 +84,40 @@ export class EditSchoolClassroomComponent implements OnInit {
 
   // Initialize form
   initForm() {
-    this.formGroup = this.formBuilder.group({
-      name: [this.classroom?.name, [Validators.required]],
-      template: [this.classroom?.template?.id, [Validators.required]],
-      description: [this.classroom?.description, [Validators.required]],
-      teacher: [this.classroom?.teacher?.id, [Validators.required]],
-      header_photo: [this.classroom?.header_photo, [Validators.required]],
-      thumbnail: [this.classroom?.thumbnail, [Validators.required]],
-      active_term_start_date: [moment(this.classroom?.active_term_start_date).format('YYYY-MM-DD'), [Validators.required]],
-      active_term_end_date: [moment(this.classroom?.active_term_end_date).format('YYYY-MM-DD'), [Validators.required]],
+    this.formGroup.patchValue({
+      name: this.classroom?.name,
+      template: this.classroom?.template?.id,
+      description: this.classroom?.description,
+      teacher: this.classroom?.teacher?.id,
+      header_photo: this.classroom?.header_photo,
+      thumbnail: this.classroom?.thumbnail,
+      active_term_start_date: moment(
+        this.classroom?.active_term?.start_date
+      ).format('YYYY-MM-DD'),
+      active_term_end_date: moment(
+        this.classroom?.active_term?.end_date
+      ).format('YYYY-MM-DD'),
     });
   }
 
   // Get Classroom
   getClassroom() {
+    this.dataLoading = true;
+
     this.classroomService
       .getClassroomById(this.currentClassroom.classroomId)
       .subscribe({
         next: (res: any) => {
-          this.classroom = res.data.class;          
+          this.classroom = res.data.class;
           this.initForm();
+
+          this.dataLoading = false;
         },
-        error: (e) => console.error(e),
-      });    
+        error: (e) => {
+          this.dataLoading = false;
+          console.error(e);
+        },
+      });
   }
 
   // Get classroom templates
@@ -113,17 +143,22 @@ export class EditSchoolClassroomComponent implements OnInit {
   uploadThumbnail(event: any) {
     const file = event.target.files[0];
     this.thumbnailFile = file;
+    this.utilsService.imageToBase64(file).then((value: string) => {
+      this.thumbnailUrl = value;
+    });
     this.selectedThumbnailName = file.name;
 
-    this.formGroup.patchValue({thumbnail: this.selectedThumbnailName}); 
-    
+    this.formGroup.patchValue({ thumbnail: this.selectedThumbnailName });
   }
 
   uploadHeaderPhoto(event: any) {
     const file = event.target.files[0];
     this.headerPhotoFile = file;
+    this.utilsService.imageToBase64(file).then((value: string) => {
+      this.headerPhotoUrl = value;
+    });
     this.selectedHeaderPhotoName = file.name;
-    this.formGroup.patchValue({header_photo: this.selectedHeaderPhotoName})
+    this.formGroup.patchValue({ header_photo: this.selectedHeaderPhotoName });
   }
 
   editClassroom() {
@@ -131,7 +166,7 @@ export class EditSchoolClassroomComponent implements OnInit {
       this.formSubmitAttempted = true;
       return;
     }
-    
+
     // Set loading to true
     this.loading = true;
 
@@ -147,7 +182,6 @@ export class EditSchoolClassroomComponent implements OnInit {
     const start = startDate && new Date(startDate);
     const end = endDate && new Date(endDate);
 
-
     var formData: any = new FormData();
     formData.append('name', value.name);
     formData.append('description', value.description);
@@ -162,21 +196,24 @@ export class EditSchoolClassroomComponent implements OnInit {
       formData.append('thumbnail', this.thumbnailFile);
     }
 
-    this.classroomService.editClassroom(formData, this.currentClassroom.classroomId)
-      .then(res => {
+    this.classroomService
+      .editClassroom(formData, this.currentClassroom.classroomId)
+      .then((res) => {
         if (res.status === true) {
           this.alertMessage = res.message;
           this.showAlertPopup(res.message, 'success');
           // Set Timeout
           setTimeout(() => {
-            this.router.navigate([`/school/classrooms/${this.currentClassroom.classroomId}/view-classroom`]);
+            this.router.navigate([
+              `/school/classrooms/${this.currentClassroom.classroomId}/view-classroom`,
+            ]);
           }, 3000);
         }
 
         // Set loading to false
         this.loading = false;
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         // Show error message
         this.showAlertPopup(error.error.message, 'error');
@@ -185,7 +222,6 @@ export class EditSchoolClassroomComponent implements OnInit {
         this.loading = false;
       });
   }
-
 
   // Show alert
   showAlertPopup(message: string, color: string) {
@@ -200,6 +236,4 @@ export class EditSchoolClassroomComponent implements OnInit {
       this.isAlert = false;
     }, 3000);
   }
-
-
 }

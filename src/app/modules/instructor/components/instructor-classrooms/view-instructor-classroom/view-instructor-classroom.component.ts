@@ -12,13 +12,12 @@ export class ViewInstructorClassroomComponent implements OnInit {
 
   contentId: any = 'courses';
   currentClassroomId: any;
-  classroom: any;
+  classroom?: ClassroomModel;
   dataLoading: boolean = true;
   addCourseToClassroom: boolean = false;
   addLearnerToClassroom: boolean = false;
   courseQuizResult: boolean = false;
   course: any;
-  activeSession?: Term;
 
   constructor(
     private classroomService: ClassroomService,
@@ -41,14 +40,6 @@ export class ViewInstructorClassroomComponent implements OnInit {
         },
         error: (e) => console.error(e),
       });
-  }
-
-  // Check Active Session
-  checkActiveSession(classroom?: ClassroomModel) {
-    this.activeSession =
-      this.classroomService.checkClassActiveSession(classroom);
-
-    return this.activeSession;
   }
 
   openViewCourseQuizResult(course: any) {

@@ -3,9 +3,7 @@
     <i class="bx bx-chevron-right icon"></i>
     <p class="clickable" [title]="classroom?.name">
       {{
-        classroom?.name.length > 20
-          ? classroom?.name.slice(0, 20) + "..."
-          : classroom?.name
+        classroom?.name | truncate
       }}
     </p>
   </section>
@@ -19,12 +17,10 @@
           <h2>{{ classroom?.name }}</h2>
           <div class="dis-flex left_bottom">
             <p
+            [className]="classroom.active_term ? 'success-status' : 'error-status'"
               *ngIf="classroom"
-              [className]="
-                checkActiveSession(classroom) ? 'success_btn' : 'grey_btn'
-              "
             >
-              {{ (activeSession ? activeSession.title : "On Break") | uppercase }}
+            {{ (classroom.active_term ? classroom.active_term.title : "On Break") | uppercase }}
             </p>
   
             <div class="icons dis-flex">
@@ -33,12 +29,12 @@
                 <div class="">
                   <p class="body-2-regular">
                     Starts:
-                    {{ activeSession?.start_date | date : "mediumDate" }}
+                    {{ classroom?.active_term?.start_date | date : "mediumDate" }}
                   </p>
   
                   <p>
                     Ends:
-                    {{ activeSession?.end_date | date : "mediumDate" }}
+                    {{ classroom?.active_term?.end_date | date : "mediumDate" }}
                   </p>
                 </div></span
               >
