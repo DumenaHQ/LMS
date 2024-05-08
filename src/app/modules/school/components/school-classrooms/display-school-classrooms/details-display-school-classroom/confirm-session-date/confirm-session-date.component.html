@@ -7,6 +7,11 @@
       <p>
         Please confirm if this is correct?
         <br /><br />
+        Session Period:
+        <strong class="text-primary-color">
+          {{ classroom.active_term?.title | uppercase }}
+        </strong>
+        <br />
         Session Starts:
         <strong class="text-primary-color">
           {{ classroom.active_term?.start_date | date }}
