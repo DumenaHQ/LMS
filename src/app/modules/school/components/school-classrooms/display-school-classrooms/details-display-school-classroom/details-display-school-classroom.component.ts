@@ -44,31 +44,24 @@ export class DetailsDisplaySchoolClassroomComponent implements OnInit {
     this.getClassrooms();
   }
 
-  confirmSessionDates(defaultSessionConfirmed: boolean) {
-    if (defaultSessionConfirmed) {
-      this.confirmDefaultSessionDates();
+  confirmSessionDates(defaultSessionConfirmed: any) {
+    if (defaultSessionConfirmed.confrimType === 'withoutEdit') {
+      if (!this.classroom?.active_term?.start_date || !this.classroom?.active_term.end_date) {
+        this.appAlertService.showAlert(
+          'Something went wrong.\nPlease contact admin.',
+          AlertType.Error,
+        );
+        
+        return;
+      }
+      this.confirmDefaultSessionDates(this.classroom?.active_term?.start_date, this.classroom?.active_term.end_date);
     } else {
-      this.editClassroom();
+      this.confirmDefaultSessionDates(defaultSessionConfirmed.value.active_term_start_date, defaultSessionConfirmed.value.active_term_end_date);
     }
   }
 
-  confirmDefaultSessionDates() {
-    if (
-      !this.classroom?.active_term?.start_date ||
-      !this.classroom?.active_term.end_date
-    ) {
-      this.appAlertService.showAlert(
-        'Something went wrong.\nPlease contact admin.',
-        AlertType.Error
-      );
-
-      return;
-    }
-
+  confirmDefaultSessionDates(startDate: any, endDate: any) {
     this.updatingClassDate = true;
-
-    const startDate = this.classroom?.active_term?.start_date;
-    const endDate = this.classroom?.active_term.end_date;
 
     const start = startDate && new Date(startDate);
     const end = endDate && new Date(endDate);
@@ -79,13 +72,10 @@ export class DetailsDisplaySchoolClassroomComponent implements OnInit {
 
     this.classroomService
       .editClassroom(formData, this.currentClassroomId.classroomId)
-      // this.classroomService.editClassroom(formData, this.classroom?.id)
       .then((res) => res.json())
       .then((data) => {
         if (data.status) {
           this.appAlertService.showAlert(data.message, AlertType.Success);
-
-          // Set Timeout
           setTimeout(() => {
             window.location.reload();
           }, 3000);

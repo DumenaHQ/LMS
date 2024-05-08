@@ -3,15 +3,10 @@
     <h5></h5>
 
     <div class="modal-details" style="text-align: left">
-      <h2 class="text-primary-color">Confirm Session Dates</h2>
-      <p>
+      <h2 class="text-primary-color">Confirm Term Dates</h2>
+      <p *ngIf="!isChange">
         Please confirm if this is correct?
         <br /><br />
-        Term Period:
-        <strong class="text-primary-color">
-          {{ classroom.active_term?.title | uppercase }}
-        </strong>
-        <br />
         Term Starts:
         <strong class="text-primary-color">
           {{ classroom.active_term?.start_date | date }}
@@ -22,16 +17,69 @@
           {{ classroom.active_term?.end_date | date }}
         </strong>
       </p>
+
+      <form class="confirm-term" [formGroup]="formGroup" *ngIf="isChange">
+        <div class="form_control_container">
+          <div class="form_control">
+            <label for="active_term_start_date">Term Starts</label>
+    
+            <div class="form_control_field">
+              <div class="">
+                <input
+                  type="date"
+                  name="active_term_start_date"
+                  id=""
+                  formControlName="active_term_start_date"
+                  [min]="minDate"
+                  [max]="maxDate"
+                  />
+              </div>
+            </div>
+            <div class="form_error">
+              <div
+                *ngIf="formGroup.controls['active_term_start_date'].invalid && formGroup.controls['active_term_start_date'].touched"
+              >
+                Start Date is required.
+              </div>
+            </div>
+          </div>
+    
+          <div class="form_control">
+            <label for="active_term_end_date">Term Ends</label>
+            <div class="form_control_field">
+              <div class="">
+                <input
+                  type="date"
+                  name="active_term_end_date"
+                  id=""
+                  formControlName="active_term_end_date"
+                  [min]="minDate"
+                  [max]="maxDate"
+                  />
+              </div>
+            </div>
+            <div class="form_error">
+              <div
+                *ngIf="
+                  formGroup.controls['active_term_end_date'].invalid && formGroup.controls['active_term_end_date'].touched
+                "
+              >
+                End Date is required.
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
     <!-- Buttons -->
     <div class="modal-btns dis-flex">
-      <button type="button" class="btn skip_btn" (click)="confirmAction(false)">
-        Change
+      <button type="button" class="btn skip_btn" (click)="changeDatesToggle()">
+        {{ isChange ? 'Cancel' : 'Change' }}
       </button>
       <button
         class="btn prim_btn"
-        [disabled]="loading"
-        (click)="confirmAction(true)"
+        [disabled]="loading || (isChange && formGroup.invalid)"
+        (click)="confirmAction()"
       >
         <span *ngIf="!loading">Confirm</span>
         <span *ngIf="loading">Processing...</span>
