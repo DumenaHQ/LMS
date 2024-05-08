@@ -2,7 +2,10 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClassroomService } from 'src/app/services/classroom.service';
 import { ClassroomModel, Term } from '../models/classroom.model';
-import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
+import {
+  AlertType,
+  AppAlertService,
+} from 'src/app/services/app-alerts/app-alert.service';
 
 @Component({
   selector: 'app-details-display-school-classroom',
@@ -50,10 +53,13 @@ export class DetailsDisplaySchoolClassroomComponent implements OnInit {
   }
 
   confirmDefaultSessionDates() {
-    if (!this.classroom?.active_term?.start_date || !this.classroom?.active_term.end_date) {
+    if (
+      !this.classroom?.active_term?.start_date ||
+      !this.classroom?.active_term.end_date
+    ) {
       this.appAlertService.showAlert(
         'Something went wrong.\nPlease contact admin.',
-        AlertType.Error,
+        AlertType.Error
       );
 
       return;
@@ -71,30 +77,32 @@ export class DetailsDisplaySchoolClassroomComponent implements OnInit {
     formData.append('active_term_start_date', new Date(start).toISOString());
     formData.append('active_term_end_date', new Date(end).toISOString());
 
-    this.classroomService.editClassroom(formData, this.currentClassroomId.classroomId)
-    // this.classroomService.editClassroom(formData, this.classroom?.id)
-      .then(res => {
-        if (res.status === true) {
-          this.appAlertService.showAlert(
-            res.message,
-            AlertType.Success,
-          );
+    this.classroomService
+      .editClassroom(formData, this.currentClassroomId.classroomId)
+      // this.classroomService.editClassroom(formData, this.classroom?.id)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status) {
+          this.appAlertService.showAlert(data.message, AlertType.Success);
 
           // Set Timeout
           setTimeout(() => {
-            // this.router.navigate([`/school/classrooms/`]);
             window.location.reload();
           }, 3000);
+          this.updatingClassDate = false;
+        } else {
+          throw data;
         }
-
-        this.updatingClassDate = false;
       })
-      .catch(error => {
-        console.log(error);
+      .catch((error) => {
         // Show error message
         this.appAlertService.showAlert(
-          error.message,
-          AlertType.Error,
+          error.message
+            ? error.message
+            : error.error
+            ? error.error.message || error.error.error.errors[0].message
+            : error.message,
+          AlertType.Error
         );
 
         this.updatingClassDate = false;

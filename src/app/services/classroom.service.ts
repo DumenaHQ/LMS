@@ -6,31 +6,32 @@ import { ClassroomModel } from '../modules/school/components/school-classrooms/d
 import { map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ClassroomService {
-
   baseUrl: string = environment.baseUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getClassrooms() {
     return this.http.get(`${this.baseUrl}classes`, this.getHttpOptions());
   }
 
   getClassroomById(classroomId: string) {
-    return this.http.get(`${this.baseUrl}classes/${classroomId}`, this.getHttpOptions());
+    return this.http.get(
+      `${this.baseUrl}classes/${classroomId}`,
+      this.getHttpOptions()
+    );
   }
-  
+
   addClassroom(formData: FormData): Promise<any> {
     const headers = new Headers();
     headers.append('Authorization', 'bearer ' + localStorage.getItem('token'));
     return fetch(`${this.baseUrl}classes`, {
       method: 'POST',
       headers: headers,
-      body: formData
-    })
-    .then(response => {
+      body: formData,
+    }).then((response) => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -44,7 +45,7 @@ export class ClassroomService {
       // `${this.baseUrl}classes/${classroomId}/courses`,
       data,
       this.getHttpOptions()
-      );
+    );
   }
 
   addLearnerToClassroom(data: any, classroomId: any) {
@@ -52,7 +53,7 @@ export class ClassroomService {
       `${this.baseUrl}classes/${classroomId}/learners`,
       data,
       this.getHttpOptions()
-      );
+    );
   }
 
   subscribeLearnerToClassroom(data: any, classroomId: any) {
@@ -60,52 +61,55 @@ export class ClassroomService {
       `${this.baseUrl}classes/${classroomId}/subscribe`,
       data,
       this.getHttpOptions()
-      );
+    );
   }
-  
-  editClassroom(formData: FormData, classroomId: any): Promise<any> {
+
+  editClassroom(formData: FormData, classroomId: any): Promise<Response> {
     const headers = new Headers();
     headers.append('Authorization', 'bearer ' + localStorage.getItem('token'));
     return fetch(`${this.baseUrl}classes/${classroomId}`, {
       method: 'PUT',
       headers: headers,
-      body: formData
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    });
+      body: formData,
+    });;
   }
 
   getQuizResultsByQuizId(classroomId: string, quizId: string) {
-    return this.http.get(`${this.baseUrl}classes/${classroomId}/quizes/${quizId}/result`, this.getHttpOptions());
+    return this.http.get(
+      `${this.baseUrl}classes/${classroomId}/quizes/${quizId}/result`,
+      this.getHttpOptions()
+    );
   }
 
   //--- TEMPLATES STARTS --//
   getClassroomTemplates() {
-    return this.http.get(`${this.baseUrl}classes/templates`, this.getHttpOptions());
+    return this.http.get(
+      `${this.baseUrl}classes/templates`,
+      this.getHttpOptions()
+    );
   }
 
   getClassroomTemplateById(templateId: string) {
-    return this.http.get(`${this.baseUrl}classes/templates/${templateId}`, this.getHttpOptions());
+    return this.http.get(
+      `${this.baseUrl}classes/templates/${templateId}`,
+      this.getHttpOptions()
+    );
   }
 
   addClassroomTemplate(data: any) {
     return this.http.post(
       `${this.baseUrl}classes/templates`,
-      data, 
+      data,
       this.getHttpOptions()
     );
   }
-  
+
   addCourseToClassroomTemplate(data: any, templateId: any) {
     return this.http.patch(
       `${this.baseUrl}classes/templates/${templateId}/courses`,
       data,
       this.getHttpOptions()
-      );
+    );
   }
 
   // Add classroom template
@@ -114,13 +118,16 @@ export class ClassroomService {
       `${this.baseUrl}classes/templates/${templateId}`,
       data,
       this.getHttpOptions()
-      );
-    }
+    );
+  }
 
-  updateClassroomTemplate(classroomTemplate: ClassTemplateDetailModel, data: any) {
+  updateClassroomTemplate(
+    classroomTemplate: ClassTemplateDetailModel,
+    data: any
+  ) {
     return this.http.put(
       `${this.baseUrl}classes/templates/${classroomTemplate.id}`,
-      data, 
+      data,
       this.getHttpOptions()
     );
   }
