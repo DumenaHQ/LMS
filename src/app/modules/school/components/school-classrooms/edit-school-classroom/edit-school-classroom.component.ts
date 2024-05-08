@@ -4,9 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClassroomService } from 'src/app/services/classroom.service';
 import { TeachersService } from 'src/app/services/teachers.service';
-import { ClassroomModel, Term } from '../display-school-classrooms/models/classroom.model';
+import {
+  ClassroomModel,
+  Term,
+} from '../display-school-classrooms/models/classroom.model';
 import * as moment from 'moment';
 import { UtilsService } from 'src/app/services/utils/utils.service';
+import { AlertType } from 'src/app/services/app-alerts/app-alert.service';
 
 @Component({
   selector: 'app-edit-school-classroom',
@@ -40,7 +44,7 @@ export class EditSchoolClassroomComponent implements OnInit {
     private router: Router,
     private teachersService: TeachersService,
     private authService: AuthService,
-    private utilsService: UtilsService,
+    private utilsService: UtilsService
   ) {}
 
   // classroom form
@@ -56,16 +60,16 @@ export class EditSchoolClassroomComponent implements OnInit {
   });
 
   get minDate(): string {
-    const termsSorted = (this.classroom?.terms || []).sort(
-      (a: Term, b: Term) => moment(a.start_date).diff(b.start_date),
+    const termsSorted = (this.classroom?.terms || []).sort((a: Term, b: Term) =>
+      moment(a.start_date).diff(b.start_date)
     );
 
     return moment(termsSorted[0]?.start_date).format('YYYY-MM-DD');
   }
- 
+
   get maxDate(): string {
-    const termsSorted = (this.classroom?.terms || []).sort(
-      (a: Term, b: Term) => moment(a.end_date).diff(b.end_date),
+    const termsSorted = (this.classroom?.terms || []).sort((a: Term, b: Term) =>
+      moment(a.end_date).diff(b.end_date)
     );
 
     return moment(termsSorted[2]?.end_date).format('YYYY-MM-DD');
@@ -198,16 +202,18 @@ export class EditSchoolClassroomComponent implements OnInit {
 
     this.classroomService
       .editClassroom(formData, this.currentClassroom.classroomId)
-      .then((res) => {
-        if (res.status === true) {
-          this.alertMessage = res.message;
-          this.showAlertPopup(res.message, 'success');
+      .then(res => res.json()).then((data) => {
+        if (data.status) {
+          this.alertMessage = data.message;
+          this.showAlertPopup(data.message, AlertType.Success);
           // Set Timeout
           setTimeout(() => {
             this.router.navigate([
               `/school/classrooms/${this.currentClassroom.classroomId}/view-classroom`,
             ]);
           }, 3000);
+        } else {
+          throw data;
         }
 
         // Set loading to false
@@ -216,7 +222,12 @@ export class EditSchoolClassroomComponent implements OnInit {
       .catch((error) => {
         console.log(error);
         // Show error message
-        this.showAlertPopup(error.error.message, 'error');
+        this.showAlertPopup(
+          error.message ? error.message : error.error
+            ? error.error.message || error.error.error.errors[0].message
+            : error.message,
+          AlertType.Error
+        );
 
         // Set loading to false
         this.loading = false;
