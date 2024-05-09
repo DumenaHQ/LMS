@@ -165,9 +165,9 @@
           'is-invalid': isFormSubmitted && userForm.controls.contactPersonEmail.errors
         }"
       >
-        <label for="email">Contact Email Address</label>
+        <label for="contactPersonEmail">Contact Email Address</label>
         <div class="input-field">
-          <input type="email" name="email" formControlName="email" />
+          <input type="contactPersonEmail" name="contactPersonEmail" formControlName="contactPersonEmail" />
           <i class="bx bx-error-circle icon info-icon"></i>
         </div>
         <!-- Error -->
@@ -176,7 +176,7 @@
             class="body-3-regular error-msg"
             *ngIf="userForm.controls.contactPersonEmail.errors.required"
           >
-            Email is required
+          Contact Email is required
           </p>
           <p
             class="body-3-regular error-msg"
