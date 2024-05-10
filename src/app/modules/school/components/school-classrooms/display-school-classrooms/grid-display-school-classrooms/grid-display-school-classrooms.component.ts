@@ -31,13 +31,11 @@ export class GridDisplaySchoolClassroomsComponent implements OnInit {
 
   // Open Confirm Delete Modal
   openDeleteModal(classroom: any) {
-    console.log(classroom);
     this.classroomName = classroom.name;
 
     this.deleteModal = true;
 
     this.deleteUrl = `classes/${classroom.id}`;
-    this.deleteRoutePath = '/school/classrooms';
   }
 
   // Close Confirm Delete Modal

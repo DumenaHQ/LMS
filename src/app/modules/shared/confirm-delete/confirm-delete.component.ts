@@ -25,20 +25,19 @@ export class ConfirmDeleteComponent implements OnInit {
 
   // Remove item
   removeItem() {
-    this.loading = true
+    this.loading = true;          
 
     this.authService
       .deleteItem(this.deleteUrl, this.deleteType)
       .subscribe((res: any) => {
-        console.log(res);
         if (res.status === true) {
           this.showAlertPopup(res.message, 'success');
           setTimeout(() => {
             this.closeDeleteModal();
-            if(this.deleteRoutePath !== '') {
-              this.router.navigate([this.deleteRoutePath]);
-            } else {
+            if(this.deleteRoutePath === '' || this.deleteRoutePath === null || this.deleteRoutePath === undefined) {
               window.location.reload();
+            } else {
+              this.router.navigate([this.deleteRoutePath]);
             }
           }, 3000);
         }
