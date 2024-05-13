@@ -75,29 +75,26 @@ export class AddCourseComponent implements OnInit {
       course_quadrant: this.formGroup.value.course_quadrant,
     };
 
-    console.log(payload);
-    
-
-    // this.coursesService.addCourse(payload).subscribe(
-    //     (res: any) => {
-    //     this.appAlertService.showAlert(res.message, AlertType.Success);
-    //     setTimeout(() => {
-    //       this.router.navigate([`admin/courses/create-course/${res.data.course.id}/modules`])
-    //     }, 3000);
-    //     this.loading = false;
-    //   },
-    //   (error: any) => {
-    //     console.log(error);
-    //     this.appAlertService.showAlert(
-    //       error.message
-    //         ? error.message
-    //         : error.error
-    //         ? error.error.message || error.error.error.errors[0].message
-    //         : error.message,
-    //       AlertType.Error
-    //     );
-    //     this.loading = false;
-    //   }
-    // );
+    this.coursesService.addCourse(payload).subscribe(
+        (res: any) => {
+        this.appAlertService.showAlert(res.message, AlertType.Success);
+        setTimeout(() => {
+          this.router.navigate([`admin/courses/create-course/${res.data.course.id}/modules`])
+        }, 3000);
+        this.loading = false;
+      },
+      (error: any) => {
+        console.log(error);
+        this.appAlertService.showAlert(
+          error.message
+            ? error.message
+            : error.error
+            ? error.error.message || error.error.error.errors[0].message
+            : error.message,
+          AlertType.Error
+        );
+        this.loading = false;
+      }
+    );
   }
 }
