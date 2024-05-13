@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { CoursesService } from 'src/app/services/courses.service';
 
 @Component({
@@ -9,32 +10,40 @@ import { CoursesService } from 'src/app/services/courses.service';
   styleUrls: ['./add-course.component.scss']
 })
 export class AddCourseComponent implements OnInit {
-
-  selectedFile: File;
-  previewImage: any;
-  showPreviewImage: boolean = false;
-  // @Output() showHeader: EventEmitter<any> = new EventEmitter();
-
   loading: boolean = false;
-  isAlert: boolean = false;
-  alertMessage: string;
-  alertColor: string;
-  courseForm: any = FormGroup;
+  formGroup: FormGroup;
   isTags: any;
   isTagsList: boolean = false
   tagsList: any[] = [];
+  difficultyLevels: any[] = [
+    { label: 'Beginner', value: 'Beginner' },
+    { label: 'Intermediate', value: 'Intermediate' },
+    { label: 'Advanced', value: 'Advanced' },
+  ];
+
+  quadrants: any[] = [
+    { label: 'Developer', value: 'Developer' },
+    { label: 'Designer', value: 'Designer' },
+    { label: 'Innovator', value: 'Innovator' },
+    { label: 'Maker', value: 'Maker' },
+  ];
 
   constructor(
     private coursesService: CoursesService,
+    private appAlertService: AppAlertService,
     private formBuilder: FormBuilder,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.courseForm = this.formBuilder.group({
+    this.initForm();
+  }
+
+  initForm() {
+    this.formGroup = this.formBuilder.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
-      tags: [''],
+      tags: ['', Validators.required],
       difficulty_level: ['', Validators.required],
       course_quadrant: ['', Validators.required],
     });
@@ -42,101 +51,53 @@ export class AddCourseComponent implements OnInit {
 
   // Add tags
   addTag() {
-    // Show added tagsory(s)
-    if (this.courseForm.value.tags !== '') {
-      // Show added email(s)
+    if (this.formGroup.value.tags !== '') {
       this.isTagsList = true;
-      this.tagsList.push(this.courseForm.value.tags);
+      this.tagsList.push(this.formGroup.value.tags);
+      this.formGroup.patchValue({ tags: this.tagsList });
     }
-    // Clear input field
-    this.courseForm.get('tags').setValue('');
-    
+    this.formGroup.value.tags = '';
   }
   // Remove tagsory
   removeTag(index: any) {
     this.tagsList.splice(index, 1);
-    // this.ngOnInit()
   }
 
   // Add Course
   addCourse() {
-    // Set loading to true
     this.loading = true;
 
     let payload = {
-      title: this.courseForm.value.title,
-      description: this.courseForm.value.description,
+      title: this.formGroup.value.title,
+      description: this.formGroup.value.description,
       tags: this.tagsList,
-      difficulty_level: this.courseForm.value.difficulty_level,
-      course_quadrant: this.courseForm.value.course_quadrant,
+      difficulty_level: this.formGroup.value.difficulty_level,
+      course_quadrant: this.formGroup.value.course_quadrant,
     };
+
+    console.log(payload);
     
-    // Send users data
-    this.coursesService.addCourse(payload).subscribe(
-        (res: any) => {
-        console.log(res);
-        
-        this.showAlertPopup(res.message, 'success')
 
-        setTimeout(() => {
-          this.router.navigate([`admin/courses/create-course/${res.data.course.id}/modules`])
-        }, 3000);
-
-        // Set loading to false
-        this.loading = false;
-      },
-      (error: any) => {
-        console.log(error);
-        // Show error message
-        // this.errorMessage = error.error.error.errors[0].message
-        this.showAlertPopup(error.error.message, 'error')
-        // Set loading to false
-        this.loading = false;
-
-        // Set Timeout
-        // setTimeout(() => {
-        //   this.showError = false
-        // }, 3000);
-      }
-    );
+    // this.coursesService.addCourse(payload).subscribe(
+    //     (res: any) => {
+    //     this.appAlertService.showAlert(res.message, AlertType.Success);
+    //     setTimeout(() => {
+    //       this.router.navigate([`admin/courses/create-course/${res.data.course.id}/modules`])
+    //     }, 3000);
+    //     this.loading = false;
+    //   },
+    //   (error: any) => {
+    //     console.log(error);
+    //     this.appAlertService.showAlert(
+    //       error.message
+    //         ? error.message
+    //         : error.error
+    //         ? error.error.message || error.error.error.errors[0].message
+    //         : error.message,
+    //       AlertType.Error
+    //     );
+    //     this.loading = false;
+    //   }
+    // );
   }
-
-  // Upload File
-  uploadFile(event: any) {
-    // for (let index = 0; index < event.length; index++) {
-    //   const element = event[index];
-    //   this.files.push(element.name)
-    // }
-
-    // Preview File Selected
-    this.selectedFile = event[0];
-
-    if (this.selectedFile) {
-      let reader = new FileReader();
-      reader.readAsDataURL(this.selectedFile);
-      reader.onload = (e: any) => {
-        this.previewImage = e.target.result;
-        if (this.previewImage !== '') {
-          this.showPreviewImage = true;
-        } else {
-          this.showPreviewImage = false;
-        }
-      };
-    }
-  }
-
-  // Show alert
-  showAlertPopup(message: string, color: string) {
-    // Set message
-    this.alertMessage = message;
-    // Set color
-    this.alertColor = color;
-    // Show Alert
-    this.isAlert = true;
-    // Hide Alert
-    setTimeout(() => {
-      this.isAlert = false;
-    }, 3000);
-  }
-
 }
