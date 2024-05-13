@@ -48,12 +48,19 @@ export class CoursesService {
   }
 
   // Add Lesson to Module
-  addLessonToModule(courseId: string, moduleId: string, data: any) {
-    return this.http.post(
-      `${this.baseUrl}courses/${courseId}/modules/${moduleId}/lessons`,
-      data,
-      this.getHttpOptionsForMultipart()
-    );
+  addLessonToModule(courseId: string, moduleId: string, formData: FormData): Promise<any> {
+    const headers = new Headers();
+    headers.append('Authorization', 'bearer ' + localStorage.getItem('token'));
+    return fetch(`${this.baseUrl}courses/${courseId}/modules/${moduleId}/lessons`, {
+      method: 'POST',
+      headers: headers,
+      body: formData,
+    }).then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    });
   }
 
   // Get HttpOptions
