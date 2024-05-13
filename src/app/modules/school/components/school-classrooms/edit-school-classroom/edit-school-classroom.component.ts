@@ -10,7 +10,7 @@ import {
 } from '../display-school-classrooms/models/classroom.model';
 import * as moment from 'moment';
 import { UtilsService } from 'src/app/services/utils/utils.service';
-import { AlertType } from 'src/app/services/app-alerts/app-alert.service';
+import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 
 @Component({
   selector: 'app-edit-school-classroom',
@@ -21,9 +21,6 @@ export class EditSchoolClassroomComponent implements OnInit {
   // classroom: ClassroomModel;
   classroom?: ClassroomModel;
   currentClassroom: any;
-  alertMessage: string = '';
-  alertColor: string = '';
-  isAlert: boolean = false;
   formSubmitAttempted: boolean = false;
   loading: boolean = false;
   dataLoading: boolean = false;
@@ -44,7 +41,8 @@ export class EditSchoolClassroomComponent implements OnInit {
     private router: Router,
     private teachersService: TeachersService,
     private authService: AuthService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private appAlertService: AppAlertService
   ) {}
 
   // classroom form
@@ -59,20 +57,18 @@ export class EditSchoolClassroomComponent implements OnInit {
     active_term_end_date: [''],
   });
 
-  get minDate(): string {
-    const termsSorted = (this.classroom?.terms || []).sort((a: Term, b: Term) =>
-      moment(a.start_date).diff(b.start_date)
-    );
+  get minDate(): string | undefined {
+    const startDate = this.classroom?.active_term?.start_date;
+    if (!startDate) return;
 
-    return moment(termsSorted[0]?.start_date).format('YYYY-MM-DD');
+    return moment(startDate).format('YYYY-MM-DD');
   }
 
-  get maxDate(): string {
-    const termsSorted = (this.classroom?.terms || []).sort((a: Term, b: Term) =>
-      moment(a.end_date).diff(b.end_date)
-    );
+  get maxDate(): string | undefined {
+    const endDate = this.classroom?.active_term?.end_date;
+    if (!endDate) return;
 
-    return moment(termsSorted[2]?.end_date).format('YYYY-MM-DD');
+    return moment(endDate).format('YYYY-MM-DD');
   }
 
   ngOnInit(): void {
@@ -204,8 +200,7 @@ export class EditSchoolClassroomComponent implements OnInit {
       .editClassroom(formData, this.currentClassroom.classroomId)
       .then(res => res.json()).then((data) => {
         if (data.status) {
-          this.alertMessage = data.message;
-          this.showAlertPopup(data.message, AlertType.Success);
+          this.appAlertService.showAlert(data.message, AlertType.Success);
           // Set Timeout
           setTimeout(() => {
             this.router.navigate([
@@ -221,30 +216,16 @@ export class EditSchoolClassroomComponent implements OnInit {
       })
       .catch((error) => {
         console.log(error);
-        // Show error message
-        this.showAlertPopup(
-          error.message ? error.message : error.error
+        this.appAlertService.showAlert(
+          error.message
+            ? error.message
+            : error.error
             ? error.error.message || error.error.error.errors[0].message
             : error.message,
           AlertType.Error
         );
-
         // Set loading to false
         this.loading = false;
       });
-  }
-
-  // Show alert
-  showAlertPopup(message: string, color: string) {
-    // Set message
-    this.alertMessage = message;
-    // Set color
-    this.alertColor = color;
-    // Show Alert
-    this.isAlert = true;
-    // Hide Alert
-    setTimeout(() => {
-      this.isAlert = false;
-    }, 3000);
   }
 }
