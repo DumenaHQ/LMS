@@ -186,6 +186,7 @@
           padding: 0 $m-2;
           @include hover();
           input,
+          textarea,
           &.select-image {
             padding: $m-2 0;
             width: 100%;

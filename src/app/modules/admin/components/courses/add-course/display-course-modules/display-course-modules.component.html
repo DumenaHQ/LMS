@@ -1,20 +1,7 @@
-<!-- Alert message -->
-<app-alert-popup
-  *ngIf="isAlert"
-  [alertMessage]="alertMessage"
-  [alertColor]="alertColor"
-></app-alert-popup>
-
 <section class="ds-head dis-flex">
   <h2 class="ds-head_title clickable" routerLink="/admin/courses">Courses</h2>
   <i class="bx bx-chevron-right icon"></i>
-  <p>
-    {{
-      course?.title.length > 20
-        ? course?.title.slice(0, 20)  + "..." 
-        : course?.title | titlecase
-    }}
-  </p>
+  <p>{{ course?.title | truncate }}</p>
 </section>
 
 <section class="grouping dis-flex">
@@ -77,49 +64,84 @@
         </div>
 
         <!-- Module Form -->
-        <form style="margin-top: 2rem;" [formGroup]="moduleLessonForm">
+        <form style="margin-top: 2rem;" [formGroup]="formGroup">
           <div class="form_control">
-            <label for="title">Lesson Title</label>
+            <label for="title">Lesson Title <strong class="label-required">*</strong></label>
             <div class="form_control_field">
-            <input
-              type="text"
-              id="title"
-              placeholder="Type here"
-              formControlName="title"
-            />
+              <input
+                type="text"
+                id="title"
+                placeholder="Type here"
+                formControlName="title"
+              />
+            </div>
+            <div class="form_error">
+              <div
+                *ngIf="formGroup.controls['title'].invalid && formGroup.controls['title'].touched"
+              >
+                Title is required.
+              </div>
             </div>
           </div>
           <div class="form_control">
-              <label for="lesson_video">Lesson Video</label>
-              <div class="">
+            <label for="note">Lesson Note <strong class="label-required">*</strong></label>
+            <div class="form_control_field">
+              <textarea
+                name="note"
+                id="note"
+                cols="30"
+                rows="5"
+                placeholder="Type here"
+                spellcheck="true"
+                formControlName="note"
+              ></textarea>
+            </div>
+            <div class="form_error">
               <div
-                  class="form_control_field select-image clickable"
-                  (click)="fileInput.click()"
-                  (fileDropped)="onFileSelected($event)"
+                *ngIf="formGroup.controls['note'].invalid && formGroup.controls['note'].touched"
               >
-                  <input
-                  type="file"
-                  id="lesson_video"
-                  #fileInput
-                  hidden
-                  (change)="onFileSelected($event)"
-                  />
-                  <img
-                      src="../../../../../../../assets/img/library/video-square.svg"
-                      alt=""
-                  />
-                  <p class="body-3-regular text-primary-color">
-                    {{ selectedFileName === '' ? 'Select a video' : selectedFileName }}
-                  </p>
+                Note is required.
               </div>
+            </div>
+          </div>
+          <div class="form_control">
+              <label for="lesson_video">Lesson Video <strong class="label-required">*</strong></label>
+              <div class="">
+                <div
+                    class="form_control_field select-image clickable"
+                    (click)="fileInput.click()"
+                    (fileDropped)="onFileSelected($event)"
+                >
+                    <input
+                      type="file"
+                      id="lesson_video"
+                      formControlName="lesson_video"
+                      #fileInput
+                      hidden
+                      (change)="onFileSelected($event)"
+                    />
+                    <img
+                        src="../../../../../../../assets/img/library/video-square.svg"
+                        alt=""
+                    />
+                    <p class="body-3-regular text-primary-color">
+                      {{ selectedFileName === '' ? 'Select a video' : selectedFileName }}
+                    </p>
+                </div>
+              </div>
+              <div class="form_error">
+                <div
+                  *ngIf="formGroup.controls['lesson_video'].invalid && formGroup.controls['lesson_video'].touched"
+                >
+                  Video is required.
+                </div>
               </div>
           </div>
 
           <div class="form_btns">
-              <!-- <button class="btn prim_btn" (click)="addModuleLesson()" [disabled]="moduleLessonForm.invalid">Add</button> -->
               <button
                 class="btn prim_btn clickable"
-                (click)="addModuleLesson()" [disabled]="moduleLessonForm.invalid || loading"
+                (click)="addModuleLesson()" [disabled]="formGroup.invalid || selectedFileName === '' || loading"
               >
                 <span *ngIf="!loading">Add</span>
                 <span *ngIf="loading">Processing...</span>

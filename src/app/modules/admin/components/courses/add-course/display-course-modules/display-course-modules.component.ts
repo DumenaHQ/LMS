@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CoursesService } from 'src/app/services/courses.service';
-import { HttpClient, HttpEventType } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AlertType,
+  AppAlertService,
+} from 'src/app/services/app-alerts/app-alert.service';
 
 @Component({
   selector: 'app-display-course-modules',
@@ -12,11 +15,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class DisplayCourseModulesComponent implements OnInit {
 
 
-  moduleLessonForm: any = FormGroup;
+  formGroup: any = FormGroup;
   loading: boolean = false;
-  isAlert: boolean = false;
-  alertMessage: string;
-  alertColor: string;
   currentCourseId: any;
   dataLoading: boolean = true;
   modules: any;
@@ -27,62 +27,63 @@ export class DisplayCourseModulesComponent implements OnInit {
   selectedFileName: string = '';
   selectedFile: File;
   course: any;
-  // previewImage: any;
-  // showPreviewImage: boolean = false;
 
   constructor(
     private coursesService: CoursesService,
     private activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private appAlertService: AppAlertService
   ) {}
   
   ngOnInit(): void {
-    
     this.initForm();
-
-     // Get Current Program
      this.currentCourseId = this.activatedRoute.snapshot.params;
+     this.getCoure();
+     this.getCourseModules();
+  }
 
-     // Get Course
+  // Get course
+  getCoure() {
+    // Get Course
     this.coursesService.getCourse(this.currentCourseId.courseId).subscribe({
       next: (res: any) => {
         this.course = res.data.course;
-        console.log(this.course);
-        
       },
       error: (e) => console.error(e),
       complete: () => {
         // this.dataLoading = false;
       },
     });
+  }
 
+  // Get course modules
+  getCourseModules() {
     // Fetch all course modules
     this.coursesService.getCourse(this.currentCourseId.courseId).subscribe({
       next: (res: any) => {
         this.modules = res.data.course.modules;
-        console.log(this.modules);
-        
-      
       },
       error: (e) => console.error(e),
       complete: () => {
         this.dataLoading = false;
       },
     });
-
   }
 
   // Initilize form
   initForm() {
-    this.moduleLessonForm = this.formBuilder.group({
+    this.formGroup = this.formBuilder.group({
       title: ['', Validators.required],
+      note: ['', Validators.required],
+      lesson_video: [''],
     });
   }
 
   // On file select
   onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
-    this.selectedFileName = this.selectedFile.name;
+    const file = event.target.files[0];
+    this.selectedFile = file;
+    this.selectedFileName = file.name;   
   }
 
   // Add Module
@@ -91,48 +92,42 @@ export class DisplayCourseModulesComponent implements OnInit {
     this.loading = true;
 
     const formData: any = new FormData();
-    formData.append('title', this.moduleLessonForm.value.title);
-    // formData.append('lesson_video', this.selectedFile);
+    formData.append('title', this.formGroup.value.title);
+    formData.append('note', this.formGroup.value.title);
+    formData.append('lesson_video', this.selectedFile);
+    formData.append('has_video', true);
 
-    // for (var pair of formData.entries()) {
-    //   console.log(pair[0] + ', ' + pair[1]);
-    //   console.log(pair)
-    // }
-
-    this.coursesService
-    .addLessonToModule(this.currentCourseId.courseId, this.moduleId, formData)
-    .subscribe({
-      next: (res: any) => {
-        console.log(res);
-        // if (res.type === HttpEventType.UploadProgress) {
-        //   const progress = Math.round(100 * res.loaded / res.total);
-        //   console.log(`File upload progress: ${progress}%`);
-        // } else if (res.type === HttpEventType.Response) {
-        //   console.log('File upload complete');
-        // }
-        
+    this.coursesService.addLessonToModule(this.currentCourseId.courseId, this.moduleId, formData)
+      .then(res => {
         if(res.status === true) {
-          this.showAlertPopup(res.message, 'success');
-          // Set file name to empty
-          this.selectedFileName = ''
+          // if (res.type === HttpEventType.UploadProgress) {
+          //   const progress = Math.round(100 * res.loaded / res.total);
+          //   console.log(`File upload progress: ${progress}%`);
+          // } else if (res.type === HttpEventType.Response) {
+          //   console.log('File upload complete');
+          // }
+          this.appAlertService.showAlert(res.message, AlertType.Success);
+          this.selectedFileName = '';
           setTimeout(() => {
             this.addModuleLessonModal = false
-            this.ngOnInit();
+            this.getCoure();
+            this.getCourseModules();
           }, 3000);
         }
-      },
-      error: (error: any) => {
+      })
+      .catch(error => {
         console.log(error);
-        this.showAlertPopup(error.error.message, 'error');
-
-        // Set loading to false
+        this.appAlertService.showAlert(
+          error.message
+            ? error.message
+            : error.error
+            ? error.error.message || error.error.error.errors[0].message
+            : error.message,
+          AlertType.Error
+        );
         this.loading = false;
-      }
-    });
+      });
   }
-
-
-  
   
   // Add Module Lesson
   openModuleLesson(moduleId: string, moduleName: string) {
@@ -145,21 +140,4 @@ export class DisplayCourseModulesComponent implements OnInit {
   closeAddModuleLesson() {
     this.addModuleLessonModal = false
   }
-
-  // Show alert
-  showAlertPopup(message: string, color: string) {
-    // Set message
-    this.alertMessage = message;
-    // Set color
-    this.alertColor = color;
-    // Show Alert
-    this.isAlert = true;
-    // Hide Alert
-    setTimeout(() => {
-      this.isAlert = false;
-    }, 3000);
-  }
-
-
-
 }
