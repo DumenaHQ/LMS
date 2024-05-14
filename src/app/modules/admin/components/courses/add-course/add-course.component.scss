@@ -55,7 +55,6 @@
           }
         }
         &.select-image {
-          padding:  0;
           display: grid;
           place-items: center;
           grid-gap: $m-1;
@@ -68,6 +67,12 @@
           img {
             width: 34px;
             height: 34px;
+          }
+        }
+        &.tags_control_field {
+          .btn {
+            font-size: 14px;
+            padding: 0.2rem 0.5rem;
           }
         }
         textarea {

@@ -1,10 +1,3 @@
-<!-- Alert message -->
-<app-alert-popup
-  *ngIf="isAlert"
-  [alertMessage]="alertMessage"
-  [alertColor]="alertColor"
-></app-alert-popup>
-
 <section class="ds-head dis-flex">
   <h2 class="ds-head_title clickable" routerLink="/admin/courses">Courses</h2>
   <i class="bx bx-chevron-right icon"></i>
@@ -15,57 +8,25 @@
 
 <section class="set-info" app>
   <div class="set-info_header">
-    <!-- <button class="btn prim_btn" (click)="addCourse()">Add Course</button> -->
-    <!-- <button class="btn sec_btn" style="margin: 0 1rem 1rem 1rem" [routerLink]="'id' + '/add-module'">
-      Add Module
-    </button> -->
-    <!-- <button class="btn sec_btn" style="margin: 0 1rem 1rem 1rem" routerLink="quiz">
-      Add Quiz
-    </button> -->
     <h3 class="text-primary-color">Set the Course Information</h3>
     <p>
       This information will be displayed to the learners before they start the
       course
     </p>
   </div>
-  <form [formGroup]="courseForm">
-    <!-- <div class="form_control">
-      <label for="thumbnail">Course Thumbnail</label>
-      <div class="">
-        <div
-          class="form_control_field select-image clickable"
-          (click)="fileInput.click()"
-          appDragDrop
-          (fileDropped)="uploadFile($event)"
-        >
-          <input
-            type="file"
-            #fileInput
-            hidden
-            (change)="uploadFile($any($event).target.files)"
-          />
-          <img
-            [src]="
-              showPreviewImage
-                ? previewImage
-                : '../../../assets/img/select-Image.svg'
-            "
-            alt=""
-          />
-          <p class="body-3-regular">
-            Drag your image here or
-            <span class="text-primary-color">browse</span>
-          </p>
-          <p class="body-3-regular">Max file size 4MB</p>
-        </div>
-      </div>
-    </div> -->
-    
+  <form [formGroup]="formGroup">    
     <div class="form_control_container">
       <div class="form_control">
         <label for="title">Course Title <strong class="label-required">*</strong></label>
         <div class="form_control_field">
           <input type="text" name="title" id="title" placeholder="Type here" formControlName="title" />
+        </div>
+        <div class="form_error">
+          <div
+            *ngIf="formGroup.controls['title'].invalid && formGroup.controls['title'].touched"
+          >
+            Title is required.
+          </div>
         </div>
       </div>
       <div class="form_control">
@@ -81,27 +42,49 @@
             formControlName="description"
           ></textarea>
         </div>
+        <div class="form_error">
+          <div
+            *ngIf="formGroup.controls['description'].invalid && formGroup.controls['description'].touched"
+          >
+            Description is required.
+          </div>
+        </div>
       </div>
       <div class="form_control">
         <label for="difficulty_level">Difficulty Level <strong class="label-required">*</strong></label>
         <div class="form_control_field">
           <select name="difficulty_level" id="difficulty_level" formControlName="difficulty_level">
-            <option value="">Please Select</option>
-            <option value="Beginner">Beginner</option>
-            <option value="Intermediate">Intermediate</option>
-            <option value="Advanced">Advanced</option>
+            <option value="">Select an option</option>
+            <option [value]="item.value" *ngFor="let item of difficultyLevels">{{ item.label }}</option>            
           </select>
+        </div>
+        <div class="form_error">
+          <div
+            *ngIf="formGroup.controls['difficulty_level'].invalid && formGroup.controls['difficulty_level'].touched"
+          >
+            Difficulty level is required.
+          </div>
         </div>
       </div>
       <div class="form_control">
         <label for="course_quadrant">Course Quadrant <strong class="label-required">*</strong></label>
         <div class="form_control_field">
-          <input type="text" name="course_quadrant" id="course_quadrant" placeholder="Type here" formControlName="course_quadrant">
+          <select name="course_quadrant" id="course_quadrant" formControlName="course_quadrant">
+            <option value="">Select an option</option>
+            <option [value]="item.value" *ngFor="let item of quadrants">{{ item.label }}</option>
+          </select>
+        </div>
+        <div class="form_error">
+          <div
+            *ngIf="formGroup.controls['course_quadrant'].invalid && formGroup.controls['course_quadrant'].touched"
+          >
+            Course quadrant is required.
+          </div>
         </div>
       </div>
       <div class="form_control">
         <label for="tags">Tags</label>
-        <div class="form_control_field dis-flex">
+        <div class="form_control_field tags_control_field dis-flex">
           <input
             type="text"
             name="tags"
@@ -110,6 +93,13 @@
             formControlName="tags"
           >
           <button class="btn prim_btn" (click)="addTag()">Add</button>
+        </div>
+        <div class="form_error">
+          <div
+            *ngIf="formGroup.controls['tags'].invalid && formGroup.controls['tags'].touched"
+          >
+            Tags is required.
+          </div>
         </div>
         <div class="tag_list dis-flex">
           <div
@@ -131,7 +121,7 @@
     <div class="form_btns dis-flex">
       <ng-container *ngIf="!loading">
         <button class="btn grey_btn" routerLink="/admin/courses">Cancel</button>
-        <button class="btn prim_btn" (click)="addCourse()" [disabled]="courseForm.invalid">Create</button>
+        <button class="btn prim_btn" (click)="addCourse()" [disabled]="formGroup.invalid">Create</button>
       </ng-container>
       <button
         class="btn prim_btn"
