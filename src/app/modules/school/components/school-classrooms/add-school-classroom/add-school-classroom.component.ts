@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClassroomService } from 'src/app/services/classroom.service';
 import { TeachersService } from 'src/app/services/teachers.service';
@@ -36,7 +37,8 @@ export class AddSchoolClassroomComponent implements OnInit {
     private classroomService: ClassroomService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private appAlertService: AppAlertService,
   ) {}
 
   ngOnInit(): void {
@@ -121,7 +123,7 @@ export class AddSchoolClassroomComponent implements OnInit {
     this.classroomService.addClassroom(formData)
       .then(res => {
         if (res.status === true) {
-          this.showAlertPopup(res.message, 'success');
+          this.appAlertService.showAlert(res.message, AlertType.Success);
           setTimeout(() => {
             this.router.navigate(['school/classrooms']);
           }, 3000);
@@ -129,23 +131,15 @@ export class AddSchoolClassroomComponent implements OnInit {
       })
       .catch(error => {
         console.log(error);
-        this.showAlertPopup(error.error.message, 'error');
+        this.appAlertService.showAlert(
+          error.message
+            ? error.message
+            : error.error
+            ? error.error.message || error.error.error.errors[0].message
+            : error.message,
+          AlertType.Error
+        );
         this.loading = false;
       });
   }
-
-  // Show alert
-  showAlertPopup(message: string, color: string) {
-    // Set message
-    this.alertMessage = message;
-    // Set color
-    this.alertColor = color;
-    // Show Alert
-    this.isAlert = true;
-    // Hide Alert
-    setTimeout(() => {
-      this.isAlert = false;
-    }, 3000);
-  }
-
 }

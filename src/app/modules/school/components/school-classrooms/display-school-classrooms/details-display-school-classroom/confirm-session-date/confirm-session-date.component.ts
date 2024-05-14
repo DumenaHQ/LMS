@@ -37,20 +37,18 @@ export class ConfirmSessionDateComponent implements OnInit {
     this.isChange = !this.isChange;
   }
 
-  get minDate(): string {
-    const termsSorted = (this.classroom?.terms || []).sort(
-      (a: Term, b: Term) => moment(a.start_date).diff(b.start_date),
-    );
+  get minDate(): string | undefined {
+    const startDate = this.classroom?.active_term?.start_date;
+    if (!startDate) return;
 
-    return moment(termsSorted[0]?.start_date).format('YYYY-MM-DD');
+    return moment(startDate).format('YYYY-MM-DD');
   }
- 
-  get maxDate(): string {
-    const termsSorted = (this.classroom?.terms || []).sort(
-      (a: Term, b: Term) => moment(a.end_date).diff(b.end_date),
-    );
 
-    return moment(termsSorted[2]?.end_date).format('YYYY-MM-DD');
+  get maxDate(): string | undefined {
+    const endDate = this.classroom?.active_term?.end_date;
+    if (!endDate) return;
+
+    return moment(endDate).format('YYYY-MM-DD');
   }
 
   // Close modal

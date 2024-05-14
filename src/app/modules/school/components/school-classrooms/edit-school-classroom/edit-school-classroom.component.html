@@ -1,10 +1,3 @@
-<!-- Alert message -->
-<app-alert-popup
-  *ngIf="isAlert"
-  [alertMessage]="alertMessage"
-  [alertColor]="alertColor"
-></app-alert-popup>
-
 <app-loader *ngIf="dataLoading"></app-loader>
 
 <section class="ds-head dis-flex" *ngIf="classroom">
@@ -12,7 +5,7 @@
     Classrooms
   </h2>
   <i class="bx bx-chevron-right icon"></i>
-  <p class="clickable" [title]="classroom.name">
+  <p class="clickable" [title]="classroom.name" [routerLink]="['/school/classrooms', currentClassroom.classroomId, 'view-classroom']">
     {{ classroom.name | truncate }}
   </p>
   <i class="bx bx-chevron-right icon"></i>
