@@ -1,0 +1,93 @@
+<div class="modal">
+    <div class="modal_area">
+        <span class="modal_area_close" (click)="closeAddQuestionModal()">
+            <i class="bx bx-x icon clickable"></i>
+        </span>
+  
+        <div class="question-container auth_content">
+            <div class="question-container_header">
+                <h4 class="text-primary-color title">Start a new discussion</h4>
+            </div>
+            <form [formGroup]="formGroup">
+                <div class="form_control_container">
+                    <div class="form_control">
+                        <label for="course">Course <strong class="label-required">*</strong></label>
+                        <div class="form_control_field">
+                            <select name="course" id="course" formControlName="course" (change)="handleSelectChange($event, 'course')">
+                                <option value="">Select a course</option>
+                                <option [value]="item.id" *ngFor="let item of classroomCourses; let i = index">
+                                    {{ item.title }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form_error">
+                            <div *ngIf="formGroup.controls['course'].invalid && formGroup.controls['course'].touched">
+                                Course is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form_control">
+                        <label for="module">Module <strong class="label-required">*</strong></label>
+                        <div class="form_control_field">
+                            <select name="module" id="module" formControlName="module" (change)="handleSelectChange($event, 'module')">
+                                <option value="">Select a module</option>
+                                <option [value]="item.id" *ngFor="let item of modules; let i = index">
+                                    {{ item.title }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form_error">
+                            <div *ngIf="formGroup.value.course === '' && formGroup.controls['module'].touched">
+                                Select a course.
+                            </div>
+                            <div *ngIf="formGroup.value.course !== '' && formGroup.controls['module'].invalid && formGroup.controls['module'].touched">
+                                Module is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form_control">
+                        <label for="lesson">Lesson <strong class="label-required">*</strong></label>
+                        <div class="form_control_field">
+                            <select name="lesson" id="lesson" formControlName="lesson" (change)="handleSelectChange($event, 'lesson')">
+                                <option value="">Select a lesson</option>
+                                <option [value]="item.id" *ngFor="let item of lessons">
+                                    {{ item.title }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form_error">
+                            <div *ngIf="formGroup.value.module === '' && formGroup.controls['lesson'].touched">
+                                Select a module.
+                            </div>
+                            <div *ngIf="formGroup.value.module !== '' && formGroup.controls['lesson'].invalid && formGroup.controls['lesson'].touched">
+                                Lesson is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form_control">
+                        <label for="lesson">Question <strong class="label-required">*</strong></label>
+                        <div class="form_control_field">
+                            <textarea name="question" id="question" cols="30" rows="5" placeholder="Type here" spellcheck="true" formControlName="question"></textarea>
+                        </div>
+                        <div class="form_error">
+                            <div *ngIf="formGroup.controls['question'].invalid && formGroup.controls['question'].touched">
+                                Question is required.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form_btns dis-flex">
+                    <ng-container *ngIf="!loading">
+                    <button class="btn grey_btn" (click)="closeAddQuestionModal()">Cancel</button>
+                    <button class="btn prim_btn" (click)="addQuestion()" [disabled]="formGroup.invalid">Send</button>
+                    </ng-container>
+                    <button
+                    class="btn prim_btn"
+                    [disabled]="loading"
+                    *ngIf="loading"
+                    >Processing...</button> 
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
