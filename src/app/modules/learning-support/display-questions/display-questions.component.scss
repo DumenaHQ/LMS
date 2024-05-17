@@ -1,0 +1,53 @@
+@import '../../../../assets/css/variables.scss';
+@import '../../../../assets/css/mixins.scss';
+
+.display-questions-container {
+    padding: $m-4;
+}
+
+.empty-discussion {
+    display: grid;
+    grid-gap: 1rem;
+    place-items: center;
+}
+
+.accordion {
+    border: 1px solid #ccc;
+    .accordion-item {
+        border-bottom: 1px solid #ccc;
+        .accordion-header {
+            padding: 10px;
+            background-color: $grey40;
+            cursor: pointer;
+            gap: $m-2;
+            justify-content: space-between;
+            &_left {
+                .lesson {
+                    margin-top: $m-1;
+                }
+            }
+            &_right {
+                gap: $m-2;
+                .date {
+                    color: $primary20;
+                }
+                .icon {
+                    font-size: 26px;
+                    transition: all .2s ease-in;
+                    &.open {
+                        transform: rotate(180deg);
+                    }
+                }
+            }
+        }
+        .accordion-content {
+            padding: $m-4 $m-2;
+            display: none;
+            &.active {
+                display: block;
+            }
+        }
+    }
+}
+
+

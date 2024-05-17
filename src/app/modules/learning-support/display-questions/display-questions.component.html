@@ -1,0 +1,64 @@
+<div class="display-questions-container">
+  <div *ngIf="questions?.length === 0" class="empty-discussion">
+    <!-- <img
+      src="../../../../assets/img/empty-classrrom.svg"
+      alt=""
+      class="blank-item_image"
+    /> -->
+    <p style="text-align: center">No disccussion available</p>
+    <button
+      type="button"
+      class="btn sec_btn"
+      (click)="openAddQuestionModal()"
+    >
+      New Question
+    </button>
+  </div>
+  
+  <div *ngIf="questions?.length > 0">
+    <div style="padding: 1% 0">
+        <button
+          type="button"
+          class="btn sec_btn"
+          (click)="openAddQuestionModal()"
+        >
+          New Question
+        </button>
+    </div>
+
+    <div class="accordion">
+      <div *ngFor="let item of questions; let i = index" class="accordion-item">
+        <div class="accordion-header dis-flex" (click)="toggleAccordion(i)">
+          <div class="accordion-header_left">
+            <h5>{{ item.question }}</h5>
+            <p class="lesson text-primary-color">Lesson: <em>{{ item.lesson.title }}</em></p>
+          </div>
+          <div class="accordion-header_right dis-flex">
+            <span class="date">
+              <ng-container *ngIf="isCurrentDate(item.updatedAt); else notCurrentDate">
+                {{ item.updatedAt | date: 'shortTime' }}
+              </ng-container>
+              <ng-template #notCurrentDate>
+                {{ item.updatedAt | date: 'MMM d, h:mm a' }}
+            </ng-template>
+            </span>
+            <i class="bx bx-chevron-down icon" [class.open]="activeIndex === i"></i>
+          </div>
+        </div>
+        <div class="accordion-content" [ngClass]="{'active': activeIndex === i}">
+          <app-display-question-comments [questionId]="item._id"></app-display-question-comments>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-loader *ngIf="dataLoading"></app-loader>
+</div>
+
+<app-add-question 
+  *ngIf="addQuestion" 
+  (addQuestionModal)="closeAddQuestionModal()" 
+  (getQuestions)="getQuestionsForAClassroom()"
+  [classroomCourses]="classroomCourses" 
+  [classroomId]="classroomId"
+></app-add-question>

@@ -1,0 +1,24 @@
+<form [formGroup]="formGroup">
+    <div class="form_control_container">
+        <div class="form_control">
+            <div class="form_control_field dis-flex">
+                <textarea 
+                    name="comment" 
+                    id="comment" 
+                    cols="30" 
+                    rows="2" 
+                    placeholder="Type your message here" 
+                    spellcheck="true" 
+                    formControlName="comment" 
+                ></textarea>
+                <div class="form_control_field_icon">
+                    <i class='bx bx-send send-icon' title="Send" *ngIf="!loading" (click)="addQuestion()"></i>
+                    <i class='bx bx-loader-circle loading-icon' title="Loading..." *ngIf="loading"></i> 
+                </div>
+            </div>
+            <div class="form_error" *ngIf="errorMessage">
+                <p style="font-size: 12px;">Type a message.</p>
+            </div>
+        </div>
+    </div>
+</form>

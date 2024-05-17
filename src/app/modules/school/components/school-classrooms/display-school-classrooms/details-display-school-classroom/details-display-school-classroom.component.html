@@ -114,6 +114,13 @@
         >
           Learners
         </li>
+        <li
+          class="body-2-medium"
+          [class.active]="contentId === 'discussions'"
+          (click)="tabChange('discussions')"
+        >
+          Discussions
+        </li>
       </ul>
     </div>
     <div class="course-details_body_content">
@@ -190,18 +197,6 @@
           </div>
 
           <ng-container *ngIf="classroom?.learners?.length > 0">
-            <div
-              class="dis-flex"
-              style="justify-content: flex-end; margin-bottom: 1.5rem"
-            >
-              <button
-                type="button"
-                class="btn sec_btn"
-                (click)="openAddLearnerToClassroomModal()"
-              >
-                Add Learner
-              </button>
-            </div>
             <table>
               <tr class="table-header">
                 <th>Full Name</th>
@@ -241,6 +236,11 @@
             </button>
           </div>
         </div>
+      </ng-container>
+
+      <!-- Discussions -->
+      <ng-container *ngIf="contentId === 'discussions'">
+        <app-display-questions [classroomCourses]="classroom?.courses" [classroomId]="currentClassroomId.classroomId"></app-display-questions>
       </ng-container>
     </div>
   </div>

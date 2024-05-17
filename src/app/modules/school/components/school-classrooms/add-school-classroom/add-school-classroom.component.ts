@@ -17,9 +17,6 @@ export class AddSchoolClassroomComponent implements OnInit {
   loading: boolean = false;
   returnUrl = '';
   isSignedin: boolean = false;
-  alertMessage: string = '';
-  alertColor: string = '';
-  isAlert: boolean = false;
   selectedThumbnailName: string = '';
   selectedHeaderPhotoName: string = '';
   thumbnailFile: File;

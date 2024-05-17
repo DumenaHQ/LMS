@@ -23,6 +23,7 @@ import { AddSchoolClassroomLearnersComponent } from './components/school-classro
 import { AddSchoolClassroomCoursesComponent } from './components/school-classrooms/add-school-classroom-courses/add-school-classroom-courses.component';
 import { ViewCourseQuizResultsComponent } from './components/school-classrooms/display-school-classrooms/details-display-school-classroom/view-course-quiz-results/view-course-quiz-results.component';
 import { ConfirmSessionDateComponent } from './components/school-classrooms/display-school-classrooms/details-display-school-classroom/confirm-session-date/confirm-session-date.component';
+import { LearningSupportModule } from '../learning-support/learning-support.module';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { ConfirmSessionDateComponent } from './components/school-classrooms/disp
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
+    LearningSupportModule
   ],
 })
 export class SchoolModule {}

@@ -1,0 +1,48 @@
+@import '../../../../../../assets/css/variables.scss';
+@import '../../../../../../assets/css/mixins.scss';
+@import '../../../../../../assets/css/dashboard.scss';
+
+@mixin hover {
+    transition: all .2s;
+    &:hover {
+      border-color: $primary80;
+    }
+}
+
+form {
+    .form_control {
+      width: 100%;
+      &_field {
+        width: 100%;
+        border: 1px solid $inner-border;
+        border-radius: $border-radius1;
+        padding: 0 $m-2;
+        @include hover();
+        textarea {
+            padding: $m-2 0;
+            width: 100%;
+            background-color: transparent;
+            border: none;
+            outline: none;
+            height: 100%;
+            resize: vertical;
+            overflow-x: hidden;
+            overflow-y: hidden;
+          &::placeholder {
+            font-size: 16px;
+          }
+        }
+        &_icon {
+            font-size: 26px;
+          .send-icon {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    .form_btns {
+      gap: $m-2;
+      margin-top: $m-4;
+      justify-content: center;
+    }
+}

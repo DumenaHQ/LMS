@@ -16,7 +16,10 @@ export class DisplaySchoolClassroomsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // Get classrooms
+    this.getClassrooms();
+  }
+
+  getClassrooms() {
     this.classroomService.getClassrooms().subscribe({
       next: (res: any) => {
         this.classrooms = (res.data.classes || []);
