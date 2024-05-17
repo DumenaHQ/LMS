@@ -87,9 +87,9 @@ export class DetailsDisplaySchoolClassroomComponent implements OnInit {
       .catch((error) => {
         // Show error message
         this.appAlertService.showAlert(
-          error.message
-            ? error.message
-            : error.error
+          error.error.message
+            ? error.error.message
+            : error.message
             ? error.error.message || error.error.error.errors[0].message
             : error.message,
           AlertType.Error

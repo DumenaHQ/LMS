@@ -129,9 +129,9 @@ export class AddSchoolClassroomComponent implements OnInit {
       .catch(error => {
         console.log(error);
         this.appAlertService.showAlert(
-          error.message
-            ? error.message
-            : error.error
+          error.error.message
+            ? error.error.message
+            : error.message
             ? error.error.message || error.error.error.errors[0].message
             : error.message,
           AlertType.Error

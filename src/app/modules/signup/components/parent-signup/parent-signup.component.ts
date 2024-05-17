@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -11,13 +12,8 @@ import { AuthService } from 'src/app/services/auth.service';
 export class ParentSignupComponent implements OnInit {
   hide: boolean = true;
   loading: boolean = false;
-  returnUrl = '';
-  isSignedin: boolean = false;
-  errorMessage: string = '';
-  showError: boolean = false;
   userEvent: any;
-  userForm: FormGroup;
-  isFormSubmitted: boolean = false;
+  formGroup: FormGroup;
 
   statesInNigeria = [
     {
@@ -173,92 +169,89 @@ export class ParentSignupComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private appAlertService: AppAlertService
   ) {}
 
   ngOnInit(): void {
     // Get user event
     this.userEvent = JSON.parse(localStorage.getItem('event') || '[]');
-    this.userForm = this.formBuilder.group({
+    this.formGroup = this.formBuilder.group({
       fullname: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       resident_state: ['', [Validators.required]],
       phone: ['', [Validators.required, Validators.minLength(11)]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(6), this.alphanumericSymbolPasswordValidator()]],
     });
   }
 
   // Sign Up
   signUp() {
-    // Set loading to true
     this.loading = true;
 
-    // Set submitted to true
-    this.isFormSubmitted = true;
-
-    // If Form is invalid
-    if (this.userForm.invalid) {
-      this.loading = false;
-
-      return;
-    }
-
-    // Set payload
     let payload = {
-      fullname: this.userForm.value.fullname,
-      email: this.userForm.value.email,
-      resident_state: this.userForm.value.resident_state,
-      phone: this.userForm.value.phone,
-      password: this.userForm.value.password,
+      fullname: this.formGroup.value.fullname,
+      email: this.formGroup.value.email,
+      resident_state: this.formGroup.value.resident_state,
+      phone: this.formGroup.value.phone,
+      password: this.formGroup.value.password,
       user_type: 'parent',
       event: this.userEvent.event,
     };
 
-    // Send users data
     this.authService.addUser(payload).subscribe(
       (res: any) => {
         console.log(res);
-
         if (res.status == true) {
-          // Store user data to localstorage
+          this.appAlertService.showAlert(res.message, AlertType.Success);
           this.authService.addUserDataToLocalStorage(res.data);
-
-          // Remove event from localstorage
           localStorage.removeItem('event');
-
-          // Navigate to Dashboard
           this.router.navigate(['/verify-email']);
         }
 
-        // Show error message
-        this.errorMessage = res.message;
-        this.showError = true;
-
-        // Set loading to false
         this.loading = false;
       },
       (error: any) => {
         console.log(error);
-        // Show error message
-        error.error.error.code == 400
-          ? (this.errorMessage = error.error.error.errors[0].message)
-          : (this.errorMessage = error.error.message);
-        this.showError = true;
-
-        // Set loading to false
+        this.appAlertService.showAlert(
+          error.error.message
+            ? error.error.message
+            : error.message
+            ? error.error.message || error.error.error.errors[0].message
+            : error.message,
+          AlertType.Error
+        );
         this.loading = false;
-
-        // Set Timeout
-        // setTimeout(() => {
-        //   this.showError = false
-        // }, 3000);
       }
     );
   }
 
+  // validate password
+  alphanumericSymbolPasswordValidator() {
+    return (control: FormGroup) => {
+      const password = control.value;
+  
+      // Check if the password contains at least one letter (alphabetical character)
+      const containsLetter = /[a-zA-Z]/.test(password);
+  
+      // Check if the password contains at least one digit (numerical character)
+      const containsDigit = /\d/.test(password);
+  
+      // Check if the password contains at least one symbol (any symbol)
+      const containsSymbol = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(password);
+  
+      if (!containsLetter || !containsDigit || !containsSymbol) {
+        // Return an error object if the password doesn't meet the criteria
+        return { alphanumericSymbolPassword: true };
+      }
+  
+      // Return null if the password is valid
+      return null;
+    };
+  }
+
   // Go Back to the previous page
   goBack() {
-    window.history.go(-1);
-    return false;
+    this.router.navigate(['signup']);
   }
 }

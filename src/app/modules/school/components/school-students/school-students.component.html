@@ -1,6 +1,7 @@
 <app-school-enroll-learners
   *ngIf="addLearnerModal"
   (addLearnerModal)="closeAddLearnerModal()"
+  (getAllStudents)="callGetAllStudents()"
 ></app-school-enroll-learners>
 
 <section class="ds-head">

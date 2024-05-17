@@ -1,6 +1,3 @@
-<!-- Alert message -->
-<app-alert-popup *ngIf="isAlert" [alertMessage]="alertMessage" [alertColor]="alertColor"></app-alert-popup>
-
 <div class="modal">
   <div class="modal_area">
     <span class="modal_area_close" (click)="closeAddLearnerModal()">
@@ -12,7 +9,7 @@
         <span *ngIf="billingId == 'single'">Enroll a student</span>
         <span *ngIf="billingId == 'batch'">Enroll students</span>
       </h4>
-      <form class="enroll_form auth_content_form" [formGroup]="userForm">
+      <form class="enroll_form auth_content_form" [formGroup]="formGroup">
         <!-- Tabs starts -->
         <div class="form-field col-2">
           <label for="">Select an enrollment method</label>
@@ -31,7 +28,7 @@
         <!-- Single enrollment starts *ngIf="billingId == 'single'" -->
         <div class="single-enroll col-2" *ngIf="billingId == 'single'">
           <div class="form-field col-2" [ngClass]="{
-              'is-invalid': isFormSubmitted && userForm.controls.fullname.errors
+              'is-invalid': formGroup.controls.fullname.errors && formGroup.controls.fullname.touched
             }">
             <label for="fullname">Full Name</label>
             <div class="input-field">
@@ -40,14 +37,16 @@
             </div>
 
             <!-- Error -->
-            <div *ngIf="isFormSubmitted && userForm.controls.fullname.errors">
-              <p class="body-3-regular error-msg" *ngIf="userForm.controls.fullname.errors.required">
+            <div *ngIf="formGroup.controls.fullname.errors && formGroup.controls.fullname.touched">
+              <p class="body-3-regular error-msg" *ngIf="formGroup.controls.fullname.errors.required">
                 Fullname is required
               </p>
             </div>
           </div>
           <div
-            class="form-field"
+            class="form-field" [ngClass]="{
+              'is-invalid': formGroup.controls.parent_email.errors && formGroup.controls.parent_email.touched
+            }"
           >
             <label for="parent_email">Parent Email</label>
             <div class="input-field">
@@ -58,9 +57,14 @@
                 formControlName="parent_email"
               />
             </div>
+            <div *ngIf="formGroup.controls.parent_email.errors && formGroup.controls.parent_email.touched">
+              <p class="body-3-regular error-msg" *ngIf="formGroup.controls.parent_email.errors.required">
+                Parent email is required
+              </p>
+            </div>
           </div>
           <div class="form-field" [ngClass]="{
-              'is-invalid': isFormSubmitted && userForm.controls.grade.errors
+              'is-invalid': formGroup.controls.grade.errors && formGroup.controls.grade.touched
             }">
             <label for="grade">Grade</label>
             <div class="input-field">
@@ -69,20 +73,17 @@
             </div>
 
             <!-- Error -->
-            <div *ngIf="isFormSubmitted && userForm.controls.grade.errors">
-              <p class="body-3-regular error-msg" *ngIf="userForm.controls.grade.errors.required">
+            <div *ngIf="formGroup.controls.grade.errors && formGroup.controls.grade.touched">
+              <p class="body-3-regular error-msg" *ngIf="formGroup.controls.grade.errors.required">
                 Grade is required
               </p>
             </div>
           </div>
-          <span class="message col-2" *ngIf="showError">{{
-            errorMessage
-            }}</span>
           <!-- Submit Button -->
           <div class="form-btns col-2 dis-flex">
             <span class="grey_btn clickable" (click)="closeAddLearnerModal()">Cancel</span>
             <div class="continue">
-              <button class="btn prim_btn clickable" [disabled]="loading" (click)="singleSignup()">
+              <button class="btn prim_btn clickable" [disabled]="loading || formGroup.invalid" (click)="singleSignup()">
                 <span *ngIf="!loading">Continue</span>
                 <span *ngIf="loading">Processing...</span>
               </button>
