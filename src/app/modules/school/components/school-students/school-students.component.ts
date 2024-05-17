@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { SchoolService } from 'src/app/services/school.service';
+import { SchoolDisplayStudentsComponent } from './school-display-students/school-display-students.component';
 
 @Component({
   selector: 'app-school-students',
@@ -8,6 +9,8 @@ import { SchoolService } from 'src/app/services/school.service';
   styleUrls: ['./school-students.component.scss'],
 })
 export class SchoolStudentsComponent implements OnInit {
+
+  @ViewChild(SchoolDisplayStudentsComponent) schoolDisplayStudentsComponent!: SchoolDisplayStudentsComponent;
   addLearnerModal: boolean = false;
   user: any;
   dataLoading: boolean = true;
@@ -38,6 +41,12 @@ export class SchoolStudentsComponent implements OnInit {
       },
     });
   }
+
+  callGetAllStudents() {
+    this.schoolDisplayStudentsComponent.getAllStudents();
+  }
+
+
 
   // Open Learner Modal
   openAddLearnerModal() {
