@@ -89,9 +89,10 @@
               }
           }
           .completion {
-              // p:last-child {
-              //     margin-top: $m-1;
-              // }
+              .name {
+                gap: $m-1;
+                // align-items: center;
+              }
           }
   
       }

@@ -126,8 +126,7 @@ export class ViewClassroomComponent implements OnInit {
   }
 
   // Remove teacher
-  // Open Confirm Delete Modal
-  openDeleteModal(teacher: any) {
+  removeTeacher() {
     this.deleteModal = true;
     this.deleteUrl = `classes/${this.currentClassroomId.classroomId}/teacher/remove`;
     this.deleteRoutePath = '';

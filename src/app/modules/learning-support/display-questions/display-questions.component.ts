@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { LearningSupportService } from 'src/app/services/learning-support.service';
+import { learningSupportModel } from '../models/learning-support.model';
 
 @Component({
   selector: 'app-display-questions',
@@ -12,10 +13,6 @@ export class DisplayQuestionsComponent implements OnInit {
   questions?: any;
   addQuestion: boolean = false;
   dataLoading: boolean;
-  items = [
-    { question: 'Accordion Item 1', lesson: 'Content for Accordion Item 1', updatedAt: 'date', comments: [] },
-    { question: 'Accordion Item 2', lesson: 'Content for Accordion Item 2', updatedAt: 'date', comments: [] },
-  ];
   activeIndex: number | null = null;
 
   constructor(
