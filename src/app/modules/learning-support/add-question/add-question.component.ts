@@ -74,7 +74,7 @@ export class AddQuestionComponent implements OnInit {
       course_id: value.course,
       class_id: this.classroomId,
       lesson: {
-        title: 'Lesson one',
+        title: this.lessonTitle,
         id: value.lesson
       }
     } 

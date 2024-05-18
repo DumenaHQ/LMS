@@ -91,7 +91,9 @@
           .completion {
               .name {
                 gap: $m-1;
-                // align-items: center;
+                .icon {
+                  color: $error80;
+                }
               }
           }
   

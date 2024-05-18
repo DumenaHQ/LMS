@@ -17,7 +17,6 @@ export class LearnerOverviewComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-
     // Get greeting
     this.greeting = this.authService.getGreeting() 
     
@@ -29,27 +28,19 @@ export class LearnerOverviewComponent implements OnInit {
 
     // Load the Visualization API and the corechart package.
     google.charts.load('current', {'packages':['corechart']});
-    this.buildChart()
-    this.buildChart2()
+    this.buildChart();
+    this.buildChart2();
 
   }
 
   // close Onboarding modal
   closeOnboardModal() {
-
-    // this.isOnboarding = false
-
     let payload = {
       isUserOnboarded: true,
     }
-    console.log(payload);
     
-    // update user profile
     this.authService.updateUser(payload).subscribe((res: any) => {
-      console.log(res);
       if (res.status == true) {
-        
-        // Set User data
         this.authService.addUserDataToLocalStorage(res.data);
         this.ngOnInit()
       }
@@ -59,7 +50,6 @@ export class LearnerOverviewComponent implements OnInit {
   // Progress Bar
   progressBar() {
     this.elem = document.getElementById('bar');
-
     this.elem.style.width = this.stepValue + '%';
     // this.elem.innerHTML = this.stepValue + '%' + ' complete';
     this.stepValue = this.stepValue + 10;
@@ -138,6 +128,4 @@ export class LearnerOverviewComponent implements OnInit {
     // Draw the pie chart and bar chart when Charts is loaded
     google.charts.setOnLoadCallback(callback);
   }
-
-
 }

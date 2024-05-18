@@ -19,7 +19,6 @@ export class AuthService {
 
   // Set Token and save to localstorage
   addUserDataToLocalStorage(data: any): void {
-    // localStorage.setItem('token', token)
     localStorage.setItem('data', JSON.stringify(data));
   }
 
@@ -191,18 +190,16 @@ export class AuthService {
 
   // Get greeting time
   getGreeting(): string {
-    const currentTime = new Date();
-    const currentHour = currentTime.getHours();
-    let greeting: string;
-  
-    if (currentHour >= 5 && currentHour < 12) {
-      greeting = 'Good morning';
-    } else if (currentHour >= 12 && currentHour < 18) {
-      greeting = 'Good afternoon';
-    } else {
-      greeting = 'Good evening';
-    }
-  
-    return greeting;
+    const currentHour = new Date().getHours();
+    
+    const MORNING_START = 5;
+    const AFTERNOON_START = 12;
+    const EVENING_START = 18;
+    
+    return currentHour >= MORNING_START && currentHour < AFTERNOON_START
+      ? 'Good morning'
+      : currentHour >= AFTERNOON_START && currentHour < EVENING_START
+      ? 'Good afternoon'
+      : 'Good evening';
   }
 }
