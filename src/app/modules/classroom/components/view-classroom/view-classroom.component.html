@@ -89,11 +89,14 @@
             </ul>
           </div>
         </div>
-        <div class="completion dis-flex">
+        <div class="completion dis-flex" *ngIf="classroom?.teacher">
           <p class="body-2-bold title">Instructor:</p>
-          <p class="body-2-medium text-primary-color">
-            {{ classroom?.teacher?.fullname }}
-          </p>
+          <div class="name dis-flex">
+            <p class="body-2-medium text-primary-color">
+              {{ classroom?.teacher?.fullname }}
+            </p>
+            <i class='bx bx-message-square-x clickable' title="Remove" (click)="removeTeacher()"></i>
+          </div>
         </div>
       </div>
     </div>

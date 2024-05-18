@@ -84,7 +84,7 @@ export class EditClassroomComponent implements OnInit {
       name: this.classroom?.name,
       template: this.classroom?.template?.id,
       description: this.classroom?.description,
-      teacher: this.classroom?.teacher?.id,
+      teacher: this.classroom?.teacher?.id ? this.classroom?.teacher?.id : '',
       header_photo: this.classroom?.header_photo,
       thumbnail: this.classroom?.thumbnail,
       active_term_start_date: moment(
