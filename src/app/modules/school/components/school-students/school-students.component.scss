@@ -22,16 +22,8 @@ section:not(:last-child) {
         font-size: 18px;
       }
     }
-    .dropdown {
-      position: absolute;
-      top: $m-4;
-      right: 50%;
-      width: max-content;
-      background-color: $white-color;
-      box-shadow: $box-shadow;
-      padding: $m-2;
-      border-radius: $border-radius1;
-      z-index: 10;
+    .s-f-select {
+      cursor: pointer;
     }
   }
   .right {

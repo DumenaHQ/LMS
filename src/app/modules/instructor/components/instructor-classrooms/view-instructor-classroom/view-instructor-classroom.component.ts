@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ClassroomModel, Term } from 'src/app/modules/school/components/school-classrooms/display-school-classrooms/models/classroom.model';
+import { ClassroomModel } from 'src/app/modules/classroom/models/classroom.model';
 import { ClassroomService } from 'src/app/services/classroom.service';
 
 @Component({

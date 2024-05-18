@@ -1,0 +1,54 @@
+@import '../../../../../../assets/css/variables.scss';
+@import '../../../../../../assets/css/mixins.scss';
+
+// Confirm delete modal
+.modal {
+    @include modal($modal-area-width: 500px);
+    &_area {
+      padding: $m-6 $m-3;  
+    }
+}
+
+@mixin hover {
+  transition: all .2s;
+  &:hover {
+    border-color: $primary80;
+  }
+}
+
+// @media only screen and (min-width: 590px) {
+form {
+  margin-top: $m-3;
+  .form_control_container {
+    display: grid;
+    grid-gap: $m-3;
+    grid-template-columns: repeat(2, 1fr);
+
+  }
+  .form_control {
+      width: 100%;
+      label {
+      display: inline-block;
+      margin-bottom: $m-2;
+      font-weight: 700;
+      }
+      &_field {
+        width: 100%;
+        border: 1px solid $inner-border;
+        border-radius: $border-radius1;
+        padding: 0 $m-2;
+        @include hover();
+        input {
+          padding: $m-2 0;
+          width: 100%;
+          background-color: transparent;
+          border: none;
+          outline: none;
+          height: 100%;
+          &::placeholder {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
