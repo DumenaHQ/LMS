@@ -65,7 +65,6 @@ export class LoginComponent implements OnInit {
             : error.message,
           AlertType.Error
         );
-
         this.loading = false;
       }
     );
@@ -107,7 +106,6 @@ export class LoginComponent implements OnInit {
     this.authService
       .resendVerificationEmail(this.formGroup.value.email)
       .subscribe((res: any) => {
-        console.log(res);
         if (res.status === true) {
           this.appAlertService.showAlert(res.message, AlertType.Success);
         }

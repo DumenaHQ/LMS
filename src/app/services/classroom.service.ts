@@ -2,8 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ClassTemplateDetailModel } from '../modules/admin/components/class-template/display-admin-class-template/details-display-admin-class-template/interfaces/class-template.model';
-import { ClassroomModel } from '../modules/school/components/school-classrooms/display-school-classrooms/models/classroom.model';
-import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',

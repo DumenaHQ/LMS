@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { LearningSupportService } from 'src/app/services/learning-support.service';
-import { learningSupportModel } from '../model/learning-support.model';
 
 @Component({
   selector: 'app-display-questions',
@@ -35,12 +34,7 @@ export class DisplayQuestionsComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           this.dataLoading = false;
-          if(res.data.questions[0] == null) {
-            console.log('No questions found');            
-            this.questions = [];
-          } else {
-            this.questions = res.data.questions;
-          }    
+          this.questions = res.data.questions;   
           this.changeDectetorRef.detectChanges();
         },
         error: (e) => console.error(e),

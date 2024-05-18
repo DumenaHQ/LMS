@@ -7,10 +7,6 @@ import { SchoolPaymentComponent } from './components/school-payment/school-payme
 import { SchoolProgramsComponent } from './components/school-programs/school-programs.component';
 import { SchoolStudentsComponent } from './components/school-students/school-students.component';
 import { SchoolComponent } from './school.component';
-import { DisplaySchoolClassroomsComponent } from './components/school-classrooms/display-school-classrooms/display-school-classrooms.component';
-import { AddSchoolClassroomComponent } from './components/school-classrooms/add-school-classroom/add-school-classroom.component';
-import { DetailsDisplaySchoolClassroomComponent } from './components/school-classrooms/display-school-classrooms/details-display-school-classroom/details-display-school-classroom.component';
-import { EditSchoolClassroomComponent } from './components/school-classrooms/edit-school-classroom/edit-school-classroom.component';
 
 const routes: Routes = [
   {
@@ -67,7 +63,7 @@ const routes: Routes = [
       },
       {
         path: 'classrooms',
-        loadChildren: () => import('../school/components/school-classrooms/school-classroom.module').then((m) => m.SchoolClassroomModule),
+        loadChildren: () => import('../../modules/classroom/classroom.module').then((m) => m.ClassroomModule),
         data: {
           title: 'Classrooms',
           description: 'Description Meta Tag Content',
