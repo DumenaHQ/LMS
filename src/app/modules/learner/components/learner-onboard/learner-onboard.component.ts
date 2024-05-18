@@ -1,6 +1,13 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 
+export type UserModel = {
+  avatar?:      string;
+  isUserOnboarded?:    boolean;
+  interests?: Array<string>;
+  username?: string;
+}
+
 @Component({
   selector: 'app-learner-onboard',
   templateUrl: './learner-onboard.component.html',
@@ -143,10 +150,8 @@ export class LearnerOnboardComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    // Get user details
     let userData = this.authService.getUser();
     this.user = userData.user;
-    
   }
 
   // Close Modal
@@ -162,15 +167,10 @@ export class LearnerOnboardComponent implements OnInit {
   // Select Avatar
   selectAvatar(selected: any) {
     this.avatars.forEach((e: any) => {
-      // Set all avatar selected to false
       e.selected = false;
-      // Check if the selected id same and is not true
       if (e.id === selected) {
         if (selected !== true) {
-          // Set the only selected to true
           e.selected = true;
-
-          // Set avatar url
           this.selectedAvatarUrl = e.image;
         }
       }
@@ -180,8 +180,6 @@ export class LearnerOnboardComponent implements OnInit {
   // Select Interest
   selectInterest(selected: any) {
     selected.selected = true;
-
-    // If doesn't exist add new interest
     let exist = this.selectedInterest.includes(selected.value);
     if (!exist) {
       this.selectedInterest.push(selected.value);
@@ -191,37 +189,34 @@ export class LearnerOnboardComponent implements OnInit {
   // Set Username
   setUsername(data: any, currentModal: any) {
     this.username = data.username;
-
-    // Move to next modal
     this.onboardModal = currentModal += 1;
   }
 
   // Complete Profile
   completeProfileSetup(currentModal: any) {
-    // Start loading
     this.loading = true;
-
-    let payload = {
-      avatar: this.selectedAvatarUrl,
-      username: this.username,
-      interests: this.selectedInterest,
+    let payload: UserModel = {
       isUserOnboarded: true
     };
 
-    // update user profile
-    this.updateUser(payload)
+    if (this.selectedAvatarUrl) {
+      payload.avatar = this.selectedAvatarUrl;
+    }
+    if (this.selectedInterest.length > 0) {
+      payload.interests = this.selectedInterest;
+    }
+    if(this.username) {
+      payload.username = this.username
+    }
 
-    // Move to next modal
+    this.updateUser(payload);
     this.onboardModal = currentModal += 1;
   }
 
   // Update User
   updateUser(payload: any) {
-     // update user profile
      this.authService.updateUser(payload).subscribe((res: any) => {
-      console.log(res);
       if (res.status == true) {
-        // Set User data
         this.authService.addUserDataToLocalStorage(res.data);
       }
     });
