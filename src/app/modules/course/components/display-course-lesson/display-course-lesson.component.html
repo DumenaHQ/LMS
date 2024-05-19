@@ -1,0 +1,177 @@
+<section class="ds-head dis-flex" *ngIf="modules">
+    <h2 class="ds-head_title">Course</h2>
+    <i class="bx bx-chevron-right icon"></i>
+    <p class="clickable" (click)="goBackToCourseInfo()">
+      {{ course?.title | truncate }}
+    </p>
+    <i class="bx bx-chevron-right icon"></i>
+    <p>{{ modules[currentModuleIndex]?.title | truncate | titlecase  }}</p>
+  </section>
+  
+  <section class="" *ngIf="modules">
+    <div class="dis-flex course-header">
+      <h3 class="course-title">{{ modules[currentModuleIndex]?.lessons[currentLessonIndex]?.title}}</h3>
+    </div>
+    <div class="ds-flex">
+      <main class="ds-grid">
+        <div class="course-video" *ngIf="lessonVideoUrl">
+          <div class="c-video">
+            <video
+              class="video"
+              [src]="lessonVideoUrl"
+              controls
+              controlsList="nodownload"
+              #videoPlayer
+              autoplay
+              (ended)="playNextVideo()"
+            ></video>
+          </div>
+        </div>
+  
+        <div class="course-descp">
+          <div class="course-descp" >
+            <div class="course-descp_header">
+              <ul class="dis-flex">
+                <li class="body-2-medium active">Discussion</li>
+                <!-- <li class="body-2-medium active">Course Description</li> -->
+              </ul>
+            </div>
+            <div class="course-descp_body">
+              <p>
+                {{ modules[currentModuleIndex]?.further_reading }}
+              </p>
+              <!-- Objectives -->
+              <div class="obj">
+                <h4>Objectives</h4>
+                <ul *ngIf="modules[currentModuleIndex]?.objectives?.length > 0">
+                  <li class="" *ngFor="let objective of modules[currentModuleIndex]?.objectives | keyvalue">
+                    <p>{{ objective.value }}</p>
+                  </li>
+                </ul>
+                <p *ngIf="modules[currentModuleIndex]?.objectives?.length === 0">None</p>
+              </div>
+              <!-- Activities -->
+              <div class="acti">
+                <h4>Activities</h4>
+                <ul *ngIf="modules[currentModuleIndex]?.class_activities?.length > 0">
+                  <li class="" *ngFor="let activity of modules[currentModuleIndex]?.class_activities | keyvalue">
+                    <p>{{ activity.value }}</p>
+                  </li>
+                </ul>
+                <p *ngIf="modules[currentModuleIndex]?.class_activities?.length === 0">None</p>
+              </div>
+              <!-- Further Reading Links -->
+              <div class="further_reading_links">
+                <h4>Further Reading Links</h4>
+                <ul *ngIf="modules[currentModuleIndex]?.further_reading_links?.length > 0">
+                  <li 
+                    style="display: flex; align-items: center; gap: 2rem; margin-bottom: 1rem;" 
+                    *ngFor="let readingLinks of modules[currentModuleIndex]?.further_reading_links"
+                  >
+                    <h5>{{ readingLinks.caption }}</h5>
+                    <p>{{ readingLinks.url }}</p>
+                  </li>
+                </ul>
+                <p *ngIf="modules[currentModuleIndex]?.further_reading_links?.length === 0">None</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <aside>
+        <div class="course-content">
+          <div class="course-content_header ds-sect-header">
+            <h5>Lessons</h5>
+            <p class="total-length">Lessons ({{ course?.lesson_count }})</p>
+          </div>
+  
+          <div class="course-content_list">
+            <div
+              class="course-content_list_item"
+              *ngFor="let module of modules; let moduleIndex = index"
+            >
+                <div 
+                    class="course-content_list_item_module dis-flex clickable" 
+                    [title]="module?.title" 
+                    [class.active]="currentModuleIndex === moduleIndex"
+                    (click)="toggleAccordion(moduleIndex)"
+                    >
+                    <div class="left dis-flex">
+                        <span class="numb">{{ moduleIndex + 1 }}</span>
+                        <div class="">
+                            <h5 class="heading"> 
+                            {{ module?.title | truncate:15 }}
+                            </h5>
+                            <span class="time dis-flex">
+                            <img
+                                src="../../../../../assets/img/library/clock.svg"
+                                alt="image"
+                            />
+                            <small>{{module?.duration}}</small>
+                            </span>
+                        </div>
+                    </div>
+                    <span class="right">
+                        <i class="bx bx-chevron-down icon chevron-icon" [class.open]="activeIndex === moduleIndex"></i>
+                    </span>
+                </div>
+  
+                <div class="course-content_list_item_lessons" [ngClass]="{'active': activeIndex === moduleIndex}">
+                  <div 
+                      class="course-content_list_item_lessons_item dis-flex clickable" 
+                      *ngFor="let lesson of module?.lessons; let lessonIndex = index" 
+                      (click)="watchLesson(moduleIndex, lessonIndex)" 
+                      [title]="lesson?.title" 
+                      [class.active]="currentModuleIndex + currentLessonIndex === moduleIndex + lessonIndex"
+                  >
+                    <div class="left dis-flex">
+                      <img
+                          src="../../../../../assets/img/library/video-play-black.svg"
+                          alt="image"
+                          class="icon"
+                      />
+                      <p
+                          class="body-1-medium title"
+                      >
+                        {{ lesson?.title | truncate:15 }}
+                      </p>
+                    </div>
+                    <span class="right">
+                      <p class="body-3-regular">{{ lesson?.duration }}</p>
+                    </span>
+                  </div>
+                </div>
+            </div>
+            <!-- Module quiz -->
+            <span 
+                *ngIf="course?.quiz_id && user.role === 'learner'"
+                class="course-content_list_item_lessons_quiz clickable" 
+                (click)="viewQuiz()" 
+            >
+              <div class="left dis-flex">
+                <i class='bx bx-medal icon'></i>
+                <p>Quiz</p>
+              </div>
+            </span>
+          </div>
+  
+          <div class="course-content_tutor">
+            <h5>Support and Instructor Information</h5>
+            <div class="course-content_tutor_profile">
+                <div class="image">
+                    <img
+                      src="../../../../assets/img/logo.svg"
+                      alt="Course Tutor"
+                    />
+                </div>
+              <p class="body-1-medium name">DUMENA Education Team</p>
+              <p class="body-1-regular details">
+                This course has been prepared by the DUMENA Education team.
+              </p>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+  

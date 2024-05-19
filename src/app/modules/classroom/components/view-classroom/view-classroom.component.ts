@@ -82,7 +82,7 @@ export class ViewClassroomComponent implements OnInit {
         }
       })
       .catch((error) => {
-        // Show error message
+        console.log(error);
         this.appAlertService.showAlert(
           error.error.message
             ? error.error.message
@@ -151,7 +151,7 @@ export class ViewClassroomComponent implements OnInit {
 
   watchCourse(courseId: string) {    
     this.router.navigate([
-      `/learner/library/${courseId}`,
+      `/${this.user.role}/classrooms/courses/${courseId}`,
     ]);
   }
 

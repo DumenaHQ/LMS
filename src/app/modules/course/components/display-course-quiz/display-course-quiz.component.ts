@@ -1,36 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CoursesService } from 'src/app/services/courses.service';
+import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { QuizService } from 'src/app/services/quiz.service';
 
 @Component({
-  selector: 'app-library-courses-quiz',
-  templateUrl: './library-courses-quiz.component.html',
-  styleUrls: ['./library-courses-quiz.component.scss']
+  selector: 'app-display-course-quiz',
+  templateUrl: './display-course-quiz.component.html',
+  styleUrls: ['./display-course-quiz.component.scss']
 })
-export class LibraryCoursesQuizComponent implements OnInit {
+export class DisplayCourseQuizComponent implements OnInit {
+
   currentCourseParams: any;
   course: any;
   quiz: any;
   currentQuestionIndex: number = 0;
   responses: { question_id: string, selected_ans: string }[] = [];
-
-  isAlert: boolean = false;
-  alertMessage: string;
-  alertColor: string;
   isSubmitQuiz: boolean = false;
   loading: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private coursesService: CoursesService,
     private quizzesService: QuizService,
+    private appAlertService: AppAlertService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
     this.currentCourseParams = this.activatedRoute.snapshot.params;
-
     this.getQuizByQuizId(this.currentCourseParams.quizId);
   }
 
@@ -89,7 +85,6 @@ export class LibraryCoursesQuizComponent implements OnInit {
 
   // Open confirm submit modal
   openConfirmSubmitModal() {
-    // Show confirm submit modal
     this.isSubmitQuiz = true;
   }
 
@@ -99,50 +94,29 @@ export class LibraryCoursesQuizComponent implements OnInit {
 
     this.quizzesService.submitQuiz(this.currentCourseParams.quizId, this.responses).subscribe(
       (res: any) => {
-        console.log(res);
-
-        // Show alert
         if (res.status === true) {
-          this.showAlertPopup(res.message, 'success');
-          setTimeout(() => {
-            this.router.navigate([`learner/library/${this.currentCourseParams.courseId}/${this.currentCourseParams.lessonId}`]);
-          }, 3000);
-        }
-        
+          this.appAlertService.showAlert(res.message, AlertType.Success);
+          this.goBackToCourse();
+        }     
       },
       (error: any) => {
         console.log(error);
-        // Show error message
-        this.showAlertPopup(error.error.message, 'error');
-
-        // Set loading to false
+        this.appAlertService.showAlert(
+          error.error.message
+            ? error.error.message
+            : error.message
+            ? error.error.message || error.error.error.errors[0].message
+            : error.message,
+          AlertType.Error
+        );
         this.loading = false;
-
-        // Set Timeout
-        // setTimeout(() => {
-        //   this.showError = false
-        // }, 3000);
       }
     );
   }
 
   // Go back
-  goToLibrary() {
-    window.history.back();
-  }
-
-  // Show alert
-  showAlertPopup(message: string, color: string) {
-    // Set message
-    this.alertMessage = message;
-    // Set color
-    this.alertColor = color;
-    // Show Alert
-    this.isAlert = true;
-    // Hide Alert
-    setTimeout(() => {
-      this.isAlert = false;
-    }, 3000);
+  goBackToCourse() {
+    this.router.navigate([`learner/classrooms/courses/${this.currentCourseParams.courseId}/lessons`]);
   }
 
 }

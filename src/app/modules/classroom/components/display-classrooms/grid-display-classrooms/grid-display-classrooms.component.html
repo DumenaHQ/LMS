@@ -77,7 +77,7 @@
           </div>
         </div>
   
-        <div class="actions">
+        <div class="actions" *ngIf="user.role === 'school'">
           <img
             src="../../../../../../assets/img/action.svg"
             class="clickable"

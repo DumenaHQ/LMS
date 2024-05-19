@@ -1,11 +1,8 @@
-<!-- Alert message -->
-<app-alert-popup *ngIf="isAlert" [alertMessage]="alertMessage" [alertColor]="alertColor"></app-alert-popup>
-
 <section class="ds-head dis-flex">
   <div class=" dis-flex">
     <h2 class="ds-head_title">Quiz</h2>
     <i class="bx bx-chevron-right icon" style="transform: rotate(180deg);"></i>
-    <p class="ds-head_title clickable" (click)="goToLibrary()">Go back to Course</p>
+    <p class="ds-head_title clickable" (click)="goBackToCourse()">Go back to Course</p>
   </div>
   <button class="btn prim_btn" (click)="openConfirmSubmitModal()">Submit</button>
 </section>
@@ -14,7 +11,7 @@
   <div class="dis-flex" style="justify-content: space-between; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
     <h4>Title: {{ quiz?.title }}</h4>
     <span>
-      <b>{{ responses.length }}</b> out of <b>{{ quiz?.questions?.length }}</b> questions
+      <b>{{ responses.length }}</b> out of <b>{{ quiz?.questions?.length || 0 }}</b> questions
     </span>
   </div>
   <div class="course-details_body_header">
@@ -130,7 +127,7 @@
       <p>
         Are you sure you want to Submit the Quiz?
       </p>
-      <em style="margin-top: 1rem;"><b>{{ responses.length }}</b> out of <b>{{ quiz?.questions?.length }}</b> questions
+      <em style="margin-top: 1rem;"><b>{{ responses.length }}</b> out of <b>{{ quiz?.questions?.length || 0 }}</b> questions
         have been answered</em>
     </div>
     <!-- Buttons -->
