@@ -9,12 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LearnerOnboardComponent } from './components/learner-onboard/learner-onboard.component';
 import { DisplayLearnerProgramsComponent } from './components/learner-programs/display-learner-programs/display-learner-programs.component';
 import { DisplayLearnerProgramDetailsComponent } from './components/learner-programs/display-learner-program-details/display-learner-program-details.component';
-import { DisplayLearnerClassoomsComponent } from './components/learner-classrooms/display-learner-classooms/display-learner-classooms.component';
-import { DisplayDetailsLearnerClassoomComponent } from './components/learner-classrooms/display-details-learner-classoom/display-details-learner-classoom.component';
-import { BlankDisplayLearnerClassroomComponent } from './components/learner-classrooms/display-learner-classooms/blank-display-learner-classroom/blank-display-learner-classroom.component';
-import { GridDisplayLearnerClassroomsComponent } from './components/learner-classrooms/display-learner-classooms/grid-display-learner-classrooms/grid-display-learner-classrooms.component';
 import { BlankDisplayLearnerProgramComponent } from './components/learner-programs/display-learner-programs/blank-display-learner-program/blank-display-learner-program.component';
-import { ViewQuizResultComponent } from './components/learner-classrooms/display-details-learner-classoom/view-quiz-result/view-quiz-result.component';
 
 @NgModule({
   declarations: [
@@ -23,12 +18,7 @@ import { ViewQuizResultComponent } from './components/learner-classrooms/display
     LearnerOnboardComponent,
     DisplayLearnerProgramsComponent,
     DisplayLearnerProgramDetailsComponent,
-    DisplayLearnerClassoomsComponent,
-    DisplayDetailsLearnerClassoomComponent,
-    BlankDisplayLearnerClassroomComponent,
-    GridDisplayLearnerClassroomsComponent,
     BlankDisplayLearnerProgramComponent,
-    ViewQuizResultComponent,
   ],
   imports: [
     CommonModule,

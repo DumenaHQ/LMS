@@ -17,11 +17,7 @@
         <div class="content_details">
           <div class="content_details_header dis-flex">
             <h5 class="clickable" [routerLink]="i.id + '/details'" [title]="i.title">
-              {{
-                i.title.length > 20
-                  ? i.title.slice(0, 20)  + "..." 
-                  : i.title | titlecase
-              }}
+              {{ i.title | truncate }}
             </h5>
             <div class="actions">
               <img src="../../../../../../../assets/img/action.svg" alt="" class="clickable" (click)="actionBtn.click()" />

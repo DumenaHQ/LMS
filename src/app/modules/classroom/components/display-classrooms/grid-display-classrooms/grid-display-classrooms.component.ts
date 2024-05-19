@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class GridDisplayClassroomsComponent implements OnInit {
 
   @Input() classrooms?: ClassroomModel[];
+  @Input() user: any;
   classroomName: any;
   deleteModal: boolean = false;
   deleteUrl: string;
@@ -23,7 +24,7 @@ export class GridDisplayClassroomsComponent implements OnInit {
 
   // Display program
   displayClassroom(classroomId?: string) {
-    this.router.navigate([`/school/classrooms/${classroomId}/view-classroom`]);
+    this.router.navigate([`/${this.user.role}/classrooms/${classroomId}/view-classroom`]);
   }
 
   // Open Confirm Delete Modal

@@ -150,8 +150,7 @@ export class LearnerOnboardComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    let userData = this.authService.getUser();
-    this.user = userData.user;
+    this.user = this.authService.getUser().user;
   }
 
   // Close Modal

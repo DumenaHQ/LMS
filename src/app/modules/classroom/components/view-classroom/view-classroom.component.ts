@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ClassroomService } from 'src/app/services/classroom.service';
 import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { ClassroomModel, Term } from '../../models/classroom.model';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-view-classroom',
@@ -25,9 +26,11 @@ export class ViewClassroomComponent implements OnInit {
   teacherName: any;
   courseQuizResult: boolean = false;
   course: any;
+  user: any;
 
   constructor(
     private classroomService: ClassroomService,
+    private authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private changeDectetorRef: ChangeDetectorRef,
@@ -36,6 +39,7 @@ export class ViewClassroomComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentClassroomId = this.activatedRoute.snapshot.params;
+    this.user = this.authService.getUser().user;
     this.getClassrooms();
   }
 
@@ -126,7 +130,8 @@ export class ViewClassroomComponent implements OnInit {
   }
 
   // Remove teacher
-  removeTeacher() {
+  removeTeacher(teacherName: any) {
+    this.teacherName = teacherName;
     this.deleteModal = true;
     this.deleteUrl = `classes/${this.currentClassroomId.classroomId}/teacher/remove`;
     this.deleteRoutePath = '';
@@ -140,12 +145,18 @@ export class ViewClassroomComponent implements OnInit {
   // Edit classroom
   editClassroom() {
     this.router.navigate([
-      `/school/classrooms/${this.currentClassroomId.classroomId}/edit-classroom`,
+      `/${this.user.role}/classrooms/${this.currentClassroomId.classroomId}/edit-classroom`,
+    ]);
+  }
+
+  watchCourse(courseId: string) {    
+    this.router.navigate([
+      `/learner/library/${courseId}`,
     ]);
   }
 
   goToViewAllClassrooms() {
-    this.router.navigate([`/school/classrooms`]);
+    this.router.navigate([`/${this.user.role}/classrooms`]);
   }
 
   openViewCourseQuizResult(course: any) {

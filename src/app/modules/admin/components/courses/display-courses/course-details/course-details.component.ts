@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService } from 'src/app/services/courses.service';
 import { QuizService } from 'src/app/services/quiz.service';
 
@@ -24,7 +24,8 @@ export class CourseDetailsComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private coursesService: CoursesService,
-    private quizzesService: QuizService
+    private quizzesService: QuizService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -40,7 +41,11 @@ export class CourseDetailsComponent implements OnInit {
     this.coursesService.getCourse(this.currentCourseParams.courseId).subscribe({
       next: (res: any) => {
         this.course = res.data.course;
-        this.getCourseQuiz(res.data.course.quiz_id);
+        if(res.data.course.quiz_id) {
+          this.getCourseQuiz(res.data.course.quiz_id);
+        } else {
+          this.quizzes = [];
+        }
       },
       error: (e) => console.error(e),
     });
@@ -86,6 +91,11 @@ export class CourseDetailsComponent implements OnInit {
   // Tab change
   tabChange(ids: any) {
     this.contentId = ids;
+  }
+
+  // Go to add module page
+  goToAddModulePage() {
+    this.router.navigate([`/admin/courses/create-course/${this.currentCourseParams.courseId}/modules`]);
   }
 
 }
