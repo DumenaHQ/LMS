@@ -2,30 +2,12 @@
 @import '../../../../../assets/css/mixins.scss';
 @import '../../../../../assets/css/dashboard.scss';
 
-// .body {
-//   display: grid;
-//   grid-gap: $m-3;
-//   @media only screen and (min-width: 850px) {
-//     display: flex;
-//     justify-content: space-between;
-//     gap: $m-4;
-//     main {
-//       flex-basis: 70%;
-//     }
-//     aside {
-//       flex-basis: 30%;
-//     }
-//   }
-//   .du-grid {
-//     display: grid;
-//     grid-gap: $m-4;
-//   }
-// }
 .course-header {
   justify-content: space-between;
   gap: $m-2;
   margin-bottom: $m-3;
 }
+
 .course-video {
   iframe {
     width: 100%;
@@ -38,8 +20,10 @@
     position: relative;
     overflow: hidden;
     margin: auto;
+    border-radius: $border-radius3;
     video {
       width: 100%;
+      border: 2px solid $primary80;
       border-radius: $border-radius3;
     }
     .play_icon {
@@ -50,13 +34,9 @@
       top: 50%;
       transform: translate(-50%, -50%);
       z-index: 5;
-      // display: none;
       img {
         width: 30px;
       }
-      // .show {
-      //   display: flex;
-      // }
     }
     .bar {
       height: 10px;
@@ -162,16 +142,12 @@ aside {
         border-top: 1px solid $divider-color;
         border-bottom: 1px solid $divider-color;
         transition: all .2s;
-        input[type="checkbox"]:checked + .accordion-body {
-          display: block;
-        }
         &_module {
           gap: $m-2;
           padding: $m-2;
           justify-content: space-between;
           transition: all .2s ease;
           border-left: 2px solid transparent;
-          &:hover,
           &.active {
             background-color: $grey40;
             border-left: 2px solid $primary80;
@@ -191,11 +167,17 @@ aside {
             .icon {
               font-size: 26px;
               transition: all .2s ease;
+              &.open {
+                transform: rotate(180deg);
+              }
             }
           }
         }
         &_lessons {
           display: none;
+          &.active {
+            display: block;
+          }
           &_item,
           &_quiz {
             gap: $m-2;
@@ -215,6 +197,10 @@ aside {
           &_quiz {
             display: block;
             background-color: $inner-border;
+            .icon {
+              font-size: 26px;
+              color: $secondary80;
+            }
           }
         }
       }
@@ -226,10 +212,13 @@ aside {
         margin-top: $m-3;
         .image {
           width: 60px;
-          height: 60px;
+          height: auto;
+          img {
+            width: 100%;
+          }
         }
         .name {
-          margin: $m-3 0 $m-2 0;
+          margin: $m-2 0 $m-2 0;
         }
       }
     }

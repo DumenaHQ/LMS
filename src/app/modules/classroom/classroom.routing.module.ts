@@ -38,6 +38,14 @@ const routes: Routes = [
       description: 'Description Meta Tag Content',
     },
   },
+  {
+    path: 'courses',
+    loadChildren: () => import('../../modules/course/course.module').then((m) => m.CourseModule),
+    data: {
+      title: 'Courses',
+      description: 'Description Meta Tag Content',
+    }
+  },
 ];
 
 @NgModule({
