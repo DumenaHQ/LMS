@@ -25,7 +25,7 @@
     </div>
 
     <!-- New Classroom Button -->
-    <button class="btn prim_btn" (click)="goToAddClassroom()">
+    <button class="btn prim_btn" (click)="goToAddClassroom()" *ngIf="user.role === 'school'">
       New Classroom
     </button>
   </div>
@@ -35,7 +35,7 @@
   <app-loader *ngIf="dataLoading"></app-loader>
   
   <section class="classroom" *ngIf="!dataLoading">
-    <app-grid-display-classrooms [classrooms]="classrooms" *ngIf="classrooms?.length ?? 0 > 0"></app-grid-display-classrooms>
+    <app-grid-display-classrooms [classrooms]="classrooms" [user]="user" *ngIf="classrooms?.length ?? 0 > 0"></app-grid-display-classrooms>
 
     <div class="classroom_body" *ngIf="classrooms?.length === 0">
         <app-blank-display-classroom></app-blank-display-classroom>

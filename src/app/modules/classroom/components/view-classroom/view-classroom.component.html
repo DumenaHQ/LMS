@@ -51,9 +51,14 @@
           </div>
         </div>
         <div class="right dis-flex items-center">
-          <button class="btn" style="padding: 10px; display: flex; align-items: center" (click)="editClassroom()">
+          <button 
+            class="btn" 
+            style="padding: 10px; display: flex; align-items: center" 
+            (click)="editClassroom()" 
+            *ngIf="user.role === 'school'"
+          >
             <img src="../../../assets/img/svg/setting-grey.svg" alt="" />
-            <span class="" style="padding-left: 4px;">
+            <span class="" style="margin-left: 4px;">
               Edit Classroom
             </span>
           </button>
@@ -89,13 +94,18 @@
             </ul>
           </div>
         </div>
-        <div class="completion dis-flex" *ngIf="classroom?.teacher">
+        <div class="completion dis-flex" *ngIf="classroom?.teacher && user.role !== 'instructor'">
           <p class="body-2-bold title">Instructor:</p>
           <div class="name dis-flex">
             <p class="body-2-medium text-primary-color">
               {{ classroom?.teacher?.fullname }}
             </p>
-            <i class='bx bx-message-square-x icon clickable' title="Remove" (click)="removeTeacher()"></i>
+            <i 
+              *ngIf="user.role === 'school'"
+              class='bx bx-message-square-x icon clickable' 
+              title="Remove" 
+              (click)="removeTeacher(classroom?.teacher?.fullname)"
+            ></i>
           </div>
         </div>
       </div>
@@ -153,12 +163,8 @@
                     <td>{{ course?.course_quadrant || "-" }}</td>
                     <td>{{ course?.duration || "-" }}</td>
                     <td>
-                      <button
-                        class="btn sec_btn"
-                        (click)="openViewCourseQuizResult(course)"
-                      >
-                        Quiz Result
-                      </button>
+                      <button class="btn sec_btn" (click)="watchCourse(course?.id)">Watch</button>
+                      <button class="btn sec_btn" style="margin-left: 2rem;" (click)="openViewCourseQuizResult(course)">Quiz Result</button>
                     </td>
                   </tr>
                 </ng-container>
@@ -166,12 +172,13 @@
             </ng-container>
   
             <div *ngIf="classroom?.courses?.length === 0" class="course-empty">
+              <img src="../../../../../assets/img/Illustration.svg" alt="">
               <p style="text-align: center">No Course available</p>
               <button
                 type="button"
                 class="btn sec_btn"
                 (click)="openAddCourseToClassroomModal()"
-                *ngIf="!classroom?.template"
+                *ngIf="!classroom?.template && user.role === 'school'"
               >
                 Add Course
               </button>
@@ -182,6 +189,7 @@
             *ngIf="courseQuizResult"
             [classroomId]="currentClassroomId.classroomId"
             [course]="course"
+            [user]="user"
             (courseQuizResult)="closeViewCourseQuizResult()"
           ></app-view-course-quiz-report>
         </ng-container>
@@ -189,7 +197,7 @@
         <!-- Learners -->
         <ng-container *ngIf="contentId === 'learners'">
           <div class="table-container" style="overflow-x: auto">
-            <div *ngIf="classroom?.learners?.length != 0" style="padding: 1%">
+            <div *ngIf="classroom?.learners?.length != 0 && user.role ==='school'" style="padding: 1%">
               <button
                 type="button"
                 class="btn sec_btn"
@@ -229,11 +237,13 @@
             </ng-container>
   
             <div *ngIf="classroom?.learners?.length === 0" class="course-empty">
+              <img src="../../../../../assets/img/Illustration.svg" alt="">
               <p style="text-align: center">No Learner available</p>
               <button
                 type="button"
                 class="btn sec_btn"
                 (click)="openAddLearnerToClassroomModal()"
+                *ngIf=" user.role === 'school'"
               >
                 Add Learner
               </button>
@@ -274,7 +284,7 @@
   <app-confirm-session-date
     [loading]="updatingClassDate"
     [classroom]="classroom"
-    *ngIf="this.classroom?.active_term?.defaultDateChanged === false"
+    *ngIf="this.classroom?.active_term?.defaultDateChanged === false && user.role === 'school'"
     (confirmSessionDateAction)="confirmSessionDates($event)"
   ></app-confirm-session-date>
   

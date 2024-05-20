@@ -5,8 +5,6 @@ import { LearnerOverviewComponent } from './components/learner-overview/learner-
 import { DisplayLearnerProgramDetailsComponent } from './components/learner-programs/display-learner-program-details/display-learner-program-details.component';
 import { DisplayLearnerProgramsComponent } from './components/learner-programs/display-learner-programs/display-learner-programs.component';
 import { LearnerComponent } from './learner.component';
-import { DisplayLearnerClassoomsComponent } from './components/learner-classrooms/display-learner-classooms/display-learner-classooms.component';
-import { DisplayDetailsLearnerClassoomComponent } from './components/learner-classrooms/display-details-learner-classoom/display-details-learner-classoom.component';
 
 const routes: Routes = [
   {
@@ -49,18 +47,10 @@ const routes: Routes = [
       },
       {
         path: 'classrooms',
-        component: DisplayLearnerClassoomsComponent,
+        loadChildren: () => import('../../modules/classroom/classroom.module').then((m) => m.ClassroomModule),
         data: {
-          title: 'Clasrooms',
-          description: 'Description Meta Tag Content'
-        }
-      },
-      {
-        path: 'classrooms/:classroomId/view-classroom',
-        component: DisplayDetailsLearnerClassoomComponent,
-        data: {
-          title: 'Classroom',
-          description: 'Description Meta Tag Content'
+          title: 'Classrooms',
+          description: 'Description Meta Tag Content',
         }
       },
       { path: '', redirectTo: '/learner', pathMatch: 'full' },

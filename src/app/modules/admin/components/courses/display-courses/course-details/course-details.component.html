@@ -2,11 +2,7 @@
   <h2 class="ds-head_title clickable" routerLink="/admin/courses">Courses</h2>
   <i class="bx bx-chevron-right icon"></i>
   <p class="clickable">
-    {{
-      course?.title.length > 20
-        ? course?.title.slice(0, 20)  + "..." 
-        : course?.title | titlecase
-    }}
+    {{ course?.title | truncate }}
   </p>
 </section>
 
@@ -33,10 +29,11 @@
         </div>
       </div>
       <div class="right dis-flex">
-        <button class="grey_btn">Edit</button>
-        <button class="grey_btn">Preview as Learner</button>
-        <button class="grey_btn settings">
+        <button class="grey_btn dis-flex">
           <img src="../../../../../../../assets/img/svg/setting-grey.svg" alt="" />
+          <span class="" style="margin-left: 4px;">
+            Edit Classroom
+          </span>
         </button>
       </div>
     </div>
@@ -66,7 +63,7 @@
     </div>
   </div>
   <div class="course-details_body">
-    <div class="course-details_body_header">
+    <div class="course-details_body_header dis-flex">
       <ul class="dis-flex">
         <li class="body-2-medium active"
           [class.active]="contentId === 'courses'"
@@ -81,6 +78,8 @@
           Quizzes
         </li>
       </ul>
+
+      <button class="btn sec_btn" (click)="goToAddModulePage()" *ngIf="contentId === 'courses'">Add Module</button>
     </div>
     <div class="course-details_body_content">
       <!-- Courses -->
@@ -185,9 +184,9 @@
       <!-- Quizzes -->
       <ng-container *ngIf="contentId === 'quizzes'">
         <main>
-          <div class="table-container" style="overflow-x: auto">
+          <div class="table-container" style="overflow-x: auto" *ngIf="quizzes.length > 0">
             <button class="btn prim_btn" (click)="openAddQuizToCourse()">Add Quiz</button>
-            <ng-container *ngIf="quizzes">
+            <ng-container>
               <table>
                 <tr class="table-header">
                   <th>Title</th>
@@ -196,20 +195,19 @@
                 </tr>
                 <ng-container>
                   <tr class="table-body">
-                    <td>{{ quizzes?.title }}</td>
-                    <td>{{ quizzes?.questions.length }}</td>
-                    <td>{{ quizzes?.quiz_level }}</td>
+                    <td>{{ quizzes?.title || '-' }}</td>
+                    <td>{{ quizzes?.questions?.length || '-' }}</td>
+                    <td>{{ quizzes?.quiz_level || '-' }}</td>
                   </tr>
                 </ng-container>
               </table>
             </ng-container> 
-  
-            <div *ngIf="!quizzes" class="course-empty">
-              <p style="text-align: center" >
-                No Quiz available
-              </p>
-              <button type="button" class="btn sec_btn">Add Quiz</button>
-            </div>
+          </div>
+          <div *ngIf="quizzes.length === 0" class="course-empty">
+            <p style="text-align: center" >
+              No Quiz available
+            </p>
+            <button type="button" class="btn sec_btn" (click)="openAddQuizToCourse()">Add Quiz</button>
           </div>
         </main>
       </ng-container>
