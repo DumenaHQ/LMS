@@ -67,21 +67,29 @@
               class="form_control_field select-image clickable"
               (click)="fileHeaderPhoto.click()"
               appDragDrop
-              (fileDropped)="uploadHeaderPhoto($event)"
+              (fileDropped)="selectPhoto($event, 'header_photo')"
             >
               <input
                 type="file"
+                accept="image/*"
                 #fileHeaderPhoto
                 hidden
-                (change)="uploadHeaderPhoto($event)"
+                formControlName="header_photo"
+                (change)="selectPhoto($event, 'header_photo')"
               />
-              <img
-                src="../../../../../../../assets/img/select-Image.svg"
-                alt=""
-              />
-              <p class="body-3-regular text-primary-color">
-                {{ selectedHeaderPhotoName === '' ? 'Select a picture' : selectedHeaderPhotoName }}
-              </p>
+              <div class="select-image_content">
+                <img
+                  [src]="headerPhotoImagePreview ? headerPhotoImagePreview : '../../../../../../../assets/img/select-Image.svg'"
+                  alt="Image Preview"
+                  [class.no-image]="!headerPhotoImagePreview"
+                />
+                <p class="captions-regular text-primary-color" *ngIf="selectedHeaderPhotoName">
+                  {{ selectedHeaderPhotoName  }}
+                </p>
+                <p class="body-3-regular text-primary-color">
+                  {{ selectedHeaderPhotoName === '' ? 'Click to select a picture' : 'Click to Select another picture' }}
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -93,21 +101,29 @@
               class="form_control_field select-image clickable"
               (click)="fileThumbnail.click()"
               appDragDrop
-              (fileDropped)="uploadThumbnail($event)"
-            >
+              (fileDropped)="selectPhoto($event, 'thumbnail')"
+              >
               <input
                 type="file"
+                accept="image/*"
                 #fileThumbnail
                 hidden
-                (change)="uploadThumbnail($event)"
+                formControlName="thumbnail"
+                (change)="selectPhoto($event, 'thumbnail')"
               />
-              <img
-                src="../../../../../../../assets/img/select-Image.svg"
-                alt=""
-              />
-              <p class="body-3-regular text-primary-color">
-                {{ selectedThumbnailName === '' ? 'Select a picture' : selectedThumbnailName }}
-              </p>
+              <div class="select-image_content">
+                <img
+                  [src]="thumbnailImagePreview ? thumbnailImagePreview : '../../../../../../../assets/img/select-Image.svg'"
+                  alt="Image Preview"
+                  [class.no-image]="!thumbnailImagePreview"
+                />
+                <p class="captions-regular text-primary-color" *ngIf="selectedThumbnailName">
+                  {{ selectedThumbnailName  }}
+                </p>
+                <p class="body-3-regular text-primary-color">
+                  {{ selectedThumbnailName === '' ? 'Click to select a picture' : 'Click to Select another picture' }}
+                </p>
+              </div>
             </div>
           </div>
         </div>

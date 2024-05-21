@@ -40,23 +40,18 @@ export class DisplayCourseQuizComponent implements OnInit {
       });
   }
 
-  // Get question Index
-  // Get Module lessons
   getQuestionIndex(questionIndex: number) {
     this.currentQuestionIndex = questionIndex;    
   }
 
-  // Next question
   nextQuestion() {
     this.currentQuestionIndex++;
   }
 
-  // Previous question
   previousQuestion() {
     this.currentQuestionIndex--;
   }
 
-  // Select answer
   selectAnswer(questionId: string, selectedAnswer: string) {
     // Check if the response for this question already exists
     const index = this.responses.findIndex(response => response.question_id === questionId);
@@ -83,12 +78,10 @@ export class DisplayCourseQuizComponent implements OnInit {
     return response && response.selected_ans === option;
   }
 
-  // Open confirm submit modal
   openConfirmSubmitModal() {
     this.isSubmitQuiz = true;
   }
 
-  // Submit quiz
   submitQuiz() {
     this.loading = true; 
 
@@ -114,7 +107,6 @@ export class DisplayCourseQuizComponent implements OnInit {
     );
   }
 
-  // Go back
   goBackToCourse() {
     this.router.navigate([`learner/classrooms/courses/${this.currentCourseParams.courseId}/lessons`]);
   }

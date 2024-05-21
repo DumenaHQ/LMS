@@ -23,12 +23,12 @@ export class EditClassroomComponent implements OnInit {
   teachers: any;
   user: any;
   templates: any;
-  selectedThumbnailName: string = '';
-  selectedHeaderPhotoName: string = '';
   thumbnailFile: File;
   headerPhotoFile: File;
-  thumbnailUrl?: string;
-  headerPhotoUrl?: string;
+  selectedThumbnailName: string = '';
+  selectedHeaderPhotoName: string = '';
+  headerPhotoImagePreview?: string;
+  thumbnailImagePreview?: string;
 
   constructor(
     private classroomService: ClassroomService,
@@ -136,25 +136,28 @@ export class EditClassroomComponent implements OnInit {
     });
   }
 
-  uploadThumbnail(event: any) {
-    const file = event.target.files[0];
-    this.thumbnailFile = file;
-    this.utilsService.imageToBase64(file).then((value: string) => {
-      this.thumbnailUrl = value;
-    });
-    this.selectedThumbnailName = file.name;
+  selectPhoto(event: any, fileName: string) {
+    const fileInput = event.target as HTMLInputElement;
+    
+    if (fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
 
-    this.formGroup.patchValue({ thumbnail: this.selectedThumbnailName });
-  }
+      if(fileName === 'header_photo') {
+        this.headerPhotoFile = file;
+        this.selectedHeaderPhotoName = file.name;
+      } else if(fileName === 'thumbnail') {
+        this.thumbnailFile = file;
+        this.selectedThumbnailName = file.name;
+      }
 
-  uploadHeaderPhoto(event: any) {
-    const file = event.target.files[0];
-    this.headerPhotoFile = file;
-    this.utilsService.imageToBase64(file).then((value: string) => {
-      this.headerPhotoUrl = value;
-    });
-    this.selectedHeaderPhotoName = file.name;
-    this.formGroup.patchValue({ header_photo: this.selectedHeaderPhotoName });
+      this.utilsService.imageToBase64(file).then((value: string) => {
+        if(fileName === 'header_photo') {
+          this.headerPhotoImagePreview = value;
+        } else if(fileName === 'thumbnail') {
+          this.thumbnailImagePreview = value;
+        }
+      });
+    }
   }
 
   editClassroom() {

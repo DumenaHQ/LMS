@@ -47,19 +47,25 @@ form {
         }
         &.select-image {
             padding:  0;
-            display: grid;
-            place-items: center;
-            grid-gap: $m-1;
             height: 100%;
             width: 100%;
             border: 1px solid $inner-border;
             border-radius: $border-radius1;
-            padding: 16% $m-2;
+            padding: 5% $m-2;
             @include hover();
-            img {
-            width: 34px;
-            height: 34px;
+            .select-image_content {
+                display: grid;
+                place-items: center;
+                grid-gap: $m-1;
+                img {
+                width: 60px;
+                height: 60px;
+                &.no-image {
+                    width: 34px;
+                    height: 34px;
+                }
             }
+          }
         }
         textarea {
             resize: none;
