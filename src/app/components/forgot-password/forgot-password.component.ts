@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { FormErrorMessageService } from 'src/app/services/utils/form-error-message.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -9,18 +11,19 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ForgotPasswordComponent implements OnInit {
   loading: boolean = false;
-  errorMessage: string = '';
-  showError: boolean = false;
   id: any = 'forgot-password';
   email: string = '';
-  userForm: any;
-  isFormSubmitted: boolean = false;
+  formGroup: any;
 
-
-  constructor(private authService: AuthService, private formBuilder: FormBuilder) {}
+  constructor(
+    private authService: AuthService, 
+    private formBuilder: FormBuilder,
+    private appAlertService: AppAlertService,
+    private formErrorService: FormErrorMessageService
+  ) {}
 
   ngOnInit(): void {
-    this.userForm = this.formBuilder.group({
+    this.formGroup = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
     });
   }
@@ -33,41 +36,33 @@ export class ForgotPasswordComponent implements OnInit {
   // Set reset email
   sendResetEmail() {
     // Start loading
-    this.loading = true;
+    this.loading = true;   
 
-    // Set submitted to true
-    this.isFormSubmitted = true;
-
-    // If Form is invalid
-    if (this.userForm.invalid) {
-      this.loading = false;
-
-      return;
-    }    
-
-    this.authService.sendResetEmail(this.userForm.value).subscribe(
+    this.authService.sendResetEmail(this.formGroup.value).subscribe(
       (res: any) => {
-        console.log(res);
-
         if (res.status === true) {
-          // Show check email section
           this.id = 'check-mail';
-
-          // Pass the user email
-          this.email = this.userForm.value.email;
-          
+          this.email = this.formGroup.value.email;
         }
       },
       (error: any) => {
         console.log(error);
-        // Show error message
-        this.errorMessage = error.error.message;
-
-        this.showError = true;
-
-        // Set loading to false
+        this.appAlertService.showAlert(
+          error.error.message
+            ? error.error.message
+            : error.message
+            ? error.error.message || error.error.error.errors[0].message
+            : error.message,
+          AlertType.Error
+        );
         this.loading = false;
       }
     );
+  }
+
+  getErrorMessage(controlName: string, labelName: string): string {
+    const control = this.formGroup.get(controlName);
+    const errors = control?.errors;
+    return this.formErrorService.getErrorMessage(errors, labelName);
   }
 }

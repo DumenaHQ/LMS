@@ -7,13 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignupOverviewComponent implements OnInit {
   signupOptions = [
-    {
-      id: 1,
-      title: 'Student Account',
-      description: 'For students, class participants, club members, etc',
-      link: 'student',
-      icon: '../../../assets/img/svg/student-signup.svg',
-    },
+    // {
+    //   id: 1,
+    //   title: 'Student Account',
+    //   description: 'For students, class participants, club members, etc',
+    //   link: 'student',
+    //   icon: '../../../assets/img/svg/student-signup.svg',
+    // },
     {
       id: 2,
       title: 'Parent Account',

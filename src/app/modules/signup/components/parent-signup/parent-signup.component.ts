@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { FormErrorMessageService } from 'src/app/services/utils/form-error-message.service';
+import { NigeriaStatesService } from 'src/app/services/utils/nigeria-states.service';
 
 @Component({
   selector: 'app-parent-signup',
@@ -165,23 +167,30 @@ export class ParentSignupComponent implements OnInit {
       name: 'Zamfara',
     },
   ];
+  states: { code: string; name: string; }[];
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private appAlertService: AppAlertService
+    private appAlertService: AppAlertService,
+    private nigeriaStatesService: NigeriaStatesService,
+    private formErrorService: FormErrorMessageService
   ) {}
 
   ngOnInit(): void {
-    // Get user event
     this.userEvent = JSON.parse(localStorage.getItem('event') || '[]');
+    this.states = this.nigeriaStatesService.getAllStates();
+    this.initForm();
+  }
+  
+  initForm() {
     this.formGroup = this.formBuilder.group({
       fullname: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       resident_state: ['', [Validators.required]],
-      phone: ['', [Validators.required, Validators.minLength(11)]],
-      password: ['', [Validators.required, Validators.minLength(6), this.alphanumericSymbolPasswordValidator()]],
+      phone: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern(/^\d+$/)]],
+      password: ['', [Validators.required, Validators.minLength(6), this.formErrorService.alphanumericSymbolPasswordValidator()]],
     });
   }
 
@@ -226,28 +235,10 @@ export class ParentSignupComponent implements OnInit {
     );
   }
 
-  // validate password
-  alphanumericSymbolPasswordValidator() {
-    return (control: FormGroup) => {
-      const password = control.value;
-  
-      // Check if the password contains at least one letter (alphabetical character)
-      const containsLetter = /[a-zA-Z]/.test(password);
-  
-      // Check if the password contains at least one digit (numerical character)
-      const containsDigit = /\d/.test(password);
-  
-      // Check if the password contains at least one symbol (any symbol)
-      const containsSymbol = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(password);
-  
-      if (!containsLetter || !containsDigit || !containsSymbol) {
-        // Return an error object if the password doesn't meet the criteria
-        return { alphanumericSymbolPassword: true };
-      }
-  
-      // Return null if the password is valid
-      return null;
-    };
+  getErrorMessage(controlName: string, labelName: string): string {
+    const control = this.formGroup.get(controlName);
+    const errors = control?.errors;
+    return this.formErrorService.getErrorMessage(errors, labelName);
   }
 
   // Go Back to the previous page

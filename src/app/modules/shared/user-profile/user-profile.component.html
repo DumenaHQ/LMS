@@ -6,91 +6,113 @@
   <h5 class="profile_title">My Profile</h5>
 
   <div class="profile_body">
-    <ng-container>
-      <div class="dis-flex">
-        <img
-          [src]="
-            user.avatar !== undefined
-              ? user.avatar
-              : '../../../../assets/img/children-avatar/child-avatar-1.png'
-          "
-          alt="Avatar"
-        />
+    <div class="avatar-wrapper">
+      <img
+        [src]="
+          user.avatar !== undefined
+            ? user.avatar
+            : '../../../../assets/img/children-avatar/child-avatar-1.png'
+        "
+        alt="Avatar"
+      />
+    </div>
+    <form [formGroup]="formGroup">
+      <div class="form-control">
+        <label for="userName">{{ user.role === 'school' ? 'School Name' : 'Full Name'}}</label>
+        <div class="form-control_field" [class.data-disabled]="!isEdit">
+          <input
+            type="text"
+            name="userName"
+            formControlName="userName"
+            [readonly]="!isEdit"
+          />
+        </div>
       </div>
-      <form [formGroup]="userForm">
-        <div class="form-control col-2">
-          <label for="firstName">Full Name</label>
-          <div class="form-control_field" [class.data-disabled]="!isEdit">
-            <input
-              type="text"
-              name="fullname"
-              formControlName="fullname"
-              [readonly]="!isEdit"
-            />
-          </div>
+      <div class="form-control">
+        <label for="userEmail">{{ user.role === 'school' ? 'School Email' : 'Email' }}</label>
+        <div class="form-control_field data-disabled">
+          <input
+            type="text"
+            name="userEmail"
+            formControlName="userEmail"
+            readonly
+          />
         </div>
-        <!-- <div class="form-control">
-          <label for="firstName">First Name</label>
-          <div class="form-control_field" [class.data-disabled]="!isEdit">
-            <input
-              type="text"
-              name="firstname"
-              formControlName="firstname"
-              [readonly]="!isEdit"
-            />
-          </div>
+      </div>
+      <div class="form-control" *ngIf="user.role === 'learner'">
+        <label for="grade">Grade</label>
+        <div class="form-control_field data-disabled">
+          <input
+            type="text"
+            name="grade"
+            formControlName="grade"
+            readonly
+          />
         </div>
-        <div class="form-control">
-          <label for="lastName">Last Name</label>
-          <div class="form-control_field" [class.data-disabled]="!isEdit">
-            <input
-              type="text"
-              name="lastname"
-              formControlName="lastname"
-              [readonly]="!isEdit"
-            />
-          </div>
-        </div> -->
-        <div class="form-control">
-          <label for="email">Email Address</label>
-          <div class="form-control_field data-disabled">
-            <input type="email" name="email" formControlName="email" readonly />
-          </div>
+      </div>
+      <div class="form-control">
+        <label for="phoneNumber">Phone Number</label>
+        <div class="form-control_field" [class.data-disabled]="!isEdit">
+          <input
+            type="tel"
+            name="phone"
+            formControlName="phone"
+            [readonly]="!isEdit"
+          />
         </div>
-        <div class="form-control">
-          <label for="phoneNumber">Phone Number</label>
-          <div class="form-control_field" [class.data-disabled]="!isEdit">
-            <input
-              type="tel"
-              name="phone"
-              formControlName="phone"
-              [readonly]="!isEdit"
-            />
-          </div>
+      </div>
+      <div class="form-control">
+        <label for="phoneNumber">Location</label>
+        <div class="form-control_field" [class.data-disabled]="!isEdit">
+          <input
+            *ngIf="!isEdit"
+            type="tel"
+            name="state"
+            formControlName="state"
+            readonly
+          />
+          <select name="state" id="state" formControlName="state" *ngIf="isEdit">
+            <option value="">Select State</option>
+            <option [value]="state.name" *ngFor="let state of states">{{ state.name }}</option>
+          </select>
         </div>
-        <!-- <div class="form-control">
-          <label for="gender">Gender</label>
-          <div class="form-control_field">
-            <select name="" id="">
-              <option value="Male">Male</option>
-              <option value="Male">Female</option>
-            </select>
-          </div>
-        </div> -->
-        <!-- <div class="form-control">
-          <label for="phoneNumber">Date of Birth</label>
-          <div class="form-control_field">
-            <input type="date" />
-          </div>
-        </div> -->
-        <div class="form-control col-2">
-          <label for="phoneNumber"> Address</label>
-          <div class="form-control_field">
-            <textarea name="" id="" cols="30" rows="5"></textarea>
-          </div>
+      </div>
+      <div class="form-control">
+        <label for="address">Address</label>
+        <div class="form-control_field" [class.data-disabled]="!isEdit">
+          <input
+            type="tel"
+            name="address"
+            formControlName="address"
+            [readonly]="!isEdit"
+          />
         </div>
+      </div>
+      <div class="form-control" *ngIf="user.role === 'school'">
+        <label for="contactName">Contact Person Name</label>
+        <div class="form-control_field" [class.data-disabled]="!isEdit">
+          <input
+            type="tel"
+            name="contactName"
+            formControlName="contactName"
+            [readonly]="!isEdit"
+          />
+        </div>
+      </div>
+      <div class="form-control" *ngIf="user.role === 'school'">
+        <label for="contactEmail">Contact Person Email</label>
+        <div class="form-control_field data-disabled">
+          <input
+            type="tel"
+            name="contactEmail"
+            formControlName="contactEmail"
+            readonly
+          />
+        </div>
+      </div>
 
-        <div class="btns-area dis-flex" *ngIf="isEdit">
+      <div class="form-control form-btns-area col-3 dis-flex">
+        <ng-container *ngIf="isEdit">
           <button class="btn tert_btn" (click)="isEdit = false">Cancel</button>
           <button
             class="btn prim_btn"
@@ -100,20 +122,15 @@
             <span *ngIf="!loading">Save Changes</span>
             <span *ngIf="loading">Processing...</span>
           </button>
-        </div>
-        <div class="btns-area dis-flex" *ngIf="!isEdit">
-          <button class="btn tert_btn" (click)="isEdit = true">
-            Update profile
-          </button>
-        </div>
-      </form>
-    </ng-container>
+        </ng-container>
+        <button class="btn tert_btn" (click)="isEdit = true" *ngIf="!isEdit">
+          Update profile
+        </button>
+      </div>
+    </form>
+    <small class="date-updated">
+      <b>Updated at:</b> 
+      {{ formGroup.value.dateUpdated | date: 'medium' }}
+    </small>
   </div>
 </section>
-
-<!-- Alert Message -->
-<app-alert-popup
-  *ngIf="isAlert"
-  [alertMessage]="alertMessage"
-  [alertColor]="alertColor"
-></app-alert-popup>
