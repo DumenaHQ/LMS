@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { ClassroomModel } from '../../models/classroom.model';
+import { FormErrorMessageService } from 'src/app/services/utils/form-error-message.service';
 
 @Component({
   selector: 'app-edit-classroom',
@@ -38,7 +39,8 @@ export class EditClassroomComponent implements OnInit {
     private teachersService: TeachersService,
     private authService: AuthService,
     private utilsService: UtilsService,
-    private appAlertService: AppAlertService
+    private appAlertService: AppAlertService,
+    private formErrorService: FormErrorMessageService
   ) {}
 
   // classroom form
@@ -212,6 +214,11 @@ export class EditClassroomComponent implements OnInit {
       });
   }
 
+  getErrorMessage(controlName: string, labelName: string): string {
+    const control = this.formGroup.get(controlName);
+    const errors = control?.errors;
+    return this.formErrorService.getErrorMessage(errors, labelName);
+  }
 
   navigatePage(pageNumber: number) {
     if(pageNumber === 1) {

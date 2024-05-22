@@ -1,8 +1,9 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { FormErrorMessageService } from 'src/app/services/utils/form-error-message.service';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -16,18 +17,18 @@ export class SchoolEnrollLearnersComponent implements OnInit {
   loading: boolean = false;
   user: any;
   selectedFileName: any;
-  messageval: string;
   billingId: string = 'single';
   formGroup: any = FormGroup;
   file: File;
   arrayBuffer: any;
-  learnersList: any;
+  learnersList: any[] = [];
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private appAlertService: AppAlertService
+    private appAlertService: AppAlertService,
+    private formErrorService: FormErrorMessageService
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +36,10 @@ export class SchoolEnrollLearnersComponent implements OnInit {
     let userData = this.authService.getUser();
     this.user = userData.user;
 
+    this.initForm();
+  }
+  
+  initForm() {
     this.formGroup = this.formBuilder.group({
       fullname: ['', Validators.required],
       parent_email: ['', [Validators.required, Validators.email]],
@@ -47,17 +52,13 @@ export class SchoolEnrollLearnersComponent implements OnInit {
     this.billingId = ids;
   }
 
-  // Sign Up
-  singleSignup() {
-    // Set loading to true
+  addLearners(uploadType: string) {
     this.loading = true;
 
-    // Payload
     let payload = {
-      learners: [this.formGroup.value],
+      learners: uploadType == 'single' ? [this.formGroup.value] : this.learnersList,
     };
 
-    // Send users data
     this.authService
       .enrollLearner(payload, `schools/${this.user.id}/learners`)
       .subscribe(
@@ -81,45 +82,6 @@ export class SchoolEnrollLearnersComponent implements OnInit {
       );
   }
 
-  // Batch signup
-  batchSignup() {
-    // Set loading to true
-    this.loading = true;
-
-    if (this.learnersList === undefined) {
-      this.loading = false;
-
-      return;
-    }
-
-    // Payload
-    let payload = {
-      learners: this.learnersList,
-    };
-
-    // Send users data
-    this.authService
-      .enrollLearner(payload, `schools/${this.user.id}/learners`)
-      .subscribe(
-        (res: any) => {
-          if (res.status === true) {
-            this.appAlertService.showAlert(`${res.message}. An email has been sent containing the login credentials of ${this.formGroup.value.fullname}`, AlertType.Success);
-          }
-          this.closeAddLearnerModal();
-          this.getAllStudents.emit();
-        },
-        (error: any) => {
-          console.log(error);
-          this.appAlertService.showAlert(
-            error.error.error.code == 400
-            ? (error.error.error.errors[0].message)
-            : (error.error.message),
-            AlertType.Error
-          );
-          this.loading = false;
-        }
-      );
-  }
 
   // Upload File
   uploadFile(event: any) {
@@ -150,6 +112,12 @@ export class SchoolEnrollLearnersComponent implements OnInit {
       
     };
     fileReader.readAsArrayBuffer(this.file);
+  }
+
+  getErrorMessage(controlName: string, labelName: string): string {
+    const control = this.formGroup.get(controlName);
+    const errors = control?.errors;
+    return this.formErrorService.getErrorMessage(errors, labelName);
   }
 
   // Close Add Modal
