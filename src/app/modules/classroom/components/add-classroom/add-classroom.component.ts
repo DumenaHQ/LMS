@@ -5,6 +5,7 @@ import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-aler
 import { AuthService } from 'src/app/services/auth.service';
 import { ClassroomService } from 'src/app/services/classroom.service';
 import { TeachersService } from 'src/app/services/teachers.service';
+import { UtilsService } from 'src/app/services/utils/utils.service';
 
 @Component({
   selector: 'app-add-classroom',
@@ -15,10 +16,12 @@ export class AddClassroomComponent implements OnInit {
 
   formGroup: FormGroup;
   loading: boolean = false;
-  selectedThumbnailName: string = '';
-  selectedHeaderPhotoName: string = '';
   thumbnailFile: File;
   headerPhotoFile: File;
+  selectedThumbnailName: string = '';
+  selectedHeaderPhotoName: string = '';
+  headerPhotoImagePreview?: string;
+  thumbnailImagePreview?: string;
   templates: any;
   teachers: any;
   user: any;
@@ -30,6 +33,7 @@ export class AddClassroomComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private appAlertService: AppAlertService,
+    private utilsService: UtilsService,
   ) {}
 
   ngOnInit(): void {
@@ -72,18 +76,28 @@ export class AddClassroomComponent implements OnInit {
     });
   }
 
-  uploadThumbnail(event: any) {
-    const file = event.target.files[0];
-    this.thumbnailFile = file;
-    this.selectedThumbnailName = file.name;
-    this.formGroup.patchValue({thumbnail: this.selectedThumbnailName}); 
-  }
+  selectPhoto(event: any, fileName: string) {
+    const fileInput = event.target as HTMLInputElement;
+    
+    if (fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
 
-  uploadHeaderPhoto(event: any) {
-    const file = event.target.files[0];
-    this.headerPhotoFile = file;
-    this.selectedHeaderPhotoName = file.name;
-    this.formGroup.patchValue({header_photo: this.selectedHeaderPhotoName})
+      if(fileName === 'header_photo') {
+        this.headerPhotoFile = file;
+        this.selectedHeaderPhotoName = file.name;
+      } else if(fileName === 'thumbnail') {
+        this.thumbnailFile = file;
+        this.selectedThumbnailName = file.name;
+      }
+
+      this.utilsService.imageToBase64(file).then((value: string) => {
+        if(fileName === 'header_photo') {
+          this.headerPhotoImagePreview = value;
+        } else if(fileName === 'thumbnail') {
+          this.thumbnailImagePreview = value;
+        }
+      });
+    }
   }
 
 
