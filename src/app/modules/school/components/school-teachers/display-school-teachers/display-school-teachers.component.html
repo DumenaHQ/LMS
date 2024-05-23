@@ -1,0 +1,47 @@
+<section class="ds-head">
+    <h2 class="ds-head_title">Teachers</h2>
+  </section>
+    
+  <section class="grouping dis-flex">
+    <!-- Filter -->
+    <div class="filter s-f">
+      <div class="body-3-regular dis-flex">
+        <span class="title">Filter:</span>
+        <span class="dropdown dis-flex clickable"
+          >All teachers <i class="bx bx-chevron-down"></i
+        ></span>
+      </div>
+    </div>
+  
+    <div class="right dis-flex">
+      <!-- Sort -->
+      <div class="sort s-f">
+        <div class="body-3-regular dis-flex">
+          <span class="title">Sort:</span>
+          <span class="dropdown dis-flex clickable"
+            >Last modified <i class="bx bx-chevron-down"></i
+          ></span>
+        </div>
+      </div>
+  
+      <!-- New Classroom Button -->
+      <button class="btn prim_btn" (click)="toggleAddEditTeacher()">
+        New Teacher
+      </button>
+    </div>
+  </section>
+  
+  <ng-container>
+    <app-loader *ngIf="dataLoading"></app-loader>
+    
+    <section class="classroom" *ngIf="!dataLoading">
+      <app-list-display-school-teachers [teachers]="teachers" *ngIf="teachers?.length ?? 0 > 0"></app-list-display-school-teachers>
+  
+      <div class="classroom_body" *ngIf="teachers?.length === 0">
+          <app-blank-display-school-teacher (addEditTeacher)="toggleAddEditTeacher()"></app-blank-display-school-teacher>
+      </div>
+    </section>
+  </ng-container>
+
+  <app-add-edit-school-teacher *ngIf="addEditTeacher" (addEditTeacher)="toggleAddEditTeacher()"></app-add-edit-school-teacher>
+  

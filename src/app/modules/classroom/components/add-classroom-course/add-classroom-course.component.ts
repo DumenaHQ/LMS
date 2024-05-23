@@ -12,6 +12,7 @@ export class AddClassroomCourseComponent implements OnInit {
 
   @Input() classroomId: string;
   @Output() addCourseToClassroomModal: EventEmitter<any> = new EventEmitter();
+  @Output() getClassroom: EventEmitter<any> = new EventEmitter();
   loading: boolean = false;
   selectedCourses: any[] = [];
   courses: any;
@@ -82,13 +83,8 @@ export class AddClassroomCourseComponent implements OnInit {
         next: (res: any) => {
           if (res.status === true) {
             this.appAlertService.showAlert(res.message, AlertType.Success);
-            // close modal
-            setTimeout(() => {
-              this.closeAddCourseToClassroomModal();
-
-              window.location.reload();
-              // this.changeDectetorRef.detectChanges();
-            }, 3000);
+            this.closeAddCourseToClassroomModal();
+            this.getClassroom.emit();
           }
         },
         error: (error) => {

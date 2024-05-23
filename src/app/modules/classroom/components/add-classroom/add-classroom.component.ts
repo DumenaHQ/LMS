@@ -5,6 +5,7 @@ import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-aler
 import { AuthService } from 'src/app/services/auth.service';
 import { ClassroomService } from 'src/app/services/classroom.service';
 import { TeachersService } from 'src/app/services/teachers.service';
+import { FormErrorMessageService } from 'src/app/services/utils/form-error-message.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 
 @Component({
@@ -34,6 +35,7 @@ export class AddClassroomComponent implements OnInit {
     private authService: AuthService,
     private appAlertService: AppAlertService,
     private utilsService: UtilsService,
+    private formErrorService: FormErrorMessageService
   ) {}
 
   ngOnInit(): void {
@@ -136,6 +138,12 @@ export class AddClassroomComponent implements OnInit {
         );
         this.loading = false;
       });
+  }
+
+  getErrorMessage(controlName: string, labelName: string): string {
+    const control = this.formGroup.get(controlName);
+    const errors = control?.errors;
+    return this.formErrorService.getErrorMessage(errors, labelName);
   }
 
   navigatePage() {

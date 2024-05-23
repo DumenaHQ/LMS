@@ -27,10 +27,8 @@
               formControlName="name"
             />
           </div>
-          <div class="form_error">
-            <div *ngIf="formGroup.controls.name.errors?.required && formGroup.controls.name.touched">
-                Name is required.
-            </div>
+          <div class="form_error" *ngIf="formGroup.controls.name.errors && formGroup.controls.name.touched">
+            <p class="body-3-regular error-msg">{{ getErrorMessage('name', 'Name') }}</p>
           </div>
         </div>
         <div class="form_control">
@@ -43,10 +41,8 @@
               </option>
             </select>
           </div>
-          <div class="form_error">
-            <div *ngIf="formGroup.controls.template.errors?.required && formGroup.controls.template.touched">
-              Template is required.
-            </div>
+          <div class="form_error" *ngIf="formGroup.controls.template.errors && formGroup.controls.template.touched">
+            <p class="body-3-regular error-msg">{{ getErrorMessage('template', 'Template') }}</p>
           </div>
         </div>
         <div class="form_control">
@@ -60,10 +56,8 @@
             </select>
           </div>
   
-          <div class="form_error">
-            <div *ngIf="formGroup.controls.teacher.errors?.required && formGroup.controls.teacher.touched">
-              Teacher is required.
-            </div>
+          <div class="form_error" *ngIf="formGroup.controls.teacher.errors && formGroup.controls.teacher.touched">
+            <p class="body-3-regular error-msg">{{ getErrorMessage('teacher', 'Teacher') }}</p>
           </div>
         </div>
   
@@ -101,10 +95,8 @@
               </div>
             </div>
             
-            <div class="form_error">
-                <div *ngIf="formGroup.controls.header_photo.errors?.required && formGroup.controls.header_photo.touched">
-                    Header Photo is required.
-                </div>
+            <div class="form_error" *ngIf="formGroup.controls.header_photo.errors && formGroup.controls.header_photo.touched">
+              <p class="body-3-regular error-msg">{{ getErrorMessage('header_photo', 'Header Photo') }}</p>
             </div>
           </div>
         </div>
@@ -141,10 +133,8 @@
               </div>
             </div>
   
-            <div class="form_error">
-                <div *ngIf="formGroup.controls.thumbnail.errors?.required && formGroup.controls.thumbnail.touched">
-                    Thumbnail is required.
-                </div>
+            <div class="form_error" *ngIf="formGroup.controls.thumbnail.errors && formGroup.controls.thumbnail.touched">
+              <p class="body-3-regular error-msg">{{ getErrorMessage('thumbnail', 'Thumbnail') }}</p>
             </div>
           </div>
         </div>
@@ -165,10 +155,8 @@
               />
             </div>
   
-            <div class="form_error">
-                <div *ngIf="formGroup.controls.active_term_start_date.errors?.required && formGroup.controls.active_term_start_date.touched">
-                    Start Date is required.
-                </div>
+            <div class="form_error" *ngIf="formGroup.controls.active_term_start_date.errors && formGroup.controls.active_term_start_date.touched">
+              <p class="body-3-regular error-msg">{{ getErrorMessage('active_term_start_date', 'Start Date') }}</p>
             </div>
           </div>
         </div>
@@ -187,10 +175,8 @@
               />
             </div>
   
-            <div class="form_error">
-              <div *ngIf="formGroup.controls.active_term_end_date.errors?.required && formGroup.controls.active_term_end_date.touched">
-                End Date is required.
-              </div>
+            <div class="form_error" *ngIf="formGroup.controls.active_term_end_date.errors && formGroup.controls.active_term_end_date.touched">
+              <p class="body-3-regular error-msg">{{ getErrorMessage('active_term_end_date', 'End Date') }}</p>
             </div>
           </div>
         </div>

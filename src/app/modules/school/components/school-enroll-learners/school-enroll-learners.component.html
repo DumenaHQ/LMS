@@ -38,9 +38,7 @@
 
             <!-- Error -->
             <div *ngIf="formGroup.controls.fullname.errors && formGroup.controls.fullname.touched">
-              <p class="body-3-regular error-msg" *ngIf="formGroup.controls.fullname.errors.required">
-                Fullname is required
-              </p>
+              <p class="body-3-regular error-msg">{{ getErrorMessage('fullname', 'Fullname') }}</p>
             </div>
           </div>
           <div
@@ -58,9 +56,7 @@
               />
             </div>
             <div *ngIf="formGroup.controls.parent_email.errors && formGroup.controls.parent_email.touched">
-              <p class="body-3-regular error-msg" *ngIf="formGroup.controls.parent_email.errors.required">
-                Parent email is required
-              </p>
+              <p class="body-3-regular error-msg">{{ getErrorMessage('parent_email', 'Parent Email') }}</p>
             </div>
           </div>
           <div class="form-field" [ngClass]="{
@@ -74,16 +70,14 @@
 
             <!-- Error -->
             <div *ngIf="formGroup.controls.grade.errors && formGroup.controls.grade.touched">
-              <p class="body-3-regular error-msg" *ngIf="formGroup.controls.grade.errors.required">
-                Grade is required
-              </p>
+              <p class="body-3-regular error-msg">{{ getErrorMessage('grade', 'Grade') }}</p>
             </div>
           </div>
           <!-- Submit Button -->
           <div class="form-btns col-2 dis-flex">
             <span class="grey_btn clickable" (click)="closeAddLearnerModal()">Cancel</span>
             <div class="continue">
-              <button class="btn prim_btn clickable" [disabled]="loading || formGroup.invalid" (click)="singleSignup()">
+              <button class="btn prim_btn clickable" [disabled]="loading || formGroup.invalid" (click)="addLearners('single')">
                 <span *ngIf="!loading">Continue</span>
                 <span *ngIf="loading">Processing...</span>
               </button>
@@ -95,12 +89,17 @@
         <!-- Batch enrollment starts *ngIf="billingId == 'batch'" -->
         <div class="batch-enroll col-2" *ngIf="billingId == 'batch'">
           <div class="form-field col-2">
-            <label for="">Your can put your pupils' data in an excel sheet and upload to have them signed up all at
+            <label for="">
+              Your can put your pupils' data in an excel sheet and upload to have them signed up all at
               once.
-              <p>Download the excel template to use from
-                <strong><a href="https://dev.dumena.com/downloads/template?name=students_template"
-                    class="text-primary-color hover-1 clicakble">here</a></strong>
-              </p>
+              <br />
+              Or download the excel template to use from
+              <strong>
+                <a 
+                  href="https://dev.dumena.com/downloads/template?name=students_template"
+                  class="text-primary-color hover-1 clicakble"
+                >here</a>
+              </strong>
             </label>
             <div class="form-field select-image clickable" (click)="fileInput.click()" appDragDrop
               (fileDropped)="uploadFile($event)">
@@ -117,8 +116,8 @@
           <div class="form-btns col-2 dis-flex">
             <span class="grey_btn clickable" (click)="closeAddLearnerModal()">Cancel</span>
             <div class="continue">
-              <button class="btn prim_btn clickable" [disabled]="loading || learnersList === undefined"
-                (click)="batchSignup()">
+              <button class="btn prim_btn clickable" [disabled]="loading || learnersList.length === 0"
+                (click)="addLearners('fileUpload')">
                 <span *ngIf="!loading">Continue</span>
                 <span *ngIf="loading">Processing...</span>
               </button>

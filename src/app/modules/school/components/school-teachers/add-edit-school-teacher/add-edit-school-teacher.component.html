@@ -1,0 +1,81 @@
+<div class="modal">
+  <div class="modal_area">
+    <span class="modal_area_close" (click)="closeAddTeacherModal()">
+      <i class="bx bx-x icon clickable"></i>
+    </span>
+
+    <div class="enroll auth_content">
+      <h4 class="text-primary-color enroll_title">Add Teacher</h4>
+      <form [formGroup]="formGroup">
+        <div class="form_control_container">
+          <div class="form_control">
+            <label for="firstName"
+              >First Name <strong class="label-required">*</strong></label
+            >
+            <div class="form_control_field">
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                placeholder=""
+                formControlName="firstName"
+              />
+            </div>
+            <div class="form_error" *ngIf="formGroup.controls.firstName.errors && formGroup.controls.firstName.touched">
+              <p class="body-3-regular error-msg">{{ getErrorMessage('firstName', 'First Name') }}</p>
+            </div>
+          </div>
+    
+          <div class="form_control">
+            <label for="lastName"
+              >Last Name <strong class="label-required">*</strong></label
+            >
+            <div class="form_control_field">
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                placeholder=""
+                formControlName="lastName"
+              />
+            </div>
+            <div class="form_error" *ngIf="formGroup.controls.lastName.errors && formGroup.controls.lastName.touched">
+              <p class="body-3-regular error-msg">{{ getErrorMessage('lastName', 'Last Name') }}</p>
+            </div>
+          </div>
+    
+          <div class="form_control col-2">
+            <label for="email"
+              >Email <strong class="label-required">*</strong></label
+            >
+            <div class="form_control_field">
+              <input
+                type="text"
+                id="email"
+                name="email"
+                placeholder=""
+                formControlName="email"
+              />
+            </div>
+    
+            <div class="form_error" *ngIf="formGroup.controls.email.errors && formGroup.controls.email.touched">
+              <p class="body-3-regular error-msg">{{ getErrorMessage('email', 'Email') }}</p>
+            </div>
+          </div>
+        </div>
+    
+        <div class="form_btns dis-flex">
+          <ng-container *ngIf="!loading">
+            <button class="btn grey_btn" (click)="closeAddTeacherModal()">
+              Cancel
+            </button>
+            <button class="btn prim_btn" (click)="createTeacher()" [disabled]="formGroup.invalid">Save</button>
+          </ng-container>
+          <button class="btn prim_btn" [disabled]="loading" *ngIf="loading">
+            Processing...
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

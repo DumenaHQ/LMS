@@ -263,6 +263,7 @@
     *ngIf="addCourseToClassroom"
     (addCourseToClassroomModal)="closeAddCourseToClassroomModal()"
     [classroomId]="currentClassroomId.classroomId"
+    (getClassroom)="getClassrooms()"
   ></app-add-classroom-course>
   
   <app-add-classroom-learner
