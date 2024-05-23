@@ -12,7 +12,6 @@ export class DashboardHeaderComponent implements OnInit {
   @Output() hamClick: EventEmitter<any> = new EventEmitter();
   showNotifi: boolean = false;
   user: any;
-  userNamePath: any;
   plans: any;
 
   constructor(
@@ -22,19 +21,20 @@ export class DashboardHeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Get user data from localstorage
     let userData = this.authService.getUser();
     this.user = userData.user;
-    this.userNamePath = this.user.fullname.replace(/\s/g, '-').toLowerCase();
-    
-
-    // Get products from cart
-    this.plans = this.orderService.loadCart()
+    this.plans = this.orderService.loadCart();
   }
-
+  
   // Open Menu
   openMenu() {
     this.hamClick.emit();
+  }
+  
+  goToProfile() {
+    const userName = this.user.role === 'school' ? this.user.school : this.user.fullname;
+    let userNamePath = userName.replace(/\s/g, '-').toLowerCase();
+    this.router.navigate([`/${this.user.role}/profile/${userNamePath}`]);
   }
 
   // Route to Cart

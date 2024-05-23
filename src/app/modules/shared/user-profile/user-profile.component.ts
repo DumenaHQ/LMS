@@ -1,7 +1,9 @@
 import { Component, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { NigeriaStatesService } from 'src/app/services/utils/nigeria-states.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -12,82 +14,77 @@ export class UserProfileComponent implements OnInit {
   isEdit: boolean = false;
   user: any;
   fullname: string = '';
-  @Output() isAlert: boolean = false;
-  alertMessage: string;
-  alertColor: string
   loading: boolean = false;
+  formGroup: FormGroup;
+  states: { code: string; name: string; }[];
 
   constructor(
     private authService: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private appAlertService: AppAlertService,
+    private nigeriaStatesService: NigeriaStatesService
   ) {}
 
-  // User Form
-  userForm = this.formBuilder.group({
-    fullname: ['', Validators.required],
-    // firstname: ['', Validators.required],
-    // lastname: ['', Validators.required],
-    email: ['', Validators.required],
-    phone: ['', Validators.required],
-  });
-
   ngOnInit(): void {
-    // Get user data from localstorage
+    this.getUserData();
+    this.states = this.nigeriaStatesService.getAllStates();    
+  }
+  
+  getUserData() {  
     let userData = this.authService.getUser();
     this.user = userData.user;
 
-    // Get firstname and lastname from user fullname
-    let fullnameArray = this.user.fullname;
-    this.fullname = fullnameArray.split(' ');
-
-    this.userForm = this.formBuilder.group({
-      fullname: [this.user.fullname, Validators.required],
-      // firstname: [this.fullname[0], Validators.required],
-      // lastname: [this.fullname[1], Validators.required],
-      email: [this.user.email, Validators.required],
+    this.formGroup = this.formBuilder.group({
+      userName: [this.user.role === 'school' ? this.user.school : this.user.fullname, Validators.required],
+      userEmail: [this.user.role === 'school' ? this.user.school_email : (this.user.email || this.user.parent_email), Validators.required],
+      contactName: [this.user.fullname, Validators.required],
+      contactEmail: [this.user.email, Validators.required],
       phone: [this.user.phone, Validators.required],
+      state: [this.user.resident_state, Validators.required],
+      address: [this.user.address, Validators.required],
+      grade: [this.user.grade],
+      dateUpdated: [this.user.updatedAt],
     });
   }
-
-  // Edit user profile
+  
   editProfile() {
-    // Start loading
     this.loading = true;
+    const { value } = this.formGroup;
 
-    let payload = {
-      fullname: this.userForm.value.fullname,
-      phone: this.userForm.value.phone,
-      resident_state: '',
+    let payload: any = {
+      fullname: this.user.role === 'school' ? value.contactName : value.userName,
+      phone: value.phone,
+      resident_state: value.state,
     };
 
-    this.authService.updateUser(payload).subscribe((res: any) => {
-      console.log(res);
+    if (this.user.role === 'school') {
+      payload.school = value.userName;
+    }
 
-      if (res.status == true) {
-        // Set User data
-        this.authService.addUserDataToLocalStorage(res.data);
-
-        this.showAlertPopup(res.message, 'success');
-
-        // Hide Alert
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-      }
+    this.authService.updateUser(payload).subscribe({
+      next: (res: any) => {
+        if (res.status == true) {
+          this.authService.addUserDataToLocalStorage(res.data);
+          this.appAlertService.showAlert(res.message, AlertType.Success);
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
+        }
+      },
+      error: (error) => {
+        console.error(error);
+        this.appAlertService.showAlert(
+          error.message
+            ? error.message
+            : error.error
+            ? error.error.message || error.error.error.errors[0].message
+            : error.message,
+            AlertType.Error
+          );
+      },
+      complete: () => {
+        this.loading = false;
+      },
     });
-  }
-
-  // Show alert
-  showAlertPopup(message: string, color: string) {
-    // Set message
-    this.alertMessage = message;
-    // Set color
-    this.alertColor = color;
-    // Show Alert
-    this.isAlert = true;
-    // Hide Alert
-    setTimeout(() => {
-      this.isAlert = false;
-    }, 3000);
   }
 }

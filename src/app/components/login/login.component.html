@@ -28,12 +28,7 @@
         </div>
         <!-- Error -->
         <div *ngIf="formGroup.controls.email.errors && formGroup.controls.email.touched">
-          <p
-            class="body-3-regular error-msg"
-            *ngIf="formGroup.controls.email.errors.required"
-          >
-            Email is required
-          </p>
+          <p class="body-3-regular error-msg">{{ getErrorMessage('email', 'Email') }}</p>
         </div>
       </div>
       <div
@@ -59,18 +54,7 @@
         </div>
         <!-- Error -->
         <div *ngIf="formGroup.controls.password.errors && formGroup.controls.password.touched">
-          <p
-            class="body-3-regular error-msg"
-            *ngIf="formGroup.controls.password.errors.required"
-          >
-            Password is required
-          </p>
-          <p
-            class="body-3-regular error-msg"
-            *ngIf="formGroup.controls.password.errors.minlength"
-          >
-            Your password must be at least 6 characters
-          </p>
+          <p class="body-3-regular error-msg">{{ getErrorMessage('password', 'Password') }}</p>
         </div>
       </div>
       <!-- Forgot Password -->

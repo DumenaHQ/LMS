@@ -50,12 +50,7 @@
         </div>
         <!-- Error -->
         <div *ngIf="formGroup.controls.fullname.errors && formGroup.controls.fullname.touched">
-          <p
-            class="body-3-regular error-msg"
-            *ngIf="formGroup.controls.fullname.errors.required"
-          >
-            Fullname is required
-          </p>
+          <p class="body-3-regular error-msg">{{ getErrorMessage('fullname', 'FullName') }}</p>
         </div>
       </div>
       <div
@@ -71,18 +66,7 @@
         </div>
         <!-- Error -->
         <div *ngIf="formGroup.controls.email.errors && formGroup.controls.email.touched">
-          <p
-            class="body-3-regular error-msg"
-            *ngIf="formGroup.controls.email.errors.required"
-          >
-            Email is required
-          </p>
-          <p
-            class="body-3-regular error-msg"
-            *ngIf="formGroup.controls.email.errors.email"
-          >
-            Invalid email address
-          </p>
+          <p class="body-3-regular error-msg">{{ getErrorMessage('email', 'Email') }}</p>
         </div>
       </div>
       <div
@@ -100,8 +84,8 @@
             name="resident_state"
             formControlName="resident_state"
           >
-            <option value="" selected disabled hidden>-- Your State --</option>
-            <option [value]="i.name" *ngFor="let i of statesInNigeria">
+            <option value="" selected disabled hidden>Select a state</option>
+            <option [value]="i.name" *ngFor="let i of states">
               {{ i.name }}
             </option>
           </select>
@@ -109,12 +93,7 @@
         </div>
         <!-- Error -->
         <div *ngIf="formGroup.controls.resident_state.errors && formGroup.controls.resident_state.touched">
-          <p
-            class="body-3-regular error-msg"
-            *ngIf="formGroup.controls.resident_state.errors.required"
-          >
-            State of residence is required
-          </p>
+          <p class="body-3-regular error-msg">{{ getErrorMessage('resident_state', 'State') }}</p>
         </div>
       </div>
       <div
@@ -125,23 +104,12 @@
       >
         <label for="phone">Phone Number</label>
         <div class="input-field">
-          <input type="tel" name="phone" formControlName="phone" />
+          <input type="text" name="phone" formControlName="phone" />
           <i class="bx bx-error-circle icon info-icon"></i>
         </div>
         <!-- Error -->
         <div *ngIf="formGroup.controls.phone.errors && formGroup.controls.phone.touched">
-          <p
-            class="body-3-regular error-msg"
-            *ngIf="formGroup.controls.phone.errors.required"
-          >
-            Phone number is required
-          </p>
-          <p
-            class="body-3-regular error-msg"
-            *ngIf="formGroup.controls.phone.errors.minlength"
-          >
-            Phone number is less than 11 digits
-          </p>
+          <p class="body-3-regular error-msg">{{ getErrorMessage('phone', 'Phone') }}</p>
         </div>
       </div>
       <div
@@ -167,26 +135,10 @@
         </div>
         <!-- Error -->
         <div *ngIf="formGroup.controls.password.errors && formGroup.controls.password.touched">
-          <p
-            class="body-3-regular error-msg"
-            *ngIf="formGroup.controls.password.errors.required"
-          >
-            Password is required
-          </p>
-          <p
-            class="body-3-regular error-msg"
-            *ngIf="formGroup.controls.password.errors.minlength"
-          >
-            Password must be at least 6 characters
-          </p>
-          <p
-            class="body-3-regular error-msg"
-            *ngIf="formGroup.controls.password.errors.alphanumericSymbolPassword"
-          >
-            Password must contain at least one letter and one number and one symbol
-          </p>
+          <p class="body-3-regular error-msg">{{ getErrorMessage('password', 'Password') }}</p>
         </div>
       </div>
+      
       <!-- Terms and conditions -->
       <p class="col-2 terms">
         By signing up you agree to our
