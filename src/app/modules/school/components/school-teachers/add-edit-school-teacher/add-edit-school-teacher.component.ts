@@ -55,6 +55,7 @@ export class AddEditSchoolTeacherComponent implements OnInit {
           : (error.error.message),
           AlertType.Error
         );
+        this.loading = false;
       });
   }
 

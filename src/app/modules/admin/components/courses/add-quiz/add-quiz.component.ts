@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { QuizService } from 'src/app/services/quiz.service';
 
 @Component({
@@ -8,22 +10,36 @@ import { QuizService } from 'src/app/services/quiz.service';
 })
 export class AddQuizComponent implements OnInit {
 
-  @Input() courseId: any;
-  @Input() moduleId: any;
+  @Input() course: any;
   @Output() addQuizToCourseModal: EventEmitter<any> = new EventEmitter();
   loading: boolean = false;
-  isAlert: boolean = false;
-  alertMessage: string;
-  alertColor: string;
   selectedQuizzes: any[] = [];
   quizzes: any;
   dataLoading: boolean = true;
   quizName: string;
+  modules: any;
+  lessons: any;
+  formGroup: FormGroup;
 
-  constructor(private quizService: QuizService) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private quizService: QuizService,
+    private appAlertService: AppAlertService,
+  ) {}
 
   ngOnInit(): void {
+    this.modules = this.course.modules;
+    this.initForm();
     this.getAllquizzes();
+    console.log(this.course);
+    
+  }
+
+  initForm() {
+    this.formGroup = this.formBuilder.group({
+      module: ['', [Validators.required]],
+      lesson: ['', [Validators.required]],
+    });
   }
 
   // Get all quizzes
@@ -31,13 +47,22 @@ export class AddQuizComponent implements OnInit {
     this.quizService.getAllquizzes().subscribe({
       next: (res: any) => {
         this.quizzes = res.data.quizzes;
-        console.log(this.quizzes);
       },
       error: (e) => console.error(e),
       complete: () => {
         this.dataLoading = false;
       },
     });
+  }
+
+  handleSelectChange(event: any, fieldName: string) {
+    if (fieldName === 'module') {
+      this.modules.forEach((item: any) => {
+        if (item.id === event.target.value) {
+          this.lessons = item.lessons;
+        }
+      })
+    }
   }
 
   // Search quiz
@@ -71,43 +96,32 @@ export class AddQuizComponent implements OnInit {
   // Add quiz to course
   addQuizToCourse() {
     let payload = {
-      course_id: this.courseId,
-      quiz_level: "course", // ["course", "module", "lesson"] optional field
-      quiz_level_id: this.courseId
-    };       
-
-    this.quizService.addQuizToCourse(this.selectedQuizzes[0], payload).subscribe(
-      (res: any) => {
-        this.showAlertPopup(res.message, 'success');
-
-        setTimeout(() => {
-          window.location.reload();
-        }, 5000);
-
-          // Set loading to false
-          this.loading = false;
-        },
-        (error: any) => {
-          console.log(error);
-          this.showAlertPopup(error.error.message, 'error');
-          // Set loading to false
-          this.loading = false;
+      course_id: this.course.id,
+      quiz_level: "lesson", // ["course", "module", "lesson"] optional field
+      quiz_level_id: this.formGroup.value.lesson
+    };
+    
+    this.quizService.addQuizToCourse(this.selectedQuizzes[0], payload).subscribe({
+      next: (res: any) => {
+        console.log(res);
+        
+        // this.appAlertService.showAlert(res.message, AlertType.Success);
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 5000);
+        this.loading = false;
+      },
+      error: (error: any) => {
+        console.log(error);
+        this.appAlertService.showAlert(
+          error.error.error.code == 400
+          ? (error.error.error.errors[0].message)
+          : (error.error.message),
+          AlertType.Error
+        );
+        this.loading = false;
       }
-    );
-  }
-
-   // Show alert
-   showAlertPopup(message: string, color: string) {
-    // Set message
-    this.alertMessage = message;
-    // Set color
-    this.alertColor = color;
-    // Show Alert
-    this.isAlert = true;
-    // Hide Alert
-    setTimeout(() => {
-      this.isAlert = false;
-    }, 3000);
+    });
   }
 
   // Close Add Modal

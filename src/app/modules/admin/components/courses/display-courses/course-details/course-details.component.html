@@ -242,6 +242,6 @@
   </div>
 </div>
 
-<app-add-quiz [courseId]="currentCourseParams.courseId" [moduleId]="course?.modules[currentModuleIndex].id" (addQuizToCourseModal)="closeAddQuizToCourse()" *ngIf="addQuizToCourse"></app-add-quiz>
+<app-add-quiz [course]="course" (addQuizToCourseModal)="closeAddQuizToCourse()" *ngIf="addQuizToCourse"></app-add-quiz>
 
 
