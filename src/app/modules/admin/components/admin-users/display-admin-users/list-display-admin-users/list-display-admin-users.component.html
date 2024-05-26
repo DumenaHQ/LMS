@@ -1,0 +1,59 @@
+<div class="courses_dislist" style="overflow-x: auto">
+    <ng-container *ngIf="(users || []).length > 0">
+    <table>
+      <tr class="table-header">
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Status</th>
+        <th>Date Enrolled</th>
+        <th></th>
+      </tr>
+        <tr class="table-body" *ngFor="let user of users">
+          <td class="name">
+            <div class="dis-flex">
+              <img
+                src="../../../../../../assets/img/children-avatar/child-avatar-1.png"
+                alt=""
+              />
+              <div>
+                <p>{{ user.fullname | titlecase }}</p>
+              </div>
+            </div>
+          </td>
+          <td class="contact-info">
+            <p>{{ (user.email | lowercase) || '-' }}</p>
+          </td>
+          <td>
+            <p>{{ (user.role | titlecase) || '-' }}</p>
+          </td>
+          <td class="grade">
+            <p [className]="user.status === 'active' ? 'success-status' : 'error-status'">{{ user.status === "active" ? "Active" : "Inactive" }}</p>
+          </td>
+          <td class="dateEnrolled">
+            <p>{{ user.createdAt | date: "mediumDate" }}</p>
+          </td>
+          <td class="actions">
+            <img src="../../../../../../assets/img/action.svg" alt="" class="clickable" (click)="actionBtn.click()" />
+            <input
+                type="checkbox"
+                name="action-btn"
+                id="action-btn"
+                style="display: none"
+                #actionBtn
+              />
+              <div class="dropdown">
+                <small
+                  class="body-3-regular delete clickable"
+                  (click)="openDeleteModal(user)"
+                  >Delete</small
+                >
+              </div>
+          </td>
+        </tr>
+      </table>
+    </ng-container>
+  </div>
+ 
+ <!-- Delete confirmation -->
+ <app-confirm-delete *ngIf="deleteModal" (deleteModal)="closeDeleteModal()" [itemName]="userName" [deleteUrl]="deleteUrl" [deleteRoutePath]="deleteRoutePath"></app-confirm-delete>

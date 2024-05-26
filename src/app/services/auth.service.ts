@@ -40,7 +40,7 @@ export class AuthService {
   }
 
   // Get all users
-  allUser() {
+  getAllusers() {
     return this.http.get(`${this.baseUrl}users`, this.getHttpOptions());
   }
 
@@ -77,6 +77,11 @@ export class AuthService {
   // Enroll Learner
   enrollLearner(data: any, url: string) {
     return this.http.post(`${this.baseUrl}${url}`, data, this.getHttpOptions());
+  }
+
+  // Onboard Admin
+  onboardAdmin(data: any) {
+    return this.http.post(`${this.baseUrl}admins/enroll`, data, this.getHttpOptions());
   }
   
   // School Analytics
