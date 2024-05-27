@@ -52,16 +52,16 @@ export class AdminComponent implements OnInit {
     },
     {
       name: 'Users',
-      link: '/all-courses',
+      link: '/admin/users',
       icon: 'assets/img/svg/profile-2user.svg',
       subLinks: [],
     },
-    {
-      name: 'Account',
-      link: '/all-courses',
-      icon: 'assets/img/svg/frame.svg',
-      subLinks: [],
-    },
+    // {
+    //   name: 'Account',
+    //   link: '/all-courses',
+    //   icon: 'assets/img/svg/frame.svg',
+    //   subLinks: [],
+    // },
   ];
 
   user: any;
