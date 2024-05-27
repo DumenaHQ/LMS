@@ -8,11 +8,14 @@
   align-items: flex-start;
   gap: $m-3;
   @media only screen and (max-width: 850px) {
-    display: grid;
-    grid-gap: $m-3;
+    flex-direction: column;
   }
   .stats {
+    width: 100%;
     flex-basis: 70%;
+    @media only screen and (min-width: 450px) {
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    }
     //-- Card ends --//
     .card {
       display: grid;
@@ -48,6 +51,7 @@
     }
     //-- Card ends --//
     .enroll {
+      margin-top: $m-3;
       @include sect-bg($border-color: transparent);
       &_title {
         @include sect-bg-title;

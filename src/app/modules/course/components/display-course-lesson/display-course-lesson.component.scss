@@ -189,16 +189,15 @@ aside {
             }
             .left {
               gap: $m-2;
-              .icon {
+              .video-icon {
                 width: 16px;
               }
             }
           }
           &_quiz {
-            display: block;
-            background-color: $inner-border;
+            background-color: $secondary20;
             .icon {
-              font-size: 26px;
+              font-size: 20px;
               color: $secondary80;
             }
           }

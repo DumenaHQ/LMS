@@ -16,6 +16,7 @@ export type ClassroomModel = {
     readonly template?:      any;
     readonly teacher?:       Teacher;
     readonly learners?:       any;
+    readonly quiz_id?:       any;
   }
   
   export type Term = {
