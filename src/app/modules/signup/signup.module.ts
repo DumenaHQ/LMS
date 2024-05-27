@@ -8,7 +8,6 @@ import { RouterModule } from '@angular/router';
 import { SignupComponent } from './signup.component';
 import { SchoolSignupComponent } from './components/school-signup/school-signup.component';
 import { StudentSignupComponent } from './components/student-signup/student-signup.component';
-import { EducatorSignupComponent } from './components/educator-signup/educator-signup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
@@ -19,7 +18,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ParentSignupComponent,
     SchoolSignupComponent,
     StudentSignupComponent,
-    EducatorSignupComponent,
   ],
   imports: [
     CommonModule,
