@@ -103,12 +103,10 @@ export class AddQuizComponent implements OnInit {
     
     this.quizService.addQuizToCourse(this.selectedQuizzes[0], payload).subscribe({
       next: (res: any) => {
-        console.log(res);
-        
-        // this.appAlertService.showAlert(res.message, AlertType.Success);
-        // setTimeout(() => {
-        //   window.location.reload();
-        // }, 5000);
+        this.appAlertService.showAlert(res.message, AlertType.Success);
+        setTimeout(() => {
+          window.location.reload();
+        }, 5000);
         this.loading = false;
       },
       error: (error: any) => {

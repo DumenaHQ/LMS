@@ -117,42 +117,45 @@
                 </div>
   
                 <div class="course-content_list_item_lessons" [ngClass]="{'active': activeIndex === moduleIndex}">
-                  <div 
-                      class="course-content_list_item_lessons_item dis-flex clickable" 
-                      *ngFor="let lesson of module?.lessons; let lessonIndex = index" 
-                      (click)="watchLesson(moduleIndex, lessonIndex)" 
-                      [title]="lesson?.title" 
-                      [class.active]="currentModuleIndex + currentLessonIndex === moduleIndex + lessonIndex"
-                  >
-                    <div class="left dis-flex">
-                      <img
-                          src="../../../../../assets/img/library/video-play-black.svg"
-                          alt="image"
-                          class="icon"
-                      />
-                      <p
-                          class="body-1-medium title"
-                      >
-                        {{ lesson?.title | truncate:15 }}
-                      </p>
+                  <div *ngFor="let lesson of module?.lessons; let lessonIndex = index">
+                    <div 
+                        class="course-content_list_item_lessons_item dis-flex clickable" 
+                        (click)="watchLesson(moduleIndex, lessonIndex)" 
+                        [title]="lesson?.title" 
+                        [class.active]="currentModuleIndex + currentLessonIndex === moduleIndex + lessonIndex"
+                    >
+                      <div class="left dis-flex">
+                        <img
+                            src="../../../../../assets/img/library/video-play-black.svg"
+                            alt="image"
+                            class="video-icon"
+                        />
+                        <p class="body-1-medium title" [title]="lesson?.title">
+                          {{ lesson?.title | truncate: 15 }}
+                        </p>
+                      </div>
+                      <span class="right">
+                        <p class="body-3-regular">{{ lesson?.duration }}</p>
+                      </span>
                     </div>
-                    <span class="right">
-                      <p class="body-3-regular">{{ lesson?.duration }}</p>
+                    <!-- lesson quiz -->
+                    <span 
+                        *ngIf="course?.quiz_id"
+                        class="course-content_list_item_lessons_quiz dis-flex clickable" 
+                        (click)="viewQuiz(lesson?.quiz_id)" 
+                    >
+                      <div class="left dis-flex">
+                        <i class='bx bx-medal icon'></i>
+                        <p>Quiz</p>
+                      </div>
+                      <div>
+                        <i class='bx bx-checkbox icon'></i>
+                        <!-- <i class='bx bxs-checkbox-checked icon check-icon'></i> -->
+                      </div>
                     </span>
                   </div>
                 </div>
             </div>
-            <!-- Module quiz -->
-            <span 
-                *ngIf="course?.quiz_id && user.role === 'learner'"
-                class="course-content_list_item_lessons_quiz clickable" 
-                (click)="viewQuiz()" 
-            >
-              <div class="left dis-flex">
-                <i class='bx bx-medal icon'></i>
-                <p>Quiz</p>
-              </div>
-            </span>
           </div>
   
           <div class="course-content_tutor">

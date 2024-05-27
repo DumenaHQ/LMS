@@ -81,7 +81,7 @@ export class DisplayCourseLessonComponent implements OnInit {
     this.router.navigate([`/${this.user.role}/classrooms/courses/${this.currentCourseParams.courseId}`]);
   }
 
-  viewQuiz() {
+  viewQuiz(quiz_id: any) {
     this.router.navigate([`${this.user.role}/classrooms/courses/${this.currentCourseParams.courseId}/lessons/quiz/${this.course?.quiz_id}`]);
   }
 
