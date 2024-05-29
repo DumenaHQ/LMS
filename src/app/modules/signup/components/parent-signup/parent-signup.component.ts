@@ -16,157 +16,6 @@ export class ParentSignupComponent implements OnInit {
   loading: boolean = false;
   userEvent: any;
   formGroup: FormGroup;
-
-  statesInNigeria = [
-    {
-      code: 'FC',
-      name: 'FCT',
-    },
-    {
-      code: 'AB',
-      name: 'Abia',
-    },
-    {
-      code: 'AD',
-      name: 'Adamawa',
-    },
-    {
-      code: 'AK',
-      name: 'AkwaIbom',
-    },
-    {
-      code: 'AN',
-      name: 'Anambra',
-    },
-    {
-      code: 'BA',
-      name: 'Bauchi',
-    },
-    {
-      code: 'BY',
-      name: 'Bayelsa',
-    },
-    {
-      code: 'BE',
-      name: 'Benue',
-    },
-    {
-      code: 'BO',
-      name: 'Borno',
-    },
-    {
-      code: 'CR',
-      name: 'CrossRiver',
-    },
-    {
-      code: 'DE',
-      name: 'Delta',
-    },
-    {
-      code: 'EB',
-      name: 'Ebonyi',
-    },
-    {
-      code: 'ED',
-      name: 'Edo',
-    },
-    {
-      code: 'EK',
-      name: 'Ekiti',
-    },
-    {
-      code: 'EN',
-      name: 'Enugu',
-    },
-    {
-      code: 'GO',
-      name: 'Gombe',
-    },
-    {
-      code: 'IM',
-      name: 'Imo',
-    },
-    {
-      code: 'JI',
-      name: 'Jigawa',
-    },
-    {
-      code: 'KD',
-      name: 'Kaduna',
-    },
-    {
-      code: 'KN',
-      name: 'Kano',
-    },
-    {
-      code: 'KT',
-      name: 'Katsina',
-    },
-    {
-      code: 'KE',
-      name: 'Kebbi',
-    },
-    {
-      code: 'KO',
-      name: 'Kogi',
-    },
-    {
-      code: 'KW',
-      name: 'Kwara',
-    },
-    {
-      code: 'LA',
-      name: 'Lagos',
-    },
-    {
-      code: 'NA',
-      name: 'Nassarawa',
-    },
-    {
-      code: 'NI',
-      name: 'Niger',
-    },
-    {
-      code: 'OG',
-      name: 'Ogun',
-    },
-    {
-      code: 'ON',
-      name: 'Ondo',
-    },
-    {
-      code: 'OS',
-      name: 'Osun',
-    },
-    {
-      code: 'OY',
-      name: 'Oyo',
-    },
-    {
-      code: 'PL',
-      name: 'Plateau',
-    },
-    {
-      code: 'RI',
-      name: 'Rivers',
-    },
-    {
-      code: 'SO',
-      name: 'Sokoto',
-    },
-    {
-      code: 'TA',
-      name: 'Taraba',
-    },
-    {
-      code: 'YO',
-      name: 'Yobe',
-    },
-    {
-      code: 'ZA',
-      name: 'Zamfara',
-    },
-  ];
   states: { code: string; name: string; }[];
 
   constructor(
@@ -175,7 +24,7 @@ export class ParentSignupComponent implements OnInit {
     private formBuilder: FormBuilder,
     private appAlertService: AppAlertService,
     private nigeriaStatesService: NigeriaStatesService,
-    private formErrorService: FormErrorMessageService
+    private formErrorService: FormErrorMessageService,
   ) {}
 
   ngOnInit(): void {
@@ -223,11 +72,11 @@ export class ParentSignupComponent implements OnInit {
       (error: any) => {
         console.log(error);
         this.appAlertService.showAlert(
-          error.error.message
-            ? error.error.message
-            : error.message
-            ? error.error.message || error.error.error.errors[0].message
-            : error.message,
+          error.error.error.errors[0].message
+            ? error.error.error.errors[0].message
+            : error.error.message
+            ? error.error.message || error.error.errors[0].message
+            : error.error.message,
           AlertType.Error
         );
         this.loading = false;

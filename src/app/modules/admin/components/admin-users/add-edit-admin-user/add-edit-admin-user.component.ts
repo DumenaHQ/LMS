@@ -12,6 +12,7 @@ import { FormErrorMessageService } from 'src/app/services/utils/form-error-messa
 export class AddEditAdminUserComponent implements OnInit {
 
   @Output() addEditUser: EventEmitter<any> = new EventEmitter();
+  @Output() getAllUsers: EventEmitter<any> = new EventEmitter();
   formGroup: FormGroup;
   loading: boolean = false;
 
@@ -37,10 +38,10 @@ export class AddEditAdminUserComponent implements OnInit {
     const { value } = this.formGroup;
 
     let payload = {
-      firstName: value.firstName,
-      lastName: value.lastName,
+      firstname: value.firstName,
+      lastname: value.lastName,
       email: value.email,
-      phoneNumber: value.phoneNumber,
+      phone: value.phoneNumber,
       admin_role: value.role,
     };
 
@@ -50,6 +51,7 @@ export class AddEditAdminUserComponent implements OnInit {
         if (res) {
           this.formGroup.reset();
           this.appAlertService.showAlert(res.message, AlertType.Success);
+          this.getAllUsers.emit();
           this.closeAddAdminModal();
         }
       }, (error) => {

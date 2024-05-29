@@ -20,13 +20,13 @@ export class ViewClassroomComponent implements OnInit {
   addLearnerToClassroom: boolean = false;
   updatingClassDate: boolean = false;
   activeSession?: Term;
-  deleteModal: boolean = false;
-  deleteUrl: string;
-  deleteRoutePath: string;
   teacherName: any;
   courseQuizResult: boolean = false;
   course: any;
   user: any;
+  confirmModal: boolean = false;
+  confirmUrl: string;
+  confirmMessage: string;
 
   constructor(
     private classroomService: ClassroomService,
@@ -129,17 +129,16 @@ export class ViewClassroomComponent implements OnInit {
     this.addLearnerToClassroom = false;
   }
 
-  // Remove teacher
-  removeTeacher(teacherName: any) {
-    this.teacherName = teacherName;
-    this.deleteModal = true;
-    this.deleteUrl = `classes/${this.currentClassroomId.classroomId}/teacher/remove`;
-    this.deleteRoutePath = '';
+  // Open Confirm Delete Modal
+  openConfirmModal(teacherName: any) {
+    this.confirmModal = true;
+    this.confirmMessage = `Are you sure you want to remove ${teacherName}?`;
+    this.confirmUrl = `classes/${this.currentClassroomId.classroomId}/teacher/remove`;
   }
 
   // Close Confirm Delete Modal
-  closeDeleteModal() {
-    this.deleteModal = false;
+  closeConfirmModal() {
+    this.confirmModal = false;
   }
 
   // Edit classroom

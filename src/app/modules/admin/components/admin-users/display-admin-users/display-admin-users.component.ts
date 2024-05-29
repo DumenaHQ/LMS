@@ -10,7 +10,7 @@ export class DisplayAdminUsersComponent implements OnInit {
 
   users: any;
   dataLoading: boolean = true;
-  user: any;
+  loggedInUserData: any;
   addEditUser: boolean = false;
 
   constructor(
@@ -19,7 +19,7 @@ export class DisplayAdminUsersComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {  
-    this.user = this.authService.getUser().user; 
+    this.loggedInUserData = this.authService.getUser().user; 
     this.getUsers();
   }
 

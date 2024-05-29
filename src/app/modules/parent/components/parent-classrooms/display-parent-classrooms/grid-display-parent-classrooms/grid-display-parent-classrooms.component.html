@@ -109,6 +109,12 @@
     </div>
   </div>
   
-  <!-- Delete confirmation -->
-  <app-confirm-delete *ngIf="deleteModal" (deleteModal)="closeDeleteModal()" [itemName]="classroomName" [deleteUrl]="deleteUrl" [deleteRoutePath]="deleteRoutePath"></app-confirm-delete>
+<!-- Delete confirmation -->
+<!-- <app-confirm-delete 
+  *ngIf="confirmModal" 
+  (confirmModal)="closeConfirmModal()" 
+  [confirmMessage]="confirmMessage" 
+  [confrimUrl]="confirmUrl" 
+  (reloadData)="getReloadData()"
+></app-confirm-delete> -->
   

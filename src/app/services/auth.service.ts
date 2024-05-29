@@ -89,6 +89,20 @@ export class AuthService {
     return this.http.get(`${this.baseUrl}schools/analytics`);
   }
 
+  // Activate user
+  activateUser(userId: any) {
+    return this.http.put(`${this.baseUrl}users/${userId}/activate`,
+      this.getHttpOptions()
+    );
+  }
+
+  // Deactivate user
+  deactivateUser(userId: any) {
+    return this.http.put(`${this.baseUrl}users/${userId}/deactivate`,
+      this.getHttpOptions()
+    );
+  }
+
   // Activate email
   confirmEmail(model: any) {
     return this.http.put(
@@ -103,17 +117,22 @@ export class AuthService {
     return this.http.put(`${this.baseUrl}users`, data, this.getHttpOptions());
   }
 
-  // Delete
-  deleteItem(deleteUrl: string, deleteType: any) {
-    if(deleteType === 'patch') { 
+  confirmItem(confirmUrl: string, confirmType: any) {
+    if(confirmType === 'patch') { 
       return this.http.patch(
-        `${this.baseUrl}${deleteUrl}`,
+        `${this.baseUrl}${confirmUrl}`,
+        {},
+        this.getHttpOptions()
+      );
+    } else if(confirmType === 'put') {
+      return this.http.put(
+        `${this.baseUrl}${confirmUrl}`,
         {},
         this.getHttpOptions()
       );
     } else {
       return this.http.delete(
-        `${this.baseUrl}${deleteUrl}`,
+        `${this.baseUrl}${confirmUrl}`,
         this.getHttpOptions()
       );
     }

@@ -21,7 +21,7 @@
         <button class="btn tert_btn" routerLink="edit-child">
           Update Profile
         </button>
-        <a class="remove clickable" (click)="openDeleteModal()">Remove Child</a>
+        <a class="remove clickable" (click)="openConfirmModal()">Remove Child</a>
       </div>
     </div>
     <!-- Learning overview(lo) -->
@@ -82,7 +82,13 @@
 </section>
 
 <!-- Delete confirmation -->
-<app-confirm-delete *ngIf="deleteModal" (deleteModal)="closeDeleteModal()" [itemName]="child.username" [deleteUrl]="deleteUrl" [deleteRoutePath]="deleteRoutePath"></app-confirm-delete>
+<app-confirm-delete 
+  *ngIf="confirmModal" 
+  (confrimModal)="closeConfirmModal()" 
+  [confirmMessage]="confirmMessage" 
+  [confirmUrl]="confirmUrl" 
+  (reloadData)="goToParentChildrenPage()"
+></app-confirm-delete>
 
 <!-- Subscription plan -->
 <app-pricing-plan

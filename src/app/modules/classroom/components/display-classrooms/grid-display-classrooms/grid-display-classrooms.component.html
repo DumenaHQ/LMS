@@ -94,7 +94,7 @@
           <div class="dropdown">
             <small
               class="body-3-regular delete clickable"
-              (click)="openDeleteModal(classroom)"
+              (click)="openConfirmModal(classroom)"
               >Delete</small
             >
           </div>
@@ -104,5 +104,11 @@
   </div>
   
   <!-- Delete confirmation -->
-  <app-confirm-delete *ngIf="deleteModal" (deleteModal)="closeDeleteModal()" [itemName]="classroomName" [deleteUrl]="deleteUrl"></app-confirm-delete>
+  <app-confirm-delete 
+    *ngIf="confirmModal" 
+    (confrimModal)="closeConfirmModal()" 
+    [confirmMessage]="confirmMessage" 
+    [confirmUrl]="confirmUrl" 
+    (reloadData)="getReloadData()"
+  ></app-confirm-delete>
   

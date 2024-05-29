@@ -35,7 +35,10 @@
     <app-loader *ngIf="dataLoading"></app-loader>
     
     <section class="classroom" *ngIf="!dataLoading">
-      <app-list-display-school-teachers [teachers]="teachers" *ngIf="teachers?.length ?? 0 > 0"></app-list-display-school-teachers>
+      <app-list-display-school-teachers 
+        [teachers]="teachers" *ngIf="teachers?.length ?? 0 > 0"
+        (reloadData)="getTeachers()"
+      ></app-list-display-school-teachers>
   
       <div class="classroom_body" *ngIf="teachers?.length === 0">
           <app-blank-display-school-teacher (addEditTeacher)="toggleAddEditTeacher()"></app-blank-display-school-teacher>

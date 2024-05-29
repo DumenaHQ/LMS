@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-school-display-students',
@@ -8,26 +8,30 @@ import { Component, Input, OnInit } from '@angular/core';
 export class SchoolDisplayStudentsComponent implements OnInit {
   @Input() students: any;
   @Input() user: any;
-  studentName: any
-  deleteModal: boolean = false;
-  deleteUrl: string;
-  deleteRoutePath: string;
+  @Output() reloadData: EventEmitter<any> = new EventEmitter();
+  confirmModal: boolean = false;
+  confirmUrl: string;
+  confirmMessage: string;
   
   constructor() {}
 
   ngOnInit(): void {
   }
 
-   // Open Confirm Delete Modal
-   openDeleteModal(student: any) {
-    this.studentName = student.username;
-    this.deleteModal = true;
-    this.deleteUrl = `schools/${this.user.id}/learners/${student.id}`;
-    this.deleteRoutePath = '';
+  // Open Confirm Delete Modal
+  openConfirmModal(student: any) {
+    this.confirmModal = true;
+    this.confirmMessage = `Are you sure you want to delete ${student.fullname}?`;
+    this.confirmUrl = `schools/${this.user.id}/learners/${student.id}`;
+  }
+
+  // load get user
+  getReloadData() {
+    this.reloadData.emit();
   }
 
   // Close Confirm Delete Modal
-  closeDeleteModal() {
-    this.deleteModal = false;
+  closeConfirmModal() {
+    this.confirmModal = false;
   }
 }

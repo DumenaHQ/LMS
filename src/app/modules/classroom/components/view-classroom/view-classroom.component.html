@@ -104,7 +104,7 @@
               *ngIf="user.role === 'school'"
               class='bx bx-message-square-x icon clickable' 
               title="Remove" 
-              (click)="removeTeacher(classroom?.teacher?.fullname)"
+              (click)="openConfirmModal(classroom?.teacher?.fullname)"
             ></i>
           </div>
         </div>
@@ -272,14 +272,14 @@
     (addLearnerToClassroomModal)="closeAddLearnerToClassroomModal()"
     (getClassroom)="getClassrooms()"
   ></app-add-classroom-learner>
-
-  <app-confirm-delete
-    *ngIf="deleteModal"
-    (deleteModal)="closeDeleteModal()"
-    [itemName]="teacherName"
-    [deleteUrl]="deleteUrl"
-    [deleteRoutePath]="deleteRoutePath"
-    [deleteType]="'patch'"
+    
+  <app-confirm-delete 
+    *ngIf="confirmModal" 
+    (confrimModal)="closeConfirmModal()" 
+    [confirmMessage]="confirmMessage" 
+    [confirmUrl]="confirmUrl" 
+    [confirmUrl]="'patch'"
+    (reloadData)="getClassrooms()"
   ></app-confirm-delete>
   
   <app-confirm-session-date
