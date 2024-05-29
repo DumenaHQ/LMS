@@ -12,9 +12,9 @@ export class ManageChildComponent implements OnInit {
   child: any;
   user: any;
   selectPlanModal: boolean = false;
-  deleteModal: boolean = false;
-  deleteUrl: string;
-  deleteRoutePath: string;
+  confirmModal: boolean = false;
+  confirmUrl: string;
+  confirmMessage: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -23,13 +23,12 @@ export class ManageChildComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Get the current Item from the url
     this.currentItem = this.activatedRoute.snapshot.params;
-
-    // Get user data from localstorage
-    let userData = this.authService.getUser();
-    this.user = userData.user;
-
+    this.user = this.authService.getUser().user;
+    this.getParentLearner();
+  }
+  
+  getParentLearner() {
     // Get parent child
     this.authService.getParentChildren(this.user.id).subscribe((res: any) => {
       const result = res.data.learners;
@@ -51,17 +50,19 @@ export class ManageChildComponent implements OnInit {
     this.selectPlanModal = false;
   }
 
-  // Open Confirm Delete Modal
-  openDeleteModal() {
-    this.deleteModal = true;
+  goToParentChildrenPage() {
+    this.router.navigate(['/parent/children']);
+  }
 
-    this.deleteUrl = `parents/${this.user.id}/learners/${this.child.id}`
-    this.deleteRoutePath = '/parent/children'
+  openConfirmModal() {
+    this.confirmModal = true;
+    this.confirmMessage = `Are you sure you want to remove ${this.child.fullname}?`;
+    this.confirmUrl = `parents/${this.user.id}/learners/${this.child.id}`;
   }
 
   // Close Confirm Delete Modal
-  closeDeleteModal() {
-    this.deleteModal = false;
+  closeConfirmModal() {
+    this.confirmModal = false;
   }
 
 }

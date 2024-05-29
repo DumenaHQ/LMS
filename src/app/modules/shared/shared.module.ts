@@ -18,6 +18,7 @@ import { DisplayProgramsComponent } from './programs/display-programs/display-pr
 import { DisplayProgramDetailsComponent } from './programs/display-program-details/display-program-details.component';
 import { AddProgramLearnersComponent } from './programs/add-program-learners/add-program-learners.component';
 import { TruncatePipe } from 'src/app/pipes/truncate.pipe';
+import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { TruncatePipe } from 'src/app/pipes/truncate.pipe';
 
     // Pipes
     TruncatePipe,
+    ConfirmationModalComponent,
   ],
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
   exports: [

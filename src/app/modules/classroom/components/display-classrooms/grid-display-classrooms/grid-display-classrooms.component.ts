@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ClassroomModel } from '../../../models/classroom.model';
 import { Router } from '@angular/router';
 
@@ -11,10 +11,10 @@ export class GridDisplayClassroomsComponent implements OnInit {
 
   @Input() classrooms?: ClassroomModel[];
   @Input() user: any;
-  classroomName: any;
-  deleteModal: boolean = false;
-  deleteUrl: string;
-  deleteRoutePath: string;
+  @Output() reloadData: EventEmitter<any> = new EventEmitter();
+  confirmModal: boolean = false;
+  confirmUrl: string;
+  confirmMessage: string;
 
   constructor(
     private router: Router
@@ -28,15 +28,19 @@ export class GridDisplayClassroomsComponent implements OnInit {
   }
 
   // Open Confirm Delete Modal
-  openDeleteModal(classroom: any) {
-    this.classroomName = classroom.name;
-    this.deleteModal = true;
-    this.deleteUrl = `classes/${classroom.id}`;
+  openConfirmModal(classroom: any) {
+    this.confirmModal = true;
+    this.confirmMessage = `Are you sure you want to delete ${classroom.name}?`;
+    this.confirmUrl = `classes/${classroom.id}`;
+  }
+
+  getReloadData() {
+    this.reloadData.emit();
   }
 
   // Close Confirm Delete Modal
-  closeDeleteModal() {
-    this.deleteModal = false;
+  closeConfirmModal() {
+    this.confirmModal = false;
   }
 
 }

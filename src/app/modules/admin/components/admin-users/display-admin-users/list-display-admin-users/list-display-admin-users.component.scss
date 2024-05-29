@@ -26,23 +26,28 @@
           // Actions
           &.actions {
             position: relative;
-            input:checked + .dropdown {
-              display: block;
-            }
             .dropdown {
               display: none;
               position: absolute;
               top: 50px;
-              left: 50%;
+              left: -1rem;
               transform: translateX(-50%);
               background: $white-color;
               box-shadow: $box-shadow;
               padding: $m-2;
               border-radius: 2.5px;
               transition: all .2s ease-in;
-              .delete {
-                color: $error80;
+              &.active {
+                display: block;
+              }
+              .item {
                 font-size: 1rem;
+                &.danger {
+                  color: $error80;
+                }
+                &.success {
+                  color: $success80;
+                }
               }
               &:hover {
                 background-color: $divider-color;

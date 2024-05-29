@@ -25,7 +25,11 @@
       </div>
   
       <!-- New Classroom Button -->
-      <button class="btn prim_btn" (click)="toggleAddEditUser()">
+      <button 
+        class="btn prim_btn" 
+        (click)="toggleAddEditUser()"
+        *ngIf="loggedInUserData.admin_role === 'super'"
+      >
         Add Admin
       </button>
     </div>
@@ -35,7 +39,11 @@
     <app-loader *ngIf="dataLoading"></app-loader>
     
     <section class="classroom" *ngIf="!dataLoading">
-      <app-list-display-admin-users [users]="users" *ngIf="users?.length ?? 0 > 0"></app-list-display-admin-users>
+      <app-list-display-admin-users 
+        [users]="users" *ngIf="users?.length ?? 0 > 0" 
+        (reloadData)="getUsers()"
+        [loggedInUserData]="loggedInUserData"
+      ></app-list-display-admin-users>
   
       <div class="classroom_body" *ngIf="users?.length === 0">
           <app-blank-display-admin-user (addEditUser)="toggleAddEditUser()"></app-blank-display-admin-user>
@@ -43,5 +51,5 @@
     </section>
   </ng-container>
 
-  <app-add-edit-admin-user *ngIf="addEditUser" (addEditUser)="toggleAddEditUser()"></app-add-edit-admin-user>
+  <app-add-edit-admin-user *ngIf="addEditUser" (addEditUser)="toggleAddEditUser()" (getAllUsers)="getUsers()"></app-add-edit-admin-user>
   

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TeacherModel } from '../../models/teacher.model';
 
 @Component({
@@ -9,10 +9,10 @@ import { TeacherModel } from '../../models/teacher.model';
 export class ListDisplaySchoolTeachersComponent implements OnInit {
 
   @Input() teachers: TeacherModel[];
-  deleteModal: boolean = false;
-  deleteUrl: string;
-  deleteRoutePath: string;
-  teacherName!: string;
+  @Output() reloadData: EventEmitter<any> = new EventEmitter();
+  confirmModal: boolean = false;
+  confirmUrl: string;
+  confirmMessage: string;
 
   constructor() { }
 
@@ -20,16 +20,20 @@ export class ListDisplaySchoolTeachersComponent implements OnInit {
   }
 
   // Open Confirm Delete Modal
-  openDeleteModal(teacher: TeacherModel) {
-    this.teacherName = teacher.fullname || '';
-    this.deleteModal = true;
-    this.deleteUrl = `users/teacher/${teacher.id}`;
-    this.deleteRoutePath = '';
+  openConfirmModal(teacher: any) {
+    this.confirmModal = true;
+    this.confirmMessage = `Are you sure you want to delete ${teacher.fullname}?`;
+    this.confirmUrl = `users/teacher/${teacher.id}`;
+  }
+
+  // load get user
+  getReloadData() {
+    this.reloadData.emit();
   }
 
   // Close Confirm Delete Modal
-  closeDeleteModal() {
-    this.deleteModal = false;
+  closeConfirmModal() {
+    this.confirmModal = false;
   }
 
 }

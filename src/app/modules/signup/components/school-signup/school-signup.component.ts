@@ -81,11 +81,11 @@ export class SchoolSignupComponent implements OnInit {
       (error: any) => {
         console.log(error);
         this.appAlertService.showAlert(
-          error.error.message
-            ? error.error.message
-            : error.message
-            ? error.error.message || error.error.error.errors[0].message
-            : error.message,
+          error.error.error.errors[0].message
+            ? error.error.error.errors[0].message
+            : error.error.message
+            ? error.error.message || error.error.errors[0].message
+            : error.error.message,
           AlertType.Error
         );
         this.loading = false;

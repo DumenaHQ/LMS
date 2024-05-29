@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormErrorMessageService } from 'src/app/services/utils/form-error-message.service';
@@ -26,16 +26,6 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Prevent logged in users from routing to this page
-    // if (this.authService.isLoggedIn()) {
-    //   // Get user role type
-    //   let userData = this.authService.getUser();
-    //   this.userType = userData.user.role;
-
-    //   // Route user to his/her dashboard
-    //   this.router.navigate(['/' + this.userType]);
-    // }
-
     // User form
     this.formGroup = this.formBuilder.group({
       email: ['', [Validators.required]],
@@ -50,10 +40,9 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.formGroup.value).subscribe(
       (res: any) => {
         if (res.status == true) {
-          this.appAlertService.showAlert(res.message, AlertType.Success);
           this.authService.setToken(res.data?.user.token);
-          this.authService.addUserDataToLocalStorage(res.data);
-          this.CheckUserType(res.data.user.role);
+          // After login, get full user details and save to localstorage
+          this.getUserData(res.data?.user.id, res.message);
         }
       },
       (error: any) => {
@@ -70,6 +59,22 @@ export class LoginComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+
+  getUserData(userId: string, loginMessage: string) {
+    this.authService
+      .getUserById(userId)
+      .subscribe({
+        next: (res: any) => {
+          this.appAlertService.showAlert(loginMessage, AlertType.Success);
+          this.authService.addUserDataToLocalStorage(res.data);
+          this.CheckUserType(res.data.user.role);
+        },
+        error: (e) => console.error(e),
+        complete: () => {
+          this.loading = false;
+        },
+      });
   }
 
   // Check User Role

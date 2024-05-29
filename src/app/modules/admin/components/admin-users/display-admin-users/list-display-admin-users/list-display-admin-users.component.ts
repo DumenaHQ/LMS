@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-list-display-admin-users',
@@ -8,10 +8,12 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ListDisplayAdminUsersComponent implements OnInit {
 
   @Input() users: any;
-  deleteModal: boolean = false;
-  deleteUrl: string;
-  deleteRoutePath: string;
-  userName!: string;
+  @Input() loggedInUserData: any;
+  @Output() reloadData: EventEmitter<any> = new EventEmitter();
+  confirmModal: boolean = false;
+  confirmUrl: string;
+  confirmMessage: string;
+  activeIndex: number | null = null;
 
   constructor() { }
 
@@ -19,16 +21,32 @@ export class ListDisplayAdminUsersComponent implements OnInit {
   }
 
   // Open Confirm Delete Modal
-  openDeleteModal(user: any) {
-    // this.userName = teacher.fullname || '';
-    // this.deleteModal = true;
-    // this.deleteUrl = `users/teacher/${teacher.id}`;
-    // this.deleteRoutePath = '';
+  openConfirmModal(user: any) {
+    this.confirmModal = true;
+    this.confirmMessage = `Are you sure you want to ${user.status === 'active' ? 'deactivate' : 'activate'} ${user.fullname}?`;
+    if(user.status === 'active') {
+      this.confirmUrl = `users/${user.id}/deactivate`; 
+    } else {
+      this.confirmUrl = `users/${user.id}/activate`;
+    }
+  }
+
+  // load get user
+  getReloadData() {
+    this.reloadData.emit();
   }
 
   // Close Confirm Delete Modal
-  closeDeleteModal() {
-    this.deleteModal = false;
+  closeConfirmModal() {
+    this.confirmModal = false;
+  }
+
+  toggleAction(index: number) {
+    if (this.activeIndex === index) {
+      this.activeIndex = null;
+    } else {
+      this.activeIndex = index;
+    }
   }
 
 }
