@@ -13,7 +13,7 @@ export class AdminComponent implements OnInit {
 
   hamClick: any;
 
-  navLink: any = [
+  navLink: any[] = [
     {
       name: 'Dashboard',
       link: '/admin',
@@ -69,13 +69,21 @@ export class AdminComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
-    let userData = this.authService.getUser();
-    this.user = userData.user;
+    this.user = this.authService.getUser().user;
 
     // Prevent Non-admin from routing here
     if (this.user.role !== 'admin') {
       this.router.navigate(['/login']);
     }
+
+    // Filter navigation links
+    this.filterNavLinks();
+  }
+
+  filterNavLinks(): void {
+    this.navLink = this.user.admin_role === 'super'
+      ? this.navLink.filter(nav => nav.name !== 'Support')
+      : this.navLink;
   }
 
   // Open Menu
