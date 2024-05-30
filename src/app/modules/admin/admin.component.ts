@@ -39,8 +39,8 @@ export class AdminComponent implements OnInit {
       subLinks: [],
     },
     {
-      name: 'Programs',
-      link: '/admin/programs',
+      name: 'Support',
+      link: '/admin/learning-support',
       icon: 'assets/img/svg/gameboy.svg',
       subLinks: [],
     },

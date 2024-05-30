@@ -21,8 +21,7 @@ export class DisplayQuestionCommentsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    let userData = this.authService.getUser();
-    this.userDetails = userData.user;
+    this.userDetails = this.authService.getUser().user;
     this.getQuestionComments();
   }
 

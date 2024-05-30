@@ -1,0 +1,47 @@
+@import '../../../../assets/css/variables.scss';
+@import '../../../../assets/css/mixins.scss';
+@import '../../../../assets/css/dashboard.scss';
+
+.accordion {
+    .accordion-item {
+        border: 1px solid #ccc;
+        &:not(:last-of-type) {
+            margin-bottom: 2rem;
+        }
+        .accordion-header {
+            padding: 10px;
+            background-color: $grey40;
+            cursor: pointer;
+            gap: $m-2;
+            justify-content: space-between;
+            &_left {
+                .lesson {
+                    margin-top: $m-1;
+                }
+            }
+            &_right {
+                gap: $m-2;
+                .date {
+                    color: $primary20;
+                }
+                .icon {
+                    font-size: 26px;
+                    transition: all .2s ease-in;
+                    &.open {
+                        transform: rotate(180deg);
+                    }
+                }
+            }
+        }
+        .accordion-content {
+            padding: $m-4 $m-2;
+            display: none;
+            background-color: $white-color;
+            &.active {
+                display: block;
+            }
+        }
+    }
+}
+
+
