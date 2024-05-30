@@ -58,6 +58,10 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'learning-support',
+        loadChildren: () => import('../learning-support/learning-support.module').then((m) => m.LearningSupportModule),
+      },
+      {
         path: 'class-templates',
         loadChildren: () => import('./components/class-template/class-template.module').then((m) => m.ClassTemplateModule),
       },

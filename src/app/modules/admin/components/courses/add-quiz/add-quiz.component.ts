@@ -95,10 +95,12 @@ export class AddQuizComponent implements OnInit {
 
   // Add quiz to course
   addQuizToCourse() {
+    const { value } = this.formGroup;
     let payload = {
       course_id: this.course.id,
       quiz_level: "lesson", // ["course", "module", "lesson"] optional field
-      quiz_level_id: this.formGroup.value.lesson
+      module_id: value.module,
+      lesson_id: value.lesson
     };
     
     this.quizService.addQuizToCourse(this.selectedQuizzes[0], payload).subscribe({

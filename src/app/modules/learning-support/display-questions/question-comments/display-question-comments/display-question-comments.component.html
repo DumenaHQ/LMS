@@ -10,7 +10,7 @@
             <ng-container>
                 <div class="message-item" *ngFor="let item of comments">
                     <div class="message-item_wrapper dis-flex" [class.self]="item.user.id === userDetails.id">
-                        <div class="avatar text-uppercase">
+                        <div class="avatar text-uppercase" [title]="item.user.fullname">
                             {{ getNameInitials(item.user.fullname) }}
                         </div>
                         <div style="width: 60%;">

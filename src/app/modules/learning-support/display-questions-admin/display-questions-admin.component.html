@@ -1,0 +1,39 @@
+<section class="ds-head">
+    <h2 class="ds-head_title">Learning Support</h2>
+</section>
+
+<app-loader *ngIf="dataLoading"></app-loader>
+
+<section class="classroom" *ngIf="!dataLoading">
+    <div *ngIf="questions?.length > 0">      
+      <div class="accordion">
+        <div *ngFor="let item of questions; let i = index" class="accordion-item">
+          <div class="accordion-header dis-flex" (click)="toggleAccordion(i)">
+            <div class="accordion-header_left">
+              <h5>{{ item.question }}</h5>
+              <p class="lesson text-primary-color">Lesson: <em>{{ item.lesson.title }}</em></p>
+              <p class="lesson text-primary-color">Sender: <em>{{ item.user.fullname }}</em></p>
+            </div>
+            <div class="accordion-header_right dis-flex">
+              <span class="date">
+                <ng-container *ngIf="isCurrentDate(item.updatedAt); else notCurrentDate">
+                  {{ item.updatedAt | date: 'shortTime' }}
+                </ng-container>
+                <ng-template #notCurrentDate>
+                  {{ item.updatedAt | date: 'MMM d, h:mm a' }}
+              </ng-template>
+              </span>
+              <i class="bx bx-chevron-down icon" [class.open]="activeIndex === i"></i>
+            </div>
+          </div>
+          <div class="accordion-content" [ngClass]="{'active': activeIndex === i}">
+            <app-display-question-comments [questionId]="item._id"></app-display-question-comments>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="classroom_body" *ngIf="questions?.length === 0">
+        <app-blank-display-question-admin></app-blank-display-question-admin>
+    </div>
+</section>

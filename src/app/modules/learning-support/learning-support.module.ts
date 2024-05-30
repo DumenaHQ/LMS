@@ -6,6 +6,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { DisplayQuestionCommentsComponent } from './display-questions/question-comments/display-question-comments/display-question-comments.component';
 import { AddQuestionCommentComponent } from './display-questions/question-comments/add-question-comment/add-question-comment.component';
+import { LearningSupportRouterModule } from './learning-support.routing.module';
+import { DisplayQuestionsAdminComponent } from './display-questions-admin/display-questions-admin.component';
+import { BlankDisplayQuestionAdminComponent } from './display-questions-admin/blank-display-question-admin/blank-display-question-admin.component';
 
 
 
@@ -14,10 +17,13 @@ import { AddQuestionCommentComponent } from './display-questions/question-commen
     DisplayQuestionsComponent,
     AddQuestionComponent,
     DisplayQuestionCommentsComponent,
-    AddQuestionCommentComponent
+    AddQuestionCommentComponent,
+    DisplayQuestionsAdminComponent,
+    BlankDisplayQuestionAdminComponent
   ],
   imports: [
     CommonModule,
+    LearningSupportRouterModule,
     FormsModule,
     ReactiveFormsModule,
     SharedModule

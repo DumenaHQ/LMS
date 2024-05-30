@@ -41,7 +41,7 @@ export class AuthService {
 
   // Get all users
   getAllusers() {
-    return this.http.get(`${this.baseUrl}users`, this.getHttpOptions());
+    return this.http.get(`${this.baseUrl}users?role=admin`, this.getHttpOptions());
   }
 
   // Get users by id
