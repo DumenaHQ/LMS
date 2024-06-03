@@ -1,0 +1,38 @@
+<div class="quiz-result">
+    <section class="ds-head dis-flex">
+      <div class=" dis-flex">
+        <i class="bx bx-chevron-right icon" style="transform: rotate(180deg);"></i>
+        <p class="ds-head_title clickable" (click)="goBack()">Go back to Courses</p>
+        <h2 class="ds-head_title" style="margin-left: 2rem;">Quiz Report</h2>
+      </div>
+    </section>
+
+    <h5 style="margin-bottom: 2rem;"><b>Course Title:</b> {{ course.title }}</h5>
+    
+    <app-loader *ngIf="dataLoading"></app-loader>
+    
+    <div class="table-container" style="overflow-x: auto" *ngIf="quizResults$ | async as quizResults">
+        <table *ngIf="quizResults.data.quizResult.length > 0">
+          <tr class="table-header">
+            <th>Learner Name</th>
+            <th>Learner Grade</th>
+            <th>Quiz Score</th>
+  
+          </tr>
+          <ng-container>
+            <tr class="table-body" *ngFor="let result of quizResults.data.quizResult">
+              <td>{{ result?.fullname || "-" }}</td>
+              <td>{{ result?.grade || "-" }}</td>
+              <td>{{ result?.score || "-" }}</td>
+            </tr>
+          </ng-container>
+        </table>
+ 
+        <div class="course-empty" *ngIf="quizResults.data.quizResult.length === 0 && user.role !== 'learner'">
+          <p style="text-align: center">No record available</p>
+        </div>
+        <div class="course-empty" *ngIf="errorMessage && user.role === 'learner'">
+          <p style="text-align: center" *ngIf="errorMessage">You haven't taken the quiz yet</p>
+        </div>
+    </div>
+</div>

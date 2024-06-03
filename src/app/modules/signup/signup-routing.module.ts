@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { EducatorSignupComponent } from './components/educator-signup/educator-signup.component';
 import { ParentSignupComponent } from './components/parent-signup/parent-signup.component';
 import { SchoolSignupComponent } from './components/school-signup/school-signup.component';
 import { SignupOverviewComponent } from './components/signup-overview/signup-overview.component';
@@ -41,14 +40,6 @@ const routes: Routes = [
         component: SchoolSignupComponent,
         data: {
           title: 'School Signup',
-          description: 'Description Meta Tag Content'
-        }
-      },
-      {
-        path: 'educator',
-        component: EducatorSignupComponent,
-        data: {
-          title: 'Educator Signup',
           description: 'Description Meta Tag Content'
         }
       },

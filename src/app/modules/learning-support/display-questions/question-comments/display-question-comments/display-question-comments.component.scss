@@ -1,0 +1,62 @@
+@import '../../../../../../assets/css/variables.scss';
+@import '../../../../../../assets/css/mixins.scss';
+
+.empty-discussion {
+    display: grid;
+    grid-gap: 1rem;
+    place-items: center;
+    padding: 2rem 0;
+    img {
+        max-width: 150px;
+        height: auto;
+    }
+}
+
+.avatar {
+    display: grid;
+    place-items: center;
+    min-width: 40px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #1F1E2E;
+    background-color: #F6F9FF;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.message {
+    .message-item {
+        margin-bottom: $m-4;
+        &_wrapper {
+            gap: $m-2;
+            @media only screen and (max-width: 550px) {
+                flex-wrap: wrap;
+            }
+            &_content {
+                padding: $m-2;
+                background-color: #F6F9FF;
+                border: 1px solid #D9D9D9;
+                border-radius: 0 10px 10px 10px;
+            }
+            &.self {
+                justify-content: flex-end;
+                .message-item_wrapper_content {
+                    background-color: $primary80;
+                    color: #ffffff;
+                }
+            }
+            &_date {
+                color: $divider-color2;
+                margin-top: $m-2;
+                font-style: italic;
+            }
+        }
+    }
+}
+
+.message-reply {
+    @media only screen and (min-width: 550px) {
+        width: 60%;
+    }
+}

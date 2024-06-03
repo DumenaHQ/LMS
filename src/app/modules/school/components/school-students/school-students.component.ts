@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { SchoolService } from 'src/app/services/school.service';
+import { SchoolDisplayStudentsComponent } from './school-display-students/school-display-students.component';
 
 @Component({
   selector: 'app-school-students',
@@ -8,10 +9,14 @@ import { SchoolService } from 'src/app/services/school.service';
   styleUrls: ['./school-students.component.scss'],
 })
 export class SchoolStudentsComponent implements OnInit {
+
+  @ViewChild(SchoolDisplayStudentsComponent) schoolDisplayStudentsComponent!: SchoolDisplayStudentsComponent;
   addLearnerModal: boolean = false;
   user: any;
-  dataLoading: boolean = true;
+  dataLoading: boolean;
   students: any;
+  grades: any = [];
+  selectedGrade: string = '';
 
   constructor(
     private authService: AuthService,
@@ -27,10 +32,18 @@ export class SchoolStudentsComponent implements OnInit {
 
   // Get all students
   getAllStudents() {
-    let grade = undefined;
-    this.schoolService.getSchoolLearners(this.user.id, grade).subscribe({
+    this.dataLoading = true;
+    let grade = this.selectedGrade === '' ? undefined : this.selectedGrade;
+    const school_id = this.user.id;
+    this.schoolService.getSchoolLearners(school_id, grade).subscribe({
       next: (res: any) => {
         this.students = res.data.students;
+        if(this.grades.length === 0) {
+          this.grades = res.data.grades.map((grade: any) => ({ 
+            id: grade, name: grade 
+          }));
+        }
+        this.dataLoading = false;
       },
       error: (e) => console.error(e),
       complete: () => {

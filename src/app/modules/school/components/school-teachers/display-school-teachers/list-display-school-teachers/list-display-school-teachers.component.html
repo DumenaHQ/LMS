@@ -1,0 +1,61 @@
+<div class="courses_dislist" style="overflow-x: auto">
+    <ng-container *ngIf="(teachers || []).length > 0">
+    <table>
+      <tr class="table-header">
+        <th>Name</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Date Enrolled</th>
+        <th></th>
+      </tr>
+        <tr class="table-body" *ngFor="let teacher of teachers">
+          <td class="name">
+            <div class="dis-flex">
+              <img
+                src="../../../../../../assets/img/children-avatar/child-avatar-1.png"
+                alt=""
+              />
+              <div>
+                <p>{{ teacher.fullname | titlecase }}</p>
+              </div>
+            </div>
+          </td>
+          <td class="contact-info">
+            <p>{{ teacher.email | lowercase }}</p>
+          </td>
+          <td class="grade">
+            <p [className]="teacher.status === 'active' ? 'success-status' : 'error-status'">{{ teacher.status === "active" ? "Active" : "Inactive" }}</p>
+          </td>
+          <td class="dateEnrolled">
+            <p>{{ teacher.createdAt | date: "mediumDate" }}</p>
+          </td>
+          <td class="actions">
+            <img src="../../../../../../assets/img/action.svg" alt="" class="clickable" (click)="actionBtn.click()" />
+            <input
+                type="checkbox"
+                name="action-btn"
+                id="action-btn"
+                style="display: none"
+                #actionBtn
+              />
+              <div class="dropdown">
+                <small
+                  class="body-3-regular delete clickable"
+                  (click)="openConfirmModal(teacher)"
+                  >Delete</small
+                >
+              </div>
+          </td>
+        </tr>
+      </table>
+    </ng-container>
+  </div>
+ 
+ <!-- Delete confirmation -->
+ <app-confirm-delete 
+  *ngIf="confirmModal" 
+  (confrimModal)="closeConfirmModal()" 
+  [confirmMessage]="confirmMessage" 
+  [confirmUrl]="confirmUrl" 
+  (reloadData)="getReloadData()"
+></app-confirm-delete>

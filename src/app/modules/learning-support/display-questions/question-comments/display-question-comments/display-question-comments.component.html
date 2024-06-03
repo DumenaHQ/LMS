@@ -1,0 +1,38 @@
+<div class="display-questions-container">
+    <div *ngIf="comments?.length === 0" class="empty-discussion">
+        <img src="../../../../../assets/img/Illustration.svg" alt="image" class="blank-item_image">
+
+        <p style="text-align: center">No comment available</p>
+    </div>
+    
+    <div class="message" *ngIf="comments?.length > 0">
+        <div class="row">
+            <ng-container>
+                <div class="message-item" *ngFor="let item of comments">
+                    <div class="message-item_wrapper dis-flex" [class.self]="item.user.id === userDetails.id">
+                        <div class="avatar text-uppercase" [title]="item.user.fullname">
+                            {{ getNameInitials(item.user.fullname) }}
+                        </div>
+                        <div style="width: 60%;">
+                            <div class="message-item_wrapper_content">
+                                <p class="">{{ item.comment }}</p>
+                            </div>
+                            <span class="message-item_wrapper_date">
+                                <ng-container *ngIf="isCurrentDate(item.createdAt); else notCurrentDate">
+                                    {{ item.createdAt | date: 'shortTime' }}
+                                  </ng-container>
+                                  <ng-template #notCurrentDate>
+                                    {{ item.createdAt | date: 'MMM d, h:mm a' }}
+                                </ng-template>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+
+    <app-loader *ngIf="dataLoading"></app-loader>
+
+    <app-add-question-comment [questionId]="questionId" (getComments)="getQuestionComments()"></app-add-question-comment>
+</div>

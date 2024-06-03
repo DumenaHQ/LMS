@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -8,59 +9,55 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./confirm-delete.component.scss']
 })
 export class ConfirmDeleteComponent implements OnInit {
-  @Output() deleteModal: EventEmitter<any> = new EventEmitter();
-  isAlert: boolean = false;
-  alertMessage: string;
-  alertColor: string;
-  @Input() itemName: any;
-  @Input() deleteUrl: any;
-  @Input() deleteRoutePath: any;
-  @Input() deleteType: any;
+  @Output() confrimModal: EventEmitter<any> = new EventEmitter();
+  @Output() reloadData: EventEmitter<any> = new EventEmitter();
+  @Input() confirmMessage: any;
+  @Input() confirmUrl: any;
+  @Input() confirmMethod: any;
   loading: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(
+    private authService: AuthService, 
+    private router: Router,
+    private appAlertService: AppAlertService,
+  ) { }
 
   ngOnInit(): void {
   }
 
-  // Remove item
-  removeItem() {
-    this.loading = true;          
-
+  confirmAction() {
+    this.loading = true;
     this.authService
-      .deleteItem(this.deleteUrl, this.deleteType)
-      .subscribe((res: any) => {
-        if (res.status === true) {
-          this.showAlertPopup(res.message, 'success');
-          setTimeout(() => {
+      .confirmItem(this.confirmUrl, this.confirmMethod).subscribe({
+        next:(res: any) => {
+          if (res.status === true) {
+            this.appAlertService.showAlert(res.message, AlertType.Success);
             this.closeDeleteModal();
-            if(this.deleteRoutePath === '' || this.deleteRoutePath === null || this.deleteRoutePath === undefined) {
-              window.location.reload();
-            } else {
-              this.router.navigate([this.deleteRoutePath]);
-            }
-          }, 3000);
+            this.getReloadedData();
+          }
+        },
+        error:(error: any) => {
+          console.log(error);
+          this.appAlertService.showAlert(
+            error.error.message
+            ? (error.error.message)
+            : (error.error.error.errors[0].message),
+            AlertType.Error
+          );
+        },
+        complete:() => {
+          this.loading = false;
         }
-      });
+    });
   }
 
   // Close modal
   closeDeleteModal() {
-    this.deleteModal.emit()
-  } 
-
-  // Show alert
-  showAlertPopup(message: string, color: string) {
-    // Set message
-    this.alertMessage = message;
-    // Set color
-    this.alertColor = color;
-    // Show Alert
-    this.isAlert = true;
-    // Hide Alert
-    setTimeout(() => {
-      this.isAlert = false;
-    }, 3000);
+    this.confrimModal.emit();
   }
+
+  getReloadedData() {
+    this.reloadData.emit();
+  } 
 
 }

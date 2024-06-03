@@ -19,7 +19,6 @@ export class AuthService {
 
   // Set Token and save to localstorage
   addUserDataToLocalStorage(data: any): void {
-    // localStorage.setItem('token', token)
     localStorage.setItem('data', JSON.stringify(data));
   }
 
@@ -41,8 +40,8 @@ export class AuthService {
   }
 
   // Get all users
-  allUser() {
-    return this.http.get(`${this.baseUrl}users`, this.getHttpOptions());
+  getAllusers() {
+    return this.http.get(`${this.baseUrl}users?role=admin`, this.getHttpOptions());
   }
 
   // Get users by id
@@ -79,10 +78,29 @@ export class AuthService {
   enrollLearner(data: any, url: string) {
     return this.http.post(`${this.baseUrl}${url}`, data, this.getHttpOptions());
   }
+
+  // Onboard Admin
+  onboardAdmin(data: any) {
+    return this.http.post(`${this.baseUrl}admins/enroll`, data, this.getHttpOptions());
+  }
   
   // School Analytics
   fetchSchoolAnalytics() {
     return this.http.get(`${this.baseUrl}schools/analytics`);
+  }
+
+  // Activate user
+  activateUser(userId: any) {
+    return this.http.put(`${this.baseUrl}users/${userId}/activate`,
+      this.getHttpOptions()
+    );
+  }
+
+  // Deactivate user
+  deactivateUser(userId: any) {
+    return this.http.put(`${this.baseUrl}users/${userId}/deactivate`,
+      this.getHttpOptions()
+    );
   }
 
   // Activate email
@@ -99,17 +117,22 @@ export class AuthService {
     return this.http.put(`${this.baseUrl}users`, data, this.getHttpOptions());
   }
 
-  // Delete
-  deleteItem(deleteUrl: string, deleteType: any) {
-    if(deleteType === 'patch') { 
+  confirmItem(confirmUrl: string, confirmType: any) {
+    if(confirmType === 'patch') { 
       return this.http.patch(
-        `${this.baseUrl}${deleteUrl}`,
+        `${this.baseUrl}${confirmUrl}`,
+        {},
+        this.getHttpOptions()
+      );
+    } else if(confirmType === 'put') {
+      return this.http.put(
+        `${this.baseUrl}${confirmUrl}`,
         {},
         this.getHttpOptions()
       );
     } else {
       return this.http.delete(
-        `${this.baseUrl}${deleteUrl}`,
+        `${this.baseUrl}${confirmUrl}`,
         this.getHttpOptions()
       );
     }
@@ -191,18 +214,16 @@ export class AuthService {
 
   // Get greeting time
   getGreeting(): string {
-    const currentTime = new Date();
-    const currentHour = currentTime.getHours();
-    let greeting: string;
-  
-    if (currentHour >= 5 && currentHour < 12) {
-      greeting = 'Good morning';
-    } else if (currentHour >= 12 && currentHour < 18) {
-      greeting = 'Good afternoon';
-    } else {
-      greeting = 'Good evening';
-    }
-  
-    return greeting;
+    const currentHour = new Date().getHours();
+    
+    const MORNING_START = 5;
+    const AFTERNOON_START = 12;
+    const EVENING_START = 18;
+    
+    return currentHour >= MORNING_START && currentHour < AFTERNOON_START
+      ? 'Good morning'
+      : currentHour >= AFTERNOON_START && currentHour < EVENING_START
+      ? 'Good afternoon'
+      : 'Good evening';
   }
 }

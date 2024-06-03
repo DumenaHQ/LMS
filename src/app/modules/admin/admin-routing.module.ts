@@ -5,6 +5,7 @@ import { AdminComponent } from './admin.component';
 import { AdminOverviewComponent } from './components/admin-overview/admin-overview.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
 import { EditAdminClassTemplateComponent } from './components/admin-class-templates/components/edit-admin-class-template/edit-admin-class-template.component';
+import { DisplayAdminUsersComponent } from './components/admin-users/display-admin-users/display-admin-users.component';
 
 const routes: Routes = [
   {
@@ -57,6 +58,10 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'learning-support',
+        loadChildren: () => import('../learning-support/learning-support.module').then((m) => m.LearningSupportModule),
+      },
+      {
         path: 'class-templates',
         loadChildren: () => import('./components/class-template/class-template.module').then((m) => m.ClassTemplateModule),
       },
@@ -65,6 +70,14 @@ const routes: Routes = [
         component: EditAdminClassTemplateComponent,
         data: {
           title: 'Edit Class Template',
+          description: 'Description Meta Tag Content',
+        },
+      },
+      {
+        path: 'users',
+        component: DisplayAdminUsersComponent,
+        data: {
+          title: 'Users',
           description: 'Description Meta Tag Content',
         },
       },

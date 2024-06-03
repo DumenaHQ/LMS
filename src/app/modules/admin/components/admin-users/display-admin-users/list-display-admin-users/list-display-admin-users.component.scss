@@ -1,0 +1,62 @@
+@import '../../../../../../../assets/css/variables.scss';
+@import '../../../../../../../assets/css/mixins.scss';
+@import '../../../../../../../assets/css/dashboard.scss';
+
+ // Courses Display List
+ .courses_dislist {
+  width: 100%;
+  table {
+    tr {
+      &.table-body {
+        td {
+          &.name {
+            img {
+              width: 45px;
+              height: auto;
+              border-radius: 50%;
+              margin-right: $m-2;
+            }
+          }
+          &.contact-info,
+          &.name {
+            p:nth-child(1) {
+                margin-bottom: 0.2rem;
+            }
+          }
+          // Actions
+          &.actions {
+            position: relative;
+            .dropdown {
+              display: none;
+              position: absolute;
+              top: 50px;
+              left: -1rem;
+              transform: translateX(-50%);
+              background: $white-color;
+              box-shadow: $box-shadow;
+              padding: $m-2;
+              border-radius: 2.5px;
+              transition: all .2s ease-in;
+              &.active {
+                display: block;
+              }
+              .item {
+                font-size: 1rem;
+                &.danger {
+                  color: $error80;
+                }
+                &.success {
+                  color: $success80;
+                }
+              }
+              &:hover {
+                background-color: $divider-color;
+              }
+            }
+          }
+        }
+      }
+    }
+
+  }
+}

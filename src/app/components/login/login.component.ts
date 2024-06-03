@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { FormErrorMessageService } from 'src/app/services/utils/form-error-message.service';
 
 @Component({
   selector: 'app-login',
@@ -12,33 +14,20 @@ export class LoginComponent implements OnInit {
   hide: boolean = true;
   loading: boolean = false;
   errorMessage: string = '';
-  showError: boolean = false;
   userType: any;
-  userForm: any = FormGroup;
-  isAlert: boolean = false;
-  alertMessage: string = '';
-  alertColor: string = '';
-  isFormSubmitted: boolean = false;
+  formGroup: any = FormGroup;
 
   constructor(
     private router: Router,
     private authService: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private appAlertService: AppAlertService,
+    private formErrorService: FormErrorMessageService
   ) {}
 
   ngOnInit(): void {
-    // Prevent logged in users from routing to this page
-    // if (this.authService.isLoggedIn()) {
-    //   // Get user role type
-    //   let userData = this.authService.getUser();
-    //   this.userType = userData.user.role;
-
-    //   // Route user to his/her dashboard
-    //   this.router.navigate(['/' + this.userType]);
-    // }
-
     // User form
-    this.userForm = this.formBuilder.group({
+    this.formGroup = this.formBuilder.group({
       email: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
@@ -46,51 +35,46 @@ export class LoginComponent implements OnInit {
 
   // Log In
   login() {
-    // Set loading to true
     this.loading = true;
 
-    // Set submitted to true
-    this.isFormSubmitted = true;
-
-    // If Form is invalid
-    if (this.userForm.invalid) {
-      this.loading = false;
-
-      return;
-    }
-
-    // Send users data
-    this.authService.login(this.userForm.value).subscribe(
+    this.authService.login(this.formGroup.value).subscribe(
       (res: any) => {
-        console.log(res);
-
-        // If status is true, set User Type
         if (res.status == true) {
-          // Set token
           this.authService.setToken(res.data?.user.token);
-
-          // Set User data
-          this.authService.addUserDataToLocalStorage(res.data);
-
-          this.showAlertPopup(res.message, 'success');
-
-          // Route user
-          setTimeout(() => {
-            this.CheckUserType(res.data.user.role);
-          }, 3000);
+          // After login, get full user details and save to localstorage
+          this.getUserData(res.data?.user.id, res.message);
         }
       },
       (error: any) => {
         console.log(error);
-        // Show error message
         this.errorMessage = error.error.message;
-
-        this.showError = true;
-
-        // Set loading to false
+        this.appAlertService.showAlert(
+          error.error.message
+            ? error.error.message
+            : error.message
+            ? error.error.message || error.error.error.errors[0].message
+            : error.message,
+          AlertType.Error
+        );
         this.loading = false;
       }
     );
+  }
+
+  getUserData(userId: string, loginMessage: string) {
+    this.authService
+      .getUserById(userId)
+      .subscribe({
+        next: (res: any) => {
+          this.appAlertService.showAlert(loginMessage, AlertType.Success);
+          this.authService.addUserDataToLocalStorage(res.data);
+          this.CheckUserType(res.data.user.role);
+        },
+        error: (e) => console.error(e),
+        complete: () => {
+          this.loading = false;
+        },
+      });
   }
 
   // Check User Role
@@ -124,30 +108,21 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  getErrorMessage(controlName: string, labelName: string): string {
+    const control = this.formGroup.get(controlName);
+    const errors = control?.errors;
+    return this.formErrorService.getErrorMessage(errors, labelName);
+  }
+
   // Resend verification email
   reVerifyEmail() {
     this.authService
-      .resendVerificationEmail(this.userForm.value.email)
+      .resendVerificationEmail(this.formGroup.value.email)
       .subscribe((res: any) => {
-        console.log(res);
         if (res.status === true) {
-          this.showAlertPopup(res.message, 'success');
+          this.appAlertService.showAlert(res.message, AlertType.Success);
         }
       });
-  }
-
-  // Show alert
-  showAlertPopup(message: string, color: string) {
-    // Set message
-    this.alertMessage = message;
-    // Set color
-    this.alertColor = color;
-    // Show Alert
-    this.isAlert = true;
-    // Hide Alert
-    setTimeout(() => {
-      this.isAlert = false;
-    }, 3000);
   }
 
   // Go Back to the previous page

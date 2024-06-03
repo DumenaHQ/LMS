@@ -1,7 +1,9 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { FormErrorMessageService } from 'src/app/services/utils/form-error-message.service';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -11,26 +13,22 @@ import * as XLSX from 'xlsx';
 })
 export class SchoolEnrollLearnersComponent implements OnInit {
   @Output() addLearnerModal: EventEmitter<any> = new EventEmitter();
-  isAlert: boolean = true;
-  alertMessage: string;
-  alertColor: string;
+  @Output() getAllStudents: EventEmitter<any> = new EventEmitter();
   loading: boolean = false;
-  errorMessage: string = '';
-  showError: boolean = false;
   user: any;
   selectedFileName: any;
-  messageval: string;
   billingId: string = 'single';
-  userForm: any = FormGroup;
-  isFormSubmitted: boolean = false;
+  formGroup: any = FormGroup;
   file: File;
   arrayBuffer: any;
-  learnersList: any;
+  learnersList: any[] = [];
 
   constructor(
     private authService: AuthService,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private appAlertService: AppAlertService,
+    private formErrorService: FormErrorMessageService
   ) {}
 
   ngOnInit(): void {
@@ -38,9 +36,13 @@ export class SchoolEnrollLearnersComponent implements OnInit {
     let userData = this.authService.getUser();
     this.user = userData.user;
 
-    this.userForm = this.formBuilder.group({
+    this.initForm();
+  }
+  
+  initForm() {
+    this.formGroup = this.formBuilder.group({
       fullname: ['', Validators.required],
-      parent_email: ['', [Validators.email]],
+      parent_email: ['', [Validators.required, Validators.email]],
       grade: ['', Validators.required],
     });
   }
@@ -50,108 +52,36 @@ export class SchoolEnrollLearnersComponent implements OnInit {
     this.billingId = ids;
   }
 
-  // Sign Up
-  singleSignup() {
-    // Set loading to true
+  addLearners(uploadType: string) {
     this.loading = true;
 
-    // Set submitted to true
-    this.isFormSubmitted = true;
-
-    // If Form is invalid
-    if (this.userForm.invalid) {
-      this.loading = false;
-
-      return;
-    }
-
-    // Payload
     let payload = {
-      learners: [this.userForm.value],
+      learners: uploadType == 'single' ? [this.formGroup.value] : this.learnersList,
     };
 
-    // Send users data
     this.authService
       .enrollLearner(payload, `schools/${this.user.id}/learners`)
       .subscribe(
         (res: any) => {
-          console.log(res);
-
           if (res.status == true) {
-            
-            // Show Popup
-            this.showAlertPopup(`${res.message}. An email has been sent containing the login credentials of ${this.userForm.value.fullname}`, 'success');
-
-            // Close Modal
-            // this.closeAddLearnerModal(); 
-            setTimeout(() => {
-              window.location.reload();
-            }, 4000);
+            this.appAlertService.showAlert(`${res.message}. An email has been sent containing the login credentials of ${this.formGroup.value.fullname}`, AlertType.Success);
           }
+          this.closeAddLearnerModal();
+          this.getAllStudents.emit();
         },
         (error: any) => {
           console.log(error);
-          // Show error message
-          error.error.error.code == 400
-            ? (this.errorMessage = error.error.error.errors[0].message)
-            : (this.errorMessage = error.error.message);
-          this.showError = true;
-          // Set loading to false
+          this.appAlertService.showAlert(
+            error.error.error.code == 400
+            ? (error.error.error.errors[0].message)
+            : (error.error.message),
+            AlertType.Error
+          );
           this.loading = false;
         }
       );
   }
 
-  // Batch signup
-  batchSignup() {
-    // Set loading to true
-    this.loading = true;
-
-    if (this.learnersList === undefined) {
-      this.loading = false;
-
-      return;
-    }
-
-    // Payload
-    let payload = {
-      learners: this.learnersList,
-    };
-
-    // Send users data
-    this.authService
-      .enrollLearner(payload, `schools/${this.user.id}/learners`)
-      .subscribe(
-        (res: any) => {
-          console.log(res);
-          // parentcook@gmail.com
-
-          if (res.status === true) {
-            
-            // Show Popup
-            this.showAlertPopup(`${res.message}. An email has been sent containing the login details for all enrolled learners`, 'success');
-
-            // Close Modal
-            // this.closeAddLearnerModal();
-            
-            setTimeout(() => {
-                window.location.reload();
-              }, 4000);
-
-          }
-        },
-        (error: any) => {
-          console.log(error);
-          // Show error message
-          error.error.error.code == 400
-            ? (this.errorMessage = error.error.error.errors[0].message)
-            : (this.errorMessage = error.error.message);
-          this.showError = true;
-          // Set loading to false
-          this.loading = false;
-        }
-      );
-  }
 
   // Upload File
   uploadFile(event: any) {
@@ -184,23 +114,14 @@ export class SchoolEnrollLearnersComponent implements OnInit {
     fileReader.readAsArrayBuffer(this.file);
   }
 
+  getErrorMessage(controlName: string, labelName: string): string {
+    const control = this.formGroup.get(controlName);
+    const errors = control?.errors;
+    return this.formErrorService.getErrorMessage(errors, labelName);
+  }
+
   // Close Add Modal
   closeAddLearnerModal() {
     this.addLearnerModal.emit();
-  }
-
-
-  // Show alert
-  showAlertPopup(message: string, color: string) {
-    // Set message
-    this.alertMessage = message;
-    // Set color
-    this.alertColor = color;
-    // Show Alert
-    this.isAlert = true;
-    // Hide Alert
-    setTimeout(() => {
-      this.isAlert = false;
-    }, 3000);
   }
 }

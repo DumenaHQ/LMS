@@ -43,7 +43,7 @@
     <!-- Profile -->
     <span
       class="profile dis-flex clickable"
-      [routerLink]="['/', user?.role, 'profile', userNamePath]"
+      (click)="goToProfile()"
     >
       <img
         [src]="
@@ -55,9 +55,8 @@
       /> 
       <span class="profile_details">
         <h5>
-          {{ user?.fullname | titlecase }}
+          {{ (user?.role === 'school' ? user.school : user.fullname) | titlecase }}
         </h5>
-        <!-- (user.username === null ? user.username : user.fullname) | titlecase -->
         <p>{{ user?.role | titlecase }}</p>
       </span>
       <i class="bx bx-chevron-down profile_icon"></i>

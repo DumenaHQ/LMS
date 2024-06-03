@@ -2,11 +2,7 @@
   <h2 class="ds-head_title clickable" routerLink="/admin/programs">Programs</h2>
   <i class="bx bx-chevron-right icon"></i>
   <p class="clickable" [title]="program?.name">
-    {{
-      program?.name.length > 20
-        ? program?.name.slice(0, 20) + "..."
-        : program?.name
-    }}
+    {{ program?.name | truncate }}
   </p>
 </section>
 
@@ -218,23 +214,3 @@
 
 <!-- Add course to program modal -->
 <app-add-course-modal *ngIf="addCourseToProgram" (addCourseToProgramModal)="closeAddCourseToProgramModal()" [programId]="currentProgramId.programId"></app-add-course-modal>
-
-<!-- <ng-container *ngIf="contentId === 'content'">
-  <aside>
-    <ul>
-      <li class="active">
-        <h5 class="body-2-medium">Course 1</h5>
-        <p>Updated May 23,2022 5:12PM</p>
-      </li>
-      <li>
-        <h5 class="body-2-medium">Course 2</h5>
-        <p>Updated May 23,2022 5:12PM</p>
-      </li>
-      <li>
-        <h5 class="body-2-medium">Quiz 1</h5>
-        <p>Updated May 23,2022 5:12PM</p>
-      </li>
-    </ul>
-  </aside>
-  <main></main>
-</ng-container> -->
