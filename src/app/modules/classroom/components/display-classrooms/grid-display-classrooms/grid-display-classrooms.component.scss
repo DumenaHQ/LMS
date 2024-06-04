@@ -96,19 +96,19 @@
             // Actions
             .actions {
                 position: relative;
-                input:checked + .dropdown {
-                    display: block;
-                }
                 .dropdown {
                     display: none;
                     position: absolute;
                     top: 20px;
-                    left: 50%;
+                    left: -1rem;
                     transform: translateX(-50%);
                     background: $white-color;
                     box-shadow: $box-shadow;
                     padding: $m-1;
                     border-radius: 2.5px;
+                    &.active {
+                        display: block;
+                    }
                     .delete {
                         color: $error80;
                     }

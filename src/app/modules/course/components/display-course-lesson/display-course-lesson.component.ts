@@ -82,7 +82,7 @@ export class DisplayCourseLessonComponent implements OnInit {
   }
 
   viewQuiz(quiz_id: any) {
-    this.router.navigate([`${this.user.role}/classrooms/courses/${this.currentCourseParams.courseId}/lessons/quiz/${this.course?.quiz_id}`]);
+    this.router.navigate([`${this.user.role}/classrooms/courses/${this.currentCourseParams.courseId}/lessons/quiz/${quiz_id}`]);
   }
 
   toggleAccordion(index: number) {

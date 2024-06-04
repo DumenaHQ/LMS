@@ -12,7 +12,7 @@
       <th></th>
     </tr>
     <ng-container *ngIf="students?.length > 0">
-      <tr class="table-body" *ngFor="let student of students">
+      <tr class="table-body" *ngFor="let student of students; let i = index">
         <td class="name">
           <div class="dis-flex">
             <img
@@ -36,21 +36,13 @@
           <p>{{ student.createdAt | date: "mediumDate" }}</p>
         </td>
         <td class="actions">
-          <img src="../../../../../../assets/img/action.svg" alt="" class="clickable" (click)="actionBtn.click()" />
-          <input
-              type="checkbox"
-              name="action-btn"
-              id="action-btn"
-              style="display: none"
-              #actionBtn
-            />
-            <div class="dropdown">
-              <small
-                class="body-3-regular delete clickable"
-                (click)="openConfirmModal(student)"
-                >Delete</small
-              >
-            </div>
+          <img src="../../../../../../assets/img/action.svg" alt="" class="clickable" (click)="toggleAction(i)" />
+          <div class="dropdown" [ngClass]="{'active': activeIndex === i}">
+            <small
+              class="body-3-regular delete clickable"
+              (click)="openConfirmModal(student)"
+            >Delete</small>
+          </div>
         </td>
       </tr>
     </ng-container>
