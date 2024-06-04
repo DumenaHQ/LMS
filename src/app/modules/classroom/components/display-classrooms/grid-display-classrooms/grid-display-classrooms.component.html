@@ -1,6 +1,6 @@
 <div class="programs_disgrid">
     <div class="program_card">
-      <div class="program_card_item" *ngFor="let classroom of classrooms">
+      <div class="program_card_item" *ngFor="let classroom of classrooms; let i = index">
         <div 
           class="program_card_item_image clickable" 
           [style.backgroundImage]="classroom?.thumbnail ? 'url(' + classroom?.thumbnail + ')' : 'url(assets/img/program-thumbnail-patterns.svg)'"
@@ -82,16 +82,9 @@
             src="../../../../../../assets/img/action.svg"
             class="clickable"
             alt="image"
-            (click)="actionBtn.click()"
+            (click)="toggleAction(i)"
           />
-          <input
-            type="checkbox"
-            name="action-btn"
-            id="action-btn"
-            style="display: none"
-            #actionBtn
-          />
-          <div class="dropdown">
+          <div class="dropdown" [ngClass]="{'active': activeIndex === i}">
             <small
               class="body-3-regular delete clickable"
               (click)="openConfirmModal(classroom)"

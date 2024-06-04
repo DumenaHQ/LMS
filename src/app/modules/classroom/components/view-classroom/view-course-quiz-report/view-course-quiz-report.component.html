@@ -1,38 +1,83 @@
 <div class="quiz-result">
     <section class="ds-head dis-flex">
       <div class=" dis-flex">
+        <h2 class="ds-head_title">Quiz Report</h2>
         <i class="bx bx-chevron-right icon" style="transform: rotate(180deg);"></i>
         <p class="ds-head_title clickable" (click)="goBack()">Go back to Courses</p>
-        <h2 class="ds-head_title" style="margin-left: 2rem;">Quiz Report</h2>
       </div>
     </section>
 
     <h5 style="margin-bottom: 2rem;"><b>Course Title:</b> {{ course.title }}</h5>
     
-    <app-loader *ngIf="dataLoading"></app-loader>
+    <form [formGroup]="formGroup">
+      <div class="form_control">
+        <label for="module">Module <strong class="label-required">*</strong></label>
+        <div class="form_control_field">
+            <select name="module" id="module" formControlName="module" (change)="handleSelectChange($event, 'module')">
+                <option value="">Select a module</option>
+                <option [value]="item.id" *ngFor="let item of modules; let i = index">
+                    {{ item.title }}
+                </option>
+            </select>
+        </div>
+        <div class="form_error">
+            <div *ngIf="formGroup.controls['module'].invalid && formGroup.controls['module'].touched">
+                Module is required.
+            </div>
+        </div>
+      </div>
+      <div class="form_control">
+        <label for="lesson">Lesson <strong class="label-required">*</strong></label>
+        <div class="form_control_field">
+            <select name="lesson" id="lesson" formControlName="lesson" (change)="handleSelectChange($event, 'lesson')">
+                <option value="">Select a lesson</option>
+                <option [value]="item.id" *ngFor="let item of lessons">
+                    {{ item.title }}
+                </option>
+            </select>
+        </div>
+        <div class="form_error">
+            <div *ngIf="formGroup.value.module === '' && formGroup.controls['lesson'].touched">
+                Select a module.
+            </div>
+            <div *ngIf="formGroup.value.module !== '' && formGroup.controls['lesson'].invalid && formGroup.controls['lesson'].touched">
+                Lesson is required.
+            </div>
+        </div>
+      </div>
+    </form>
+
+    <div>
+      <app-loader *ngIf="dataLoading"></app-loader>
+      
+      <div class="table-container" style="overflow-x: auto" *ngIf="quizResults$ | async as quizResults">
+          <table *ngIf="quizResults.data.quizResult.length > 0">
+            <tr class="table-header">
+              <th>Learner Name</th>
+              <th>Learner Grade</th>
+              <th>Quiz Score</th>
     
-    <div class="table-container" style="overflow-x: auto" *ngIf="quizResults$ | async as quizResults">
-        <table *ngIf="quizResults.data.quizResult.length > 0">
-          <tr class="table-header">
-            <th>Learner Name</th>
-            <th>Learner Grade</th>
-            <th>Quiz Score</th>
-  
-          </tr>
-          <ng-container>
-            <tr class="table-body" *ngFor="let result of quizResults.data.quizResult">
-              <td>{{ result?.fullname || "-" }}</td>
-              <td>{{ result?.grade || "-" }}</td>
-              <td>{{ result?.score || "-" }}</td>
             </tr>
-          </ng-container>
-        </table>
- 
-        <div class="course-empty" *ngIf="quizResults.data.quizResult.length === 0 && user.role !== 'learner'">
-          <p style="text-align: center">No record available</p>
-        </div>
-        <div class="course-empty" *ngIf="errorMessage && user.role === 'learner'">
-          <p style="text-align: center" *ngIf="errorMessage">You haven't taken the quiz yet</p>
-        </div>
+            <ng-container>
+              <tr class="table-body" *ngFor="let result of quizResults.data.quizResult">
+                <td>{{ result?.fullname || "-" }}</td>
+                <td>{{ result?.grade || "-" }}</td>
+                <td>{{ result?.score || "-" }}</td>
+              </tr>
+            </ng-container>
+          </table>
+   
+          <div class="course-empty" *ngIf="quizResults.data.quizResult.length === 0 && user.role !== 'learner'">
+            <p style="text-align: center">No record available</p>
+          </div>
+          <div class="course-empty" *ngIf="errorMessage && user.role === 'learner'">
+            <img src="../../../../../assets/img/Illustration.svg" alt="image" class="blank-item_image">
+            <p style="text-align: center">You haven't taken the quiz yet</p>
+          </div>
+      </div>
+      <div class="course-empty" *ngIf="errorMessage">
+        <img src="../../../../../assets/img/Illustration.svg" alt="image" class="blank-item_image">
+        <p style="text-align: center">No quiz available for this lesson</p>
+      </div>
     </div>
 </div>

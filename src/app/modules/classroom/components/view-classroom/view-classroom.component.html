@@ -164,7 +164,7 @@
                     <td>{{ course?.duration || "-" }}</td>
                     <td>
                       <button class="btn sec_btn" style="margin-right: 2rem;" (click)="watchCourse(course?.id)">Watch</button>
-                      <button class="btn sec_btn" *ngIf="classroom?.quiz_id" (click)="openViewCourseQuizResult(course)">Quiz Result</button>
+                      <button class="btn sec_btn" (click)="openViewCourseQuizResult(course)">Quiz Result</button>
                     </td>
                   </tr>
                 </ng-container>

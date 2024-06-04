@@ -5,3 +5,59 @@
 .quiz-result {
     padding: $m-4;
 }
+
+@mixin hover {
+    transition: all .2s;
+    &:hover {
+      border-color: $primary80;
+    }
+}
+
+form {
+    display: grid;
+    grid-gap: $m-3;
+    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: $m-3;
+    .form_control {
+      width: 100%;
+      label {
+        display: inline-block;
+        color: $primary80;
+        margin-bottom: $m-2;
+        font-size: 18px;
+        font-weight: 700;
+        .label-required {
+          color: $error80;
+        }
+      }
+      &_field {
+        width: 100%;
+        border: 1px solid $inner-border;
+        border-radius: $border-radius1;
+        padding: 0 $m-2;
+        @include hover();
+        select {
+          padding: $m-2 0;
+          width: 100%;
+          background-color: transparent;
+          border: none;
+          outline: none;
+          height: 100%;
+          &::placeholder {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+
+.course-empty {
+  display: grid;
+  grid-gap: 1rem;
+  place-items: center;
+  padding: 2rem 0;
+  img {
+      max-width: 150px;
+      height: auto;
+  }
+}

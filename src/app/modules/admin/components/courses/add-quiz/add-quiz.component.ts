@@ -31,8 +31,6 @@ export class AddQuizComponent implements OnInit {
     this.modules = this.course.modules;
     this.initForm();
     this.getAllquizzes();
-    console.log(this.course);
-    
   }
 
   initForm() {
@@ -128,6 +126,4 @@ export class AddQuizComponent implements OnInit {
   closeAddQuizToCourse() {
     this.addQuizToCourseModal.emit();
   }
-  
-
  }
