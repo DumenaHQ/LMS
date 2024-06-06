@@ -38,14 +38,6 @@ const routes: Routes = [
         },
       },
       {
-        path: 'payment',
-        component: SchoolPaymentComponent,
-        data: {
-          title: 'Payment',
-          description: 'Description Meta Tag Content',
-        },
-      },
-      {
         path: 'programs',
         component: SchoolProgramsComponent,
         data: {
@@ -74,6 +66,14 @@ const routes: Routes = [
         loadChildren: () => import('../school/components/school-teachers/school-teacher.module').then((m) => m.SchoolTeacherModule),
         data: {
           title: 'Teachers',
+          description: 'Description Meta Tag Content',
+        },
+      },
+      {
+        path: 'payment',
+        component: SchoolPaymentComponent,
+        data: {
+          title: 'Payment',
           description: 'Description Meta Tag Content',
         },
       },

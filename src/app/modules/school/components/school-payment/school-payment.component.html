@@ -2,49 +2,119 @@
   <h2 class="ds-head_title">Payments</h2>
 </section>
 
-<section></section>
+<section class="cart">
+  <div class="cart_body">
+    <div class="cart_body_list" style="padding-right: 1.5rem">
+      <div class="form_control">
+        <label for="classroom">Classroom</label>
+        <div class="form_control_field">
+            <select name="classroom" id="classroom" (change)="handleSelectChange($event)">
+                <option value="">Select a classroom</option>
+                <option [value]="item.id" *ngFor="let item of classrooms; let i = index">
+                    {{ item.name }}
+                </option>
+            </select>
+        </div>
+      </div>
 
-<!-- <section class="pricing">
-  <div class="pricing_header dis-flex">
-    <button class="btn prim_btn">Make Payment</button>
-  </div>
-</section> -->
+      <app-loader *ngIf="dataLoading"></app-loader>
 
-<!-- Payment History(PH) -->
-<section class="ph">
-  <div class="ds-sect-header dis-flex">
-    <h5>Payment History</h5>
-  </div>
-  <div class="ph_body">
-    <div style="overflow-x: auto">
-      <table>
-        <tr class="table-header">
-          <th>Channel</th>
-          <th>Amount (NGN)</th>
-          <th>Date</th>
-          <th>Status</th>
-        </tr>
-        <ng-container>
-          <tr class="table-body" *ngFor="let i of paymentsHistory">
-            <td>{{ i.channel | titlecase }}</td>
-            <td>{{ i.amount / 100 | number }}</td>
-            <td>{{ i.createdAt | date: "medium" }}</td>
-            <td class="status">
-              <button
-                type="button"
-                [class.success_btn]="i.status == 'success'"
-                [class.warning_btn]="i.status == 'pending'"
-                [class.danger_btn]="i.status == 'declined'"
+      <div style="overflow-x: auto;" *ngIf="dataLoading === false">
+        <p style="margin-bottom: 1rem;"><b>NOTE:</b> Select only learners you want to pay for</p>
+        <table>
+          <tr class="table-header">
+            <th>Fullname</th>
+            <th>Grade</th>
+            <th>
+              <div class="dis-flex" style="gap: 1rem;">
+                <input 
+                  type="checkbox" 
+                  name="all learners" 
+                  id="all learners"
+                  [title]="learners.length === selectedLearners.length ? 'Deselect all learners' : 'Select all learners'"
+                  [checked]="learners.length === selectedLearners.length"
+                  class="clickable"
+                  (change)="selectAllLearner($event)"
+                >
+                {{ selectedLearners.length + '/' + learners.length }}
+              </div>
+            </th>
+          </tr>
+          <tr class="table-body" *ngFor="let item of learners; let i = index">
+            <td>{{ item.fullname }}</td>
+            <td>{{ item.grade }}</td>
+            <td class="action">
+              <input 
+                type="checkbox" 
+                [name]="'learner-' + i" 
+                [id]="'learner-' + i"
+                [checked]="isLearnerSelected(item)"
+                class="clickable"
+                (change)="selectLearner($event, item)"
               >
-                {{ i.status | titlecase }}
-              </button>
             </td>
           </tr>
-        </ng-container>
-        <ng-template>
-          <p style="text-align: center">Empty Payment History!</p>
-        </ng-template>
-      </table>
+
+          <tr *ngIf="learners?.length === 0">
+            <td colspan="20" style="text-align: center;">No learner available</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="cart_body_checkout">
+      <div class="cart_body_checkout_header">
+        <p class="body-1-bold">Payment details</p>
+        <div class="sub-total dis-flex">
+          <p class="body-2-regular">Sub total</p>
+          <p class="body-2-regular">N{{ grandTotal | number }}.00</p>
+        </div>
+        <form>
+          <div class="form-field">
+            <label for="voucher" (click)="isVoucher = !isVoucher"
+              >Apply a voucher?
+              <strong class="text-primary-color clickable"
+                >Click here!</strong
+              ></label
+            >
+            <div class="input-voucher" [class.show]="isVoucher">
+              <div class="input-field">
+                <input
+                  type="text"
+                  id="voucher"
+                  name="voucher"
+                  placeholder="Enter code here"
+                />
+              </div>
+              <div class="form-btn">
+                <button class="btn prim_btn">Apply</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="cart_body_checkout_footer">
+        <div class="grand-total dis-flex">
+          <p class="body-1-bold">Total</p>
+          <p class="body-1-bold">N{{ grandTotal | number }}.00</p>
+        </div>
+        <button
+          class="btn prim_btn clickable"
+          [disabled]="selectedLearners.length === 0"
+          (click)="openConfirmModal()"
+        >
+          <span>Proceed to Payment</span>
+        </button>
+      </div>
     </div>
   </div>
 </section>
+
+ <!-- Delete confirmation -->
+ <app-confirm-delete 
+  *ngIf="confirmModal" 
+  (confrimModal)="closeConfirmModal()" 
+  [confirmMessage]="confirmMessage"
+  (confrimDone)="makePayment()"
+  (reloadData)="getClassrooms()"
+></app-confirm-delete>
