@@ -130,6 +130,7 @@
           <li
             class="body-2-medium"
             [class.active]="contentId === 'discussions'"
+            *ngIf="user.role === 'school'"
             (click)="tabChange('discussions')"
           >
             Discussions

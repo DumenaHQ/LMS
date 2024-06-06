@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ConfirmDeleteComponent implements OnInit {
   @Output() confrimModal: EventEmitter<any> = new EventEmitter();
+  @Output() confrimDone: EventEmitter<any> = new EventEmitter();
   @Output() reloadData: EventEmitter<any> = new EventEmitter();
   @Input() confirmMessage: any;
   @Input() confirmUrl: any;
@@ -26,33 +27,37 @@ export class ConfirmDeleteComponent implements OnInit {
   }
 
   confirmAction() {
-    this.loading = true;
-    this.authService
-      .confirmItem(this.confirmUrl, this.confirmMethod).subscribe({
-        next:(res: any) => {
-          if (res.status === true) {
-            this.appAlertService.showAlert(res.message, AlertType.Success);
-            this.closeDeleteModal();
-            this.getReloadedData();
+    if(this.confirmUrl) {
+      this.loading = true;
+      this.authService
+        .confirmItem(this.confirmUrl, this.confirmMethod).subscribe({
+          next:(res: any) => {
+            if (res.status === true) {
+              this.appAlertService.showAlert(res.message, AlertType.Success);
+              this.closeConfirmModal();
+              this.getReloadedData();
+            }
+          },
+          error:(error: any) => {
+            console.log(error);
+            this.appAlertService.showAlert(
+              error.error.message
+              ? (error.error.message)
+              : (error.error.error.errors[0].message),
+              AlertType.Error
+            );
+          },
+          complete:() => {
+            this.loading = false;
           }
-        },
-        error:(error: any) => {
-          console.log(error);
-          this.appAlertService.showAlert(
-            error.error.message
-            ? (error.error.message)
-            : (error.error.error.errors[0].message),
-            AlertType.Error
-          );
-        },
-        complete:() => {
-          this.loading = false;
-        }
-    });
+      });
+    } else {
+      this.confrimDone.emit();
+    }
   }
 
   // Close modal
-  closeDeleteModal() {
+  closeConfirmModal() {
     this.confrimModal.emit();
   }
 
