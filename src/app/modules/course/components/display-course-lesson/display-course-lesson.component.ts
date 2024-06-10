@@ -80,7 +80,6 @@ export class DisplayCourseLessonComponent implements OnInit {
     this.courseService
     .checkIfLessonIsReady(this.currentCourseParams.courseId, moduleId, lessonId)
     .subscribe((res: any) => {
-      console.log(res);
       if(res.data.canTakeNextLesson === true) {
         this.watchLesson(moduleIndex, lessonIndex);
       } else if(res.data.canTakeNextLesson === false) {

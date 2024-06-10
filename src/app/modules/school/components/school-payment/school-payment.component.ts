@@ -16,19 +16,16 @@ export class SchoolPaymentComponent implements OnInit {
   baseUrl: string = environment.baseUrl;
   key = environment.paystackKey;
   user: any;
-  orders: any;
-  order: any;
   grandTotal: number = 0;
+  planAmount: number = 15000;
   isVoucher: boolean = false;
-  activePlans: any;
-  allPlans: any;
-  reference: any;
   classrooms?: ClassroomModel[];
   dataLoading: boolean;
   learners: any;
   selectedLearners: any[] = [];
   confirmModal: boolean = false;
   confirmMessage: string;
+  loading: boolean;
 
   constructor(
     private classroomService: ClassroomService,
@@ -70,53 +67,66 @@ export class SchoolPaymentComponent implements OnInit {
   }
   
   handleSelectChange(event: any) {
-    if(event.target.value !== ''){ 
+    if(event.target.value !== '') { 
       this.getClassroomById(event.target.value);
     }
   }
 
   isLearnerSelected(learner: any): boolean {
-    return this.selectedLearners.some(selected => selected.userId === learner.id);
+    return this.selectedLearners.some(selected => selected.learnerId === learner.id);
   }
 
   selectLearner(event: any, learner: any) {
     if (event.target.checked) {
-      this.selectedLearners.push({
-        userId: learner.id, 
-        order_type: 'sub', 
-        slug: 'standard-plan'
-      });
+      this.selectedLearners.push({ learnerId: learner.id });
       this.appAlertService.showAlert('Learner selected', AlertType.Warning);
     } else {
-      this.selectedLearners = this.selectedLearners.filter(selected => selected.userId !== learner.id);
+      this.selectedLearners = this.selectedLearners.filter(selected => selected.learnerId !== learner.id);
       this.appAlertService.showAlert('Learner removed', AlertType.Warning);
     }
+    this.grandTotal = this.planAmount * this.selectedLearners.length;
   }
 
   selectAllLearner(event: any) {
     if (event.target.checked) {
       this.selectedLearners = [];
       this.learners.map((learner: any) => {
-        this.selectedLearners.push({
-          userId: learner.id, 
-          order_type: 'sub', 
-          slug: 'standard-plan'
-        })
+        this.selectedLearners.push({ learnerId: learner.id })
       });
       this.appAlertService.showAlert('All learners selected', AlertType.Warning);
     } else {
       this.selectedLearners = [];
       this.appAlertService.showAlert('All learners removed', AlertType.Warning);
     }
+    this.grandTotal = this.planAmount * this.selectedLearners.length;
   }
 
   openConfirmModal() {
     this.confirmModal = true;
-    this.confirmMessage = `Are you sure you want to make payment for ${this.selectedLearners.length} ${this.selectedLearners.length > 1 ? 'learners' : 'learner'}?`;
+    const formattedGrandTotal = new Intl.NumberFormat().format(this.grandTotal);
+    this.confirmMessage = `Are you sure you want to make pay ₦${formattedGrandTotal} for ${this.selectedLearners.length} ${this.selectedLearners.length > 1 ? 'learners' : 'learner'}?`;
   }
 
   makePayment() {
-    console.log(`Payment done for ${this.selectedLearners.length} learners`);
+    this.loading = true;
+    let payload = {
+      items: this.selectedLearners.map((learner: any) => ({
+        user_id: learner.learnerId,
+        order_type: 'sub',
+        slug: 'standard-plan'
+      }))
+    }
+
+    this.orderService.addOrder(payload).subscribe({
+      next: (res: any) => {
+        this.loading = false;
+        this.payWithPaystack(res.data.order.reference, res.data.order.total_amount);
+      },
+      error: (e) => {
+        console.error(e);
+        this.loading = false;
+      },
+    });
   }
 
   // Get all orders
@@ -144,20 +154,16 @@ export class SchoolPaymentComponent implements OnInit {
   }
 
   // Pay with Paystack
-  payWithPaystack() {
+  payWithPaystack(reference: string, amount: number) {
     let url = this.baseUrl;
-    let router = this.router;
-    let userRole = this.user.role;
     let zone = this.ngZOne;
-    // let reference = this.reference;
-    // let amount = this.grandTotal;
     // @ts-ignore
     let handler = PaystackPop.setup({
       key: this.key,
       email: this.user.email,
-      amount: this.grandTotal * 100,
+      amount: amount * 100,
       currency: 'NGN',
-      ref: this.reference,
+      ref: reference,
       callback: function (response: any) {
         var reference = response.reference;
         if (response.status === 'success') {
@@ -172,11 +178,9 @@ export class SchoolPaymentComponent implements OnInit {
             .then((res) => res.json())
             .then((data) => {
               console.log({ data });
-              // if payment is successful, route user to children page
               if (data.status == true) {
                 zone.run(() => {
-                  // router.navigate([userRole + '/children']);
-                  this.getOrders();
+                  this.getClassrooms();
                 });
               }
             });
