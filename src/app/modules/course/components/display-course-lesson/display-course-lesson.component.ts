@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CoursesService } from 'src/app/services/courses.service';
 
@@ -22,9 +23,10 @@ export class DisplayCourseLessonComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private coursesService: CoursesService,
+    private courseService: CoursesService,
     private authService: AuthService,
     private router: Router,
+    private appAlertService: AppAlertService,
   ) { }
 
 
@@ -35,9 +37,9 @@ export class DisplayCourseLessonComponent implements OnInit {
   }
   
   getCourse() {
-    this.coursesService
+    this.courseService
     .getCourse(this.currentCourseParams.courseId)
-    .subscribe((res: any) => {res.data.course;
+    .subscribe((res: any) => {
       this.course = res.data.course;
       this.modules = this.course.modules;
       this.lessonVideoUrl = this.course?.modules[this.currentModuleIndex]?.lessons[this.currentLessonIndex]?.lesson_video;
@@ -48,7 +50,43 @@ export class DisplayCourseLessonComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params) => {
       this.currentModuleIndex = params['moduleIndex'] ? parseInt(params['moduleIndex'], 10) : 0;
       this.currentLessonIndex = params['lessonIndex'] ? parseInt(params['lessonIndex'], 10) : 0;
+
+      this.activeIndex = this.currentModuleIndex;
       this.getCourse();
+    });
+  }
+
+  getPreviousModuleAndLesson(moduleIndex: number, lessonIndex: number) {
+    let previousModuleId, previousLessonId;
+    if (lessonIndex > 0) {
+      // Same module, previous lesson
+      previousModuleId = this.modules[moduleIndex].id;
+      previousLessonId = this.modules[moduleIndex].lessons[lessonIndex - 1].id;
+    } else if (moduleIndex > 0) {
+      // Previous module, last lesson
+      const previousModule = this.modules[moduleIndex - 1];
+      previousModuleId = previousModule.id;
+      previousLessonId = previousModule.lessons[previousModule.lessons.length - 1].id;
+    } else {
+      console.log('No previous lesson.');
+      this.watchLesson(moduleIndex, lessonIndex);
+      return;
+    }
+
+    this.canViewNextLesson(moduleIndex, lessonIndex, previousModuleId, previousLessonId);
+  }
+
+  canViewNextLesson(moduleIndex: any, lessonIndex: any, moduleId: any, lessonId: any) {
+    this.courseService
+    .checkIfLessonIsReady(this.currentCourseParams.courseId, moduleId, lessonId)
+    .subscribe((res: any) => {
+      console.log(res);
+      if(res.data.canTakeNextLesson === true) {
+        this.watchLesson(moduleIndex, lessonIndex);
+      } else if(res.data.canTakeNextLesson === false) {
+        if(res.data.message === 'Score below pass mark')
+        this.appAlertService.showAlert('Kindly complete previous lesson quiz to proceed. You scored below pass mark', AlertType.Warning);
+      }
     });
   }
 
@@ -62,19 +100,9 @@ export class DisplayCourseLessonComponent implements OnInit {
     this.getModuleAndLessonIndex();
   }
 
-  playNextVideo() {
-    this.currentLessonIndex++;
-    if (this.currentLessonIndex < this.course?.modules[this.currentModuleIndex]?.lessons.length) {
-      this.lessonVideoUrl = this.course.modules[this.currentModuleIndex].lessons[this.currentLessonIndex].lesson_video;
-      this.videoPlayer.nativeElement.src = this.lessonVideoUrl;
-      this.videoPlayer.nativeElement.load();
-      this.videoPlayer.nativeElement.addEventListener('loadeddata', () => {
-        this.videoPlayer.nativeElement.play();
-      }, { once: true }); 
-    } else {
-      this.currentLessonIndex = this.course.modules[this.currentModuleIndex].lessons.length - 1;
-      // console.log('Reached the last lesson of the module. Stopping autoplay.');
-    }
+  checkIfActiveLesson(moduleIndex: number, lessonIndex: number) {
+    const checkCurrentLesson = `${this.currentModuleIndex}${this.currentLessonIndex}` === `${moduleIndex}${lessonIndex}`;
+    return checkCurrentLesson;
   }
 
   goBackToCourseInfo() { 
