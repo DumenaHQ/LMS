@@ -103,7 +103,8 @@
           [disabled]="selectedLearners.length === 0"
           (click)="openConfirmModal()"
         >
-          <span>Proceed to Payment</span>
+          <span *ngIf="!loading">Proceed to Payment</span>
+          <span *ngIf="loading">Processing...</span>
         </button>
       </div>
     </div>

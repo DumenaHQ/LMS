@@ -23,7 +23,6 @@
               controlsList="nodownload"
               #videoPlayer
               autoplay
-              (ended)="playNextVideo()"
             ></video>
           </div>
         </div>
@@ -91,38 +90,38 @@
               *ngFor="let module of modules; let moduleIndex = index"
             >
                 <div 
-                    class="course-content_list_item_module dis-flex clickable" 
-                    [title]="module?.title" 
-                    [class.active]="currentModuleIndex === moduleIndex"
-                    (click)="toggleAccordion(moduleIndex)"
-                    >
-                    <div class="left dis-flex">
-                        <span class="numb">{{ moduleIndex + 1 }}</span>
-                        <div class="">
-                            <h5 class="heading"> 
-                            {{ module?.title | truncate:15 }}
-                            </h5>
-                            <span class="time dis-flex">
-                            <img
-                                src="../../../../../assets/img/library/clock.svg"
-                                alt="image"
-                            />
-                            <small>{{module?.duration}}</small>
-                            </span>
-                        </div>
+                  class="course-content_list_item_module dis-flex clickable" 
+                  [title]="module?.title" 
+                  [class.active]="currentModuleIndex === moduleIndex"
+                  (click)="toggleAccordion(moduleIndex)"
+                >
+                  <div class="left dis-flex">
+                    <span class="numb">{{ moduleIndex + 1 }}</span>
+                    <div class="">
+                      <h5 class="heading"> 
+                      {{ module?.title | truncate:15 }}
+                      </h5>
+                      <span class="time dis-flex">
+                      <img
+                          src="../../../../../assets/img/library/clock.svg"
+                          alt="image"
+                      />
+                      <small>{{module?.duration}}</small>
+                      </span>
                     </div>
-                    <span class="right">
-                        <i class="bx bx-chevron-down icon chevron-icon" [class.open]="activeIndex === moduleIndex"></i>
-                    </span>
+                  </div>
+                  <span class="right">
+                    <i class="bx bx-chevron-down icon chevron-icon" [class.open]="activeIndex === moduleIndex"></i>
+                  </span>
                 </div>
   
                 <div class="course-content_list_item_lessons" [ngClass]="{'active': activeIndex === moduleIndex}">
                   <div *ngFor="let lesson of module?.lessons; let lessonIndex = index">
                     <div 
                         class="course-content_list_item_lessons_item dis-flex clickable" 
-                        (click)="watchLesson(moduleIndex, lessonIndex)" 
+                        (click)="getPreviousModuleAndLesson(moduleIndex, lessonIndex)" 
                         [title]="lesson?.title" 
-                        [class.active]="currentModuleIndex + currentLessonIndex === moduleIndex + lessonIndex"
+                        [class.active]="checkIfActiveLesson(moduleIndex, lessonIndex)"
                     >
                       <div class="left dis-flex">
                         <img
