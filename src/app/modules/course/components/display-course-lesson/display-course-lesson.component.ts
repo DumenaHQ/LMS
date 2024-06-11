@@ -84,7 +84,7 @@ export class DisplayCourseLessonComponent implements OnInit {
         this.watchLesson(moduleIndex, lessonIndex);
       } else if(res.data.canTakeNextLesson === false) {
         if(res.data.message === 'Score below pass mark')
-        this.appAlertService.showAlert('Kindly complete previous lesson quiz to proceed. You scored below pass mark', AlertType.Warning);
+        this.appAlertService.showAlert('You\'ll need to retake the previous lesson quiz. You scored below pass mark', AlertType.Warning);
       }
     });
   }
