@@ -14,10 +14,13 @@ export class DisplayAdminQuizzesComponent implements OnInit {
   constructor(private quizService: QuizService) {}
 
   ngOnInit(): void {
+    this.getQuizzes();
+  }
+  
+  getQuizzes() {
     this.quizService.getAllquizzes().subscribe({
       next: (res: any) => {
         this.allquizzes = res.data.quizzes;
-        console.log(this.allquizzes);
       },
       error: (e) => console.error(e),
       complete: () => {

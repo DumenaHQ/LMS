@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { QuizService } from 'src/app/services/quiz.service';
+import { FormErrorMessageService } from 'src/app/services/utils/form-error-message.service';
 
 @Component({
   selector: 'app-add-admin-quizze-questions',
@@ -10,7 +12,8 @@ import { QuizService } from 'src/app/services/quiz.service';
 export class AddAdminQuizzeQuestionsComponent implements OnInit {
 
   @Input() quizId: any;
-  questionForm: FormGroup;
+  @Output() addQuizQuestionModal = new EventEmitter<any>();
+  formGroup: FormGroup;
   loading: boolean = false;
   alertMessage: string = '';
   alertColor: string = '';
@@ -19,33 +22,41 @@ export class AddAdminQuizzeQuestionsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private quizService: QuizService,
-  ) {
-    this.questionForm = this.fb.group({
-      questions: this.fb.array([]),
-    });
-  }
+    private appAlertService: AppAlertService,
+    private formErrorService: FormErrorMessageService
+  ) { }
   ngOnInit(): void {
+    this.initForm();
+  }
+
+  initForm() {
+    this.formGroup = this.fb.group({
+      questions: this.fb.array([
+        this.createQuestionGroup(),
+      ]),
+    });
   }
 
   // Get Questions
   get questions(): FormArray {
-    return this.questionForm.get('questions') as FormArray;
+    return this.formGroup.get('questions') as FormArray;
   }
 
-  // Get Options
-  getOptions(questionGroup: any): FormArray | null {
-    return questionGroup.get('options') as FormArray;
-  }
-
-  // Add Question
-  addQuestion() {
-    const questionGroup = this.fb.group({
-      question: '',
-      selectionType: 'single',
-      options: this.fb.array([]),
-      correctAnswer: '',
+  createQuestionGroup(): FormGroup {
+    const optionsArray = this.fb.array([
+      this.createOption('optionA')
+    ]);
+    return this.fb.group({
+      question: ['', [Validators.required]],
+      selectionType: ['single', [Validators.required]],
+      options: optionsArray,
+      correctAnswer: ['', [Validators.required]],
     });
-    this.questions.push(questionGroup);
+  }
+
+  // Add new question
+  addNewQuestion(): void {
+    this.questions.push(this.createQuestionGroup());
   }
 
   // Remove Option
@@ -53,55 +64,102 @@ export class AddAdminQuizzeQuestionsComponent implements OnInit {
     this.questions.removeAt(index);
   }
 
+  // Get Options
+  getOptions(questionGroup: any): FormArray | null {
+    return questionGroup.get('options') as FormArray;
+  }
+
+  createOption(label: string): FormGroup {
+    return this.fb.group({
+      [label]: ['', [Validators.required]]
+    });
+  }
+
   // Add Option
   addOption(questionGroup: any) {
     const options = questionGroup.get('options') as FormArray;
-    options.push(this.fb.control(''));
+    const nextLabel = `option${String.fromCharCode(65 + options.length)}`; // A, B, C, ...
+    options.push(this.createOption(nextLabel));
   }
 
   // Remove Option
   removeOption(questionGroup: any, index: number) {
     const options = questionGroup.get('options') as FormArray;
     options.removeAt(index);
+    this.updateOptionLabels(questionGroup);
+  }
+
+  updateOptionLabels(questionGroup: FormGroup): void {
+    const options = this.getOptions(questionGroup);
+    if (options) {
+      options.controls.forEach((control: AbstractControl, index: number) => {
+        const optionGroup = control as FormGroup;
+        const optionLabel = this.getAlphabetLabel(index);
+        const keys = Object.keys(optionGroup.controls);
+        keys.forEach(key => {
+          const controlValue = optionGroup.get(key)?.value;
+          optionGroup.removeControl(key);
+          optionGroup.addControl(`option${optionLabel}`, this.fb.control(controlValue, Validators.required));
+        });
+      });
+    }
+  }
+
+  getOptionLabel(option: AbstractControl): string {
+    return Object.keys(option.value)[0];
+  }
+
+  setCorrectAnswer(questionIndex: number, answer: string): void {
+    const questionFormGroup = this.questions.at(questionIndex) as FormGroup;
+    questionFormGroup.patchValue({ correctAnswer: answer });
+  }
+  
+  isCorrectAnswer(questionIndex: number, answer: string): boolean {
+    const questionFormGroup = this.questions.at(questionIndex) as FormGroup;
+    return questionFormGroup.get('correctAnswer')?.value === answer;
+  }
+
+  getPayload(): any[] {
+    return this.questions.controls.map((control: AbstractControl) => {
+      const questionGroup = control as FormGroup;
+      const question = questionGroup.get('question')?.value;
+      const correctAnswer = questionGroup.get('correctAnswer')?.value;
+      const optionsFormArray = questionGroup.get('options') as FormArray;
+      const options: { [key: string]: string } = {};
+  
+      optionsFormArray.controls.forEach((control: AbstractControl, index: number) => {
+        const optionGroup = control as FormGroup;
+        const optionLabel = this.getAlphabetLabel(index);
+        const optionValue = optionGroup.get(`option${optionLabel}`)?.value;
+        options[`opt${optionLabel}`] = optionValue;
+      });
+  
+      return {
+        question,
+        ...options,
+        answer: correctAnswer
+      };
+    });
   }
 
   onSubmit() {
     this.loading = true;
-
-    const remappedArray = this.questionForm.value.questions.map((item: any) => {
-      const remappedItem: any = {
-        "question": item.question,
-      };
-
-      const filteredOptions = item.options.filter((option: any) => option !== ""); // Remove empty options
-      filteredOptions.forEach((option: any, index: any) => {
-        remappedItem[`opt${String.fromCharCode(65 + index)}`] = option;
-
-        if (option === item.correctAnswer) {
-          remappedItem.answer = String.fromCharCode(65 + index);
-        }
-      });
-    
-      return remappedItem;
-    });
-    console.log(remappedArray);
-
-    this.quizService.addQuestionsToQuiz(this.quizId, remappedArray).subscribe(
+    const payload = this.getPayload();
+    this.quizService.addQuestionsToQuiz(this.quizId, payload).subscribe(
       (res: any) => {
-        console.log(res);
-
-        // Show alert
         if (res.status === true) {
-          this.showAlertPopup(res.message, 'success');
-          setTimeout(() => {
-            window.location.reload();
-          }, 6000);
+          this.appAlertService.showAlert(res.message, AlertType.Success);
+          this.closeAddQuizQuestions();
         }
       },
       (error: any) => {
         console.log(error);
-        // Show error message
-        this.showAlertPopup(error.error.message, 'error');
+        this.appAlertService.showAlert(
+          error.error.message
+          ? (error.error.message)
+          : (error.error.error.errors[0].message),
+          AlertType.Error
+        );
 
         // Set loading to false
         this.loading = false;
@@ -109,23 +167,27 @@ export class AddAdminQuizzeQuestionsComponent implements OnInit {
     );
   }
 
-  // Get Alphabet Label
-  getAlphabetLabel(index: number): string {
-    return String.fromCharCode(65 + index);
+  getErrorMessage(questionIndex: number, optionIndex: number, controlName: string, labelName: string): string {
+    const questionFormGroup = this.questions.at(questionIndex) as FormGroup;
+    let control: AbstractControl | null = null;
+    if (optionIndex === -1) {
+      control = questionFormGroup.get(controlName);
+    } else {
+      const optionsArray = questionFormGroup.get('options') as FormArray;
+      const optionGroup = optionsArray.at(optionIndex) as FormGroup;
+      control = optionGroup.get(controlName);
+    }
+    const errors = control?.errors;
+    return this.formErrorService.getErrorMessage(errors, labelName);
   }
 
-  // Show alert
-  showAlertPopup(message: string, color: string) {
-    // Set message
-    this.alertMessage = message;
-    // Set color
-    this.alertColor = color;
-    // Show Alert
-    this.isAlert = true;
-    // Hide Alert
-    setTimeout(() => {
-      this.isAlert = false;
-    }, 3000);
+  // Get Alphabet Label
+  getAlphabetLabel(index: number): string {
+    return String.fromCharCode(65 + index); // 65 is ASCII code for 'A'
+  }
+
+  closeAddQuizQuestions() {
+    this.addQuizQuestionModal.emit();
   }
   
 }

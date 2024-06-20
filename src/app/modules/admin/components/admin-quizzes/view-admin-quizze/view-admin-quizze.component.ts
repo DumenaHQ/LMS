@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CoursesService } from 'src/app/services/courses.service';
 import { QuizService } from 'src/app/services/quiz.service';
 
 @Component({
@@ -12,39 +11,53 @@ export class ViewAdminQuizzeComponent implements OnInit {
 
   quiz: any;
   currentQuiz: any;
-  isModuleLessons: boolean = false;
-  questionLessons: any;
   questionIndex: number = 0;
-  isAddQuiz: boolean = false;
+  isAddQuizQuestions: boolean = false;
 
   // sub: any
   constructor(
     private activatedRoute: ActivatedRoute,
     private quizService: QuizService
-
   ) { }
 
   ngOnInit(): void {
-
-    // Get Current Program
     this.currentQuiz = this.activatedRoute.snapshot.params;
-
-    // Get Course
+    this.getQuizByQuizId();
+  }
+  
+  getQuizByQuizId() {
     this.quizService.getquizByQuizId(this.currentQuiz.quizId).subscribe({
       next: (res: any) => {
         this.quiz = res.data.quiz;
         console.log(this.quiz);
       },
-      error: (e: any) => console.error(e),
-      complete: () => {
-        // this.dataLoading = false;
-      },
+      error: (e: any) => console.error(e)
     });
   }
 
-  // Add quiz
-  addQuiz() {
-    this.isAddQuiz = true
+  toggleAddQuizQuestions() {
+    this.isAddQuizQuestions = !this.isAddQuizQuestions;
+  }
+
+  closeAndRefresh() {
+    this.isAddQuizQuestions = false;
+    this.getQuizByQuizId();
+  }
+
+  getOptions(question: any): { label: string, value: string }[] {
+    if (!question) {
+      return [];
+    }
+    const options: { label: string; value: any; }[] = [];
+    const optionLabels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+    optionLabels.forEach(label => {
+      const optionKey = `opt${label}`;
+      if (question[optionKey]) {
+        options.push({ label, value: question[optionKey] });
+      }
+    });
+  
+    return options;
   }
 
 }
