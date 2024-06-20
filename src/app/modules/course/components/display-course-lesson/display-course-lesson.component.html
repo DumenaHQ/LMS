@@ -119,7 +119,7 @@
                   <div *ngFor="let lesson of module?.lessons; let lessonIndex = index">
                     <div 
                         class="course-content_list_item_lessons_item dis-flex clickable" 
-                        (click)="getPreviousModuleAndLesson(moduleIndex, lessonIndex)" 
+                        (click)="getPreviousModuleAndLesson(moduleIndex, lessonIndex, undefined, 'lesson')" 
                         [title]="lesson?.title" 
                         [class.active]="checkIfActiveLesson(moduleIndex, lessonIndex)"
                     >
@@ -139,18 +139,18 @@
                     </div>
                     <!-- lesson quiz -->
                     <span 
-                        *ngIf="lesson?.quiz_id"
-                        class="course-content_list_item_lessons_quiz dis-flex clickable" 
-                        (click)="viewQuiz(lesson?.quiz_id)" 
+                      *ngIf="lesson?.quiz_id"
+                      class="course-content_list_item_lessons_quiz dis-flex clickable" 
+                      (click)="getPreviousModuleAndLesson(moduleIndex, lessonIndex, lesson?.quiz_id, 'quiz')"
                     >
                       <div class="left dis-flex">
                         <i class='bx bx-medal icon'></i>
                         <p>Quiz</p>
                       </div>
-                      <div>
+                      <!-- <div>
                         <i class='bx bx-checkbox icon'></i>
-                        <!-- <i class='bx bxs-checkbox-checked icon check-icon'></i> -->
-                      </div>
+                        <i class='bx bxs-checkbox-checked icon check-icon'></i>
+                      </div> -->
                     </span>
                   </div>
                 </div>

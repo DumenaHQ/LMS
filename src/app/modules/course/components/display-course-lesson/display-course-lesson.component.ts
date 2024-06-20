@@ -56,7 +56,7 @@ export class DisplayCourseLessonComponent implements OnInit {
     });
   }
 
-  getPreviousModuleAndLesson(moduleIndex: number, lessonIndex: number) {
+  getPreviousModuleAndLesson(moduleIndex: number, lessonIndex: number, lessonQuizId: any, type: string) {
     let previousModuleId, previousLessonId;
     if (lessonIndex > 0) {
       // Same module, previous lesson
@@ -69,22 +69,33 @@ export class DisplayCourseLessonComponent implements OnInit {
       previousLessonId = previousModule.lessons[previousModule.lessons.length - 1].id;
     } else {
       console.log('No previous lesson.');
-      this.watchLesson(moduleIndex, lessonIndex);
+      if(type === 'lesson') {
+        this.watchLesson(moduleIndex, lessonIndex);
+      } else {
+        this.viewQuiz(lessonQuizId);
+      }
       return;
     }
 
-    this.canViewNextLesson(moduleIndex, lessonIndex, previousModuleId, previousLessonId);
+    this.canViewNextLessonOrQuiz(moduleIndex, lessonIndex, previousModuleId, previousLessonId, lessonQuizId, type);
   }
 
-  canViewNextLesson(moduleIndex: any, lessonIndex: any, moduleId: any, lessonId: any) {
+  canViewNextLessonOrQuiz(moduleIndex: any, lessonIndex: any, moduleId: any, lessonId: any, lessonQuizId: any, type: string) {
     this.courseService
     .checkIfLessonIsReady(this.currentCourseParams.courseId, moduleId, lessonId)
     .subscribe((res: any) => {
       if(res.data.canTakeNextLesson === true) {
-        this.watchLesson(moduleIndex, lessonIndex);
+        if(type === 'lesson') {
+          this.watchLesson(moduleIndex, lessonIndex);
+        } else {
+          this.viewQuiz(lessonQuizId);
+        }
       } else if(res.data.canTakeNextLesson === false) {
-        if(res.data.message === 'Score below pass mark')
-        this.appAlertService.showAlert('You\'ll need to retake the previous lesson quiz. You scored below pass mark', AlertType.Warning);
+        if(res.data.message === 'Score below pass mark') {
+          this.appAlertService.showAlert('Kindly complete previous lesson quiz to proceed. You scored below pass mark', AlertType.Warning);
+        } else {
+          this.appAlertService.showAlert(res.data.message, AlertType.Warning);
+        }
       }
     });
   }
@@ -103,13 +114,13 @@ export class DisplayCourseLessonComponent implements OnInit {
     const checkCurrentLesson = `${this.currentModuleIndex}${this.currentLessonIndex}` === `${moduleIndex}${lessonIndex}`;
     return checkCurrentLesson;
   }
-
+  
+  viewQuiz(lessonQuizId: any) {
+    this.router.navigate([`${this.user.role}/classrooms/courses/${this.currentCourseParams.courseId}/lessons/quiz/${lessonQuizId}`]);
+  }
+  
   goBackToCourseInfo() { 
     this.router.navigate([`/${this.user.role}/classrooms/courses/${this.currentCourseParams.courseId}`]);
-  }
-
-  viewQuiz(quiz_id: any) {
-    this.router.navigate([`${this.user.role}/classrooms/courses/${this.currentCourseParams.courseId}/lessons/quiz/${quiz_id}`]);
   }
 
   toggleAccordion(index: number) {
