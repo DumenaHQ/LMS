@@ -16,7 +16,7 @@
       font-weight: 400;
       line-height: 17px;
       letter-spacing: 0.01em;
-      text-align: center;
+      text-align: left;
     }
     tr {
       &.table-header {
@@ -44,10 +44,6 @@
               border-radius: $border-radius2;
             }
           }
-          &.quadrant,
-          &.name {
-            text-align: left;
-          }
         }
         &:not(:last-child) {
           td {
@@ -61,28 +57,25 @@
 }
 
 
-// Action Buttons
-// Actions
+// Action 
 .actions {
-    position: relative;
-    input:checked + .dropdown {
-        display: grid;
+  position: relative;
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: -0.5rem;
+    transform: translateX(-50%);
+    background: $white-color;
+    box-shadow: $box-shadow;
+    padding: $m-2;
+    border-radius: 2.5px;
+    transition: all .2s ease-in;
+    &.active {
+      display: block;
     }
-    .dropdown {
-        display: none;
-        position: absolute;
-        top: 40px;
-        left: 50%;
-        transform: translateX(-50%);
-        grid-gap: 1rem;
-        justify-items: flex-start;
-        background: $white-color;
-        box-shadow: $box-shadow;
-        padding: $m-2;
-        border-radius: 2.5px;
-        z-index: 10;
-        .delete {
-            color: $error80;
-        }
+    &:hover {
+      background-color: $divider-color;
     }
+  }
 }

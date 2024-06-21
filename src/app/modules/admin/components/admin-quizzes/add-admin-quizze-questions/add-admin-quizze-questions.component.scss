@@ -58,13 +58,26 @@ label {
     }
     &.option {
       padding: 0 $m-1;
-      height: 35px;
+      height: 40px;
       input {
         padding: $m-1 0;
       }
+      &.correct-answer {
+        border: 1px solid $success80;
+        background-color: $success20;
+      }
+      .correct-check,
       .remove-option {
-        height: 35px;
+        height: 40px;
         border-left: 1px solid $inner-border;
+      }
+      .correct-check {
+        .icon {
+          font-size: 25px;
+          color: $success80;
+        }
+      }
+      .remove-option {
         .icon {
           width: 25px;
         }
@@ -101,9 +114,6 @@ label {
   label {
     flex-basis: 5%;
   }
-  .option {
-    flex-basis: 95%;
-  }
   .add-option {
     margin-top: $m-2;
     gap: $m-1;
@@ -116,9 +126,6 @@ label {
   gap: $m-1;
   label {
     flex-basis: 20%;
-  }
-  .form_control_field {
-    flex-basis: 80%;
   }
 }
   
@@ -145,4 +152,4 @@ label {
         margin-top: $m-1;
       }
     }
-  }
+}

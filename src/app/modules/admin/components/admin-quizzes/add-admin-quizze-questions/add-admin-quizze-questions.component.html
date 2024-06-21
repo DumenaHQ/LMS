@@ -1,11 +1,4 @@
-<!-- Alert message -->
-<app-alert-popup
-  *ngIf="isAlert"
-  [alertMessage]="alertMessage"
-  [alertColor]="alertColor"
-></app-alert-popup>
-
-<form [formGroup]="questionForm">
+<form [formGroup]="formGroup">
   <div formArrayName="questions" class="form_container">
     <div *ngFor="let questionGroup of questions.controls; let i = index" [formGroupName]="i">
       <div class="form_control_question">
@@ -16,7 +9,7 @@
               <select formControlName="selectionType" [id]="'selectionType' + ' ' + i" name="selectionType">
                 <option value="single" selected>Single Choice</option>
                 <option value="multiple">Multiple Choice</option>
-                <option value="boolean">True/False</option>
+                <!-- <option value="boolean">True/False</option> -->
               </select>
             </div>
             <span class="clickable remove-question dis-flex" (click)="removeQuestion(i)">
@@ -35,20 +28,45 @@
             formControlName="question"
           ></textarea>
         </div>
+        <div class="form_error" *ngIf="formGroup.get('questions')?.get(i.toString())?.get('question')?.invalid && formGroup.get('questions')?.get(i.toString())?.get('question')?.touched">
+          <p class="body-3-regular error-msg">{{ getErrorMessage(i, -1, 'question', 'Question') }}</p>
+        </div>
       </div>
 
       <div formArrayName="options" class="options_container">
         <div>
-          <label>State your Options</label>  
+          <label>State your options</label>  
           <div *ngIf="getOptions(questionGroup)" class="options_container_body">
-            <div *ngFor="let option of getOptions(questionGroup)?.controls; let j = index">
+            <div *ngFor="let option of getOptions(questionGroup)?.controls; let j = index" [formGroupName]="j">
               <div class="form_control dis-flex">
                   <label>{{ getAlphabetLabel(j) }}.</label>
-                  <div class="form_control_field option">
-                    <input [formControlName]="j" placeholder="Enter option text" />
-                    <span class="clickable remove-option dis-flex" (click)="removeOption(questionGroup, j)">
-                      <img src="../../../../../../assets/img/svg/fi_check.svg" class="icon" alt="cancel">
-                    </span>
+                  <div style="width: 100%;">
+                    <div 
+                      class="form_control_field option" 
+                      [class.correct-answer]="isCorrectAnswer(i, getAlphabetLabel(j))"
+                    >
+                      <input [formControlName]="getOptionLabel(option)" placeholder="Enter option text" />
+                      <span 
+                        class="clickable correct-check dis-flex" 
+                        (click)="setCorrectAnswer(i, getAlphabetLabel(j))" 
+                        title="Click to set as correct answer"
+                      >
+                        <i class='bx bx-check icon'></i>
+                      </span>
+                      <span 
+                        class="clickable remove-option dis-flex" 
+                        (click)="removeOption(questionGroup, j)"
+                        title="Click to remove option"
+                      >
+                        <img src="../../../../../../assets/img/svg/fi_check.svg" class="icon" alt="cancel">
+                      </span>
+                    </div>
+                    <div 
+                      class="form_error" 
+                      *ngIf="option.get(getOptionLabel(option))?.invalid && option.get(getOptionLabel(option))?.touched"
+                    >
+                      <p class="body-3-regular error-msg">{{ getErrorMessage(i, j, getOptionLabel(option), 'Option') }}</p>
+                    </div>
                   </div>
               </div>
             </div>
@@ -59,20 +77,13 @@
           Add Option
         </span>
       </div>
-
-      <div class="correct_answer_container form_control dis-flex">
-        <label>Correct Answer:</label>
-        <div class="form_control_field">
-          <input formControlName="correctAnswer" placeholder="Enter correct answer" title="Copy and paste the correct option here" />
-        </div>
-      </div>
     </div>
   </div>
 
   <div class="form_btns dis-flex">
     <ng-container *ngIf="!loading">
-      <button class="btn sec_btn" (click)="addQuestion()">Add Question</button>
-      <button class="btn prim_btn" (click)="onSubmit()" [disabled]="questionForm.invalid">Submit</button>
+      <button class="btn sec_btn" (click)="addNewQuestion()">Add Question</button>
+      <button class="btn prim_btn" (click)="onSubmit()" [disabled]="formGroup.invalid">Submit</button>
     </ng-container>
     <button
       class="btn prim_btn"

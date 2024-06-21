@@ -8,10 +8,19 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ListDisplayAdminQuizzesComponent implements OnInit {
 
   @Input() allquizzes: any;
+  activeIndex: number | null = null;
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  toggleAction(index: number) {
+    if (this.activeIndex === index) {
+      this.activeIndex = null;
+    } else {
+      this.activeIndex = index;
+    }
   }
 
 }

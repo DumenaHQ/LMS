@@ -160,24 +160,43 @@
                     &:not(:last-child) {
                         margin-bottom: $m-2;
                     }
-                    p {
+                    .option-label {
                         flex-basis: 5%;
                     }
-                    .option_item_body {
+                    .option-value {
                         flex-basis: 95%;
                         gap: $m-2;
                         justify-content: space-between;
                         border: 1px solid $inner-border;
                         border-radius: $border-radius1;
                         padding-left: $m-2;
-                        height: 35px;
+                        &_content {
+                            width: 75%;
+                            font-size: 16px;
+                            padding: $m-2 0;
+                            background-color: transparent;
+                            border: none;
+                            outline: none;
+                            height: 40px;
+                            resize: none;
+                            &::placeholder {
+                                font-size: 16px;
+                            }
+                            &.extended {
+                                height: 55px;
+                            }
+                        }
                         &_marked {
-                            height: 35px;
+                            width: 25%;
+                            height: 40px;
                             border-left: 1px solid $inner-border;
                             background-color: $secondary40;
                             color: $secondary80;
                             padding: 0 $m-2;
                             border-radius: 0 $border-radius1 $border-radius1 0;
+                            &.extended {
+                                height: 55px;
+                            }
                         }
                     }
                 }
