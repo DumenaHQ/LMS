@@ -62,9 +62,14 @@ label {
       input {
         padding: $m-1 0;
       }
-      &.correct-answer {
+      &.checked{
         border: 1px solid $success80;
         background-color: $success20;
+        .correct-check {
+          .icon {
+            color: $success80;
+          }
+        }
       }
       .correct-check,
       .remove-option {
@@ -74,7 +79,7 @@ label {
       .correct-check {
         .icon {
           font-size: 25px;
-          color: $success80;
+          color: $inner-border;
         }
       }
       .remove-option {
