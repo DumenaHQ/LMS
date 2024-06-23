@@ -5,13 +5,13 @@
         <div class="form_control_question_header dis-flex">
           <label style="margin-bottom: 0;">Question {{ i + 1 }}</label>
           <div class="dis-flex form_control_question_header_right dis-flex">
-            <div class="form_control_field">
+            <!-- <div class="form_control_field">
               <select formControlName="selectionType" [id]="'selectionType' + ' ' + i" name="selectionType">
                 <option value="single" selected>Single Choice</option>
                 <option value="multiple">Multiple Choice</option>
-                <!-- <option value="boolean">True/False</option> -->
+                <option value="boolean">True/False</option>
               </select>
-            </div>
+            </div> -->
             <span class="clickable remove-question dis-flex" (click)="removeQuestion(i)">
               <img src="../../../../../../assets/img/svg/fi_check.svg" class="icon" alt="cancel">
             </span>
@@ -43,7 +43,7 @@
                   <div style="width: 100%;">
                     <div 
                       class="form_control_field option" 
-                      [class.correct-answer]="isCorrectAnswer(i, getAlphabetLabel(j))"
+                      [class.checked]="isCorrectAnswer(i, getAlphabetLabel(j))"
                     >
                       <input [formControlName]="getOptionLabel(option)" placeholder="Enter option text" />
                       <span 
