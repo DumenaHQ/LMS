@@ -104,7 +104,7 @@ export class SchoolPaymentComponent implements OnInit {
   openConfirmModal() {
     this.confirmModal = true;
     const formattedGrandTotal = new Intl.NumberFormat().format(this.grandTotal);
-    this.confirmMessage = `Are you sure you want to make pay ₦${formattedGrandTotal} for ${this.selectedLearners.length} ${this.selectedLearners.length > 1 ? 'learners' : 'learner'}?`;
+    this.confirmMessage = `Are you sure you want to pay ₦${formattedGrandTotal} for ${this.selectedLearners.length} ${this.selectedLearners.length > 1 ? 'learners' : 'learner'}?`;
   }
 
   makePayment() {
@@ -181,6 +181,7 @@ export class SchoolPaymentComponent implements OnInit {
               if (data.status == true) {
                 zone.run(() => {
                   this.getClassrooms();
+                  this.closeConfirmModal();
                 });
               }
             });
