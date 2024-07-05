@@ -93,6 +93,18 @@
         }
         &_header {
           padding: 0 $m-2;
+          .sub-plan {
+            justify-content: space-between;
+            &_value {
+              color: $primary80;
+              background-color: $primary60;
+              border-radius: 5px;
+              padding: 0.2rem 0.5rem;
+              display: inline-block;
+              font-size: 14px;
+              font-weight: 500;
+            }
+          }
           .sub-total {
             margin-top: $m-3;
           }

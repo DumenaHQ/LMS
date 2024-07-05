@@ -23,9 +23,11 @@ export class GridDisplayClassroomsComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // Display program
-  displayClassroom(classroomId?: string) {
-    this.router.navigate([`/${this.user.role}/classrooms/${classroomId}/view-classroom`]);
+  // View program
+  viewClassroom(classroomId?: string, activeTab?: string) {
+    this.router.navigate([`/${this.user.role}/classrooms/${classroomId}/view-classroom`], {
+      queryParams: { activeTab: activeTab },
+    });
   }
 
   // Open Confirm Delete Modal

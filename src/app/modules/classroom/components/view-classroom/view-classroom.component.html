@@ -115,23 +115,23 @@
         <ul class="dis-flex">
           <li
             class="body-2-medium active"
-            [class.active]="contentId === 'courses'"
-            (click)="tabChange('courses')"
+            [class.active]="activeTab === 'courses'"
+            (click)="setActiveTab('courses')"
           >
             Courses
           </li>
           <li
             class="body-2-medium"
-            [class.active]="contentId === 'learners'"
-            (click)="tabChange('learners')"
+            [class.active]="activeTab === 'learners'"
+            (click)="setActiveTab('learners')"
           >
             Learners
           </li>
           <li
             class="body-2-medium"
-            [class.active]="contentId === 'discussions'"
+            [class.active]="activeTab === 'discussions'"
             *ngIf="user.role === 'school'"
-            (click)="tabChange('discussions')"
+            (click)="setActiveTab('discussions')"
           >
             Discussions
           </li>
@@ -139,7 +139,7 @@
       </div>
       <div class="course-details_body_content">
         <!-- Courses -->
-        <ng-container *ngIf="contentId === 'courses'">
+        <ng-container *ngIf="activeTab === 'courses'">
           <div
             class="table-container"
             style="overflow-x: auto"
@@ -196,7 +196,7 @@
         </ng-container>
   
         <!-- Learners -->
-        <ng-container *ngIf="contentId === 'learners'">
+        <ng-container *ngIf="activeTab === 'learners'">
           <div class="table-container" style="overflow-x: auto">
             <div *ngIf="classroom?.learners?.length != 0 && user.role ==='school'" style="padding: 1%">
               <button
@@ -253,7 +253,7 @@
         </ng-container>
   
         <!-- Discussions -->
-        <ng-container *ngIf="contentId === 'discussions'">
+        <ng-container *ngIf="activeTab === 'discussions'">
           <app-display-questions [classroomCourses]="classroom?.courses" [classroomId]="currentClassroomId.classroomId"></app-display-questions>
         </ng-container>
       </div>
