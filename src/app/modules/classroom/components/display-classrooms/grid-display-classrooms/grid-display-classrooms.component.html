@@ -4,7 +4,7 @@
         <div 
           class="program_card_item_image clickable" 
           [style.backgroundImage]="classroom?.thumbnail ? 'url(' + classroom?.thumbnail + ')' : 'url(assets/img/program-thumbnail-patterns.svg)'"
-          (click)="displayClassroom(classroom?.id)"
+          (click)="viewClassroom(classroom?.id, 'courses')"
         ></div>
   
         <div class="program_card_item_details" *ngIf="classroom.name !== undefined">
@@ -14,7 +14,7 @@
                 <h5
                   class="title clickable"
                   [title]="classroom?.name"
-                  (click)="displayClassroom(classroom?.id)"
+                  (click)="viewClassroom(classroom?.id, 'courses')"
                 >
                   {{
                     classroom?.name | truncate
@@ -24,12 +24,12 @@
               </div>
             </div>
             <ul class="dis-flex">
-              <li>
+              <li (click)="viewClassroom(classroom?.id, 'courses')">
                 <p class="body-2-bold">{{ classroom?.course_count || '0' }}</p>
                 <p class="body-3-regular">{{(classroom?.course_count ?? 0) > 1 ? 'Courses' : 'Course'}}</p>
               </li>
 
-              <li>
+              <li (click)="viewClassroom(classroom?.id, 'learners')">
                 <p class="body-2-bold">{{ classroom?.learner_count || '0' }}</p>
                 <p class="body-3-regular">{{(classroom?.learner_count || 0) > 1 ? 'Learners' : 'Learner'}}</p>
               </li>
