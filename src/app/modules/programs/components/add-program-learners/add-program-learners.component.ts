@@ -1,27 +1,27 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { ClassroomService } from 'src/app/services/classroom.service';
+import { ProgramsService } from 'src/app/services/programs.service';
 import { SchoolService } from 'src/app/services/school.service';
 import * as XLSX from 'xlsx';
 
 @Component({
-  selector: 'app-add-classroom-learner',
-  templateUrl: './add-classroom-learner.component.html',
-  styleUrls: ['./add-classroom-learner.component.scss']
+  selector: 'app-add-program-learners',
+  templateUrl: './add-program-learners.component.html',
+  styleUrls: ['./add-program-learners.component.scss']
 })
-export class AddClassroomLearnerComponent implements OnInit {
+export class AddProgramLearnersComponent implements OnInit {
 
-  @Input() classroomId: string;
-  @Output() addLearnerToClassroomModal: EventEmitter<any> = new EventEmitter();
-  @Output() getClassroom: EventEmitter<any> = new EventEmitter();
+  @Input() programId: string;
+  @Output() addLearnerToProgramModal: EventEmitter<any> = new EventEmitter();
+  @Output() getProgram: EventEmitter<any> = new EventEmitter();
   loading: boolean = false;
   user: any;
   billingId: string = 'single';
   selectedFileName: any;
   file: File;
   arrayBuffer: any;
-  schoolLearners: any;
+  learners: any;
   dataLoading: boolean = false;
   studentName: any;
   uploadedLearners: any[] = [];
@@ -30,13 +30,12 @@ export class AddClassroomLearnerComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private classroomService: ClassroomService,
+    private programsService: ProgramsService,
     private schoolService: SchoolService,
     private appAlertService: AppAlertService,
   ) {}
 
   ngOnInit(): void {
-    // Get User data from localstorage
     this.user= this.authService.getUser().user;
 
     this.getAllStudents('');
@@ -47,20 +46,34 @@ export class AddClassroomLearnerComponent implements OnInit {
     this.dataLoading = true;
     let grade = event?.target?.value === '' ? undefined : event?.target?.value;
     const school_id = this.user.id;
-    this.schoolService.getSchoolLearners(school_id, grade).subscribe({
-      next: (res: any) => {
-        this.schoolLearners = res.data.students;     
-        if(this.grades.length === 0) {
-          this.grades = res.data.grades.map((grade: any) => ({ 
-            id: grade, name: grade 
-          }));
-        }
-      },
-      error: (e) => console.error(e),
-      complete: () => {
-        this.dataLoading = false;
-      }
-    });
+    if(this.user.role === 'school') {
+      this.schoolService.getSchoolLearners(school_id, grade).subscribe({
+        next: (res: any) => {
+          this.learners = res.data.students;
+          if(this.grades.length === 0) {
+            this.grades = res.data.grades.map((grade: any) => ({ 
+              id: grade, name: grade 
+            }));
+          }
+        },
+        error: (e) => console.error(e),
+        complete: () => {
+          this.dataLoading = false;
+        },
+      });
+    } else {
+      // Get parent learners from localstorage
+      this.authService.getParentChildren(this.user.id).subscribe({
+        next: (res: any) => {
+          this.learners = res.data.learners;
+          console.log(this.learners);
+        },
+        error: (e) => console.error(e),
+        complete: () => {
+          this.dataLoading = false;
+        },
+      });
+    }
   }
 
   // Tab change
@@ -68,21 +81,21 @@ export class AddClassroomLearnerComponent implements OnInit {
     this.billingId = ids;
   }
 
-  addLearnersToClassroom(uploadType: string) {
+  addLearnersToProgram(uploadType: string) {
     this.loading = true;
 
     let payload = {
       learners: uploadType === 'selected' ? this.selectedLearners : this.uploadedLearners,
     };
 
-    this.classroomService
-      .addLearnerToClassroom(payload, this.classroomId)
+    this.programsService
+      .addLearnerToProgram(payload, this.programId)
       .subscribe({
         next: (res: any) => {
           if (res.status === true) {
             this.appAlertService.showAlert(res.message, AlertType.Success);
-            this.closeAddLearnerToClassroomModal();
-            this.getClassroom.emit();
+            this.closeAddLearnerToProgramModal();
+            this.getProgram.emit();
           }
         },
         error: (error) => {
@@ -102,7 +115,7 @@ export class AddClassroomLearnerComponent implements OnInit {
 
   downloadLearnersAsExcel() {
     let selectedData;
-    selectedData = this.schoolLearners.map((item: any) => {
+    selectedData = this.learners.map((item: any) => {
       return {
         'Learner Username': item.username,
         'Learner ID': item.id,
@@ -161,7 +174,7 @@ export class AddClassroomLearnerComponent implements OnInit {
   // Search students
   search() {
     if (this.studentName != "") {
-      this.schoolLearners = this.schoolLearners.filter((res: any) => {
+      this.learners = this.learners.filter((res: any) => {
         return res.fullname.toLocaleLowerCase().match(this.studentName.toLocaleLowerCase());
       });
     } else if (this.studentName == "") {
@@ -185,8 +198,9 @@ export class AddClassroomLearnerComponent implements OnInit {
   }
 
   // Close Add Modal
-  closeAddLearnerToClassroomModal() {
-    this.addLearnerToClassroomModal.emit();
+  closeAddLearnerToProgramModal() {
+    this.addLearnerToProgramModal.emit();
   }
 
 }
+

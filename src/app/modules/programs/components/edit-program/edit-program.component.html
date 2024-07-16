@@ -1,23 +1,23 @@
-<section class="ds-head dis-flex">
-    <h2 class="ds-head_title clickable" (click)="navigatePage()">Classrooms</h2>
+<app-loader *ngIf="dataLoading"></app-loader>
+
+<div *ngIf="program && !dataLoading">
+  <section class="ds-head dis-flex" >
+    <h2 class="ds-head_title clickable" (click)="navigatePage(1)">
+      Programs
+    </h2>
     <i class="bx bx-chevron-right icon"></i>
-    <p>
-      Add Classroom
+    <p class="clickable" [title]="program.name" (click)="navigatePage(2)">
+      {{ program.name | truncate }}
     </p>
+    <i class="bx bx-chevron-right icon"></i>
+    <p class="clickable">Edit Program</p>
   </section>
   
-  
-  <section class="set-info">
-    <div class="set-info_header">
-      <h3 class="text-primary-color">Set the Classroom Information</h3>
-      <p>
-          This information will be displayed to the learners when they are added to the class
-      </p>
-    </div>
+  <section>
     <form [formGroup]="formGroup">
       <div class="form_control_container">
         <div class="form_control">
-          <label for="name">Name <strong class="label-required">*</strong></label>
+          <label for="name">Name</label>
           <div class="form_control_field">
             <input
               type="text"
@@ -31,30 +31,21 @@
             <p class="body-3-regular error-msg">{{ getErrorMessage('name', 'Name') }}</p>
           </div>
         </div>
-        <div class="form_control description">
-          <label for="template">Classroom Template</label>
-          <div class="form_control_field">
-            <select name="template" id="template" formControlName="template">
-              <option value="" selected>Select a Template</option>
-              <option [value]="item.id" *ngFor="let item of templates">
-                {{ item.title }}
-              </option>
-            </select>
-          </div>
-        </div>
         <div class="form_control">
-          <label for="teacher">Teacher</label>
+          <label for="name">Description</label>
           <div class="form_control_field">
-            <select name="teacher" id="teacher" formControlName="teacher">
-              <option value="" selected>Select a Teacher</option>
-              <option [value]="item.id" *ngFor="let item of teachers">
-                {{ item.fullname }}
-              </option>
-            </select>
+            <input
+              type="text"
+              id="description"
+              name="description"
+              placeholder="Type here"
+              formControlName="description"
+            />
+          </div>
+          <div class="form_error" *ngIf="formGroup.controls.description.errors && formGroup.controls.description.touched">
+            <p class="body-3-regular error-msg">{{ getErrorMessage('description', 'Description') }}</p>
           </div>
         </div>
-  
-        <div class=""></div>
   
         <div class="form_control">
           <label for="thumbnail">Header Photo</label>
@@ -87,9 +78,13 @@
                 </p>
               </div>
             </div>
+            
+            <div class="form_error" *ngIf="formGroup.controls.header_photo.errors && formGroup.controls.header_photo.touched">
+              <p class="body-3-regular error-msg">{{ getErrorMessage('header_photo', 'Header Photo') }}</p>
+            </div>
           </div>
         </div>
-        
+  
         <div class="form_control">
           <label for="thumbnail">Thumbnail</label>
           <div class="">
@@ -121,19 +116,21 @@
                 </p>
               </div>
             </div>
+  
+            <div class="form_error" *ngIf="formGroup.controls.thumbnail.errors && formGroup.controls.thumbnail.touched">
+              <p class="body-3-regular error-msg">{{ getErrorMessage('thumbnail', 'Thumbnail') }}</p>
+            </div>
           </div>
-        </div>
+        </div>        
       </div>
-      <div class="form_btns dis-flex">
-        <ng-container *ngIf="!loading">
-          <button class="btn grey_btn" routerLink="/school/classrooms">Cancel</button>
-          <button class="btn prim_btn" (click)="createClassroom()" [disabled]="formGroup.invalid">Save</button>
-        </ng-container>
-        <button
-          class="btn prim_btn"
-          [disabled]="loading"
-          *ngIf="loading"
-        >Processing...</button> 
+      <div class="form_btns">
+        <button class="btn prim_btn" *ngIf="!loading" (click)="editProgram()">
+          Save
+        </button>
+        <button class="btn prim_btn" [disabled]="loading || formGroup.invalid" *ngIf="loading">
+          Processing...
+        </button>
       </div>
     </form>
   </section>
+</div>

@@ -3,17 +3,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { ClassroomService } from 'src/app/services/classroom.service';
-import { TeachersService } from 'src/app/services/teachers.service';
+import { ProgramsService } from 'src/app/services/programs.service';
 import { FormErrorMessageService } from 'src/app/services/utils/form-error-message.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 
 @Component({
-  selector: 'app-add-classroom',
-  templateUrl: './add-classroom.component.html',
-  styleUrls: ['./add-classroom.component.scss']
+  selector: 'app-add-program',
+  templateUrl: './add-program.component.html',
+  styleUrls: ['./add-program.component.scss']
 })
-export class AddClassroomComponent implements OnInit {
+export class AddProgramComponent implements OnInit {
 
   formGroup: FormGroup;
   loading: boolean = false;
@@ -23,13 +22,10 @@ export class AddClassroomComponent implements OnInit {
   selectedHeaderPhotoName: string = '';
   headerPhotoImagePreview?: string;
   thumbnailImagePreview?: string;
-  templates: any;
-  teachers: any;
   user: any;
 
   constructor(
-    private teachersService: TeachersService,
-    private classroomService: ClassroomService,
+    private programsService: ProgramsService,
     private formBuilder: FormBuilder,
     private router: Router,
     private authService: AuthService,
@@ -41,38 +37,15 @@ export class AddClassroomComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.authService.getUser().user;    
     this.initForm();
-    this.getClassroomTemplates();
-    this.getTeachers();
   }
 
   // Initialize form
   initForm() {
     this.formGroup = this.formBuilder.group({
       name: ['', [Validators.required]],
-      template: [''],
-      teacher: [''],
+      description: ['', [Validators.required]],
       header_photo: [''],
       thumbnail: [''],
-    });
-  }
-
-  // Get classroom templates
-  getClassroomTemplates() {
-    this.classroomService.getClassroomTemplates().subscribe({
-      next: (res: any) => {
-        this.templates = res.data.classTemplates;
-      },
-      error: (e) => console.error(e),
-    });
-  }
-
-  // Get teachers
-  getTeachers() {
-    this.teachersService.fetchTeachersInSchool(this.user.id).subscribe({
-      next: (res: any) => {
-        this.teachers = res.data.teachers;
-      },
-      error: (e) => console.error(e),
     });
   }
 
@@ -102,14 +75,13 @@ export class AddClassroomComponent implements OnInit {
 
 
   // Create program
-  createClassroom() {
+  createProgram() {
     this.loading = true;
     const { value } = this.formGroup;
 
     var formData: any = new FormData();
     formData.append('name', value.name);
-    formData.append('template', value.template);
-    formData.append('teacher_id', value.teacher);
+    formData.append('description', value.description);
     if (this.headerPhotoFile) {
       formData.append('header_photo', this.headerPhotoFile);
     }
@@ -117,7 +89,7 @@ export class AddClassroomComponent implements OnInit {
       formData.append('thumbnail', this.thumbnailFile);
     }
 
-    this.classroomService.addClassroom(formData)
+    this.programsService.addProgram(formData)
       .then(res => {
         if (res.status === true) {
           this.appAlertService.showAlert(res.message, AlertType.Success);
@@ -146,8 +118,9 @@ export class AddClassroomComponent implements OnInit {
 
   navigatePage() {
     this.router.navigate([
-      '/school/classrooms',
+      `/${this.user.role}/programs`,
     ]);
   }
 
 }
+

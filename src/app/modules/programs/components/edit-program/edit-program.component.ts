@@ -1,38 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { ClassroomService } from 'src/app/services/classroom.service';
 import { TeachersService } from 'src/app/services/teachers.service';
 import * as moment from 'moment';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
-import { ClassroomModel } from '../../models/classroom.model';
 import { FormErrorMessageService } from 'src/app/services/utils/form-error-message.service';
+import { ProgramsService } from 'src/app/services/programs.service';
 
 @Component({
-  selector: 'app-edit-classroom',
-  templateUrl: './edit-classroom.component.html',
-  styleUrls: ['./edit-classroom.component.scss']
+  selector: 'app-edit-program',
+  templateUrl: './edit-program.component.html',
+  styleUrls: ['./edit-program.component.scss']
 })
-export class EditClassroomComponent implements OnInit {
+export class EditProgramComponent implements OnInit {
 
-  classroom?: ClassroomModel;
-  currentClassroom: any;
+  program: any;
   loading: boolean = false;
   dataLoading: boolean = false;
-  teachers: any;
   user: any;
-  templates: any;
   thumbnailFile: File;
   headerPhotoFile: File;
   selectedThumbnailName: string = '';
   selectedHeaderPhotoName: string = '';
   headerPhotoImagePreview?: string;
   thumbnailImagePreview?: string;
+  formGroup: FormGroup;
 
   constructor(
-    private classroomService: ClassroomService,
+    private programsService: ProgramsService,
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private router: Router,
@@ -43,27 +40,15 @@ export class EditClassroomComponent implements OnInit {
     private formErrorService: FormErrorMessageService
   ) {}
 
-  // classroom form
-  formGroup = this.formBuilder.group({
-    name: ['', Validators.required],
-    template: ['', Validators.required],
-    description: ['', Validators.required],
-    teacher: ['', Validators.required],
-    header_photo: ['', Validators.required],
-    thumbnail: ['', Validators.required],
-    active_term_start_date: ['', Validators.required],
-    active_term_end_date: ['', Validators.required],
-  });
-
   get minDate(): string | undefined {
-    const startDate = this.classroom?.active_term?.start_date;
+    const startDate = this.program?.active_term?.start_date;
     if (!startDate) return;
 
     return moment(startDate).format('YYYY-MM-DD');
   }
 
   get maxDate(): string | undefined {
-    const endDate = this.classroom?.active_term?.end_date;
+    const endDate = this.program?.active_term?.end_date;
     if (!endDate) return;
 
     return moment(endDate).format('YYYY-MM-DD');
@@ -72,40 +57,29 @@ export class EditClassroomComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.authService.getUser().user;
 
-    // Get Current classroom
-    this.currentClassroom = this.activatedRoute.snapshot.params;
-    this.getClassroom();
-    this.getClassroomTemplates();
-    this.getTeachers();
+    // Get Current program
+    this.program = this.activatedRoute.snapshot.params;
+    this.getProgram();
   }
 
   // Initialize form
   initForm() {
-    this.formGroup.patchValue({
-      name: this.classroom?.name,
-      template: this.classroom?.template?.id,
-      description: this.classroom?.description,
-      teacher: this.classroom?.teacher?.id ? this.classroom?.teacher?.id : '',
-      header_photo: this.classroom?.header_photo,
-      thumbnail: this.classroom?.thumbnail,
-      active_term_start_date: moment(
-        this.classroom?.active_term?.start_date
-      ).format('YYYY-MM-DD'),
-      active_term_end_date: moment(
-        this.classroom?.active_term?.end_date
-      ).format('YYYY-MM-DD'),
+    this.formGroup = this.formBuilder.group({
+      name: [this.program?.name, [Validators.required]],
+      description: [this.program?.description, [Validators.required]],
+      header_photo: [this.program?.header_photo],
+      thumbnail: [this.program?.thumbnail],
     });
   }
 
-  // Get Classroom
-  getClassroom() {
+  // Get program
+  getProgram() {
     this.dataLoading = true;
-
-    this.classroomService
-      .getClassroomById(this.currentClassroom.classroomId)
+    this.programsService
+      .getProgramsById(this.program.programId)
       .subscribe({
         next: (res: any) => {
-          this.classroom = res.data.class;
+          this.program = res.data.program;
           this.initForm();
         },
         error: (e) => {
@@ -115,26 +89,6 @@ export class EditClassroomComponent implements OnInit {
           this.dataLoading = false;
         },
       });
-  }
-
-  // Get classroom templates
-  getClassroomTemplates() {
-    this.classroomService.getClassroomTemplates().subscribe({
-      next: (res: any) => {
-        this.templates = res.data.classTemplates;
-      },
-      error: (e) => console.error(e),
-    });
-  }
-
-  // Get Teachers
-  getTeachers() {
-    this.teachersService.fetchTeachersInSchool(this.user.id).subscribe({
-      next: (res: any) => {
-        this.teachers = res.data.teachers;
-      },
-      error: (e) => console.error(e),
-    });
   }
 
   selectPhoto(event: any, fileName: string) {
@@ -161,26 +115,13 @@ export class EditClassroomComponent implements OnInit {
     }
   }
 
-  editClassroom() {
+  editProgram() {
     this.loading = true;
     const { value } = this.formGroup;
-    if (!value.active_term_start_date || !value.active_term_end_date) {
-      return;
-    }
-
-    const startDate = value.active_term_start_date;
-    const endDate = value.active_term_end_date;
-
-    const start = startDate && new Date(startDate);
-    const end = endDate && new Date(endDate);
 
     var formData: any = new FormData();
     formData.append('name', value.name);
     formData.append('description', value.description);
-    formData.append('template', value.template);
-    formData.append('teacher_id', value.teacher);
-    formData.append('active_term_start_date', new Date(start).toISOString());
-    formData.append('active_term_end_date', new Date(end).toISOString());
     if (this.headerPhotoFile) {
       formData.append('header_photo', this.headerPhotoFile);
     }
@@ -188,8 +129,8 @@ export class EditClassroomComponent implements OnInit {
       formData.append('thumbnail', this.thumbnailFile);
     }
 
-    this.classroomService
-      .editClassroom(formData, this.currentClassroom.classroomId)
+    this.programsService
+      .editProgram(formData, this.program.programId)
       .then(res => res.json()).then((data) => {
         if (data.status) {
           this.appAlertService.showAlert(data.message, AlertType.Success);
@@ -222,13 +163,14 @@ export class EditClassroomComponent implements OnInit {
   navigatePage(pageNumber: number) {
     if(pageNumber === 1) {
       this.router.navigate([
-        '/school/classrooms',
+        `/${this.user.role}/programs`,
       ]);
     } else if(pageNumber === 2) {
       this.router.navigate([
-        `/school/classrooms/${this.currentClassroom.classroomId}/view-classroom`,
+        `/${this.user.role}/programs/${this.program.programId}/view-program`,
       ]);
     }
   }
 }
+
 

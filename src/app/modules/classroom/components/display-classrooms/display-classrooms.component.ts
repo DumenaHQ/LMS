@@ -12,7 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class DisplayClassroomsComponent implements OnInit {
 
   classrooms?: ClassroomModel[];
-  dataLoading: boolean = true;
+  dataLoading: boolean;
   user: any;
 
   constructor(
@@ -27,6 +27,7 @@ export class DisplayClassroomsComponent implements OnInit {
   }
 
   getClassrooms() {
+    this.dataLoading = true;
     this.classroomService.getClassrooms().subscribe({
       next: (res: any) => {
         this.classrooms = (res.data.classes || []);

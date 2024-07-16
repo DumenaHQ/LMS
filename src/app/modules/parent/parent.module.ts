@@ -16,7 +16,6 @@ import { EditChildComponent } from './components/children/edit-child/edit-child.
 import { PaymentHistoryComponent } from './components/payment-history/payment-history.component';
 import { ParentOnboardComponent } from './components/parent-onboard/parent-onboard.component';
 import { ParentEnrollLearnersComponent } from './components/parent-enroll-learners/parent-enroll-learners.component';
-import { ParentProgramsComponent } from './components/parent-programs/parent-programs.component';
 import { DisplayParentClassroomsComponent } from './components/parent-classrooms/display-parent-classrooms/display-parent-classrooms.component';
 import { GridDisplayParentClassroomsComponent } from './components/parent-classrooms/display-parent-classrooms/grid-display-parent-classrooms/grid-display-parent-classrooms.component';
 import { DetailsDisplayParentClassroomComponent } from './components/parent-classrooms/display-parent-classrooms/details-display-parent-classroom/details-display-parent-classroom.component';
@@ -38,7 +37,6 @@ import { AddParentClassroomComponent } from './components/parent-classrooms/add-
     PaymentHistoryComponent,
     ParentOnboardComponent,
     ParentEnrollLearnersComponent,
-    ParentProgramsComponent,
     DisplayParentClassroomsComponent,
     GridDisplayParentClassroomsComponent,
     DetailsDisplayParentClassroomComponent,
