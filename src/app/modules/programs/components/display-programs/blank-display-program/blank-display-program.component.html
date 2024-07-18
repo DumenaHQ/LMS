@@ -1,0 +1,19 @@
+<div class="dis-flex">
+    <div class="blank-item">
+      <img
+        src="../../../../../../assets/img/empty-classrrom.svg"
+        alt=""
+        class="blank-item_image"
+      />
+      <div class="blank-item_details">
+        <h2 class="text-primary-color">
+            {{ user.role === 'admin' ? 'Start by creating a program' : 'No programs available' }}
+        </h2>
+      </div>
+      <div class="blank-item_btn" *ngIf="user.role === 'admin'">
+        <button class="btn prim_btn" routerLink="add-program">
+            New Program
+        </button>
+      </div>
+    </div>
+  </div>

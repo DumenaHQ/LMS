@@ -50,16 +50,21 @@ export class ProgramsService {
   //-- GET ENDS --//
 
   //-- ADD STARTS --//
-  // Add program
-  addProgram(data: any) {
-    return this.http.post(
-      `${this.baseUrl}programs`,
-      data,
-      this.getHttpOptionsForMultipart()
-    );
+  addProgram(formData: FormData): Promise<any> {
+    const headers = new Headers();
+    headers.append('Authorization', 'bearer ' + localStorage.getItem('token'));
+    return fetch(`${this.baseUrl}programs`, {
+      method: 'POST',
+      headers: headers,
+      body: formData,
+    }).then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    });
   }
 
-  // Add course to program
   addCourseToProgram(data: any, programId: any) {
     return this.http.patch(
       `${this.baseUrl}programs/${programId}/courses`,
@@ -68,7 +73,6 @@ export class ProgramsService {
       );
   }
 
-  // Add school to program
   addSchoolToProgram(data: any, programId: any) {
     return this.http.patch(
       `${this.baseUrl}programs/${programId}/schools`,
@@ -77,7 +81,6 @@ export class ProgramsService {
       );
   }
 
-  // Add parent to program
   addParentToProgram(data: any, programId: any) {
     return this.http.patch(
       `${this.baseUrl}programs/${programId}/parents`,
@@ -85,8 +88,7 @@ export class ProgramsService {
       this.getHttpOptions()
       );
   }
-    
-  // Add learner to program
+
   addLearnerToProgram(data: any, programId: any) {
     return this.http.patch(
       `${this.baseUrl}programs/${programId}/learners`,
@@ -94,17 +96,16 @@ export class ProgramsService {
       this.getHttpOptions()
       );
   }
-  //-- ADD ENDS --//
 
-  //-- EDIT STARTS --//
-  editProgram(data: any, programId: any) {
-    return this.http.put(
-      `${this.baseUrl}programs/${programId}`,
-      data,
-      this.getHttpOptions()
-    );
+  editProgram(formData: FormData, programId: any): Promise<Response> {
+    const headers = new Headers();
+    headers.append('Authorization', 'bearer ' + localStorage.getItem('token'));
+    return fetch(`${this.baseUrl}classes/${programId}`, {
+      method: 'PUT',
+      headers: headers,
+      body: formData,
+    });;
   }
-  //-- EDIT END --//
     
   //-- DELETE STARTS --//
   // Delete program

@@ -52,10 +52,11 @@ const routes: Routes = [
       },
       {
         path: 'programs',
-        loadChildren: () =>
-          import('./components/programs/programs.module').then(
-            (m) => m.ProgramsModule
-          ),
+        loadChildren: () => import('../../modules/programs/programs.module').then((m) => m.ProgramsModule),
+        data: {
+          title: 'Programs',
+          description: 'Description Meta Tag Content',
+        }
       },
       {
         path: 'learning-support',

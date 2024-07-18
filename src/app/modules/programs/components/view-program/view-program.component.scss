@@ -1,0 +1,19 @@
+@import '../../../../../assets/css/variables.scss';
+@import '../../../../../assets/css/mixins.scss';
+@import '../../../../../assets/css/dashboard.scss';
+@import '../../../../../assets/css/program.scss';
+
+.course-empty {
+    display: grid;
+    grid-gap: 1rem;
+    place-items: center;
+    img {
+        width: 200px;
+        height: auto;
+        margin-bottom: $m-2;
+    }
+}
+
+.course-details_body_content {
+    display: block;
+}

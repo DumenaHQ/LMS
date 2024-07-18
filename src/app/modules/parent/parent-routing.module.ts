@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DisplayProgramDetailsComponent } from '../shared/programs/display-program-details/display-program-details.component';
 import { UserProfileComponent } from '../shared/user-profile/user-profile.component';
 import { ChildrenComponent } from './components/children/children.component';
 import { EditChildComponent } from './components/children/edit-child/edit-child.component';
 import { ManageChildComponent } from './components/children/manage-child/manage-child.component';
 import { ParentOverviewComponent } from './components/parent-overview/parent-overview.component';
-import { ParentProgramsComponent } from './components/parent-programs/parent-programs.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { ParentComponent } from './parent.component';
@@ -60,22 +58,6 @@ const routes: Routes = [
         },
       },
       {
-        path: 'programs',
-        component: ParentProgramsComponent,
-        data: {
-          title: 'Programs',
-          description: 'Description Meta Tag Content',
-        },
-      },
-      {
-        path: 'programs/:programId',
-        component: DisplayProgramDetailsComponent,
-        data: {
-          title: 'Programs',
-          description: 'Description Meta Tag Content',
-        },
-      },
-      {
         path: 'classrooms',
         component: DisplayParentClassroomsComponent,
         data: {
@@ -98,6 +80,14 @@ const routes: Routes = [
           title: 'View Classroom',
           description: 'Description Meta Tag Content',
         },
+      },
+      {
+        path: 'programs',
+        loadChildren: () => import('../../modules/programs/programs.module').then((m) => m.ProgramsModule),
+        data: {
+          title: 'Programs',
+          description: 'Description Meta Tag Content',
+        }
       },
       {
         path: 'payment',

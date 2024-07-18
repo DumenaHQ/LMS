@@ -1,0 +1,265 @@
+<section class="ds-head dis-flex">
+    <h2 class="ds-head_title clickable" (click)="goToViewAllPrograms()">
+      Programs
+    </h2>
+    <i class="bx bx-chevron-right icon"></i>
+    <p class="clickable" [title]="program?.name">
+      {{ program?.name | truncate }}
+    </p>
+  </section>
+  
+  <section class="course-details">
+    <div class="course-details_image" [style.backgroundImage]="program?.header_photo ? 'url(' + program?.header_photo + ')' : 'url(assets/img/program-thumbnail.svg)'">
+    </div>
+    <div class="course-details_header">
+      <div class="course-details_header_top" style="align-items: center">
+        <div class="left">
+          <h2>{{ program?.name }}</h2>
+          <div class="dis-flex left_bottom">
+            <button
+                [ngClass]="
+                program?.status === 'active' ? 'success_btn' : 'grey_btn'
+                "
+            >
+                {{ program?.status === "active" ? "Ongoing" : "Ended" }}
+            </button>
+  
+            <div class="icons dis-flex">
+              <span class="dis-flex" *ngIf="program?.active_term">
+                <!-- <img src="../../../assets/img/svg/calendar-2.svg" alt="" /> -->
+                <div class="">
+                  <p class="body-2-regular">
+                    Starts:
+                    {{ program?.start_date | date : "mediumDate" }}
+                  </p>
+  
+                  <p>
+                    Ends:
+                    {{ program?.end_date | date : "mediumDate" }}
+                  </p>
+                </div></span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="right dis-flex items-center">
+          <button 
+            class="btn" 
+            style="padding: 10px; display: flex; align-items: center" 
+            (click)="editProgram()" 
+            *ngIf="user.role === 'admin'"
+          >
+            <img src="../../../assets/img/svg/setting-grey.svg" alt="" />
+            <span class="" style="margin-left: 4px;">
+              Edit program
+            </span>
+          </button>
+        </div>
+      </div>
+      <div class="course-details_header_bottom">
+        <div class="students dis-flex">
+          <p class="body-2-bold title">
+            Total
+            {{ (program?.learner_count || 0) > 1 ? "Learners:" : "Learner:" }}
+          </p>
+          <div class="students_value dis-flex">
+            <p class="body-2-medium text-primary-color">({{ program?.learner_count }})</p>
+            <ul class="students_list dis-flex">
+              <li>
+                <img
+                  src="../../../../../assets/img/children-avatar/child-avatar-1.png"
+                  alt=""
+                />
+              </li>
+              <li>
+                <img
+                  src="../../../../../assets/img/children-avatar/child-avatar-2.png"
+                  alt=""
+                />
+              </li>
+              <li>
+                <img
+                  src="../../../../../assets/img/children-avatar/child-avatar-3.png"
+                  alt=""
+                />
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="completion dis-flex" *ngIf="program?.teacher && user.role !== 'instructor'">
+          <!-- <p class="body-2-bold title">Instructor:</p>
+          <div class="name dis-flex">
+            <p class="body-2-medium text-primary-color">
+              {{ program?.teacher?.fullname }}
+            </p>
+            <i 
+              *ngIf="user.role === 'school'"
+              class='bx bx-message-square-x icon clickable' 
+              title="Remove" 
+              (click)="openConfirmModal(program?.teacher?.fullname)"
+            ></i>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <div class="course-details_body">
+      <div class="course-details_body_header">
+        <ul class="dis-flex">
+          <li
+            class="body-2-medium active"
+            [class.active]="activeTab === 'courses'"
+            (click)="setActiveTab('courses')"
+          >
+            Courses
+          </li>
+          <li
+            class="body-2-medium"
+            [class.active]="activeTab === 'schools'"
+            *ngIf="user.role === 'admin'"
+            (click)="setActiveTab('schools')"
+          >
+            Schools
+          </li>
+          <li
+            class="body-2-medium"
+            [class.active]="activeTab === 'learners'"
+            (click)="setActiveTab('learners')"
+          >
+            Learners
+          </li>
+        </ul>
+      </div>
+      <div class="course-details_body_content">
+        <!-- Courses -->
+        <ng-container *ngIf="activeTab === 'courses'">
+          <div class="table-container" style="overflow-x: auto">
+            <ng-container *ngIf="program?.courses?.length > 0">
+              <table>
+                <tr class="table-header">
+                  <th>Title</th>
+                  <th>Number of lesson(s)</th>
+                  <th>Quadrant</th>
+                  <th>Duration</th>
+                  <th>Action</th>
+                </tr>
+                <ng-container>
+                  <tr
+                    class="table-body"
+                    *ngFor="let course of program?.courses"
+                  >
+                    <td>{{ course?.title || "-" }}</td>
+                    <td>{{ course?.lesson_count || "-" }}</td>
+                    <td>{{ course?.course_quadrant || "-" }}</td>
+                    <td>{{ course?.duration || "-" }}</td>
+                    <td>
+                      <button class="btn sec_btn" style="margin-right: 2rem;" (click)="watchCourse(course?.id)">Watch</button>
+                    </td>
+                  </tr>
+                </ng-container>
+              </table>
+            </ng-container>
+  
+            <div *ngIf="program?.courses?.length === 0" class="course-empty">
+              <img src="../../../../../assets/img/Illustration.svg" alt="">
+              <p style="text-align: center">No Course available</p>
+              <button
+                type="button"
+                class="btn sec_btn"
+                (click)="openAddCourseToProgramModal()"
+                *ngIf="user.role === 'admin'"
+              >
+                Add Course
+              </button>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- Schools -->
+        <ng-container *ngIf="activeTab === 'schools'">
+          <div class="table-container" style="overflow-x: auto">
+            <ng-container *ngIf="program?.schools?.length > 0">
+                <table>
+                    <tr class="table-header">
+                      <th>Name</th>
+                      <th>Number of students</th>
+                    </tr>
+                    <ng-container>
+                      <tr class="table-body" *ngFor="let school of program?.schools">
+                        <td>{{ school?.name }}</td>
+                        <td>{{ school?.student_count }}</td>
+                      </tr>
+                    </ng-container>
+                </table>
+            </ng-container>
+  
+            <div *ngIf="program?.schools?.length === 0" class="course-empty">
+              <img src="../../../../../assets/img/Illustration.svg" alt="">
+              <p style="text-align: center">No School available</p>
+            </div>
+          </div>
+        </ng-container>
+  
+        <!-- Learners -->
+        <ng-container *ngIf="activeTab === 'learners'">
+          <div class="table-container" style="overflow-x: auto">
+            <div *ngIf="program?.learners?.length != 0 && user.role ==='school'" style="padding: 1%">
+              <button
+                type="button"
+                class="btn sec_btn"
+                (click)="openAddLearnerToProgramModal()"
+              >
+                Add Learner
+              </button>
+            </div>
+  
+            <ng-container *ngIf="program?.learners?.length > 0">
+                <table>
+                    <tr class="table-header">
+                      <th>Full Name</th>
+                      <th>User Name</th>
+                      <th *ngIf="user?.role === 'school'">Email</th>
+                      <th *ngIf="user?.role === 'school'">Grade</th>
+                    </tr>
+                    <ng-container>
+                      <tr class="table-body" *ngFor="let learner of program?.learners">
+                        <td>{{ learner.fullname }}</td>
+                        <td>{{ learner.username }}</td>
+                        <td *ngIf="user?.role === 'school'">{{learner.email}}</td>
+                        <td *ngIf="user?.role === 'school'">{{learner.grade}}</td>
+                      </tr>
+                    </ng-container>
+                </table>
+            </ng-container>
+  
+            <div *ngIf="program?.learners?.length === 0" class="course-empty">
+              <img src="../../../../../assets/img/Illustration.svg" alt="">
+              <p style="text-align: center">No Learner available</p>
+              <button
+                type="button"
+                class="btn sec_btn"
+                (click)="openAddLearnerToProgramModal()"
+                *ngIf=" user.role === 'school'"
+              >
+                Add Learner
+              </button>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </section>
+  
+  <app-add-program-courses
+    *ngIf="addCourseToProgram"
+    (addCourseToprogramModal)="closeAddCourseToProgramModal()"
+    [programId]="currentProgramId.programId"
+    (getprogram)="getPrograms()"
+  ></app-add-program-courses>
+  
+  <app-add-program-learners
+    *ngIf="addLearnerToProgram"
+    [programId]="currentProgramId.programId"
+    (addLearnerToProgramModal)="closeAddLearnerToProgramModal()"
+    (getprogram)="getPrograms()"
+  ></app-add-program-learners>
+  
