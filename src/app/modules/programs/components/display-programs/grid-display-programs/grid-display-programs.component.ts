@@ -60,7 +60,7 @@ export class GridDisplayProgramsComponent implements OnInit {
       next: (res: any) => {
         if (res.status === true) {
           this.appAlertService.showAlert(res.message, AlertType.Success);
-          this.router.navigate([`/${this.user.role}/programs/${this.selectedProgramId}`]);
+          this.router.navigate([`/${this.user.role}/programs/${this.selectedProgramId}/view-program`]);
         }
       },
       error: (error) => {

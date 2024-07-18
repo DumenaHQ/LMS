@@ -82,15 +82,15 @@
               />
               <div class="select-image_content">
                 <img
-                  [src]="headerPhotoImagePreview ? headerPhotoImagePreview : '../../../../../../../assets/img/select-Image.svg'"
+                  [src]="headerPhotoImagePreview ? headerPhotoImagePreview : classroom.header_photo ? classroom.header_photo : '../../../../../../../assets/img/select-Image.svg'"
                   alt="Image Preview"
-                  [class.no-image]="!headerPhotoImagePreview"
+                  [class.no-image]="!headerPhotoImagePreview && !classroom.header_photo"
                 />
                 <p class="captions-regular text-primary-color" *ngIf="selectedHeaderPhotoName">
                   {{ selectedHeaderPhotoName  }}
                 </p>
                 <p class="body-3-regular text-primary-color">
-                  {{ selectedHeaderPhotoName === '' ? 'Click to select a picture' : 'Click to Select another picture' }}
+                  {{ (selectedHeaderPhotoName === '' && !classroom.header_photo) ? 'Click to select a picture' : 'Click to Select another picture' }}
                 </p>
               </div>
             </div>
@@ -120,15 +120,15 @@
               />
               <div class="select-image_content">
                 <img
-                  [src]="thumbnailImagePreview ? thumbnailImagePreview : '../../../../../../../assets/img/select-Image.svg'"
+                  [src]="thumbnailImagePreview ? thumbnailImagePreview : classroom.thumbnail ? classroom.thumbnail : '../../../../../../../assets/img/select-Image.svg'"
                   alt="Image Preview"
-                  [class.no-image]="!thumbnailImagePreview"
+                  [class.no-image]="!thumbnailImagePreview && !classroom.thumbnail"
                 />
                 <p class="captions-regular text-primary-color" *ngIf="selectedThumbnailName">
                   {{ selectedThumbnailName  }}
                 </p>
                 <p class="body-3-regular text-primary-color">
-                  {{ selectedThumbnailName === '' ? 'Click to select a picture' : 'Click to Select another picture' }}
+                  {{ (selectedThumbnailName === '' && !classroom.thumbnail) ? 'Click to select a picture' : 'Click to Select another picture' }}
                 </p>
               </div>
             </div>

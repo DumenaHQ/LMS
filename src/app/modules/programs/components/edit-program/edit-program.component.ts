@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { TeachersService } from 'src/app/services/teachers.service';
 import * as moment from 'moment';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
@@ -16,6 +15,7 @@ import { ProgramsService } from 'src/app/services/programs.service';
 })
 export class EditProgramComponent implements OnInit {
 
+  currentClassroom: any;
   program: any;
   loading: boolean = false;
   dataLoading: boolean = false;
@@ -33,11 +33,11 @@ export class EditProgramComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private router: Router,
-    private teachersService: TeachersService,
     private authService: AuthService,
     private utilsService: UtilsService,
     private appAlertService: AppAlertService,
-    private formErrorService: FormErrorMessageService
+    private formErrorService: FormErrorMessageService,
+    private changeDectetorRef: ChangeDetectorRef
   ) {}
 
   get minDate(): string | undefined {
@@ -56,19 +56,18 @@ export class EditProgramComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authService.getUser().user;
-
-    // Get Current program
-    this.program = this.activatedRoute.snapshot.params;
+    this.currentClassroom = this.activatedRoute.snapshot.params;
+    this.initForm();
     this.getProgram();
   }
 
   // Initialize form
   initForm() {
     this.formGroup = this.formBuilder.group({
-      name: [this.program?.name, [Validators.required]],
-      description: [this.program?.description, [Validators.required]],
-      header_photo: [this.program?.header_photo],
-      thumbnail: [this.program?.thumbnail],
+      name: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      header_photo: [''],
+      thumbnail: [''],
     });
   }
 
@@ -76,11 +75,15 @@ export class EditProgramComponent implements OnInit {
   getProgram() {
     this.dataLoading = true;
     this.programsService
-      .getProgramsById(this.program.programId)
+      .getProgramsById(this.currentClassroom.programId)
       .subscribe({
         next: (res: any) => {
           this.program = res.data.program;
-          this.initForm();
+          this.formGroup.patchValue({
+            name: this.program?.name,
+            description: this.program?.description,
+          });
+          this.changeDectetorRef.detectChanges();
         },
         error: (e) => {
           console.error(e);
@@ -130,7 +133,7 @@ export class EditProgramComponent implements OnInit {
     }
 
     this.programsService
-      .editProgram(formData, this.program.programId)
+      .editProgram(formData, this.currentClassroom.programId)
       .then(res => res.json()).then((data) => {
         if (data.status) {
           this.appAlertService.showAlert(data.message, AlertType.Success);
@@ -167,7 +170,7 @@ export class EditProgramComponent implements OnInit {
       ]);
     } else if(pageNumber === 2) {
       this.router.navigate([
-        `/${this.user.role}/programs/${this.program.programId}/view-program`,
+        `/${this.user.role}/programs/${this.currentClassroom.programId}/view-program`,
       ]);
     }
   }
