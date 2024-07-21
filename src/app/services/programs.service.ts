@@ -100,7 +100,7 @@ export class ProgramsService {
   editProgram(formData: FormData, programId: any): Promise<Response> {
     const headers = new Headers();
     headers.append('Authorization', 'bearer ' + localStorage.getItem('token'));
-    return fetch(`${this.baseUrl}classes/${programId}`, {
+    return fetch(`${this.baseUrl}programs/${programId}`, {
       method: 'PUT',
       headers: headers,
       body: formData,

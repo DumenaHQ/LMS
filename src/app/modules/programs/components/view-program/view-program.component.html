@@ -16,38 +16,47 @@
         <div class="left">
           <h2>{{ program?.name }}</h2>
           <div class="dis-flex left_bottom">
-            <button
-                [ngClass]="
-                program?.status === 'active' ? 'success_btn' : 'grey_btn'
-                "
-            >
+            <button [ngClass]="program?.status === 'active' ? 'success_btn' : 'grey_btn'">
                 {{ program?.status === "active" ? "Ongoing" : "Ended" }}
             </button>
   
             <div class="icons dis-flex">
-              <span class="dis-flex" *ngIf="program?.active_term">
+              <span class="dis-flex">
                 <!-- <img src="../../../assets/img/svg/calendar-2.svg" alt="" /> -->
                 <div class="">
                   <p class="body-2-regular">
                     Starts:
-                    {{ program?.start_date | date : "mediumDate" }}
+                    {{ (program?.start_date | date : "mediumDate") || '-' }}
                   </p>
   
                   <p>
                     Ends:
-                    {{ program?.end_date | date : "mediumDate" }}
+                    {{ (program?.end_date | date : "mediumDate") || '-' }}
                   </p>
-                </div></span
-              >
+                </div>
+              </span>
             </div>
           </div>
         </div>
         <div class="right dis-flex items-center">
+          <ng-container *ngIf="user.role === 'parent' || user.role === 'school'">
+            <button 
+                  *ngIf="program?.hasJoined === false"
+                  class="btn prim_btn" 
+                  [disabled]="loading" 
+                  (click)="openConfirmModal(program, 'join')"
+              >   
+                  {{ user.role === 'parent' ? 'Follow' : 'Join' }}
+              </button>
+              <button class="btn grey_btn" *ngIf="program?.hasJoined === true">
+                  {{ user.role === 'parent' ? 'Followed' : 'Joined' }}
+              </button>
+          </ng-container>
           <button 
+            *ngIf="user.role === 'admin'"
             class="btn" 
             style="padding: 10px; display: flex; align-items: center" 
             (click)="editProgram()" 
-            *ngIf="user.role === 'admin'"
           >
             <img src="../../../assets/img/svg/setting-grey.svg" alt="" />
             <span class="" style="margin-left: 4px;">
@@ -57,6 +66,9 @@
         </div>
       </div>
       <div class="course-details_header_bottom">
+        <p class="descript">
+          {{ program?.description }}
+        </p>
         <div class="students dis-flex">
           <p class="body-2-bold title">
             Total
@@ -133,6 +145,15 @@
         <!-- Courses -->
         <ng-container *ngIf="activeTab === 'courses'">
           <div class="table-container" style="overflow-x: auto">
+            <div *ngIf="program?.courses?.length != 0 && user.role ==='admin'" style="padding: 1%">
+              <button
+                type="button"
+                class="btn sec_btn"
+                (click)="openAddCourseToProgramModal()"
+              >
+                Add Course
+              </button>
+            </div>
             <ng-container *ngIf="program?.courses?.length > 0">
               <table>
                 <tr class="table-header">
@@ -251,15 +272,23 @@
   
   <app-add-program-courses
     *ngIf="addCourseToProgram"
-    (addCourseToprogramModal)="closeAddCourseToProgramModal()"
+    (addCourseToProgramModal)="closeAddCourseToProgramModal()"
     [programId]="currentProgramId.programId"
-    (getprogram)="getPrograms()"
+    (getProgram)="getPrograms()"
   ></app-add-program-courses>
   
   <app-add-program-learners
     *ngIf="addLearnerToProgram"
     [programId]="currentProgramId.programId"
     (addLearnerToProgramModal)="closeAddLearnerToProgramModal()"
-    (getprogram)="getPrograms()"
+    (getProgram)="getPrograms()"
   ></app-add-program-learners>
+
+  <app-confirm-delete 
+    *ngIf="confirmModal" 
+    (confrimModal)="closeConfirmModal()" 
+    [confirmMessage]="confirmMessage" 
+    [confirmUrl]="confirmUrl"
+    (confrimDone)="joinProgram()"
+  ></app-confirm-delete>
   
