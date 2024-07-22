@@ -39,7 +39,7 @@ export class SchoolSignupComponent implements OnInit {
     this.formGroup = this.formBuilder.group({
       schoolName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      schoolAddress: ['', [Validators.required]],
+      schoolAddress: [''],
       schoolState: ['', [Validators.required]],
       contactPersonName: ['', [Validators.required]],
       contactPersonNumber: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern(/^\d+$/)]],
