@@ -16,13 +16,15 @@
       font-weight: 400;
       line-height: 17px;
       letter-spacing: 0.01em;
-      text-align: center;
     }
     tr {
       &.table-header {
         background-color: $primary80;
         color: $white-color;
         border-radius: $border-radius2 $border-radius2 0px 0px;
+        th {
+          text-align: left;
+        }
         th:last-child {
           border-radius: 0 $border-radius2 0px 0px;
         }
@@ -44,9 +46,25 @@
               border-radius: $border-radius2;
             }
           }
-          &.quadrant,
-          &.name {
-            text-align: left;
+          &.actions {
+            position: relative;
+            .dropdown {
+              display: none;
+              position: absolute;
+              top: 40px;
+              left: -1rem;
+              transform: translateX(-50%);
+              background: $white-color;
+              box-shadow: $box-shadow;
+              padding: $m-1;
+              border-radius: 2.5px;
+              &.active {
+                display: block;
+              }
+              .delete {
+                color: $error80;
+              }
+            }
           }
         }
         &:not(:last-child) {
