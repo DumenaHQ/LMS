@@ -1,0 +1,100 @@
+<div class="dis-flex clickable" style="gap: 1rem; padding: 2rem 0 0 2rem;" (click)="closeAddQuizQuestions()">
+    <img src="../../../../../../../assets/img/svg/arrow-left.svg" style="width: 20px;" alt="arrow right">
+    <h5 class="text-primary-color">Go back</h5>
+</div>
+
+<form [formGroup]="formGroup">
+    <div formArrayName="questions" class="form_container">
+      <div *ngFor="let questionGroup of questions.controls; let i = index" [formGroupName]="i">
+        <div class="form_control_question">
+          <div class="form_control_question_header dis-flex">
+            <label style="margin-bottom: 0;">Question {{ i + 1 }}</label>
+            <div class="dis-flex form_control_question_header_right dis-flex">
+              <!-- <div class="form_control_field">
+                <select formControlName="selectionType" [id]="'selectionType' + ' ' + i" name="selectionType">
+                  <option value="single" selected>Single Choice</option>
+                  <option value="multiple">Multiple Choice</option>
+                  <option value="boolean">True/False</option>
+                </select>
+              </div> -->
+              <span class="clickable remove-question dis-flex" (click)="removeQuestion(i)">
+                <img src="../../../../../../assets/img/svg/fi_check.svg" class="icon" alt="cancel">
+              </span>
+            </div>
+          </div>
+          <div class="form_control_field">
+            <textarea
+              name="question"
+              id="question"
+              cols="30"
+              rows="3"
+              placeholder="State your question"
+              spellcheck="true"
+              formControlName="question"
+            ></textarea>
+          </div>
+          <div class="form_error" *ngIf="formGroup.get('questions')?.get(i.toString())?.get('question')?.invalid && formGroup.get('questions')?.get(i.toString())?.get('question')?.touched">
+            <p class="body-3-regular error-msg">{{ getErrorMessage(i, -1, 'question', 'Question') }}</p>
+          </div>
+        </div>
+  
+        <div formArrayName="options" class="options_container">
+          <div>
+            <label>State your options</label>  
+            <div *ngIf="getOptions(questionGroup)" class="options_container_body">
+              <div *ngFor="let option of getOptions(questionGroup)?.controls; let j = index" [formGroupName]="j">
+                <div class="form_control dis-flex">
+                    <label>{{ getAlphabetLabel(j) }}.</label>
+                    <div style="width: 100%;">
+                      <div 
+                        class="form_control_field option" 
+                        [class.checked]="isCorrectAnswer(i, getAlphabetLabel(j))"
+                      >
+                        <input [formControlName]="getOptionLabel(option)" placeholder="Enter option text" />
+                        <span 
+                          class="clickable correct-check dis-flex" 
+                          (click)="setCorrectAnswer(i, getAlphabetLabel(j))" 
+                          title="Click to set as correct answer"
+                        >
+                          <i class='bx bx-check icon'></i>
+                        </span>
+                        <span 
+                          class="clickable remove-option dis-flex" 
+                          (click)="removeOption(questionGroup, j)"
+                          title="Click to remove option"
+                        >
+                          <img src="../../../../../../assets/img/svg/fi_check.svg" class="icon" alt="cancel">
+                        </span>
+                      </div>
+                      <div 
+                        class="form_error" 
+                        *ngIf="option.get(getOptionLabel(option))?.invalid && option.get(getOptionLabel(option))?.touched"
+                      >
+                        <p class="body-3-regular error-msg">{{ getErrorMessage(i, j, getOptionLabel(option), 'Option') }}</p>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <span class="add-option dis-flex clickable" (click)="addOption(questionGroup)">
+            <img src="../../../../../../assets/img/svg/add.svg" alt="">
+            Add Option
+          </span>
+        </div>
+      </div>
+    </div>
+  
+    <div class="form_btns dis-flex">
+      <ng-container *ngIf="!loading">
+        <button class="btn sec_btn" (click)="addNewQuestion()">Add Question</button>
+        <button class="btn prim_btn" (click)="onSubmit()" [disabled]="formGroup.invalid">Submit</button>
+      </ng-container>
+      <button
+        class="btn prim_btn"
+        [disabled]="loading"
+        *ngIf="loading"
+      >Processing...</button> 
+    </div>
+</form>
+    

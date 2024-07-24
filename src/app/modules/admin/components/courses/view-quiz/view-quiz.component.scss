@@ -1,0 +1,214 @@
+@import '../../../../../../assets/css/variables.scss';
+@import '../../../../../../assets/css/mixins.scss';
+@import '../../../../../../assets/css/dashboard.scss';
+
+.course-details {
+  @include sect-bg($border-color: transparent);
+  padding: $m-4 0;
+  &_image {
+    padding: 0 $m-3;
+    img {
+      width: 100%;
+      max-height: 300px;
+    }
+  }
+  &_header {
+    padding: 0 $m-3;
+    margin-top: $m-2;
+    &_top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-flow: row wrap;
+        gap: $m-2;
+        margin-bottom: $m-2;
+        .left {
+            &_bottom {
+                gap: $m-2;
+                margin-top: $m-2;
+                .icons {
+                    gap: $m-2;
+                    flex-flow: row wrap;
+                    justify-content: space-between;
+                    color: $primary40;
+                    img {
+                        margin-right: $m-1;
+                        width: 14px;
+                        height: 14px;
+                    }
+                }
+            }
+        }
+        .right {
+            gap: $m-2;
+            .status-btn.settings {
+            padding: $m-1 0.7rem;
+            img {
+                width: 16px;
+                height: 16px;
+                vertical-align: middle;
+                transition: all 0.2s;
+            }
+            &:hover {
+                img {
+                transform: rotate(360deg);
+                }
+            }
+            }
+        }
+    }
+    &_bottom {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: $m-4;
+        .icons {
+            gap: $m-2;
+            flex-flow: row wrap;
+            justify-content: space-between;
+            color: $primary40;
+            img {
+            margin-right: $m-1;
+            width: 14px;
+            height: 14px;
+            }
+        }
+        .numbers {
+            gap: $m-1;
+            li {
+                display: grid;
+                grid-gap: $m-1;
+                padding: $m-1;
+                border: 1px solid $divider-color;
+                border-radius: $border-radius1;
+            }
+        }
+        .completion {
+            p:last-child {
+                margin-top: $m-1;
+            }
+        }
+    }
+  }
+  &_body {
+    margin-top: $m-4;
+    &_header {
+        padding: 0 $m-4;
+        height: 3.5rem;
+        border-bottom: 1px solid $divider-color;
+        overflow: hidden;
+        ul {
+            // gap: $m-4;
+            // flex-wrap: wrap;
+            li {
+            line-height: 3.3rem;
+            cursor: pointer;
+            transition: all .2s;
+            padding: 0 $m-3;
+            &.active {
+                color: $primary80;
+                border-bottom: 2px solid $primary80;
+            }
+            &:hover {
+                background-color: $grey40;
+            }
+            }
+        }
+    }
+    &_content {
+        display: flex;
+        aside {
+            flex-basis:25%;
+            border-right: 1px solid $divider-color;
+            ul {
+                li {
+                    padding: $m-2 $m-4;
+                    transition: all .2s ease-in;
+                    border-left: 3px solid transparent;
+                    cursor: pointer;
+                    &.active,
+                    &:hover {
+                        background-color: $divider-color;
+                    }
+                    &.active {
+                        border-color: $secondary80;
+                    }
+                    p {
+                        color: $primary20;
+                    }
+                }
+            }
+        }
+        main {
+            width: 100%;
+            padding: $m-4;
+            .header {
+                h5 {
+                    color: $primary20;
+                }
+                p {
+                    border: 1px solid $inner-border;
+                    border-radius: $border-radius1;
+                    padding: $m-2;
+                }
+            }
+            ul {
+                margin-top: $m-6;
+                padding: 0 $m-4;
+                li {
+                    width: 100%;
+                    &:not(:last-child) {
+                        margin-bottom: $m-2;
+                    }
+                    .option-label {
+                        flex-basis: 5%;
+                    }
+                    .option-value {
+                        flex-basis: 95%;
+                        gap: $m-2;
+                        justify-content: space-between;
+                        border: 1px solid $inner-border;
+                        border-radius: $border-radius1;
+                        padding-left: $m-2;
+                        &_content {
+                            width: 75%;
+                            font-size: 16px;
+                            padding: $m-2 0;
+                            background-color: transparent;
+                            border: none;
+                            outline: none;
+                            height: 40px;
+                            resize: none;
+                            &::placeholder {
+                                font-size: 16px;
+                            }
+                            &.extended {
+                                height: 55px;
+                            }
+                        }
+                        &_marked {
+                            width: 25%;
+                            height: 40px;
+                            border-left: 1px solid $inner-border;
+                            background-color: $secondary40;
+                            color: $secondary80;
+                            padding: 0 $m-2;
+                            border-radius: 0 $border-radius1 $border-radius1 0;
+                            &.extended {
+                                height: 55px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+  }
+}
+
+.empty_content {
+    display: grid;
+    grid-gap: $m-2;
+    justify-content: center;
+    padding: $m-6;
+}

@@ -6,6 +6,7 @@ import { DisplayCoursesComponent } from './display-courses/display-courses.compo
 import { AddCourseComponent } from './add-course/add-course.component';
 import { AddCourseModuleComponent } from './add-course/add-course-module/add-course-module.component';
 import { DisplayCourseModulesComponent } from './add-course/display-course-modules/display-course-modules.component';
+import { ViewQuizComponent } from './view-quiz/view-quiz.component';
 
 const routes: Routes = [
   {
@@ -29,26 +30,34 @@ const routes: Routes = [
         },
       },
       {
-        path: 'create-course',
+        path: 'add-course',
         component: AddCourseComponent,
         data: {
-          title: 'Create Course',
+          title: 'Add Course',
           description: 'Description Meta Tag Content',
         },
       },
       {
-        path: 'create-course/:courseId/modules',
+        path: ':courseId/modules',
         component: DisplayCourseModulesComponent,
         data: {
-          title: 'Add Modules',
+          title: 'Modules',
           description: 'Description Meta Tag Content',
         },
       },
       {
-        path: 'create-course/:courseId/modules/add-module',
+        path: ':courseId/modules/add-module',
         component: AddCourseModuleComponent,
         data: {
           title: 'Add Modules',
+          description: 'Description Meta Tag Content',
+        },
+      },
+      {
+        path: ':courseId/quiz/:quizId/details',
+        component: ViewQuizComponent,
+        data: {
+          title: 'Quiz',
           description: 'Description Meta Tag Content',
         },
       },

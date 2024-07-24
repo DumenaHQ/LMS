@@ -5,19 +5,16 @@ import { QuizService } from 'src/app/services/quiz.service';
 import { FormErrorMessageService } from 'src/app/services/utils/form-error-message.service';
 
 @Component({
-  selector: 'app-add-admin-quizze-questions',
-  templateUrl: './add-admin-quizze-questions.component.html',
-  styleUrls: ['./add-admin-quizze-questions.component.scss']
+  selector: 'app-add-quiz-questions',
+  templateUrl: './add-quiz-questions.component.html',
+  styleUrls: ['./add-quiz-questions.component.scss']
 })
-export class AddAdminQuizzeQuestionsComponent implements OnInit {
+export class AddQuizQuestionsComponent implements OnInit {
 
   @Input() quizId: any;
   @Output() addQuizQuestionModal = new EventEmitter<any>();
   formGroup: FormGroup;
   loading: boolean = false;
-  alertMessage: string = '';
-  alertColor: string = '';
-  isAlert: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -191,3 +188,4 @@ export class AddAdminQuizzeQuestionsComponent implements OnInit {
   }
   
 }
+

@@ -1,36 +1,47 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { QuizService } from 'src/app/services/quiz.service';
 
 @Component({
-  selector: 'app-view-admin-quizze',
-  templateUrl: './view-admin-quizze.component.html',
-  styleUrls: ['./view-admin-quizze.component.scss']
+  selector: 'app-view-quiz',
+  templateUrl: './view-quiz.component.html',
+  styleUrls: ['./view-quiz.component.scss']
 })
-export class ViewAdminQuizzeComponent implements OnInit {
+export class ViewQuizComponent implements OnInit {
 
   quiz: any;
-  currentQuiz: any;
+  currentQuizParmas: any;
   questionIndex: number = 0;
+  isAddQuizQuestions: boolean = false;
   
   constructor(
     private activatedRoute: ActivatedRoute,
-    private quizService: QuizService
+    private quizService: QuizService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.currentQuiz = this.activatedRoute.snapshot.params;
+    this.currentQuizParmas = this.activatedRoute.snapshot.params;
     this.getQuizByQuizId();
   }
   
   getQuizByQuizId() {
-    this.quizService.getquizByQuizId(this.currentQuiz.quizId).subscribe({
+    this.quizService.getquizByQuizId(this.currentQuizParmas.quizId).subscribe({
       next: (res: any) => {
         this.quiz = res.data.quiz;
         console.log(this.quiz);
       },
       error: (e: any) => console.error(e)
     });
+  }
+
+  toggleAddQuizQuestions() {
+    this.isAddQuizQuestions = !this.isAddQuizQuestions;
+  }
+
+  closeAndRefresh() {
+    this.isAddQuizQuestions = false;
+    this.getQuizByQuizId();
   }
 
   getOptions(question: any): { label: string, value: string }[] {
@@ -49,4 +60,9 @@ export class ViewAdminQuizzeComponent implements OnInit {
     return options;
   }
 
+  navigatePage() {
+    this.router.navigate([`admin/courses/${this.currentQuizParmas.courseId}/details`]);
+  }
+
 }
+

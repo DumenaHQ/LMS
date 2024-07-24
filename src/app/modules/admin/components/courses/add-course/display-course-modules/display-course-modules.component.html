@@ -1,7 +1,9 @@
 <section class="ds-head dis-flex">
   <h2 class="ds-head_title clickable" routerLink="/admin/courses">Courses</h2>
   <i class="bx bx-chevron-right icon"></i>
-  <p>{{ course?.title | truncate }}</p>
+  <p class="clickable" [routerLink]="['/admin/courses/', course?.id, 'details']">{{ course?.title | truncate }}</p>
+  <i class="bx bx-chevron-right icon"></i>
+  <p>Modules</p>
 </section>
 
 <section class="grouping dis-flex">
@@ -10,7 +12,7 @@
       <div class="body-3-regular dis-flex">
         <span class="title">Filter:</span>
         <span class="dropdown dis-flex clickable"
-          >All Modules <i class="bx bx-chevron-down"></i
+          >All modules <i class="bx bx-chevron-down"></i
         ></span>
       </div>
     </div>
@@ -28,22 +30,76 @@
       <!-- New Course Button -->
       <button class="btn prim_btn" routerLink="add-module">New Module</button>
     </div>
-  </section>
+</section>
 
 <section class="modules">
   <div class="modules_body">
-    <div class="module_list dis-flex card" *ngIf="modules?.length > 0">
-      <div class="module_list_item card_item" *ngFor="let module of modules">
-        <h5>{{module.title}}</h5>
-        <div class="module_list_item_bottom dis-flex">
-            <p>{{module.lesson_count}} {{module.lesson_count > 1 ? 'Lessons' : 'Lesson'}}</p>
+    <app-loader *ngIf="dataLoading"></app-loader>
+
+    <div class="accordion" *ngIf="!dataLoading">
+      <div *ngFor="let module of modules; let i = index" class="accordion-item">
+        <div class="accordion-header dis-flex" (click)="toggleAccordion(i)">
+          <div class="accordion-header_left">
+            <h5>{{ module.title }}</h5>
+            <p class="lesson text-primary-color">
+              <em>{{ module.lesson_count }} {{module.lesson_count > 1 ? 'Lessons' : 'Lesson'}}</em>
+            </p>
+          </div>
+          <div class="accordion-header_right dis-flex">
+            <span class="date">
+              <ng-container *ngIf="isCurrentDate(module.updatedAt); else notCurrentDate">
+                {{ module.updatedAt | date: 'shortTime' }}
+              </ng-container>
+              <ng-template #notCurrentDate>
+                {{ module.updatedAt | date: 'MMM d, h:mm a' }}
+            </ng-template>
+            </span>
+            <i class="bx bx-chevron-down icon" [class.open]="activeIndex === i"></i>
+          </div>
+        </div>
+        <div class="accordion-content" [ngClass]="{'active': activeIndex === i}">
+          <div style="overflow-x: auto" *ngIf="modules?.length > 0">
+            <button class="btn sec_btn" style="margin-bottom: 2rem;" (click)="openModuleLesson(module.id, module.title)">Add Lesson</button>
+            <table>
+              <tr class="table-header">
+                <th>Title</th>
+                <th>Duration</th>
+              </tr>
+              <tr class="table-body" *ngFor="let lesson of module.lessons">
+                <td>{{ lesson?.title || "-" }}</td>
+                <td>{{ lesson?.duration || "-" }}</td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="empty-discussion" *ngIf="modules?.length === 0">
+            <img src="../../../../../../../assets/img/Illustration.svg" alt="image" class="blank-item_image">
+            <p style="text-align: center">No lesson available</p>
             <button class="btn sec_btn" (click)="openModuleLesson(module.id, module.title)">Add Lesson</button>
+          </div>
         </div>
       </div>
     </div>
-    <ng-container *ngIf="modules?.length === 0">
-        <p>Empty list!</p>
-    </ng-container>
+
+
+
+    <div class="dis-flex" *ngIf="modules?.length === 0">
+      <div class="blank-item">
+        <img
+          src="../../../../../../../assets/img/empty-classrrom.svg"
+          alt=""
+          class="blank-item_image"
+        />
+        <div class="blank-item_details">
+          <h2 class="text-primary-color">Start by creating a module</h2>
+        </div>
+        <div class="blank-item_btn">
+          <button class="btn prim_btn" routerLink="add-module">
+              New Module
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -54,13 +110,7 @@
         </span>
 
         <div class="modal_area_header">
-          <h4 class="text-primary-color">
-            {{
-            moduleName.length > 20
-              ? moduleName.slice(0, 20)  + "..." 
-              : moduleName | titlecase
-            }}
-          </h4>
+          <h4 class="text-primary-color">{{ moduleName | truncate}}</h4>
         </div>
 
         <!-- Module Form -->

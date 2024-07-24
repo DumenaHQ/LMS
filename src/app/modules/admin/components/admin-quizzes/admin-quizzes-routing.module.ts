@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminQuizzesComponent } from './admin-quizzes.component';
 import { DisplayAdminQuizzesComponent } from './display-admin-quizzes/display-admin-quizzes.component';
-import { AddAdminQuizzeComponent } from './add-admin-quizze/add-admin-quizze.component';
 import { ViewAdminQuizzeComponent } from './view-admin-quizze/view-admin-quizze.component';
 
 const routes: Routes = [
@@ -23,14 +22,6 @@ const routes: Routes = [
         component: ViewAdminQuizzeComponent,
         data: {
           title: 'Quiz',
-          description: 'Description Meta Tag Content',
-        },
-      },
-      {
-        path: 'create-quiz',
-        component: AddAdminQuizzeComponent,
-        data: {
-          title: 'Create Quiz',
           description: 'Description Meta Tag Content',
         },
       },

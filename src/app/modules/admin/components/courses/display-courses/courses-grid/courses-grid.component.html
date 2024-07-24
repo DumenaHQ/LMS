@@ -2,38 +2,38 @@
   <div class="card">
     <div
       class="card_item"
-      *ngFor="let i of allCourses"
+      *ngFor="let course of courses; let i = index"
     >
       <img
         [src]="
-          i.thumbnail || '../../../../../../assets/img/library/library1.png'
+          course.thumbnail || '../../../../../../assets/img/library/library1.png'
         "
         alt="image"
         class="card_item_image clickable"
-        [routerLink]="i.id + '/details'"
-        [title]="i.title"
+        (click)="viewCourse(course.id)"
+        [title]="course.title"
       />
       <div class="content">
         <div class="content_details">
           <div class="content_details_header dis-flex">
-            <h5 class="clickable" [routerLink]="i.id + '/details'" [title]="i.title">
-              {{ i.title | truncate }}
+            <h5 class="clickable" (click)="viewCourse(course.id)" [title]="course.title">
+              {{ course.title | truncate }}
             </h5>
+
             <div class="actions">
-              <img src="../../../../../../../assets/img/action.svg" alt="" class="clickable" (click)="actionBtn.click()" />
-              <input
-                  type="checkbox"
-                  name="action-btn"
-                  id="action-btn"
-                  style="display: none"
-                  #actionBtn
-                />
-                <div class="dropdown">
-                  <small
-                    class="body-3-regular delete clickable"
-                    [routerLink]="'create-course/' + i.id + '/modules'"
-                    >Add Module</small>
-                </div>
+              <img
+                src="../../../../../../../assets/img/action.svg"
+                class="clickable"
+                alt="image"
+                (click)="toggleAction(i)"
+              />
+              <div class="dropdown" [ngClass]="{'active': activeIndex === i}">
+                <small
+                  class="body-3-regular delete clickable"
+                  (click)="openConfirmModal(course)"
+                  >Delete</small
+                >
+              </div>
             </div>
           </div>
           <div class="icons dis-flex">
@@ -42,26 +42,26 @@
                 src="../../../../../../../assets/img/library/Bag.svg"
                 alt="image"
               />
-              <p class="body-3-regular">{{ i.course_quadrant }}</p></span
+              <p class="body-3-regular">{{ course.course_quadrant }}</p></span
             >
             <span class="dis-flex"
               ><img
                 src="../../../../../../../assets/img/library/video-square.svg"
                 alt="image"
               />
-              <p class="body-3-regular">{{ i.lesson_count }} Lessons</p></span
+              <p class="body-3-regular">{{ course.lesson_count }} Lessons</p></span
             >
             <span class="dis-flex"
               ><img
                 src="../../../../../../../assets/img/library/clock.svg"
                 alt="image"
               />
-              <p class="body-3-regular">{{ i.duration }}</p></span
+              <p class="body-3-regular">{{ course.duration }}</p></span
             >
           </div>
           <!-- Status -->
-          <span [ngClass]="i.status ? 'success_btn' : 'grey_btn'">{{
-            i.status ? "Published" : "Draft"
+          <span [ngClass]="course.status ? 'success_btn' : 'grey_btn'">{{
+            course.status ? "Published" : "Draft"
           }}</span>
         </div>
       </div>

@@ -1,38 +1,25 @@
-<!-- Alert message -->
-<app-alert-popup
-  *ngIf="isAlert"
-  [alertMessage]="alertMessage"
-  [alertColor]="alertColor"
-></app-alert-popup>
-
 <section class="ds-head dis-flex">
   <h2 class="ds-head_title clickable" routerLink="/admin/courses">Courses</h2>
   <i class="bx bx-chevron-right icon"></i>
-  <p class="clickable">
-    {{
-      course?.title.length > 20
-      ? course?.title.slice(0, 20)  + "..." 
-      : course?.title | titlecase
-    }}
-  </p>
+  <p class="clickable" [routerLink]="['/admin/courses/', course?.id, 'details']">{{ course?.title | truncate }}</p>
+  <i class="bx bx-chevron-right icon"></i>
+  <p class="clickable" [routerLink]="['/admin/courses/', course?.id, 'modules']">Modules</p>
   <i class="bx bx-chevron-right icon"></i>
   <p>Add Module</p>
-
 </section>
 
 <section class="lessons">
     <div class="lessons_body">
-        <!-- Lesson Form -->
-        <form [formGroup]="moduleForm">
+        <form [formGroup]="formGroup">
             <div class="form_control_container">
               <div class="form_control">
                   <label for="title">Module Title</label>
                   <div class="form_control_field">
                   <input
-                  type="text"
-                      id="title"
-                      placeholder="Type here"
-                      formControlName="title"
+                    type="text"
+                    id="title"
+                    placeholder="Type here"
+                    formControlName="title"
                   />
                   </div>
               </div>
@@ -67,14 +54,14 @@
                   <label for="further_reading">Further Reading</label>
                   <div class="form_control_field">
                   <textarea
-                      name=""
-                      id="further_reading"
-                      cols="30"
-                      rows="5"
-                      placeholder="Type here"
-                      spellcheck="true"
-                      formControlName="further_reading"
-                      ></textarea>
+                    name=""
+                    id="further_reading"
+                    cols="30"
+                    rows="5"
+                    placeholder="Type here"
+                    spellcheck="true"
+                    formControlName="further_reading"
+                  ></textarea>
                   </div>
               </div>
               <div class="form_control">
@@ -176,8 +163,8 @@
             </div>
             <div class="form_btns dis-flex">
               <ng-container *ngIf="!loading">
-                <button class="btn prim_btn" [disabled]="moduleForm.invalid" (click)="addModule('Save and Close')">Save And Close</button>
-                <button class="btn sec_btn" [disabled]="moduleForm.invalid" (click)="addModule('Save and New')">Save And New</button>
+                <button class="btn prim_btn" [disabled]="formGroup.invalid" (click)="addModule('Save and Close')">Save And Close</button>
+                <button class="btn sec_btn" [disabled]="formGroup.invalid" (click)="addModule('Save and New')">Save And New</button>
               </ng-container>
               <button
                 class="btn prim_btn"

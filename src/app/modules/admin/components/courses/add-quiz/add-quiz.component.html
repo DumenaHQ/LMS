@@ -5,78 +5,55 @@
     </span>
 
     <div class="enroll auth_content">
-      <h4 class="text-primary-color enroll_title">Add Quiz to Course Lesson</h4>
-
-      <div>
-        <div class="table-container" >
-          <div class="table-container_header dis-flex">
-            <div class="input_field dis-flex">
-              <img
-                src="../../../../../../assets/img/svg/Search.svg"
-                alt="image"
-              />
-              <input type="text" placeholder="Search by Title" name="search" [(ngModel)]="quizName"
-              (input)="search()" />
-            </div>
-          </div>
-          <div style="overflow: auto; max-height: 300px;">
-            <app-loader *ngIf="dataLoading"></app-loader>
-            <table *ngIf="quizzes?.length > 0">
-              <tr class="table-header">
-                <th>Title</th>
-                <th>Number of question</th>
-                <th class="dis-flex actions">
-                  <!-- Mark all <input type="checkbox" name="" id="" /> -->
-                </th>
-              </tr>
-              <tr class="table-body" *ngFor="let quiz of quizzes">
-                <td>{{ quiz.title }}</td>
-                <td>{{ quiz.question_count }}</td>
-                <td><input type="radio" name="quiz" [id]="quiz.id" (change)="selectQuiz($event, quiz)" /></td>
-              </tr>
-            </table>
-            <ng-container *ngIf="quizzes?.length === 0">
-              <p style="text-align: center">No quiz!</p>
-            </ng-container>
-          </div>
-        </div>
-      </div>
+      <h4 class="text-primary-color enroll_title">Add Quiz to Lesson</h4>
       
       <form class="enroll_form auth_content_form" [formGroup]="formGroup">
         <div class="form_control">
-          <label for="module">Module <strong class="label-required">*</strong></label>
+          <label for="title">Title <strong class="label-required">*</strong></label>
           <div class="form_control_field">
-              <select name="module" id="module" formControlName="module" (change)="handleSelectChange($event, 'module')">
-                  <option value="">Select a module</option>
-                  <option [value]="item.id" *ngFor="let item of modules; let i = index">
-                      {{ item.title }}
-                  </option>
-              </select>
+            <input 
+              type="text" 
+              id="title" 
+              name="title" 
+              placeholder="Type here" 
+              formControlName="title" 
+            />
           </div>
           <div class="form_error">
-              <div *ngIf="formGroup.controls['module'].invalid && formGroup.controls['module'].touched">
-                  Module is required.
-              </div>
+            <div *ngIf="formGroup.controls['title'].invalid && formGroup.controls['title'].touched">
+              Title is required.
+            </div>
           </div>
         </div>
         <div class="form_control">
-          <label for="lesson">Lesson <strong class="label-required">*</strong></label>
-          <div class="form_control_field">
-              <select name="lesson" id="lesson" formControlName="lesson" (change)="handleSelectChange($event, 'lesson')">
-                  <option value="">Select a lesson</option>
-                  <option [value]="item.id" *ngFor="let item of lessons">
-                      {{ item.title }}
-                  </option>
-              </select>
-          </div>
-          <div class="form_error">
-              <div *ngIf="formGroup.value.module === '' && formGroup.controls['lesson'].touched">
-                  Select a module.
+          <label for="tags">Tags</label>
+          <div class="form_control_field dis-flex">
+              <input
+                type="text"
+                name="tags"
+                id="tags"
+                placeholder="Type here"
+                formControlName="tags"
+              >
+              <button class="btn prim_btn" (click)="addTag()">Add</button>
+            </div>
+            <div class="tag_list dis-flex">
+              <div class="tag_list_item dis-flex" *ngFor="let tag of tags; let tagIndex = index">
+                <small [title]="tag">{{ tag | truncate: 12 }}</small>
+                <i class="bx bx-x icon clickable"(click)="removeTag(tagIndex)"></i>
               </div>
-              <div *ngIf="formGroup.value.module !== '' && formGroup.controls['lesson'].invalid && formGroup.controls['lesson'].touched">
-                  Lesson is required.
-              </div>
+            </div>
+        </div>
+
+        <div class="form_setting">
+          <div class="">
+            <h4 class="text-primary-color">Quiz Settings</h4>
+            <p><i>Configure your quiz settings</i></p>
           </div>
+          <label class="">
+            <input type="checkbox" id="settings" name="settings" formControlName="settings"/>
+            Show the correct answer
+          </label>
         </div>
       </form>
 
@@ -89,7 +66,7 @@
         <div class="continue">
           <button
             class="btn prim_btn clickable"
-            [disabled]="loading || formGroup.invalid || selectedQuizzes.length === 0"
+            [disabled]="loading || formGroup.invalid"
             (click)="addQuizToCourse()"
           >
             <span *ngIf="!loading">Add</span>
