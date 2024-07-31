@@ -6,7 +6,7 @@
         class="blank-item_image"
       />
       <div class="blank-item_details">
-        <h2 class="text-primary-color">Start by creating a classroom</h2>
+        <h2 class="text-primary-color">{{ user.role === 'school' ? 'Start by creating a classroom' : 'You have not been added to any classrooms' }}</h2>
       </div>
       <div class="blank-item_btn" *ngIf="user.role === 'school'">
         <button class="btn prim_btn" routerLink="add-classroom">

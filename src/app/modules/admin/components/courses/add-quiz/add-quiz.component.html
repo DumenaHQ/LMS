@@ -9,19 +9,19 @@
       
       <form class="enroll_form auth_content_form" [formGroup]="formGroup">
         <div class="form_control">
-          <label for="title">Title <strong class="label-required">*</strong></label>
+          <label for="instruction">Instruction <strong class="label-required">*</strong></label>
           <div class="form_control_field">
             <input 
               type="text" 
-              id="title" 
-              name="title" 
+              id="instruction" 
+              name="instruction or description" 
               placeholder="Type here" 
-              formControlName="title" 
+              formControlName="instruction" 
             />
           </div>
           <div class="form_error">
-            <div *ngIf="formGroup.controls['title'].invalid && formGroup.controls['title'].touched">
-              Title is required.
+            <div *ngIf="formGroup.controls['instruction'].invalid && formGroup.controls['instruction'].touched">
+              Instruction is required.
             </div>
           </div>
         </div>
