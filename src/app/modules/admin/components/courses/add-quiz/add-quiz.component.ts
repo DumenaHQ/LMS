@@ -36,7 +36,7 @@ export class AddQuizComponent implements OnInit {
 
   initForm() {
     this.formGroup = this.formBuilder.group({
-      title: ['', [Validators.required]],
+      instruction: ['', [Validators.required]],
       tags: [''],
       settings: [''],
     });
@@ -63,7 +63,7 @@ export class AddQuizComponent implements OnInit {
       course_id: this.courseId,
       module_id: this.moduleId,
       lesson_id: this.lessonId,
-      title: value.title,
+      instruction: value.instruction,
       tags: this.tags,
       settings: { show_correct_answers: value.settings || false },
     };
