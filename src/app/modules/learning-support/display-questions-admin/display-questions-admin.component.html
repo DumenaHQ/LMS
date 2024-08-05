@@ -11,8 +11,9 @@
           <div class="accordion-header dis-flex" (click)="toggleAccordion(i)">
             <div class="accordion-header_left">
               <h5>{{ item.question }}</h5>
+              <!-- <p class="lesson text-primary-color">Classroom Template: <em>{{ item.user.fullname }}</em></p> -->
               <p class="lesson text-primary-color">Lesson: <em>{{ item.lesson.title }}</em></p>
-              <p class="lesson text-primary-color">Sender: <em>{{ item.user.fullname }}</em></p>
+              <p class="lesson text-primary-color">School: <em>{{ item.user.fullname }}</em></p>
             </div>
             <div class="accordion-header_right dis-flex">
               <span class="date">

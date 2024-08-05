@@ -79,6 +79,13 @@ export class SchoolService {
   //   );
   // }
 
+  getUserActivities() {
+    return this.http.get(
+      `${this.baseUrl}activites`,
+      this.getHttpOptions('application/json')
+    );
+  }
+
   // Get HttpOptions
   getHttpOptions(contentType: string) {
     const httpOptions = {

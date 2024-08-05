@@ -10,16 +10,16 @@ import { QuizService } from 'src/app/services/quiz.service';
   styleUrls: ['./course-details.component.scss']
 })
 export class CourseDetailsComponent implements OnInit {
-  name: any;
   course: any;
   currentCourseParams: any;
-  moduleLessons: any;
   currentModuleIndex: number = 0;
   isWatchLessonModal: boolean = false;
   lessonVideoUrl: string;
-  contentId: any = 'courses';
+  contentId: any = 'modules';
   addQuizToCourse: boolean = false;
   quizzes: any;
+  moduleId: string;
+  lessonId: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -29,10 +29,7 @@ export class CourseDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // Get Current Program
     this.currentCourseParams = this.activatedRoute.snapshot.params;
-
-    // Get Course
     this.getCourse();
   }
   
@@ -74,7 +71,9 @@ export class CourseDetailsComponent implements OnInit {
   }
 
   // open add quiz to course modal
-  openAddQuizToCourse() {
+  openAddQuizToCourse(moduleId: string, lessonId: string) {
+    this.moduleId = moduleId;
+    this.lessonId = lessonId;
     this.addQuizToCourse = true;
   }
 
@@ -93,9 +92,12 @@ export class CourseDetailsComponent implements OnInit {
     this.contentId = ids;
   }
 
-  // Go to add module page
   goToAddModulePage() {
-    this.router.navigate([`/admin/courses/create-course/${this.currentCourseParams.courseId}/modules`]);
+    this.router.navigate([`/admin/courses/${this.currentCourseParams.courseId}/modules`]);
+  }
+
+  goToQuizPage(quizId: string) {
+    this.router.navigate([`/admin/courses/${this.currentCourseParams.courseId}/quiz/${quizId}/details`]);
   }
 
 }

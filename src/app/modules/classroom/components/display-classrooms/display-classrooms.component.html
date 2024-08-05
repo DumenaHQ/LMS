@@ -38,7 +38,7 @@
     <app-grid-display-classrooms [classrooms]="classrooms" [user]="user" *ngIf="classrooms?.length ?? 0 > 0" (reloadData)="getClassrooms()"></app-grid-display-classrooms>
 
     <div class="classroom_body" *ngIf="classrooms?.length === 0">
-        <app-blank-display-classroom></app-blank-display-classroom>
+        <app-blank-display-classroom [user]="user"></app-blank-display-classroom>
     </div>
   </section>
 </ng-container>

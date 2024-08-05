@@ -63,6 +63,14 @@ export class CoursesService {
     });
   }
 
+  // Check if next lesson is ready
+  checkIfLessonIsReady(courseId: string, moduleId: string, lessonId: string) {
+    return this.http.get(
+      `${this.baseUrl}courses/${courseId}/modules/${moduleId}/lessons/${lessonId}/completion`,
+      this.getHttpOptions()
+    );
+  }
+
   // Get HttpOptions
   getHttpOptions() {
     const httpOptions = {

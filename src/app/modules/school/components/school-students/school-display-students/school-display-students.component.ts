@@ -12,6 +12,7 @@ export class SchoolDisplayStudentsComponent implements OnInit {
   confirmModal: boolean = false;
   confirmUrl: string;
   confirmMessage: string;
+  activeIndex: number | null = null;
   
   constructor() {}
 
@@ -33,5 +34,13 @@ export class SchoolDisplayStudentsComponent implements OnInit {
   // Close Confirm Delete Modal
   closeConfirmModal() {
     this.confirmModal = false;
+  }
+
+  toggleAction(index: number) {
+    if (this.activeIndex === index) {
+      this.activeIndex = null;
+    } else {
+      this.activeIndex = index;
+    }
   }
 }

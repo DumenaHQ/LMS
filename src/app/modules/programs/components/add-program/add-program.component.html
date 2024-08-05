@@ -1,0 +1,128 @@
+<section class="ds-head dis-flex">
+    <h2 class="ds-head_title clickable" (click)="navigatePage()">Programs</h2>
+    <i class="bx bx-chevron-right icon"></i>
+    <p>Add Program</p>
+  </section>
+  
+  
+  <section class="set-info">
+    <div class="set-info_header">
+      <h3 class="text-primary-color">Set the program Information</h3>
+      <p>
+        This information will be displayed to the learners when they are added to the program
+      </p>
+    </div>
+    <form [formGroup]="formGroup">
+      <div class="form_control_container">
+        <div class="form_control">
+          <label for="name">Name <strong class="label-required">*</strong></label>
+          <div class="form_control_field">
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Type here"
+              formControlName="name"
+            />
+          </div>
+          <div class="form_error" *ngIf="formGroup.controls.name.errors && formGroup.controls.name.touched">
+            <p class="body-3-regular error-msg">{{ getErrorMessage('name', 'Name') }}</p>
+          </div>
+        </div>
+        <div class="form_control">
+          <label for="name">Description <strong class="label-required">*</strong></label>
+          <div class="form_control_field">
+            <input
+              type="text"
+              id="description"
+              name="description"
+              placeholder="Type here"
+              formControlName="description"
+            />
+          </div>
+          <div class="form_error" *ngIf="formGroup.controls.description.errors && formGroup.controls.description.touched">
+            <p class="body-3-regular error-msg">{{ getErrorMessage('description', 'Description') }}</p>
+          </div>
+        </div>
+  
+        <div class="form_control">
+          <label for="thumbnail">Header Photo</label>
+          <div class="">
+            <div
+              class="form_control_field select-image clickable"
+              (click)="fileHeaderPhoto.click()"
+              appDragDrop
+              (fileDropped)="selectPhoto($event, 'header_photo')"
+            >
+              <input
+                type="file"
+                accept="image/*"
+                #fileHeaderPhoto
+                hidden
+                formControlName="header_photo"
+                (change)="selectPhoto($event, 'header_photo')"
+              />
+              <div class="select-image_content">
+                <img
+                  [src]="headerPhotoImagePreview ? headerPhotoImagePreview : '../../../../../../../assets/img/select-Image.svg'"
+                  alt="Image Preview"
+                  [class.no-image]="!headerPhotoImagePreview"
+                />
+                <p class="captions-regular text-primary-color" *ngIf="selectedHeaderPhotoName">
+                  {{ selectedHeaderPhotoName  }}
+                </p>
+                <p class="body-3-regular text-primary-color">
+                  {{ selectedHeaderPhotoName === '' ? 'Click to select a picture' : 'Click to Select another picture' }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form_control">
+          <label for="thumbnail">Thumbnail</label>
+          <div class="">
+            <div
+              class="form_control_field select-image clickable"
+              (click)="fileThumbnail.click()"
+              appDragDrop
+              (fileDropped)="selectPhoto($event, 'thumbnail')"
+              >
+              <input
+                type="file"
+                accept="image/*"
+                #fileThumbnail
+                hidden
+                formControlName="thumbnail"
+                (change)="selectPhoto($event, 'thumbnail')"
+              />
+              <div class="select-image_content">
+                <img
+                  [src]="thumbnailImagePreview ? thumbnailImagePreview : '../../../../../../../assets/img/select-Image.svg'"
+                  alt="Image Preview"
+                  [class.no-image]="!thumbnailImagePreview"
+                />
+                <p class="captions-regular text-primary-color" *ngIf="selectedThumbnailName">
+                  {{ selectedThumbnailName  }}
+                </p>
+                <p class="body-3-regular text-primary-color">
+                  {{ selectedThumbnailName === '' ? 'Click to select a picture' : 'Click to Select another picture' }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form_btns dis-flex">
+        <ng-container *ngIf="!loading">
+          <button class="btn grey_btn" routerLink="/school/programs">Cancel</button>
+          <button class="btn prim_btn" (click)="createProgram()" [disabled]="formGroup.invalid">Save</button>
+        </ng-container>
+        <button
+          class="btn prim_btn"
+          [disabled]="loading"
+          *ngIf="loading"
+        >Processing...</button> 
+      </div>
+    </form>
+  </section>

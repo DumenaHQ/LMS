@@ -10,7 +10,7 @@
       </tr>
       <tr
         class="table-body"
-        *ngFor="let item of allquizzes"
+        *ngFor="let item of allquizzes; let i = index"
       >
         <td class="name">{{ item.title | titlecase }}</td>
         <td>
@@ -18,34 +18,20 @@
                 {{ tag }}
                 <ng-container *ngIf="!last">, </ng-container>
             </span>
+            <span *ngIf="item.tags.length === 0">-</span>
         </td>
         <td>{{ item.quiz_level }}</td>
         <td>{{ item.quiz_type }}</td>
         <td>{{ item.createdAt | date: 'mediumDate' }}</td>
         <td class="actions">
-            
-            <div>
-                <img
-                  src="../../../../../../assets/img/action.svg"
-                  class="clickable"
-                  alt="image"
-                  (click)="actionBtn.click()"
-                />
-                <input
-                  type="checkbox"
-                  name="action-btn"
-                  id="action-btn"
-                  style="display: none"
-                  #actionBtn
-                />
-                <div class="dropdown">
-                  <small
-                    class="body-3-regular clickable"
-                    [routerLink]="[item.id, 'details']"
-                    >View</small
-                  >
-                </div>
-              </div>
+          <img src="../../../../../../assets/img/action.svg" alt="" class="clickable" (click)="toggleAction(i)" />
+            <div class="dropdown" [ngClass]="{'active': activeIndex === i}">
+              <small
+                class="body-3-regular delete clickable"
+                [routerLink]="[item.id, 'details']"
+                >View</small
+              >
+            </div>
         </td>
       </tr>
     </table>

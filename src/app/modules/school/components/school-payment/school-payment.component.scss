@@ -1,22 +1,196 @@
 @import '../../../../../assets/css/dashboard.scss';
+@import '../../../../../assets/css/variables.scss';
+@import '../../../../../assets/css/mixins.scss';
 
-.du-grid {
-  grid-gap: $m-6;
-}
-
-.pricing {
-  &_header {
-    justify-content: flex-end;
-    gap: $m-2;
-    margin-bottom: $m-5;
+@mixin hover {
+  transition: all .2s;
+  &:hover {
+    border-color: $primary80;
   }
 }
 
-// Payment History(Ph) starts
-.ph {
-  @include sect-bg();
-  &_title {
-    @include sect-bg-title;
+.form_control {
+  width: 100%;
+  margin-bottom: $m-3;
+  label {
+    display: inline-block;
+    color: $primary80;
+    margin-bottom: $m-2;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  &_field {
+    width: 100%;
+    border: 1px solid $inner-border;
+    border-radius: $border-radius1;
+    padding: 0 $m-2;
+    @include hover();
+    select {
+      padding: $m-2 0;
+      width: 100%;
+      background-color: transparent;
+      border: none;
+      outline: none;
+      height: 100%;
+      &::placeholder {
+        font-size: 16px;
+      }
+    }
   }
 }
-// Payment History(Ph) ends
+
+.cart {
+    @include sect-bg($border-color: transparent);
+    &_body {
+      display: flex;
+      display: flex;
+      @media only screen and (max-width: 850px) {
+        display: grid;
+        grid-gap: $m-3;
+      }
+      &_list {
+        flex-basis: 55%;
+        @media only screen and (min-width: 850px) {
+          border-right: 1px solid $divider-color;
+        }
+        &_item {
+          padding: 0 $m-3 $m-4 0;
+          &:not(:last-child) {
+            border-bottom: 1px solid $divider-color;
+          }
+          .header {
+            justify-content: space-between;
+            gap: $m-2;
+            margin-bottom: $m-2;
+          }
+          ul {
+            margin: $m-2 0;
+            li {
+              display: flex;
+              &:not(:last-child) {
+                margin-bottom: $m-2;
+              }
+              img {
+                margin-right: $m-3;
+                width: 20px;
+                height: 20px;
+              }
+            }
+          }
+          .remove {
+            display: inline-block;
+            float: right;
+          }
+  
+        }
+      }
+      &_checkout {
+        flex-basis: 45%;
+        .sub-total,
+        .grand-total {
+          justify-content: space-between;
+          gap: $m-2;
+        }
+        &_header {
+          padding: 0 $m-2;
+          .sub-plan {
+            justify-content: space-between;
+            &_value {
+              color: $primary80;
+              background-color: $primary60;
+              border-radius: 5px;
+              padding: 0.2rem 0.5rem;
+              display: inline-block;
+              font-size: 14px;
+              font-weight: 500;
+            }
+          }
+          .sub-total {
+            margin-top: $m-3;
+          }
+          form {
+            display: flex;
+            gap: $m-1;
+            align-items: flex-end;
+            margin: $m-2 0 $m-3 0;
+            .form-field {
+              width: 100%;
+              label {
+                display: inline-block;
+                font-weight: 500;
+                font-size: 18px;
+                line-height: 22px;
+                margin-bottom: $m-1;
+              }
+              .input-voucher  {
+                // display: flex;
+                justify-content: space-between;
+                gap: $m-2;
+                transform: translateY(-10px);
+                transition: all 0.2s ease-in;
+                opacity: 0;
+                display: none;
+                &.show {
+                  display: flex;
+                  transform: translateY(0);
+                  opacity: 1;
+                }
+              }
+              .input-field {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                background-color: $white-color;
+                border: 1px solid $inner-border;
+                border-radius: $border-radius1;
+                transition: all 0.2s ease-in;
+                padding: 0 $m-2;
+                &:hover {
+                  border-color: $primary80;
+                }
+                input {
+                  width: 100%;
+                  padding: 0.7rem 0;
+                  font-size: 16px;
+                  border: none;
+                  outline: none;
+                  background-color: transparent;
+                  border-radius: $border-radius1;
+                  color: $grey100;
+                }
+              }
+            }
+          }
+        }
+        &_footer {
+          padding: $m-3 $m-2;
+          border-top: 1px solid $divider-color;
+          .grand-total {
+            margin-bottom: $m-3;
+          }
+          .btn {
+            width: 100%;
+          }
+        }
+      }
+    }
+}
+
+.table-body {
+  td.status {
+    .active,
+    .pending {
+      font-weight: 500;
+      padding: 0.3rem 0.8rem;
+      border-radius: $border-radius1;
+    }
+    .active {
+      color: $success80;
+      background-color: $success20;
+    }
+    .pending {
+      color: $warning80;
+      background-color: $warning20;
+    }
+  }
+}

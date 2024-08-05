@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClassroomService } from 'src/app/services/classroom.service';
@@ -30,6 +30,7 @@ export class EditClassroomComponent implements OnInit {
   selectedHeaderPhotoName: string = '';
   headerPhotoImagePreview?: string;
   thumbnailImagePreview?: string;
+  formGroup: FormGroup 
 
   constructor(
     private classroomService: ClassroomService,
@@ -42,18 +43,6 @@ export class EditClassroomComponent implements OnInit {
     private appAlertService: AppAlertService,
     private formErrorService: FormErrorMessageService
   ) {}
-
-  // classroom form
-  formGroup = this.formBuilder.group({
-    name: ['', Validators.required],
-    template: ['', Validators.required],
-    description: ['', Validators.required],
-    teacher: ['', Validators.required],
-    header_photo: ['', Validators.required],
-    thumbnail: ['', Validators.required],
-    active_term_start_date: ['', Validators.required],
-    active_term_end_date: ['', Validators.required],
-  });
 
   get minDate(): string | undefined {
     const startDate = this.classroom?.active_term?.start_date;
@@ -70,11 +59,9 @@ export class EditClassroomComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let userData = this.authService.getUser();
-    this.user = userData.user;
-
-    // Get Current classroom
+    this.user = this.authService.getUser().user;
     this.currentClassroom = this.activatedRoute.snapshot.params;
+    this.initForm();
     this.getClassroom();
     this.getClassroomTemplates();
     this.getTeachers();
@@ -82,32 +69,38 @@ export class EditClassroomComponent implements OnInit {
 
   // Initialize form
   initForm() {
-    this.formGroup.patchValue({
-      name: this.classroom?.name,
-      template: this.classroom?.template?.id,
-      description: this.classroom?.description,
-      teacher: this.classroom?.teacher?.id ? this.classroom?.teacher?.id : '',
-      header_photo: this.classroom?.header_photo,
-      thumbnail: this.classroom?.thumbnail,
-      active_term_start_date: moment(
-        this.classroom?.active_term?.start_date
-      ).format('YYYY-MM-DD'),
-      active_term_end_date: moment(
-        this.classroom?.active_term?.end_date
-      ).format('YYYY-MM-DD'),
+    this.formGroup = this.formBuilder.group({
+      name: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      template: ['', [Validators.required]],
+      teacher: ['', [Validators.required]],
+      header_photo: [''],
+      thumbnail: [''],
+      active_term_start_date: ['', [Validators.required]],
+      active_term_end_date: ['', [Validators.required]],
     });
   }
 
   // Get Classroom
   getClassroom() {
     this.dataLoading = true;
-
     this.classroomService
       .getClassroomById(this.currentClassroom.classroomId)
       .subscribe({
         next: (res: any) => {
           this.classroom = res.data.class;
-          this.initForm();
+          this.formGroup.patchValue({
+            name: this.classroom?.name,
+            template: this.classroom?.template?.id,
+            description: this.classroom?.description,
+            teacher: this.classroom?.teacher?.id,
+            active_term_start_date: moment(
+              this.classroom?.active_term?.start_date
+            ).format('YYYY-MM-DD'),
+            active_term_end_date: moment(
+              this.classroom?.active_term?.end_date
+            ).format('YYYY-MM-DD'),
+          });
         },
         error: (e) => {
           console.error(e);

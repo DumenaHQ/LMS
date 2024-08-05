@@ -1,0 +1,123 @@
+<div class="programs_disgrid">
+    <div class="program_card">
+      <div class="program_card_item" *ngFor="let program of programs; let i = index">
+        <div 
+          class="program_card_item_image clickable" 
+          [style.backgroundImage]="program?.thumbnail ? 'url(' + program?.thumbnail + ')' : 'url(assets/img/program-thumbnail-patterns.svg)'"
+          (click)="viewProgram(program?.id, 'courses')"
+        ></div>
+  
+        <div class="program_card_item_details">
+          <div class="program_card_item_details_right">
+            <div class="program_card_item_details_right_header">
+              <div class="" style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                <h5
+                  class="title clickable"
+                  [title]="program?.name"
+                  (click)="viewProgram(program?.id, 'courses')"
+                >
+                  {{
+                    program?.name | truncate
+                  }}
+                </h5>
+                <button 
+                    *ngIf="program?.hasJoined === false && (user.role === 'parent' || user.role === 'school')"
+                    class="btn prim_btn" 
+                    [disabled]="loading" 
+                    (click)="openConfirmModal(program, 'join')"
+                >   
+                    {{ user.role === 'parent' ? 'Follow' : 'Join' }}
+                </button>
+                <button class="btn grey_btn" *ngIf="program?.hasJoined === true">
+                    {{ user.role === 'parent' ? 'Followed' : 'Joined' }}
+                </button>
+              </div>
+            </div>
+            <ul class="dis-flex">
+              <li (click)="viewProgram(program?.id, 'courses')">
+                <p class="body-2-bold">{{ program?.course_count || '0' }}</p>
+                <p class="body-3-regular">{{ (program?.course_count ?? 0) > 1 ? 'Courses' : 'Course' }}</p>
+              </li>
+
+              <li (click)="viewProgram(program?.id, 'schools')" *ngIf="user.role === 'admin'">
+                <p class="body-2-bold">{{ program?.school_count || '0' }}</p>
+                <p class="body-3-regular">{{ (program?.school_count ?? 0) > 1 ? 'Schools' : 'School' }}</p>
+              </li>
+
+              <li (click)="viewProgram(program?.id, 'learners')">
+                <p class="body-2-bold">{{ program?.learner_count || '0' }}</p>
+                <p class="body-3-regular">{{ (program?.learner_count || 0) > 1 ? 'Learners' : 'Learner' }}</p>
+              </li>
+            </ul>
+          </div>
+  
+          <div class="program_card_item_details_left">
+            <div class="students">
+              <p class="body-2-regular title">Total {{(program?.learner_count || 0) > 1 ? 'Learners' : 'Learner'}} ({{ program?.learner_count || '0' }})</p>
+              <ul class="students_list dis-flex">
+                <li>
+                  <img
+                    src="../../../../../assets/img/children-avatar/child-avatar-1.png"
+                    alt=""
+                  />
+                </li>
+                <li>
+                  <img
+                    src="../../../../../assets/img/children-avatar/child-avatar-2.png"
+                    alt=""
+                  />
+                </li>
+                <li>
+                  <img
+                    src="../../../../../assets/img/children-avatar/child-avatar-3.png"
+                    alt=""
+                  />
+                </li>
+              </ul>
+            </div>
+            <!-- <div class="completion">
+              <p class="body-2-regular title">Start date</p>
+              <p class="body-2-medium">
+                {{ program?.start_date | date: "mediumDate" }}
+              </p>
+            </div> -->
+            <!-- <div class="status">
+              <span
+                [ngClass]="
+                  program?.status === 'active' ? 'success_btn' : 'grey_btn'
+                "
+                >{{ program?.status === "active" ? "Published" : "Draft" }}</span
+              >
+            </div> -->
+          </div>
+        </div>
+  
+        <div class="actions" *ngIf="user.role === 'admin'">
+          <img
+            src="../../../../../../assets/img/action.svg"
+            class="clickable"
+            alt="image"
+            (click)="toggleAction(i)"
+          />
+          <div class="dropdown" [ngClass]="{'active': activeIndex === i}">
+            <small
+              class="body-3-regular delete clickable"
+              (click)="openConfirmModal(program, 'delete')"
+              >Delete</small
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+  
+<!-- Delete confirmation -->
+<app-confirm-delete 
+    *ngIf="confirmModal" 
+    (confrimModal)="closeConfirmModal()" 
+    [confirmMessage]="confirmMessage" 
+    [confirmUrl]="confirmUrl" 
+    (reloadData)="getReloadData()"
+    (confrimDone)="joinProgram()"
+></app-confirm-delete>
+  

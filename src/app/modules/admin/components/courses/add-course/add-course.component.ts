@@ -75,15 +75,15 @@ export class AddCourseComponent implements OnInit {
       course_quadrant: this.formGroup.value.course_quadrant,
     };
 
-    this.coursesService.addCourse(payload).subscribe(
-        (res: any) => {
+    this.coursesService.addCourse(payload).subscribe({
+      next: (res: any) => {
         this.appAlertService.showAlert(res.message, AlertType.Success);
-        setTimeout(() => {
-          this.router.navigate([`admin/courses/create-course/${res.data.course.id}/modules`])
-        }, 3000);
-        this.loading = false;
+        if (res.status === true) {
+          this.router.navigate([`admin/courses/${res.data.course.id}/modules`]);
+          this.loading = false;
+        }
       },
-      (error: any) => {
+      error: (error: any) => {
         console.log(error);
         this.appAlertService.showAlert(
           error.error.message
@@ -95,6 +95,6 @@ export class AddCourseComponent implements OnInit {
         );
         this.loading = false;
       }
-    );
+    });
   }
 }

@@ -8,7 +8,7 @@
         <th>Date Enrolled</th>
         <th></th>
       </tr>
-        <tr class="table-body" *ngFor="let teacher of teachers">
+        <tr class="table-body" *ngFor="let teacher of teachers; let i = index">
           <td class="name">
             <div class="dis-flex">
               <img
@@ -30,15 +30,8 @@
             <p>{{ teacher.createdAt | date: "mediumDate" }}</p>
           </td>
           <td class="actions">
-            <img src="../../../../../../assets/img/action.svg" alt="" class="clickable" (click)="actionBtn.click()" />
-            <input
-                type="checkbox"
-                name="action-btn"
-                id="action-btn"
-                style="display: none"
-                #actionBtn
-              />
-              <div class="dropdown">
+            <img src="../../../../../../assets/img/action.svg" alt="" class="clickable" (click)="toggleAction(i)" />
+              <div class="dropdown" [ngClass]="{'active': activeIndex === i}">
                 <small
                   class="body-3-regular delete clickable"
                   (click)="openConfirmModal(teacher)"

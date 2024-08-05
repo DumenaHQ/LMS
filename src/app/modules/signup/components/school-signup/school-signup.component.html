@@ -47,40 +47,23 @@
           <p class="body-3-regular error-msg">{{ getErrorMessage('schoolName', 'School Name') }}</p>
         </div>
       </div>
-      
+
       <div
         class="form-field col-2"
         [ngClass]="{
-          'is-invalid': formGroup.controls.schoolEmail.errors && formGroup.controls.schoolEmail.touched
+          'is-invalid': formGroup.controls.email.errors && formGroup.controls.email.touched
         }"
       >
-        <label for="schoolEmail">School Email Address</label>
+        <label for="email">Email Address</label>
         <div class="input-field">
-          <input type="email" name="schoolEmail" formControlName="schoolEmail" />
+          <input type="email" name="email" formControlName="email" />
           <i class="bx bx-error-circle icon info-icon"></i>
         </div>
         <!-- Error -->
-        <div *ngIf="formGroup.controls.schoolEmail.errors && formGroup.controls.schoolEmail.touched">
-          <p class="body-3-regular error-msg">{{ getErrorMessage('schoolEmail', 'School Email') }}</p>
+        <div *ngIf="formGroup.controls.email.errors && formGroup.controls.email.touched">
+          <p class="body-3-regular error-msg">{{ getErrorMessage('email', 'Email Address') }}</p>
         </div>
       </div>
-
-      <div
-      class="form-field col-2"
-      [ngClass]="{
-        'is-invalid': formGroup.controls.schoolAddress.errors && formGroup.controls.schoolAddress.touched
-      }"
-    >
-      <label for="schoolAddress">School Address</label>
-      <div class="input-field">
-        <input type="text" name="schoolAddress" formControlName="schoolAddress" />
-        <i class="bx bx-error-circle icon info-icon"></i>
-      </div>
-      <!-- Error -->
-      <div *ngIf="formGroup.controls.schoolAddress.errors && formGroup.controls.schoolAddress.touched">
-        <p class="body-3-regular error-msg">{{ getErrorMessage('schoolAddress', 'School Address') }}</p>
-      </div>
-    </div>
       
       <div
         class="form-field col-2"
@@ -111,7 +94,7 @@
       </div>
 
       <div
-        class="form-field col-2"
+        class="form-field"
         [ngClass]="{
           'is-invalid': formGroup.controls.contactPersonName.errors && formGroup.controls.contactPersonName.touched
         }"
@@ -124,23 +107,6 @@
         <!-- Error -->
         <div *ngIf="formGroup.controls.contactPersonName.errors && formGroup.controls.contactPersonName.touched">
           <p class="body-3-regular error-msg">{{ getErrorMessage('contactPersonName', 'Contact Person Name') }}</p>
-        </div>
-      </div>
-
-      <div
-        class="form-field"
-        [ngClass]="{
-          'is-invalid': formGroup.controls.contactPersonEmail.errors && formGroup.controls.contactPersonEmail.touched
-        }"
-      >
-        <label for="contactPersonEmail">Contact Email Address</label>
-        <div class="input-field">
-          <input type="contactPersonEmail" name="contactPersonEmail" formControlName="contactPersonEmail" />
-          <i class="bx bx-error-circle icon info-icon"></i>
-        </div>
-        <!-- Error -->
-        <div *ngIf="formGroup.controls.contactPersonEmail.errors && formGroup.controls.contactPersonEmail.touched">
-          <p class="body-3-regular error-msg">{{ getErrorMessage('contactPersonEmail', 'Contact Person Email') }}</p>
         </div>
       </div>
 

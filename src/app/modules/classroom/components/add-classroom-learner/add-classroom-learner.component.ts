@@ -37,8 +37,7 @@ export class AddClassroomLearnerComponent implements OnInit {
 
   ngOnInit(): void {
     // Get User data from localstorage
-    let userData = this.authService.getUser();
-    this.user = userData.user;
+    this.user= this.authService.getUser().user;
 
     this.getAllStudents('');
   }

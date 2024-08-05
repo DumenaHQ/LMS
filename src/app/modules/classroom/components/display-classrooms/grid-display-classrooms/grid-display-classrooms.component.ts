@@ -15,6 +15,7 @@ export class GridDisplayClassroomsComponent implements OnInit {
   confirmModal: boolean = false;
   confirmUrl: string;
   confirmMessage: string;
+  activeIndex: number | null = null;
 
   constructor(
     private router: Router
@@ -22,9 +23,11 @@ export class GridDisplayClassroomsComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // Display program
-  displayClassroom(classroomId?: string) {
-    this.router.navigate([`/${this.user.role}/classrooms/${classroomId}/view-classroom`]);
+  // View program
+  viewClassroom(classroomId?: string, activeTab?: string) {
+    this.router.navigate([`/${this.user.role}/classrooms/${classroomId}/view-classroom`], {
+      queryParams: { activeTab: activeTab },
+    });
   }
 
   // Open Confirm Delete Modal
@@ -41,6 +44,14 @@ export class GridDisplayClassroomsComponent implements OnInit {
   // Close Confirm Delete Modal
   closeConfirmModal() {
     this.confirmModal = false;
+  }
+
+  toggleAction(index: number) {
+    if (this.activeIndex === index) {
+      this.activeIndex = null;
+    } else {
+      this.activeIndex = index;
+    }
   }
 
 }

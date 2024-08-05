@@ -3,8 +3,7 @@
 
 .course-details {
     @include sect-bg($border-color: transparent);
-    padding: $m-4 0;
-    padding-top: 0;
+    padding: 0 0 $m-4 0;
     &_image {
       padding: 0 $m-3;
       width: 100%;

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { QuizService } from 'src/app/services/quiz.service';
 
@@ -10,106 +11,67 @@ import { QuizService } from 'src/app/services/quiz.service';
 })
 export class AddQuizComponent implements OnInit {
 
-  @Input() course: any;
+  @Input() courseId: any;
+  @Input() moduleId: any;
+  @Input() lessonId: any;
   @Output() addQuizToCourseModal: EventEmitter<any> = new EventEmitter();
   loading: boolean = false;
-  selectedQuizzes: any[] = [];
-  quizzes: any;
   dataLoading: boolean = true;
   quizName: string;
   modules: any;
   lessons: any;
-  formGroup: FormGroup;
+  formGroup: any = FormGroup;
+  tags: any[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private quizService: QuizService,
     private appAlertService: AppAlertService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.modules = this.course.modules;
     this.initForm();
-    this.getAllquizzes();
-    console.log(this.course);
-    
   }
 
   initForm() {
     this.formGroup = this.formBuilder.group({
-      module: ['', [Validators.required]],
-      lesson: ['', [Validators.required]],
+      instruction: ['', [Validators.required]],
+      tags: [''],
+      settings: [''],
     });
   }
 
-  // Get all quizzes
-  getAllquizzes() {
-    this.quizService.getAllquizzes().subscribe({
-      next: (res: any) => {
-        this.quizzes = res.data.quizzes;
-      },
-      error: (e) => console.error(e),
-      complete: () => {
-        this.dataLoading = false;
-      },
-    });
+  // Add tags
+  addTag() {
+    const { value } = this.formGroup;
+    if (value.tags !== '') {
+      this.tags.push(value.tags);
+    }
+    this.formGroup.get('tags').setValue('');
   }
-
-  handleSelectChange(event: any, fieldName: string) {
-    if (fieldName === 'module') {
-      this.modules.forEach((item: any) => {
-        if (item.id === event.target.value) {
-          this.lessons = item.lessons;
-        }
-      })
-    }
-  }
-
-  // Search quiz
-  search() {
-    if (this.quizName != "") {
-      this.quizzes = this.quizzes.filter((res: any) => {
-        return res.title.toLocaleLowerCase().match(this.quizName.toLocaleLowerCase());
-      });
-    } else if (this.quizName == "") {
-      this.ngOnInit()
-    }
-  }
-
-  // Select quizzes
-  selectQuiz(event: any, quiz: any) {
-
-    // If doesn't exist add new student
-    if(event.target.checked === false) {
-      this.selectedQuizzes.forEach((element: any, index: any) => {
-        if(element.title === quiz.title) {
-          this.selectedQuizzes.splice(index, 1)
-        }
-        return this.selectedQuizzes
-      });
-    }
-    else {
-      this.selectedQuizzes.push(quiz.id);
-    }
+  // Remove tagsory
+  removeTag(index: any) {
+    this.tags.splice(index, 1);
   }
 
   // Add quiz to course
   addQuizToCourse() {
+    this.loading = true;
     const { value } = this.formGroup;
     let payload = {
-      course_id: this.course.id,
-      quiz_level: "lesson", // ["course", "module", "lesson"] optional field
-      module_id: value.module,
-      lesson_id: value.lesson
+      course_id: this.courseId,
+      module_id: this.moduleId,
+      lesson_id: this.lessonId,
+      instruction: value.instruction,
+      tags: this.tags,
+      settings: { show_correct_answers: value.settings || false },
     };
-    
-    this.quizService.addQuizToCourse(this.selectedQuizzes[0], payload).subscribe({
+
+    this.quizService.addQuiz(payload).subscribe({
       next: (res: any) => {
         this.appAlertService.showAlert(res.message, AlertType.Success);
-        setTimeout(() => {
-          window.location.reload();
-        }, 5000);
-        this.loading = false;
+        this.router.navigate([`admin/courses/${this.courseId}/quiz/${res.data.quiz.id}/details`]);
       },
       error: (error: any) => {
         console.log(error);
@@ -128,6 +90,4 @@ export class AddQuizComponent implements OnInit {
   closeAddQuizToCourse() {
     this.addQuizToCourseModal.emit();
   }
-  
-
  }

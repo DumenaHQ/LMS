@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { ClassroomService } from 'src/app/services/classroom.service';
 import { SchoolService } from 'src/app/services/school.service';
+import { TeachersService } from 'src/app/services/teachers.service';
 declare var google: any;
 
 @Component({
@@ -13,34 +15,65 @@ export class SchoolOverviewComponent implements OnInit {
   dataLoading: boolean = true;
   students: any;
   public greeting: string = ''
+  classrooms: any;
+  teachers: any;
 
   constructor(
     private authService: AuthService,
-    private schoolService: SchoolService
+    private schoolService: SchoolService,
+    private classroomService: ClassroomService,
+    private teachersService: TeachersService
   ) {}
 
   ngOnInit(): void {
+    this.greeting = this.authService.getGreeting();
+    this.user = this.authService.getUser().user;
 
-    // Get greeting
-    this.greeting = this.authService.getGreeting() 
-
-    // Get User data from localstorage
-    let userData = this.authService.getUser();
-    this.user = userData.user;
-
-    // Get school learners from localstorage
-    this.schoolService.getSchoolLearners(this.user.id, undefined).subscribe({
-      next: (res: any) => {
-        this.students = res.data.students;
-      },
-      error: (e) => console.error(e),
-    });
+    this.getSchoolLearners();
+    this.getSchoolClassrooms();
+    this.getSchoolTeachers();
+    this.getUsersActivities();
 
     // Load the Visualization API and the corechart package.
     google.charts.load('current', {'packages':['corechart']});
     this.buildChart()
   }
 
+  getSchoolLearners() {
+    this.schoolService.getSchoolLearners(this.user.id, undefined).subscribe({
+      next: (res: any) => {
+        this.students = res.data.students;
+      },
+      error: (e) => console.error(e),
+    });
+  }
+
+  getSchoolClassrooms() {
+    this.classroomService.getClassrooms().subscribe({
+      next: (res: any) => {
+        this.classrooms = res.data.classes;
+      },
+      error: (e) => console.error(e),
+    });
+  }
+
+  getSchoolTeachers() {
+    this.teachersService.fetchTeachersInSchool({ id: this.user.id }).subscribe({
+      next: (res: any) => {
+        this.teachers = res.data.teachers;
+      },
+      error: (e) => console.error(e),
+    });
+  }
+
+  getUsersActivities() {
+    this.schoolService.getUserActivities().subscribe({
+      next: (res: any) => {
+        console.log(res);        
+      },
+      error: (e) => console.error(e),
+    });
+  }  
 
   // Build chart
   buildChart() {
@@ -83,7 +116,6 @@ export class SchoolOverviewComponent implements OnInit {
 
   // close Onboarding modal
   closeOnboardModal() {
-
     let payload = {
       isUserOnboarded: true,
     }

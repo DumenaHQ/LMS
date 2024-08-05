@@ -39,9 +39,7 @@ export class AddClassroomComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    let userData = this.authService.getUser();
-    this.user = userData.user;
-    
+    this.user = this.authService.getUser().user;    
     this.initForm();
     this.getClassroomTemplates();
     this.getTeachers();
@@ -123,7 +121,7 @@ export class AddClassroomComponent implements OnInit {
       .then(res => {
         if (res.status === true) {
           this.appAlertService.showAlert(res.message, AlertType.Success);
-          this.router.navigate(['school/classrooms']);
+          this.navigatePage();
         }
       })
       .catch(error => {

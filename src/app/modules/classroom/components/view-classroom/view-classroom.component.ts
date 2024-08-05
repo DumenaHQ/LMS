@@ -4,6 +4,8 @@ import { ClassroomService } from 'src/app/services/classroom.service';
 import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { ClassroomModel, Term } from '../../models/classroom.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { QueryActiveTabService } from 'src/app/services/utils/query-active-tab.service';
+type Tabs = 'courses' | 'learners' | 'discussions';
 
 @Component({
   selector: 'app-view-classroom',
@@ -12,7 +14,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ViewClassroomComponent implements OnInit {
 
-  contentId: any = 'courses';
+  activeTab: Tabs = 'courses';
   currentClassroomId: any;
   classroom?: ClassroomModel;
   dataLoading: boolean = true;
@@ -34,12 +36,19 @@ export class ViewClassroomComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private changeDectetorRef: ChangeDetectorRef,
-    private appAlertService: AppAlertService
+    private appAlertService: AppAlertService,
+    private queryActiveTabService: QueryActiveTabService,
   ) {}
 
   ngOnInit(): void {
     this.currentClassroomId = this.activatedRoute.snapshot.params;
     this.user = this.authService.getUser().user;
+
+    this.activatedRoute.queryParams.subscribe((params) => {
+      if(params['activeTab']) {
+        this.activeTab = params['activeTab'];
+      }
+    });
     this.getClassrooms();
   }
 
@@ -167,9 +176,10 @@ export class ViewClassroomComponent implements OnInit {
     this.courseQuizResult = false;
   }
 
-  // Tab change
-  tabChange(ids: any) {
-    this.contentId = ids;
+  // Set Active Tab
+  setActiveTab(tab: Tabs) {
+    this.activeTab = tab;
+    this.queryActiveTabService.setActiveTabInQueryParams(tab);
   }
 
 }

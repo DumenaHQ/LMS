@@ -14,7 +14,6 @@ import {
 })
 export class DisplayCourseModulesComponent implements OnInit {
 
-
   formGroup: any = FormGroup;
   loading: boolean = false;
   currentCourseId: any;
@@ -23,10 +22,10 @@ export class DisplayCourseModulesComponent implements OnInit {
   addModuleLessonModal: boolean = false;
   moduleId: string;
   moduleName: string;
-
   selectedFileName: string = '';
   selectedFile: File;
   course: any;
+  activeIndex: number | null = null;
 
   constructor(
     private coursesService: CoursesService,
@@ -39,29 +38,15 @@ export class DisplayCourseModulesComponent implements OnInit {
     this.initForm();
      this.currentCourseId = this.activatedRoute.snapshot.params;
      this.getCoure();
-     this.getCourseModules();
   }
 
   // Get course
   getCoure() {
-    // Get Course
     this.coursesService.getCourse(this.currentCourseId.courseId).subscribe({
       next: (res: any) => {
         this.course = res.data.course;
-      },
-      error: (e) => console.error(e),
-      complete: () => {
-        // this.dataLoading = false;
-      },
-    });
-  }
-
-  // Get course modules
-  getCourseModules() {
-    // Fetch all course modules
-    this.coursesService.getCourse(this.currentCourseId.courseId).subscribe({
-      next: (res: any) => {
         this.modules = res.data.course.modules;
+        console.log(this.modules);
       },
       error: (e) => console.error(e),
       complete: () => {
@@ -108,11 +93,8 @@ export class DisplayCourseModulesComponent implements OnInit {
           // }
           this.appAlertService.showAlert(res.message, AlertType.Success);
           this.selectedFileName = '';
-          setTimeout(() => {
-            this.addModuleLessonModal = false
-            this.getCoure();
-            this.getCourseModules();
-          }, 3000);
+          this.addModuleLessonModal = false
+          this.getCoure();
         }
       })
       .catch(error => {
@@ -139,5 +121,20 @@ export class DisplayCourseModulesComponent implements OnInit {
   // Close Add Module
   closeAddModuleLesson() {
     this.addModuleLessonModal = false
+  }
+
+  // Check if date is current date
+  isCurrentDate(dateStr: string): boolean {
+    const date = new Date(dateStr);
+    const today = new Date();
+    return date.toDateString() === today.toDateString();
+  }
+
+  toggleAccordion(index: number) {
+    if (this.activeIndex === index) {
+      this.activeIndex = null;
+    } else {
+      this.activeIndex = index;
+    }
   }
 }

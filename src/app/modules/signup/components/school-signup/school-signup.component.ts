@@ -38,11 +38,10 @@ export class SchoolSignupComponent implements OnInit {
     // User form
     this.formGroup = this.formBuilder.group({
       schoolName: ['', [Validators.required]],
-      schoolEmail: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
       schoolAddress: [''],
       schoolState: ['', [Validators.required]],
       contactPersonName: ['', [Validators.required]],
-      contactPersonEmail: ['', [Validators.required, Validators.email]],
       contactPersonNumber: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern(/^\d+$/)]],
       password: ['', [Validators.required, Validators.minLength(6), this.formErrorService.alphanumericSymbolPasswordValidator()]],
     });
@@ -54,11 +53,10 @@ export class SchoolSignupComponent implements OnInit {
 
     let payload: any = {
       school: this.formGroup.value.schoolName,
-      school_email: this.formGroup.value.schoolEmail, // school email is missing from the backend
+      email: this.formGroup.value.email,
       address: this.formGroup.value.schoolAddress,
       resident_state: this.formGroup.value.schoolState,
       fullname: this.formGroup.value.contactPersonName,
-      email: this.formGroup.value.contactPersonEmail,
       phone: this.formGroup.value.contactPersonNumber,
       password: this.formGroup.value.password,
       user_type: 'school',

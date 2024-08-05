@@ -9,14 +9,10 @@ import { DashboardPopupAlertComponent } from './dashboard-popup-alert/dashboard-
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotifiPopupComponent } from './notifi-popup/notifi-popup.component';
-import { PricingPlanComponent } from '../parent/components/pricing-plan/pricing-plan.component';
 import { AlertPopupComponent } from './alert-popup/alert-popup.component';
 import { LoaderComponent } from './loader/loader.component';
 import { DisplayPaymentHistoryComponent } from './display-payment-history/display-payment-history.component';
 import { ConfirmDeleteComponent } from './confirm-delete/confirm-delete.component';
-import { DisplayProgramsComponent } from './programs/display-programs/display-programs.component';
-import { DisplayProgramDetailsComponent } from './programs/display-program-details/display-program-details.component';
-import { AddProgramLearnersComponent } from './programs/add-program-learners/add-program-learners.component';
 import { TruncatePipe } from 'src/app/pipes/truncate.pipe';
 import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
 
@@ -33,9 +29,6 @@ import { ConfirmationModalComponent } from './confirmation-modal/confirmation-mo
     LoaderComponent,
     DisplayPaymentHistoryComponent,
     ConfirmDeleteComponent,
-    DisplayProgramsComponent,
-    DisplayProgramDetailsComponent,
-    AddProgramLearnersComponent,
     // PricingPlanComponent,
 
     // Pipes
@@ -55,9 +48,6 @@ import { ConfirmationModalComponent } from './confirmation-modal/confirmation-mo
     LoaderComponent,
     DisplayPaymentHistoryComponent,
     ConfirmDeleteComponent,
-    DisplayProgramsComponent,
-    DisplayProgramDetailsComponent,
-    AddProgramLearnersComponent,
     
     // Pipes
     TruncatePipe,
