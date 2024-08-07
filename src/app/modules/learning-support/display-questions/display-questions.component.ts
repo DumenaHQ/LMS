@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { LearningSupportService } from 'src/app/services/learning-support.service';
 import { learningSupportModel } from '../models/learning-support.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-display-questions',
@@ -8,9 +9,11 @@ import { learningSupportModel } from '../models/learning-support.model';
   styleUrls: ['./display-questions.component.scss']
 })
 export class DisplayQuestionsComponent implements OnInit {
-  @Input() classroomCourses: any;
+  @Input() courses: any;
   @Input() classroomId: any;
+  @Input() programId: any;
   questions?: any;
+  questions$: Observable<any>;
   addQuestion: boolean = false;
   dataLoading: boolean;
   activeIndex: number | null = null;
@@ -21,14 +24,18 @@ export class DisplayQuestionsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getQuestionsForAClassroom();
+    this.getQuestions();
   }
 
-  getQuestionsForAClassroom() {
+  getQuestions() {
     this.dataLoading = true;
-    this.learningSupportService
-      .getQuestionsForClass(this.classroomId)
-      .subscribe({
+
+    if(this.classroomId) {
+      this.questions$ = this.learningSupportService.getQuestionsForClass(this.classroomId);
+    } else {
+      this.questions$ = this.learningSupportService.getQuestionsForProgram(this.programId);
+    }
+    this.questions$.subscribe({
         next: (res: any) => {
           this.dataLoading = false;
           this.questions = res.data.questions;   

@@ -12,6 +12,7 @@ import { ViewProgramComponent } from './components/view-program/view-program.com
 import { EditProgramComponent } from './components/edit-program/edit-program.component';
 import { AddProgramLearnersComponent } from './components/add-program-learners/add-program-learners.component';
 import { AddProgramCoursesComponent } from './components/add-program-courses/add-program-courses.component';
+import { LearningSupportModule } from '../learning-support/learning-support.module';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { AddProgramCoursesComponent } from './components/add-program-courses/add
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+    LearningSupportModule
   ]
 })
 export class ProgramsModule { }

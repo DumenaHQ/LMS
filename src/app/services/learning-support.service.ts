@@ -19,6 +19,10 @@ export class LearningSupportService {
     return this.http.get(`${this.baseUrl}supports/class/${classId}/questions`, this.getHttpOptions());
   }
 
+  getQuestionsForProgram(programId: string) {
+    return this.http.get(`${this.baseUrl}supports/program/${programId}/questions`, this.getHttpOptions());
+  }
+
   getQuestionsForSchool(schoolId: string) {
     return this.http.get(`${this.baseUrl}supports/school/${schoolId}/questions`, this.getHttpOptions());
   }

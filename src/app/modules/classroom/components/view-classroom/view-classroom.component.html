@@ -223,12 +223,8 @@
                   >
                     <td>{{ learner.fullname || "-" }}</td>
                     <td>{{ learner.username || "-" }}</td>
-                    <td>
-                      {{ learner.email || "-" }}
-                    </td>
-                    <td>
-                      {{ learner.grade || "-" }}
-                    </td>
+                    <td>{{ learner.email || "-" }}</td>
+                    <td>{{ learner.grade || "-" }}</td>
                   </tr>
                 </ng-container>
                 <ng-template>
@@ -254,7 +250,7 @@
   
         <!-- Discussions -->
         <ng-container *ngIf="activeTab === 'discussions'">
-          <app-display-questions [classroomCourses]="classroom?.courses" [classroomId]="currentClassroomId.classroomId"></app-display-questions>
+          <app-display-questions [courses]="classroom?.courses" [classroomId]="currentClassroomId.classroomId"></app-display-questions>
         </ng-container>
       </div>
     </div>

@@ -10,8 +10,9 @@ import { LearningSupportService } from 'src/app/services/learning-support.servic
 })
 export class AddQuestionComponent implements OnInit {
 
-  @Input() classroomCourses: any;
+  @Input() courses: any;
   @Input() classroomId: any;
+  @Input() programId: any;
   @Output() addQuestionModal: EventEmitter<any> = new EventEmitter();
   @Output() getQuestions: EventEmitter<any> = new EventEmitter();
   formGroup: FormGroup;
@@ -44,7 +45,7 @@ export class AddQuestionComponent implements OnInit {
   handleSelectChange(event: any, fieldName: string) {
     // event.target.value
     if (fieldName === 'course') {
-      this.classroomCourses.forEach((item: any) => {
+      this.courses.forEach((item: any) => {
         if (item.id === event.target.value) {
           this.modules = item.modules;
         }
@@ -69,15 +70,20 @@ export class AddQuestionComponent implements OnInit {
     this.loading = true;
     const { value } = this.formGroup;
     
-    let payload = {
+    let payload: any = {
       question: value.question, 
       course_id: value.course,
-      class_id: this.classroomId,
       lesson: {
         title: this.lessonTitle,
         id: value.lesson
       }
-    } 
+    }
+    
+    if(this.classroomId) {
+      payload.class_id = this.classroomId
+    } else {
+      payload.program_id = this.programId
+    }
     
     this.learningSupportService.addQuestions(payload).subscribe({
       next:(res: any) => {
