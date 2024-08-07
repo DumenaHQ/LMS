@@ -139,6 +139,14 @@
           >
             Learners
           </li>
+          <li
+            class="body-2-medium"
+            [class.active]="activeTab === 'discussions'"
+            *ngIf="user.role === 'school'"
+            (click)="setActiveTab('discussions')"
+          >
+            Discussions
+          </li>
         </ul>
       </div>
       <div class="course-details_body_content">
@@ -265,6 +273,11 @@
               </button>
             </div>
           </div>
+        </ng-container>
+
+        <!-- Disscussions -->
+        <ng-container *ngIf="activeTab === 'discussions'">
+          <app-display-questions [courses]="program?.courses" [programId]="currentProgramId.programId"></app-display-questions>
         </ng-container>
       </div>
     </div>

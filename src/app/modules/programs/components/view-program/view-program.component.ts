@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { QueryActiveTabService } from 'src/app/services/utils/query-active-tab.service';
 import { ProgramsService } from 'src/app/services/programs.service';
 import { Observable } from 'rxjs';
-type Tabs = 'courses' | 'learners' | 'schools';
+type Tabs = 'courses' | 'learners' | 'schools' | 'discussions';
 
 @Component({
   selector: 'app-view-program',
