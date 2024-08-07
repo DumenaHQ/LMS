@@ -46,7 +46,7 @@
           </div>
         </div>
         <div class="accordion-content" [ngClass]="{'active': activeIndex === i}">
-          <app-display-question-comments [questionId]="item._id"></app-display-question-comments>
+          <app-display-question-comments [questionId]="item.id"></app-display-question-comments>
         </div>
       </div>
     </div>
@@ -58,7 +58,8 @@
 <app-add-question 
   *ngIf="addQuestion" 
   (addQuestionModal)="closeAddQuestionModal()" 
-  (getQuestions)="getQuestionsForAClassroom()"
-  [classroomCourses]="classroomCourses" 
+  (getQuestions)="getQuestions()"
+  [courses]="courses" 
   [classroomId]="classroomId"
+  [programId]="programId"
 ></app-add-question>

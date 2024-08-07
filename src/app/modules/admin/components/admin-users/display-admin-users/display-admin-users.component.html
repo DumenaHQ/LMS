@@ -38,7 +38,8 @@
 
 <section class="classroom" *ngIf="!dataLoading">
   <app-list-display-admin-users 
-    [users]="users" *ngIf="users?.length ?? 0 > 0" 
+    *ngIf="users?.length ?? 0 > 0" 
+    [users]="users" 
     (reloadData)="getUsers()"
     [loggedInUserData]="loggedInUserData"
   ></app-list-display-admin-users>
