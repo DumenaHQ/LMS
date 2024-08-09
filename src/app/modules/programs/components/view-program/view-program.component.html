@@ -142,7 +142,6 @@
           <li
             class="body-2-medium"
             [class.active]="activeTab === 'discussions'"
-            *ngIf="user.role === 'school'"
             (click)="setActiveTab('discussions')"
           >
             Discussions
