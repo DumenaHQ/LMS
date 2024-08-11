@@ -80,26 +80,28 @@
                         <li class="option" *ngFor="let option of getOptions(quiz?.questions[questionIndex]); let i = index" class="dis-flex">
                             <p class="option-label">{{ option.label }}.</p>
                             <div class="option-value dis-flex">
-                                <input 
-                                *ngIf="option.value.length < 200"
-                                class="option-value_content" 
-                                type="text" [id]="i" 
-                                [value]="option.value" 
-                                readonly
-                                >
-                                <textarea 
-                                *ngIf="option.value.length >= 200"
-                                class="option-value_content" 
-                                name="option" 
-                                [id]="i" 
-                                [value]="option.value" 
-                                readonly
-                                [class.extended]="option.value.length >= 200"
-                                ></textarea>
+                                <span class="option-value_content">
+                                    {{ option.value }}
+                                </span>
+                                <!-- <input 
+                                    *ngIf="option.value.length < 200"
+                                    class="option-value_content" 
+                                    type="text" [id]="i" 
+                                    [value]="option.value" 
+                                    readonly
+                                > -->
+                                <!-- <textarea 
+                                    *ngIf="option.value.length >= 200"
+                                    class="option-value_content" 
+                                    name="option" 
+                                    [id]="i" 
+                                    [value]="option.value" 
+                                    readonly
+                                    [class.extended]="option.value.length >= 200"
+                                ></textarea> -->
                                 <span 
-                                *ngIf="quiz?.questions[questionIndex].answer === option.label"
-                                class="option-value_marked dis-flex" 
-                                [class.extended]="option.value.length >= 200"
+                                    *ngIf="quiz?.questions[questionIndex].answer === option.label"
+                                    class="option-value_marked dis-flex" 
                                 >Marked as correct</span>
                             </div>
                         </li>
