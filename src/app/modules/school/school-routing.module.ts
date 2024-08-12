@@ -61,12 +61,20 @@ const routes: Routes = [
       },
       {
         path: 'payment',
-        component: SchoolPaymentComponent,
+        loadChildren: () => import('../../modules/payment/payment.module').then((m) => m.PaymentModule),
         data: {
           title: 'Payment',
           description: 'Description Meta Tag Content',
         },
       },
+      // {
+      //   path: 'payment',
+      //   component: SchoolPaymentComponent,
+      //   data: {
+      //     title: 'Payment',
+      //     description: 'Description Meta Tag Content',
+      //   },
+      // },
       { path: '', redirectTo: '/school', pathMatch: 'full' },
     ],
   },

@@ -89,19 +89,19 @@ const routes: Routes = [
           description: 'Description Meta Tag Content',
         }
       },
+      // {
+      //   path: 'payment',
+      //   component: PaymentComponent,
+      //   data: {
+      //     title: 'Payment',
+      //     description: 'Description Meta Tag Content',
+      //   },
+      // },
       {
         path: 'payment',
-        component: PaymentComponent,
+        loadChildren: () => import('../../modules/payment/payment.module').then((m) => m.PaymentModule),
         data: {
           title: 'Payment',
-          description: 'Description Meta Tag Content',
-        },
-      },
-      {
-        path: 'payment/cart',
-        component: ShoppingCartComponent,
-        data: {
-          title: 'Cart',
           description: 'Description Meta Tag Content',
         },
       },

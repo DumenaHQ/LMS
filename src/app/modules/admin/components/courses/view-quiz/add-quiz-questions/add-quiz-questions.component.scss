@@ -57,6 +57,7 @@ label {
       border-color: $primary80;
     }
     &.option {
+      align-items: stretch;
       padding: 0 $m-1;
       height: 40px;
       input {
@@ -65,22 +66,14 @@ label {
       &.checked{
         border: 1px solid $success80;
         background-color: $success20;
-        .correct-check {
-          .icon {
-            color: $success80;
-          }
-        }
       }
       .correct-check,
       .remove-option {
-        height: 40px;
         border-left: 1px solid $inner-border;
       }
       .correct-check {
-        .icon {
-          font-size: 25px;
-          color: $inner-border;
-        }
+        display: flex;
+        margin-bottom: 0;
       }
       .remove-option {
         .icon {

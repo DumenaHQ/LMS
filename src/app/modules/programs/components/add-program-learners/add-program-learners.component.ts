@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProgramsService } from 'src/app/services/programs.service';
@@ -33,6 +34,7 @@ export class AddProgramLearnersComponent implements OnInit {
     private programsService: ProgramsService,
     private schoolService: SchoolService,
     private appAlertService: AppAlertService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -87,15 +89,14 @@ export class AddProgramLearnersComponent implements OnInit {
     let payload = {
       learners: uploadType === 'selected' ? this.selectedLearners : this.uploadedLearners,
     };
-
+    
     this.programsService
-      .addLearnerToProgram(payload, this.programId)
+      .subscribeLearnerToProgram(payload, this.programId)
       .subscribe({
         next: (res: any) => {
           if (res.status === true) {
             this.appAlertService.showAlert(res.message, AlertType.Success);
-            this.closeAddLearnerToProgramModal();
-            this.getProgram.emit();
+            this.router.navigate([`/${this.user.role}/payment/cart`]);
           }
         },
         error: (error) => {
@@ -164,7 +165,7 @@ export class AddProgramLearnersComponent implements OnInit {
       let learners = XLSX.utils.sheet_to_json(worksheet, { raw: true });
       
       this.uploadedLearners = learners.map((learner: any) => ({
-        username: learner['Learner Username'],
+        name: learner['Learner Username'],
         user_id: learner['Learner ID'],
       }));
     };
@@ -193,7 +194,7 @@ export class AddProgramLearnersComponent implements OnInit {
       });
     }
     else {
-      this.selectedLearners.push({username: student.username, user_id: student.id});
+      this.selectedLearners.push({ name: student.username, user_id: student.id });
     } 
   }
 
