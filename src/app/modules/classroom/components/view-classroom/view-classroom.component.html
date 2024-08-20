@@ -154,21 +154,19 @@
                   <th>Duration</th>
                   <th>Action</th>
                 </tr>
-                <ng-container>
-                  <tr
-                    class="table-body"
-                    *ngFor="let course of classroom?.courses"
-                  >
-                    <td>{{ course?.title || "-" }}</td>
-                    <td>{{ course?.lesson_count || "-" }}</td>
-                    <td>{{ course?.course_quadrant || "-" }}</td>
-                    <td>{{ course?.duration || "-" }}</td>
-                    <td>
-                      <button class="btn sec_btn" style="margin-right: 2rem;" (click)="watchCourse(course?.id)">Watch</button>
-                      <button class="btn sec_btn" (click)="openViewCourseQuizResult(course)">Quiz Result</button>
-                    </td>
-                  </tr>
-                </ng-container>
+                <tr
+                  class="table-body"
+                  *ngFor="let course of classroom?.courses"
+                >
+                  <td>{{ course?.title || "-" }}</td>
+                  <td>{{ course?.lesson_count || "-" }}</td>
+                  <td>{{ course?.course_quadrant || "-" }}</td>
+                  <td>{{ course?.duration || "-" }}</td>
+                  <td>
+                    <button class="btn sec_btn" style="margin-right: 2rem;" (click)="watchCourse(course?.id)">Watch</button>
+                    <button class="btn sec_btn" (click)="openViewCourseQuizResult(course)">Quiz Result</button>
+                  </td>
+                </tr>
               </table>
             </ng-container>
   
@@ -212,24 +210,19 @@
               <table>
                 <tr class="table-header">
                   <th>Full Name</th>
-                  <th>User Name</th>
+                  <th *ngIf="user?.role !== 'learner'">User Name</th>
                   <th>Email</th>
                   <th>Grade</th>
                 </tr>
-                <ng-container>
-                  <tr
-                    class="table-body"
-                    *ngFor="let learner of classroom?.learners"
-                  >
-                    <td>{{ learner.fullname || "-" }}</td>
-                    <td>{{ learner.username || "-" }}</td>
-                    <td>{{ learner.email || "-" }}</td>
-                    <td>{{ learner.grade || "-" }}</td>
-                  </tr>
-                </ng-container>
-                <ng-template>
-                  <p style="text-align: center">Empty School list!</p>
-                </ng-template>
+                <tr
+                  class="table-body"
+                  *ngFor="let learner of classroom?.learners"
+                >
+                  <td>{{ learner.fullname || "-" }}</td>
+                  <td *ngIf="user?.role !== 'learner'">{{ learner.username || "-" }}</td>
+                  <td>{{ learner.email || "-" }}</td>
+                  <td>{{ learner.grade || "-" }}</td>
+                </tr>
               </table>
             </ng-container>
   

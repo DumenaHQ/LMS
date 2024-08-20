@@ -63,41 +63,8 @@
         </div>
       </div>
 
-      <!-- Username -->
-      <div class="username modal_area_content" *ngIf="onboardModal == 3">
-        <div class="modal-details">
-          <h2 class="text-primary-color">Change your Username</h2>
-          <p>
-            You have a default username but if you would like to change it you
-            can do that now or just skip this step
-          </p>
-        </div>
-        <form #usersForm="ngForm">
-          <div class="form-field">
-            <label for="username">User Name</label>
-            <div class="input-field">
-              <input
-                type="text"
-                name="username"
-                [(ngModel)]="user.username"
-                required
-              />
-            </div>
-          </div>
-        </form>
-        <div class="modal-btns dis-flex">
-          <button class="btn skip_btn" (click)="onboardModal = 4">Skip</button>
-          <button
-            class="btn prim_btn"
-            (click)="setUsername(usersForm.value, 3)"
-          >
-            Next
-          </button>
-        </div>
-      </div>
-
       <!-- Interests -->
-      <div class="interests" *ngIf="onboardModal == 4">
+      <div class="interests" *ngIf="onboardModal == 3">
         <div class="modal-details">
           <h2 class="text-primary-color">Which of these interests you?</h2>
           <p>
@@ -128,10 +95,10 @@
           </li>
         </ul>
         <div class="modal-btns dis-flex">
-          <button class="btn skip_btn" (click)="onboardModal = 5">Skip</button>
+          <button class="btn skip_btn" (click)="onboardModal = 4">Skip</button>
           <button
             class="btn prim_btn"
-            (click)="completeProfileSetup(4)"
+            (click)="completeProfileSetup(3)"
             [disabled]="loading"
           >
             <span *ngIf="!loading">Finish</span>
@@ -141,7 +108,7 @@
       </div>
 
       <!-- Done -->
-      <div class="completed" *ngIf="onboardModal == 5">
+      <div class="completed" *ngIf="onboardModal == 4">
         <img
           src="../../../../../assets/img/undraw_winners_re_wr1l 1.svg"
           alt=""
