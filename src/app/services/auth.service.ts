@@ -178,14 +178,22 @@ export class AuthService {
 
   // Log Out
   logOut() {
-    // Remove token
+    this.http.post(`${this.baseUrl}users/logout`, null, this.getHttpOptions()).subscribe({
+      next: (res: any) => {
+        this.clearUserData();
+      },
+      error: (err: any) => {
+        console.log(err);
+        this.clearUserData();
+      }
+    })
+  }
+
+  // Clear user data from local storage
+  clearUserData() {
     localStorage.removeItem('token');
-
-    // Remove User data
     localStorage.removeItem('data');
-
-    // Route user back to login
-    this.router.navigate(['login']);
+    this.router.navigate(['/login']);
   }
 
   // Get HttpOptions

@@ -143,7 +143,6 @@ export class LearnerOnboardComponent implements OnInit {
 
   selectedAvatarUrl: string = '';
   selectedInterest: any[] = [];
-  username: string = '';
   loading: boolean = false;
   user: any;
 
@@ -185,12 +184,6 @@ export class LearnerOnboardComponent implements OnInit {
     }
   }
 
-  // Set Username
-  setUsername(data: any, currentModal: any) {
-    this.username = data.username;
-    this.onboardModal = currentModal += 1;
-  }
-
   // Complete Profile
   completeProfileSetup(currentModal: any) {
     this.loading = true;
@@ -203,9 +196,6 @@ export class LearnerOnboardComponent implements OnInit {
     }
     if (this.selectedInterest.length > 0) {
       payload.interests = this.selectedInterest;
-    }
-    if(this.username) {
-      payload.username = this.username
     }
 
     this.updateUser(payload);

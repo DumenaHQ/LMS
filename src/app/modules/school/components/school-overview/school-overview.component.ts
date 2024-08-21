@@ -17,6 +17,7 @@ export class SchoolOverviewComponent implements OnInit {
   public greeting: string = ''
   classrooms: any;
   teachers: any;
+  learnersActivities: any;
 
   constructor(
     private authService: AuthService,
@@ -69,6 +70,7 @@ export class SchoolOverviewComponent implements OnInit {
   getUsersActivities() {
     this.schoolService.getUserActivities().subscribe({
       next: (res: any) => {
+        this.learnersActivities = res.data;
         console.log(res);        
       },
       error: (e) => console.error(e),
