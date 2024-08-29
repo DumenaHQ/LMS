@@ -16,7 +16,10 @@ export class SchoolStudentsComponent implements OnInit {
   dataLoading: boolean;
   students: any;
   grades: any = [];
-  selectedGrade: string = '';
+  filterValues = {
+    search: '',
+    grade: '',
+  };
 
   constructor(
     private authService: AuthService,
@@ -33,9 +36,13 @@ export class SchoolStudentsComponent implements OnInit {
   // Get all students
   getAllStudents() {
     this.dataLoading = true;
-    let grade = this.selectedGrade === '' ? undefined : this.selectedGrade;
+    // let grade = this.filterValues.grade === '' ? undefined : this.filterValues.grade;
     const school_id = this.user.id;
-    this.schoolService.getSchoolLearners(school_id, grade).subscribe({
+    const params = {
+      grade: this.filterValues.grade || undefined,
+      search: this.filterValues.search || undefined
+    };
+    this.schoolService.getSchoolLearners(school_id, params).subscribe({
       next: (res: any) => {
         this.students = res.data.students;
         if(this.grades.length === 0) {
@@ -50,6 +57,10 @@ export class SchoolStudentsComponent implements OnInit {
         this.dataLoading = false;
       },
     });
+  }
+
+  handleFilterValues() {
+    this.getAllStudents();   
   }
 
   // Open Learner Modal

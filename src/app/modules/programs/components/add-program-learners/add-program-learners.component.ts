@@ -28,6 +28,10 @@ export class AddProgramLearnersComponent implements OnInit {
   uploadedLearners: any[] = [];
   selectedLearners: any[] = [];
   grades: any = [];
+  filterValues = {
+    search: '',
+    grade: '',
+  };
 
   constructor(
     private authService: AuthService,
@@ -39,17 +43,19 @@ export class AddProgramLearnersComponent implements OnInit {
 
   ngOnInit(): void {
     this.user= this.authService.getUser().user;
-
-    this.getAllStudents('');
+    this.getAllStudents();
   }
 
   // Get all students
-  getAllStudents(event: any) {
+  getAllStudents() {
     this.dataLoading = true;
-    let grade = event?.target?.value === '' ? undefined : event?.target?.value;
     const school_id = this.user.id;
+    const params = {
+      grade: this.filterValues.grade || undefined,
+      search: this.filterValues.search || undefined
+    };
     if(this.user.role === 'school') {
-      this.schoolService.getSchoolLearners(school_id, grade).subscribe({
+      this.schoolService.getSchoolLearners(school_id, params).subscribe({
         next: (res: any) => {
           this.learners = res.data.students;
           if(this.grades.length === 0) {
@@ -76,6 +82,10 @@ export class AddProgramLearnersComponent implements OnInit {
         },
       });
     }
+  }
+
+  handleFilterValues() {
+    this.getAllStudents();   
   }
 
   // Tab change
@@ -183,19 +193,36 @@ export class AddProgramLearnersComponent implements OnInit {
     }
   }
 
+  isLearnerSelected(request: any): boolean {
+    return this.selectedLearners.some(selected => selected.user_id === request.id);
+  }
+
   // Select students (School)
-  selectStudent(event: any, student: any) {
-    if(event.target.checked === false) {
-      this.selectedLearners.forEach((element: any, index: any) => {
-        if(element.username === student.username) {
-          this.selectedLearners.splice(index, 1)
-        }
-        return this.selectedLearners
+  selectLearner(event: any, learner: any) {
+    if (event.target.checked) {
+      this.selectedLearners.push({
+        username: learner.username, 
+        user_id: learner.id,
       });
+    } else {
+      this.selectedLearners = this.selectedLearners.filter(selected => selected.user_id !== learner.id);
+    }  
+  }
+
+  toggleSelectAllLearner(event: any) {
+    if (event.target.checked) {
+      this.selectedLearners = [];
+      this.learners.map((learner: any) => {
+        this.selectedLearners.push({ 
+          username: learner.username, 
+          user_id: learner.id 
+        })
+      });
+      this.appAlertService.showAlert('All learners selected', AlertType.Warning);
+    } else {
+      this.selectedLearners = [];
+      this.appAlertService.showAlert('All learners removed', AlertType.Warning);
     }
-    else {
-      this.selectedLearners.push({ name: student.username, user_id: student.id });
-    } 
   }
 
   // Close Add Modal
