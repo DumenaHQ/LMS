@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SchoolEnrollLearnersComponent } from './components/school-enroll-learners/school-enroll-learners.component';
 import { SchoolOnboardComponent } from './components/school-onboard/school-onboard.component';
 import { LearningSupportModule } from '../learning-support/learning-support.module';
+import { PaymentClassroomLearnersComponent } from './components/school-payment/payment-classroom-learners/payment-classroom-learners.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { LearningSupportModule } from '../learning-support/learning-support.modu
     SchoolDisplayStudentsComponent,
     SchoolEnrollLearnersComponent,
     SchoolOnboardComponent,
+    PaymentClassroomLearnersComponent,
   ],
   imports: [
     CommonModule,
