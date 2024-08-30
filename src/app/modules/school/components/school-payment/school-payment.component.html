@@ -4,7 +4,7 @@
 
 <section class="cart">
   <div class="cart_body">
-    <div class="cart_body_list">
+    <div class="cart_body_list" style="padding-bottom: 2rem;">
       <h4 style="margin-bottom: 2rem; font-weight: bold;">Classrooms</h4>
 
       <app-loader *ngIf="dataLoading"></app-loader>
@@ -16,6 +16,18 @@
               <div class="content_details">
                 <div class="content_details_header dis-flex">
                   <h5 class="clickable" [title]="classroom.name">{{ classroom.name  }}</h5>
+
+                  <div class="actions">
+                    <input 
+                      type="checkbox" 
+                      [name]="'class' + i" 
+                      [id]="'class' + i"
+                      [title]="classroom.learner_count === classroomsSelectedLearners[classroom.id].length ? 'Deselect all learners' : 'Select all learners'"
+                      [checked]="classroom.learner_count === classroomsSelectedLearners[classroom.id].length"
+                      class="clickable"
+                      (change)="toggleSelectAllLearner($event, classroom)"
+                    >
+                  </div>
                 </div>
                 <div class="icons dis-flex" style="margin-bottom: 0;">
                   <span class="dis-flex">
@@ -31,92 +43,19 @@
                 <div class="card_item_footer_rates_item">
                   <p class="body-3-regular title">Learner's selected</p>
                   <p class="body-3-medium value">
-                    {{ classroomsSelectedLearners ? classroomsSelectedLearners[classroom.id]?.length : 0 }} / {{ classroom.learner_count }}
+                    {{ classroomsSelectedLearners[classroom.id]?.length }} / {{ classroom.learner_count }}
                   </p>
                 </div>
                 <div class="card_item_footer_rates_item">
                   <p class="body-3-regular title">Total amount</p>
-                  <p class="body-3-medium value">₦{{ classroomsSelectedLearners ? (classroomsSelectedLearners[classroom.id]?.length * planAmount | number) : '0.00' }}</p>
+                  <p class="body-3-medium value">₦{{ (classroomsSelectedLearners[classroom.id]?.length * planAmount) | number }}</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      
-
-
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- <div class="cart_body_list">
-      <div class="form_control">
-        <label for="classroom">Classroom</label>
-        <div class="form_control_field">
-            <select name="classroom" id="classroom" (change)="handleSelectChange($event)">
-                <option value="">Select a classroom</option>
-                <option [value]="item.id" *ngFor="let item of classrooms; let i = index">
-                    {{ item.name }}
-                </option>
-            </select>
-        </div>
-      </div>
-
-      <app-loader *ngIf="dataLoading"></app-loader>
-
-      <div style="overflow-x: auto;" *ngIf="dataLoading === false">
-        <p style="margin-bottom: 1rem;"><b>NOTE:</b> Select only learners you want to pay for</p>
-        <table>
-          <tr class="table-header">
-            <th>Fullname</th>
-            <th>Grade</th>
-            <th>
-              <div class="dis-flex" style="gap: 1rem;">
-                <input 
-                  type="checkbox" 
-                  name="all learners" 
-                  id="all learners"
-                  [title]="learners.length === selectedLearners.length ? 'Deselect all learners' : 'Select all learners'"
-                  [checked]="learners.length === selectedLearners.length"
-                  class="clickable"
-                  (change)="toggleSelectAllLearner($event)"
-                >
-                {{ selectedLearners.length + '/' + learners.length }}
-              </div>
-            </th>
-          </tr>
-          <tr class="table-body" *ngFor="let item of learners; let i = index">
-            <td>{{ item.fullname }}</td>
-            <td>{{ item.grade }}</td>
-            <td class="action">
-              <input 
-                type="checkbox" 
-                [name]="'learner-' + i" 
-                [id]="'learner-' + i"
-                [checked]="isLearnerSelected(item)"
-                class="clickable"
-                (change)="selectLearner($event, item)"
-              >
-            </td>
-          </tr>
-
-          <tr *ngIf="learners?.length === 0">
-            <td colspan="20" style="text-align: center;">No learner available</td>
-          </tr>
-        </table>
-      </div>
-    </div> -->
 
     <div class="cart_body_checkout">
       <div class="cart_body_checkout_header">
@@ -162,7 +101,7 @@
         </div>
         <button
           class="btn prim_btn clickable"
-          [disabled]="selectedLearners.length === 0"
+          [disabled]="totalSelectedLearners === 0 || !totalSelectedLearners"
           (click)="openConfirmModal()"
         >
           <span *ngIf="!loading">Proceed to Payment</span>

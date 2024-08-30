@@ -10,12 +10,12 @@ import { ClassroomService } from 'src/app/services/classroom.service';
 export class PaymentClassroomLearnersComponent implements OnInit {
 
   @Input() classroom: any;
-  @Input() classroomsSelectedLearners: any;
+  @Input() classroomsSelectedLearners: any[];
   @Output() learnersModal: EventEmitter<any> = new EventEmitter();
   dataLoading: boolean;
   learners: any;
-  selectedLearners: any[] = [];
   classSelectedLearner: any;
+  classroomLearnersLength: any;
 
   constructor(
     private classroomService: ClassroomService,
@@ -24,11 +24,6 @@ export class PaymentClassroomLearnersComponent implements OnInit {
 
   ngOnInit(): void {
     this.getClassroomById();
-    console.log(this.classroomsSelectedLearners);
-    // Initialize selectedLearners from classroomsSelectedLearners for the current classroom
-    if (this.classroom && this.classroomsSelectedLearners[this.classroom.id]) {
-      this.selectedLearners = [...this.classroomsSelectedLearners[this.classroom.id]];
-    } 
   }
 
   getClassroomById() {
@@ -45,21 +40,20 @@ export class PaymentClassroomLearnersComponent implements OnInit {
   }
 
   isLearnerSelected(learner: any): boolean {
-    return this.selectedLearners.some(selected => selected.learnerId === learner.id);
+    const currentClassroomId = this.classroom?.id;
+    return this.classroomsSelectedLearners[currentClassroomId]?.some((selected: any) => selected.learnerId === learner.id);
   }
   
   selectLearner(event: any, learner: any) {
     const currentClassroomId = this.classroom.id;
   
     if (event.target.checked) {
-      this.selectedLearners.push({ learnerId: learner.id });
       if (!this.classroomsSelectedLearners[currentClassroomId]) {
         this.classroomsSelectedLearners[currentClassroomId] = [];
       }
       this.classroomsSelectedLearners[currentClassroomId].push({ learnerId: learner.id });
       this.appAlertService.showAlert('Learner selected', AlertType.Warning);
     } else {
-      this.selectedLearners = this.selectedLearners.filter(selected => selected.learnerId !== learner.id);
       this.classroomsSelectedLearners[currentClassroomId] = this.classroomsSelectedLearners[currentClassroomId].filter((selected: any) => selected.learnerId !== learner.id);
       this.appAlertService.showAlert('Learner removed', AlertType.Warning);
     }
@@ -69,38 +63,16 @@ export class PaymentClassroomLearnersComponent implements OnInit {
     const currentClassroomId = this.classroom.id;
   
     if (event.target.checked) {
-      this.selectedLearners = [];
-      this.learners.map((learner: any) => {
-        this.selectedLearners.push({ learnerId: learner.id });
-      });
-      this.classroomsSelectedLearners[currentClassroomId] = [...this.selectedLearners];
+      this.classroomsSelectedLearners[currentClassroomId] = this.learners.map((learner: any) => ({ learnerId: learner.id }));
       this.appAlertService.showAlert('All learners selected', AlertType.Warning);
     } else {
-      this.selectedLearners = [];
       this.classroomsSelectedLearners[currentClassroomId] = [];
       this.appAlertService.showAlert('All learners removed', AlertType.Warning);
     }
   }
 
   proceed() {
-    console.log(this.selectedLearners);
-    
-    console.log(this.classroomsSelectedLearners);
-    
-    // this.learnersModal.emit(this.selectedLearners);
-    
-    // this.classSelectedLearner = {
-    //   [this.classroom.id]: this.selectedLearners
-    // }
-
-    // console.log(this.classSelectedLearner);
-    // this.learnersModal.emit(this.classSelectedLearner);
-    
-  }
-  
-  closeLearnesmModal() {
-    this.selectedLearners = [];
-    this.proceed();
+    this.learnersModal.emit(this.classroomsSelectedLearners);
   }
 
 }
