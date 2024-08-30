@@ -70,8 +70,7 @@ export class SchoolOverviewComponent implements OnInit {
   getLearnersActivities() {
     this.schoolService.getSchoolLearnersActivities().subscribe({
       next: (res: any) => {
-        this.learnersActivities = res.data;
-        console.log(res);        
+        this.learnersActivities = res.data;     
       },
       error: (e) => console.error(e),
     });
@@ -124,9 +123,7 @@ export class SchoolOverviewComponent implements OnInit {
     
     // update user profile
     this.authService.updateUser(payload).subscribe((res: any) => {
-      console.log(res);
       if (res.status == true) {
-        // Set User data
         this.authService.addUserDataToLocalStorage(res.data);
         this.ngOnInit()
       }

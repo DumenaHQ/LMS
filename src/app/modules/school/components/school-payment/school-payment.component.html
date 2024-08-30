@@ -4,7 +4,63 @@
 
 <section class="cart">
   <div class="cart_body">
-    <div class="cart_body_list" style="padding-right: 1.5rem">
+    <div class="cart_body_list">
+      <h4 style="margin-bottom: 2rem; font-weight: bold;">Classrooms</h4>
+
+      <app-loader *ngIf="dataLoading"></app-loader>
+
+      <div class="grid-card-1" *ngIf="dataLoading === false">
+        <div class="card">
+          <div class="card_item" *ngFor="let classroom of classrooms; let i = index">
+            <div class="content">
+              <div class="content_details">
+                <div class="content_details_header dis-flex">
+                  <h5 class="clickable" [title]="classroom.name">{{ classroom.name  }}</h5>
+                </div>
+                <div class="icons dis-flex" style="margin-bottom: 0;">
+                  <span class="dis-flex">
+                    <img src="../../../../../assets/img/svg/profile-2user.svg" alt="image"/>
+                    <p class="body-2-regular">{{ classroom.learner_count }} Learners</p>
+                  </span>
+                  <span class="grey_btn clickable" (click)="openViewClassroomLearners(classroom)">View Learners</span>
+                </div>
+              </div>
+            </div>
+            <div class="card_item_footer">
+              <div class="card_item_footer_rates">
+                <div class="card_item_footer_rates_item">
+                  <p class="body-3-regular title">Learner's selected</p>
+                  <p class="body-3-medium value">
+                    {{ classroomsSelectedLearners ? classroomsSelectedLearners[classroom.id]?.length : 0 }} / {{ classroom.learner_count }}
+                  </p>
+                </div>
+                <div class="card_item_footer_rates_item">
+                  <p class="body-3-regular title">Total amount</p>
+                  <p class="body-3-medium value">₦{{ classroomsSelectedLearners ? (classroomsSelectedLearners[classroom.id]?.length * planAmount | number) : '0.00' }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- <div class="cart_body_list">
       <div class="form_control">
         <label for="classroom">Classroom</label>
         <div class="form_control_field">
@@ -60,7 +116,7 @@
           </tr>
         </table>
       </div>
-    </div>
+    </div> -->
 
     <div class="cart_body_checkout">
       <div class="cart_body_checkout_header">
@@ -125,3 +181,10 @@
   (confrimDone)="makePayment()"
   (reloadData)="getClassrooms()"
 ></app-confirm-delete>
+
+<app-payment-classroom-learners
+  *ngIf="isClassroomLearners"
+  [classroom]="classroom"
+  [classroomsSelectedLearners]="classroomsSelectedLearners"
+  (learnersModal)="getSelectedClassroomLearners($event)"
+></app-payment-classroom-learners>

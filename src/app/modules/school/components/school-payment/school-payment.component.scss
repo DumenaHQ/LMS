@@ -42,16 +42,9 @@
 .cart {
     @include sect-bg($border-color: transparent);
     &_body {
-      display: flex;
-      display: flex;
-      @media only screen and (max-width: 850px) {
-        display: grid;
-        grid-gap: $m-3;
-      }
       &_list {
-        flex-basis: 55%;
+        border-bottom: 1px solid $divider-color;
         @media only screen and (min-width: 850px) {
-          border-right: 1px solid $divider-color;
         }
         &_item {
           padding: 0 $m-3 $m-4 0;
@@ -85,16 +78,14 @@
         }
       }
       &_checkout {
-        flex-basis: 45%;
+        margin-top: $m-4;
         .sub-total,
         .grand-total {
-          justify-content: space-between;
           gap: $m-2;
         }
         &_header {
-          padding: 0 $m-2;
           .sub-plan {
-            justify-content: space-between;
+            gap: $m-2;
             &_value {
               color: $primary80;
               background-color: $primary60;
@@ -114,7 +105,7 @@
             align-items: flex-end;
             margin: $m-2 0 $m-3 0;
             .form-field {
-              width: 100%;
+              // width: 100%;
               label {
                 display: inline-block;
                 font-weight: 500;
@@ -163,13 +154,10 @@
           }
         }
         &_footer {
-          padding: $m-3 $m-2;
+          padding: $m-3 0;
           border-top: 1px solid $divider-color;
           .grand-total {
             margin-bottom: $m-3;
-          }
-          .btn {
-            width: 100%;
           }
         }
       }

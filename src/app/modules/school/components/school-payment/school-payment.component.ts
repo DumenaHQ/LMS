@@ -19,13 +19,16 @@ export class SchoolPaymentComponent implements OnInit {
   grandTotal: number = 0;
   planAmount: number = 15000;
   isVoucher: boolean = false;
-  classrooms?: ClassroomModel[];
+  classrooms?: any[];
   dataLoading: boolean;
   learners: any;
   selectedLearners: any[] = [];
   confirmModal: boolean = false;
   confirmMessage: string;
   loading: boolean;
+  isClassroomLearners: boolean = false;
+  classroom: any;
+  classroomsSelectedLearners: any;
 
   constructor(
     private classroomService: ClassroomService,
@@ -39,17 +42,21 @@ export class SchoolPaymentComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authService.getUser().user;
-    this.getAllOrders();
-    this.getActiveOrder();
     this.getClassrooms();
+    console.log(this.classroomsSelectedLearners);
+    
   }
 
   getClassrooms() {
+    this.dataLoading = true;
     this.classroomService.getClassrooms().subscribe({
       next: (res: any) => {
         this.classrooms = (res.data.classes || []);
       },
-      error: (e) => console.error(e)
+      error: (e) => console.error(e),
+      complete: () => {
+        this.dataLoading = false;
+      },
     });
   }
 
@@ -64,6 +71,26 @@ export class SchoolPaymentComponent implements OnInit {
         this.dataLoading = false;
       },
     });
+  }
+
+  openViewClassroomLearners(classroom: any) {
+    this.classroom = classroom;
+    this.isClassroomLearners = true;
+  }
+  
+  closeViewClassroomLearners() {
+    this.isClassroomLearners = false;
+  }
+  
+  getSelectedClassroomLearners(event: any) {
+    console.log(event);
+    this.classroomsSelectedLearners = event;
+
+    console.log(this.classroomsSelectedLearners[this.classroom.id]);
+    console.log(this.classroomsSelectedLearners[this.classroom.id].length);
+    
+    
+    this.closeViewClassroomLearners();
   }
   
   handleSelectChange(event: any) {
@@ -127,30 +154,6 @@ export class SchoolPaymentComponent implements OnInit {
         this.loading = false;
       },
     });
-  }
-
-  // Get all orders
-  getAllOrders() {
-    // this.orderService.getOrders().subscribe({
-    //   next: (res: any) => {
-    //     this.allPlans = res.data.orders;
-    //     this.reference = res.data.orders[0].reference;
-    //   },
-    //   error: (e) => console.error(e),
-    // });
-  }
-
-  // Get active order
-  getActiveOrder() {
-    // this.orderService.getActiveOrder().subscribe({
-    //   next: (res: any) => {
-    //     this.activePlans = res.data.order;
-    //     // this.reference = res.data.orders[0].reference;
-    //     this.grandTotal = res.data.order.total_amount
-        
-    //   },
-    //   error: (e) => console.error(e),
-    // });
   }
 
   // Pay with Paystack

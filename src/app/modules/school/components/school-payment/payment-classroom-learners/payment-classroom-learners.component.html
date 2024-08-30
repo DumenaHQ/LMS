@@ -1,0 +1,79 @@
+
+<div class="modal">
+    <div class="modal_area">
+        <span class="modal_area_close" (click)="closeLearnesmModal()">
+            <i class="bx bx-x icon clickable"></i>
+        </span>
+
+        <div class="enroll auth_content">
+            <h4
+                class="text-primary-color enroll_title"
+            >
+                {{ classroom.name }} Learners
+            </h4>
+
+            <div>
+                <app-loader *ngIf="dataLoading"></app-loader>
+            
+                <div style="overflow-x: auto; margin-top: 1rem;" *ngIf="dataLoading === false">
+                    <p style="margin-bottom: 1rem;"><b>NOTE:</b> Select only learners you want to pay for</p>
+                    <table>
+                        <tr class="table-header">
+                        <th>Fullname</th>
+                        <th>Grade</th>
+                        <th>
+                            <div class="dis-flex" style="gap: 1rem;">
+                            <input 
+                                type="checkbox" 
+                                name="all learners" 
+                                id="all learners"
+                                [title]="learners.length === selectedLearners.length ? 'Deselect all learners' : 'Select all learners'"
+                                [checked]="learners.length === selectedLearners.length"
+                                class="clickable"
+                                (change)="toggleSelectAllLearner($event)"
+                            >
+                                {{ selectedLearners.length + '/' + learners.length }}
+                            </div>
+                        </th>
+                        </tr>
+                        <tr class="table-body" *ngFor="let item of learners; let i = index">
+                        <td>{{ item.fullname }}</td>
+                        <td>{{ item.grade }}</td>
+                        <td class="action">
+                            <input 
+                            type="checkbox" 
+                            [name]="'learner-' + i" 
+                            [id]="'learner-' + i"
+                            [checked]="isLearnerSelected(item)"
+                            class="clickable"
+                            (change)="selectLearner($event, item)"
+                            >
+                        </td>
+                        </tr>
+                
+                        <tr *ngIf="learners?.length === 0">
+                        <td colspan="20" style="text-align: center;">No learner available</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="form-btns dis-flex" style="margin-top: 2rem; gap: 1rem;">
+                    <span
+                      class="grey_btn clickable"
+                      (click)="closeLearnesmModal()"
+                      >Cancel</span
+                    >
+                    <div class="continue">
+                      <button
+                        class="btn prim_btn clickable"
+                        [disabled]="selectedLearners.length === 0"
+                        (click)="proceed()"
+                      >
+                        <span >Continue</span>
+                      </button>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
