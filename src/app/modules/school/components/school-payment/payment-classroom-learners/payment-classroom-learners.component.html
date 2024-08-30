@@ -1,7 +1,7 @@
 
 <div class="modal">
     <div class="modal_area">
-        <span class="modal_area_close" (click)="closeLearnesmModal()">
+        <span class="modal_area_close" (click)="proceed()">
             <i class="bx bx-x icon clickable"></i>
         </span>
 
@@ -27,12 +27,12 @@
                                 type="checkbox" 
                                 name="all learners" 
                                 id="all learners"
-                                [title]="learners.length === selectedLearners.length ? 'Deselect all learners' : 'Select all learners'"
-                                [checked]="learners.length === selectedLearners.length"
+                                [title]="learners.length === classroomsSelectedLearners[classroom.id].length ? 'Deselect all learners' : 'Select all learners'"
+                                [checked]="learners.length === classroomsSelectedLearners[classroom.id].length"
                                 class="clickable"
                                 (change)="toggleSelectAllLearner($event)"
                             >
-                                {{ selectedLearners.length + '/' + learners.length }}
+                                {{ classroomsSelectedLearners[classroom.id].length + '/' + learners.length }}
                             </div>
                         </th>
                         </tr>
@@ -60,13 +60,13 @@
                 <div class="form-btns dis-flex" style="margin-top: 2rem; gap: 1rem;">
                     <span
                       class="grey_btn clickable"
-                      (click)="closeLearnesmModal()"
+                      (click)="proceed()"
                       >Cancel</span
                     >
                     <div class="continue">
                       <button
                         class="btn prim_btn clickable"
-                        [disabled]="selectedLearners.length === 0"
+                        [disabled]="classroomsSelectedLearners[classroom.id].length === 0"
                         (click)="proceed()"
                       >
                         <span >Continue</span>

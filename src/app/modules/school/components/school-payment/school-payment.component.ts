@@ -21,14 +21,13 @@ export class SchoolPaymentComponent implements OnInit {
   isVoucher: boolean = false;
   classrooms?: any[];
   dataLoading: boolean;
-  learners: any;
-  selectedLearners: any[] = [];
   confirmModal: boolean = false;
   confirmMessage: string;
   loading: boolean;
   isClassroomLearners: boolean = false;
   classroom: any;
-  classroomsSelectedLearners: any;
+  classroomsSelectedLearners: any = {};
+  totalSelectedLearners: any;
 
   constructor(
     private classroomService: ClassroomService,
@@ -43,8 +42,6 @@ export class SchoolPaymentComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.authService.getUser().user;
     this.getClassrooms();
-    console.log(this.classroomsSelectedLearners);
-    
   }
 
   getClassrooms() {
@@ -52,19 +49,9 @@ export class SchoolPaymentComponent implements OnInit {
     this.classroomService.getClassrooms().subscribe({
       next: (res: any) => {
         this.classrooms = (res.data.classes || []);
-      },
-      error: (e) => console.error(e),
-      complete: () => {
-        this.dataLoading = false;
-      },
-    });
-  }
-
-  getClassroomById(classroomId: string) {
-    this.dataLoading = true;
-    this.classroomService.getClassroomById(classroomId).subscribe({
-      next: (res: any) => {
-        this.learners = res.data.class.learners;
+        this.classrooms?.forEach((classroom: any) => {
+          this.classroomsSelectedLearners[classroom.id] = [];
+        });        
       },
       error: (e) => console.error(e),
       complete: () => {
@@ -83,66 +70,57 @@ export class SchoolPaymentComponent implements OnInit {
   }
   
   getSelectedClassroomLearners(event: any) {
-    console.log(event);
-    this.classroomsSelectedLearners = event;
-
-    console.log(this.classroomsSelectedLearners[this.classroom.id]);
-    console.log(this.classroomsSelectedLearners[this.classroom.id].length);
-    
-    
+    this.classroomsSelectedLearners = event;  
+  
+    this.getLearnersGrandTotal();
     this.closeViewClassroomLearners();
   }
-  
-  handleSelectChange(event: any) {
-    if(event.target.value !== '') { 
-      this.getClassroomById(event.target.value);
-    }
-  }
 
-  isLearnerSelected(learner: any): boolean {
-    return this.selectedLearners.some(selected => selected.learnerId === learner.id);
-  }
+  toggleSelectAllLearner(event: any, classroom: any) {
+    const classroomId = classroom.id;
 
-  selectLearner(event: any, learner: any) {
     if (event.target.checked) {
-      this.selectedLearners.push({ learnerId: learner.id });
-      this.appAlertService.showAlert('Learner selected', AlertType.Warning);
-    } else {
-      this.selectedLearners = this.selectedLearners.filter(selected => selected.learnerId !== learner.id);
-      this.appAlertService.showAlert('Learner removed', AlertType.Warning);
-    }
-    this.grandTotal = this.planAmount * this.selectedLearners.length;
-  }
-
-  toggleSelectAllLearner(event: any) {
-    if (event.target.checked) {
-      this.selectedLearners = [];
-      this.learners.map((learner: any) => {
-        this.selectedLearners.push({ learnerId: learner.id })
+      this.classroomService.getClassroomById(classroomId).subscribe({
+        next: (res: any) => {
+          this.classroomsSelectedLearners[classroomId] = res.data.class.learners.map((learner: any) => ({ learnerId: learner.id }));
+          this.appAlertService.showAlert(`All learners for ${classroom.name} selected`, AlertType.Warning);
+          this.getLearnersGrandTotal();
+        },
+        error: (e) => console.error(e),
       });
-      this.appAlertService.showAlert('All learners selected', AlertType.Warning);
     } else {
-      this.selectedLearners = [];
-      this.appAlertService.showAlert('All learners removed', AlertType.Warning);
+      this.classroomsSelectedLearners[classroomId] = [];
+      this.appAlertService.showAlert(`All learners for ${classroom.name} removed`, AlertType.Warning);
+      this.getLearnersGrandTotal();
     }
-    this.grandTotal = this.planAmount * this.selectedLearners.length;
   }
 
+  getLearnersGrandTotal() {
+    this.totalSelectedLearners = Object.values(this.classroomsSelectedLearners)
+    .reduce((sum: any, learners: any) => sum + learners.length, 0);
+    this.grandTotal = this.planAmount * this.totalSelectedLearners;
+  }
+  
   openConfirmModal() {
     this.confirmModal = true;
     const formattedGrandTotal = new Intl.NumberFormat().format(this.grandTotal);
-    this.confirmMessage = `Are you sure you want to pay ₦${formattedGrandTotal} for ${this.selectedLearners.length} ${this.selectedLearners.length > 1 ? 'learners' : 'learner'}?`;
+    this.confirmMessage = `Are you sure you want to pay ₦${formattedGrandTotal} for ${this.totalSelectedLearners} ${this.totalSelectedLearners > 1 ? 'learners' : 'learner'}?`;
   }
 
   makePayment() {
     this.loading = true;
     let payload = {
-      items: this.selectedLearners.map((learner: any) => ({
-        user_id: learner.learnerId,
-        order_type: 'sub',
-        slug: 'standard-plan'
-      }))
-    }
+      items: Object.values(this.classroomsSelectedLearners)
+        .reduce((accumulator: any, learners: any) => {
+          return accumulator.concat(
+            learners.map((learner: any) => ({
+              user_id: learner.learnerId,
+              order_type: 'sub',
+              slug: 'standard-plan'
+            }))
+          );
+        }, [])
+    };    
 
     this.orderService.addOrder(payload).subscribe({
       next: (res: any) => {
