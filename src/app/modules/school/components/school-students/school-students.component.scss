@@ -6,24 +6,53 @@ section:not(:last-child) {
 }
 
 .grouping {
-  // margin-top: -$m-3; // Reduce the gap btw the Section title and this container
-  // margin-bottom: $m-3;
   justify-content: space-between;
   gap: $m-2;
-  // Sort and Filter
+  @media only screen and (max-width: 556px) {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
   .s-f {
-    position: relative;
-    .title {
-      color: $primary20;
-      margin-right: 0.2rem;
-    }
-    .dropdown-btn {
-      i {
-        font-size: 18px;
+    gap: $m-2;
+    flex-wrap: wrap;
+    .filter-field {
+      .title {
+        color: $primary20;
+        margin-right: 0.2rem;
+      }
+      &-select {
+        border: none;
+        outline: none;
+        background-color: transparent;
       }
     }
-    .s-f-select {
-      cursor: pointer;
+    .search-field {
+      padding: 0 $m-1;
+      background: $white-color;
+      border-radius: $border-radius1;
+      border: 2px solid $grey100;
+      gap: $m-1;
+      transition: all 0.2s ease-in;
+      &:hover { 
+        border-color: $primary80;
+      }
+      .search-icon {
+        width: 20px;
+        height: 20px;
+      }
+      input {
+        width: 100%;
+        padding: $m-1 0;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        font-size: 16px;
+        font-weight: 500;
+        color: rgba(45, 43, 109, 0.6);
+        &::placeholder {
+          color: rgba(45, 43, 109, 0.6);
+        }
+      }
     }
   }
   .right {

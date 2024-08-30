@@ -34,7 +34,7 @@
                   [title]="learners.length === selectedLearners.length ? 'Deselect all learners' : 'Select all learners'"
                   [checked]="learners.length === selectedLearners.length"
                   class="clickable"
-                  (change)="selectAllLearner($event)"
+                  (change)="toggleSelectAllLearner($event)"
                 >
                 {{ selectedLearners.length + '/' + learners.length }}
               </div>

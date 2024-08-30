@@ -59,22 +59,22 @@ const routes: Routes = [
           description: 'Description Meta Tag Content',
         },
       },
-      {
-        path: 'payment',
-        loadChildren: () => import('../../modules/payment/payment.module').then((m) => m.PaymentModule),
-        data: {
-          title: 'Payment',
-          description: 'Description Meta Tag Content',
-        },
-      },
       // {
       //   path: 'payment',
-      //   component: SchoolPaymentComponent,
+      //   loadChildren: () => import('../../modules/payment/payment.module').then((m) => m.PaymentModule),
       //   data: {
       //     title: 'Payment',
       //     description: 'Description Meta Tag Content',
       //   },
       // },
+      {
+        path: 'payment/cart',
+        component: SchoolPaymentComponent,
+        data: {
+          title: 'Payment',
+          description: 'Description Meta Tag Content',
+        },
+      },
       { path: '', redirectTo: '/school', pathMatch: 'full' },
     ],
   },

@@ -9,6 +9,7 @@ export class SchoolDisplayStudentsComponent implements OnInit {
   @Input() students: any;
   @Input() user: any;
   @Output() reloadData: EventEmitter<any> = new EventEmitter();
+  @Output() getFilterValues: EventEmitter<any> = new EventEmitter();
   confirmModal: boolean = false;
   confirmUrl: string;
   confirmMessage: string;

@@ -87,7 +87,7 @@ export class SchoolPaymentComponent implements OnInit {
     this.grandTotal = this.planAmount * this.selectedLearners.length;
   }
 
-  selectAllLearner(event: any) {
+  toggleSelectAllLearner(event: any) {
     if (event.target.checked) {
       this.selectedLearners = [];
       this.learners.map((learner: any) => {
