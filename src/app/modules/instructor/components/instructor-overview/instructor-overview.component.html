@@ -20,88 +20,35 @@
         </div>
       </div>
 
-      <div class="lo">
-        <div class="ds-sect-header">
-          <h5>Classsroom Overview</h5>
+      <div class="ap-sch">
+        <div class="ap-sch_title">
+          <h5>Learner's Activities</h5>
         </div>
-        <div class="chart-container">
-          <div class="chart" id="chart_div" style="width: 100%;"></div>
+        <div class="ap-sch_body">
+          <div style="overflow-x: auto">
+            <table>
+              <tr class="table-header">
+                <th>Name</th>
+                <th>Activity</th>
+                <th>Date</th>
+              </tr>
+              <tr class="table-body" *ngFor="let i of learnersActivities">
+                <td>{{ i.name }}</td>
+                <td>{{ i.activityType }}</td>
+                <td>{{ i.activityData.timestamp | date: "medium" }}</td>
+              </tr>
+  
+              <tr>
+                <td colspan="3" style="text-align: center">No data available</td>
+              </tr>
+            </table>
+          </div>
         </div>
       </div>
     </main>
-  
-    <aside class="ds-grid">
-      <div class="complete-profile">
-        <div class="ds-sect-header dis-flex">
-          <h5 class="text-secondary-color">Complete your profile</h5>
-          <i class="bx bx-chevron-right"></i>
-        </div>
-        <div class="progress-bar">
-          <div class="progressbarWrapper">
-            <span id="bar"></span>
-          </div>
-        </div>
-        <small>20% complete</small>
-  
-        <!-- <div class="someElement" data-tooltip="This is a tooltip">Hover Me</div> -->
-      </div>
-      <div class="points">
-        <img
-          src="../../../../../assets/img/children-avatar/child-avatar-1.png"
-          alt=""
-          class="points_profile-img"
-        />
-        <ul class="points_list">
-          <li>
-            <div>
-              <img
-                src="../../../../../assets/img/learner/icomoon-free_fire.svg"
-                alt=""
-              />
-              <p class="body-1-bold">Streak</p>
-            </div>
-            <h2 class="value">0</h2>
-          </li>
-          <li>
-            <div>
-              <img
-                src="../../../../../assets/img/learner/subway_coin.svg"
-                alt=""
-              />
-              <p class="body-1-bold">DuPoints</p>
-            </div>
-            <h2 class="value">0XP</h2>
-          </li>
-        </ul>
-      </div>
-      <!-- Learning quadrant(lq) -->
-      <div class="lq">
-        <div class="ds-sect-header dis-flex">
-          <h5>Learning Quadrant</h5>
-          <p class="caption-regular text-primary-color clickable">See Details</p>
-        </div>
-        <div class="chart-container">
-          <!-- <img
-            src="../../../../../assets/img/learner/learning-quadrant-chart.svg"
-            alt=""
-          /> -->
-          <div class="chart" id="donutchart" style="width: 100%;"></div>
-        </div>
-      </div>
-      <!-- Leaderboard(lb) -->
-      <div class="lb">
-        <div class="ds-sect-header dis-flex">
-          <h5>Leaderboard</h5>
-        </div>
-        <div class="lb_body">
-          <img src="../../../../../assets/img/learner/coming-soon.svg" alt="" />
-          <h3 class="text-primary-color">Coming soon</h3>
-        </div>
-      </div>
-    </aside>
   </section>
   
   <div class="chart-container">
-    <div class="chart" id="chart_div" ></div>
+    <div class="chart" id="chart_div"></div>
   </div>
   

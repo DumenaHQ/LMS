@@ -59,8 +59,16 @@ const routes: Routes = [
           description: 'Description Meta Tag Content',
         },
       },
+      // {
+      //   path: 'payment',
+      //   loadChildren: () => import('../../modules/payment/payment.module').then((m) => m.PaymentModule),
+      //   data: {
+      //     title: 'Payment',
+      //     description: 'Description Meta Tag Content',
+      //   },
+      // },
       {
-        path: 'payment',
+        path: 'payment/cart',
         component: SchoolPaymentComponent,
         data: {
           title: 'Payment',

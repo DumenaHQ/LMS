@@ -1,0 +1,146 @@
+<section class="ds-head dis-flex">
+    <h2 class="ds-head_title clickable" routerLink="/parent/payment">Payments</h2>
+    <i class="bx bx-chevron-right icon"></i>
+    <p>Cart</p>
+  </section>
+  
+  <section class="cart">
+    <h5>Items in your Cart</h5>
+    <div class="cart_body">
+      <div class="cart_body_list">
+        <div class="tab dis-flex">
+          <p class="tab_item active clickable" [ngClass]="{ active: activeTab === 'active' }"
+          (click)="setActiveTab('active')">Active</p>
+          <p class="tab_item clickable" [ngClass]="{ active: activeTab === 'all' }"
+          (click)="setActiveTab('all')">All</p>
+        </div>
+  
+        <!-- Active Orders -->
+        <div style="overflow-x: auto; padding-right: 1.5rem" *ngIf="activeTab === 'active'">
+          <table>
+            <tr class="table-header">
+              <th>No of Learner(s)</th>
+              <th>Amount(NGN)</th>
+              <th>Status</th>
+            </tr>
+            <ng-container  *ngIf="activePlans; else empty">
+              <tr
+                class="table-body"
+              >
+                <td>{{ activePlans.items.length }}</td>
+                <td>{{ activePlans.total_amount | number }}</td>
+                <td class="status">
+                  <span *ngIf="activePlans.status === 'active'" class="active">{{ activePlans.status }}</span>
+                  <span *ngIf="activePlans.status === 'pending'" class="pending">{{ activePlans.status }}</span>
+                </td>
+              </tr>
+            </ng-container>
+            <ng-template #empty>
+              <div style="text-align: center">
+                <p>Empty Cart!</p>
+              </div>
+            </ng-template>
+          </table>
+        </div>
+  
+        <!-- All Orders -->
+        <div style="overflow-x: auto; padding-right: 1.5rem" *ngIf="activeTab === 'all'">
+          <table>
+            <tr class="table-header">
+              <th>No of Learner(s)</th>
+              <th>Amount(NGN)</th>
+              <th>Status</th>
+            </tr>
+            <ng-container *ngIf="allPlans.length > 0; else empty">
+              <tr
+                class="table-body"
+                *ngFor="let plan of allPlans; let i = index"
+              >
+                <td>{{ plan.items.length }}</td>
+                <td>{{ plan.total_amount | number }}</td>
+                <td class="status">
+                  <span *ngIf="plan.status === 'active'" class="active">{{ plan.status }}</span>
+                  <span *ngIf="plan.status === 'pending'" class="pending">{{ plan.status }}</span>
+                </td>
+                <!-- <td>
+                  <i
+                    class="bx bx-x clickable"
+                    style="color: #e92c2c; font-size: 20px"
+                    title="Remove"
+                    (click)="removeItemFromLocalStorage(plan)"
+                  ></i>
+                </td> -->
+              </tr>
+            </ng-container>
+            <ng-template #empty>
+              <div style="text-align: center">
+                <p>Empty Cart!</p>
+              </div>
+            </ng-template>
+          </table>
+        </div>
+      </div>
+  
+      <div class="cart_body_checkout">
+        <div class="cart_body_checkout_header">
+            <p class="body-1-bold" style="margin-bottom: 2rem;">Payment details</p>
+            <div class="sub-plan dis-flex" *ngIf="user.role == 'school'">
+              <p class="body-2-regular">Subscription plan: <span class="sub-plan_value">Basic</span></p>
+              <p class="body-2-bold">₦15,000/per learner</p>
+            </div>
+            <div>
+              <div class="sub-total dis-flex">
+                <p class="body-2-regular">Sub total</p>
+                <p class="body-2-regular">₦{{ grandTotal | number }}.00</p>
+              </div>
+            </div>
+            <form>
+                <div class="form-field">
+                <label for="voucher" (click)="isVoucher = !isVoucher"
+                    >Apply a voucher?
+                    <strong class="text-primary-color clickable"
+                    >Click here!</strong
+                    ></label
+                >
+                <div class="input-voucher" [class.show]="isVoucher">
+                    <div class="input-field">
+                    <input
+                        type="text"
+                        id="voucher"
+                        name="voucher"
+                        placeholder="Enter code here"
+                    />
+                    </div>
+                    <div class="form-btn">
+                    <button class="btn prim_btn">Apply</button>
+                    </div>
+                </div>
+                </div>
+            </form>
+        </div>
+        <div class="cart_body_checkout_footer">
+            <div class="grand-total dis-flex">
+                <p class="body-1-bold">Total</p>
+                <p class="body-1-bold">N{{ grandTotal | number }}.00</p>
+            </div>
+            <button
+                class="btn prim_btn clickable"
+                (click)="openConfirmModal()"
+                [disabled]="loading"
+            >
+                <span *ngIf="!loading">Proceed to Payment</span>
+                <span *ngIf="loading">Processing...</span>
+            </button>
+        </div>
+      </div>
+    </div>
+</section>
+
+<!-- Delete confirmation -->
+<app-confirm-delete 
+    *ngIf="confirmModal" 
+    (confrimModal)="closeConfirmModal()" 
+    [confirmMessage]="confirmMessage"
+    (confrimDone)="payWithPaystack()"
+    (reloadData)="getActiveOrder()"
+></app-confirm-delete>

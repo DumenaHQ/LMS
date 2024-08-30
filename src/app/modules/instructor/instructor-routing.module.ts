@@ -33,7 +33,7 @@ const routes: Routes = [
           description: 'Description Meta Tag Content',
         }
       },
-      { path: '', redirectTo: '/learner', pathMatch: 'full' },
+      { path: '', redirectTo: '/instructor', pathMatch: 'full' },
     ]
   }
 ];

@@ -97,6 +97,14 @@ export class ProgramsService {
       );
   }
 
+  subscribeLearnerToProgram(data: any, programId: any) {
+    return this.http.post(
+      `${this.baseUrl}programs/${programId}/subscribe`,
+      data,
+      this.getHttpOptions()
+      );
+  }
+
   editProgram(formData: FormData, programId: any): Promise<Response> {
     const headers = new Headers();
     headers.append('Authorization', 'bearer ' + localStorage.getItem('token'));

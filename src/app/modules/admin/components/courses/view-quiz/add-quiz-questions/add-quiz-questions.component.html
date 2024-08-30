@@ -51,13 +51,14 @@
                         [class.checked]="isCorrectAnswer(i, getAlphabetLabel(j))"
                       >
                         <input [formControlName]="getOptionLabel(option)" placeholder="Enter option text" />
-                        <span 
+                        <label 
+                          [for]="'correctAnswer' + '-' + i + '-' + j"
                           class="clickable correct-check dis-flex" 
                           (click)="setCorrectAnswer(i, getAlphabetLabel(j))" 
                           title="Click to set as correct answer"
                         >
-                          <i class='bx bx-check icon'></i>
-                        </span>
+                          <input type="radio" name="correctAnswer" [id]="'correctAnswer' + '-' + i + '-' + j">
+                        </label>
                         <span 
                           class="clickable remove-option dis-flex" 
                           (click)="removeOption(questionGroup, j)"

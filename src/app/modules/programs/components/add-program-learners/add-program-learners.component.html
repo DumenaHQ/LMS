@@ -43,16 +43,23 @@
                   <img
                     src="../../../../../../assets/img/svg/Search.svg"
                     alt="image"
+                    class="search-icon clickable"
+                    (click)="handleFilterValues()"
                   />
-                  <input type="text" placeholder="Search by Name" name="search" [(ngModel)]="studentName"
-                  (input)="search()" />
+                  <input 
+                    type="text" 
+                    placeholder="Search..." 
+                    name="search" 
+                    [(ngModel)]="filterValues.search" 
+                    (change)="handleFilterValues()" 
+                  />
                 </div>
   
                 <div class="grouping dis-flex">
                   <div class="filter s-f">
                     <div class="captions-regular dis-flex">
                       <span class="title">Filter:</span>
-                      <select name="grade" (change)="getAllStudents($event)" class="s-f-select grade-select" style="border: none; outline: none; background-color: transparent;">
+                      <select name="grade" [(ngModel)]="filterValues.grade" (change)="handleFilterValues()" class="s-f-select grade-select" style="border: none; outline: none; background-color: transparent;">
                         <option value="">All Grades</option>
                         <option [value]="grade.id" *ngFor="let grade of grades">{{ grade.name }}</option>
                       </select>
@@ -67,16 +74,33 @@
                     <th>Student name</th>
                     <th>Username</th>
                     <th>Grade</th>
-                    <th class="dis-flex actions">
-                      <!-- Mark all <input type="checkbox" name="" id="" /> -->
+                    <th class="actions">
+                      <div class="dis-flex" style="gap: 1rem;">
+                        <input 
+                          type="checkbox" 
+                          name="all learners" 
+                          id="all learners"
+                          [title]="learners.length === selectedLearners.length ? 'Deselect all learners' : 'Select all learners'"
+                          [checked]="learners.length === selectedLearners.length"
+                          class="clickable"
+                          (change)="toggleSelectAllLearner($event)"
+                        >
+                        {{ selectedLearners.length + '/' + learners.length }}
+                      </div>
                     </th>
                   </tr>
-                  <tr class="table-body" *ngFor="let student of learners">
-                    <td>{{ student.fullname }}</td>
-                    <td>{{ student.username }}</td>
-                    <td>{{ student.grade }}</td>
+                  <tr class="table-body" *ngFor="let learner of learners">
+                    <td>{{ learner.fullname }}</td>
+                    <td>{{ learner.username }}</td>
+                    <td>{{ learner.grade }}</td>
                     <td>
-                        <input type="checkbox" name="student" [id]="student.id" (change)="selectStudent($event, student)" />
+                      <input 
+                        type="checkbox" 
+                        name="learner" 
+                        [id]="learner.id" 
+                        [checked]="isLearnerSelected(learner)"
+                        (change)="selectLearner($event, learner)" 
+                        />
                     </td>
                   </tr>
                 </table>

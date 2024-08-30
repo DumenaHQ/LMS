@@ -17,6 +17,7 @@ export class SchoolOverviewComponent implements OnInit {
   public greeting: string = ''
   classrooms: any;
   teachers: any;
+  learnersActivities: any;
 
   constructor(
     private authService: AuthService,
@@ -32,7 +33,7 @@ export class SchoolOverviewComponent implements OnInit {
     this.getSchoolLearners();
     this.getSchoolClassrooms();
     this.getSchoolTeachers();
-    this.getUsersActivities();
+    this.getLearnersActivities();
 
     // Load the Visualization API and the corechart package.
     google.charts.load('current', {'packages':['corechart']});
@@ -66,9 +67,10 @@ export class SchoolOverviewComponent implements OnInit {
     });
   }
 
-  getUsersActivities() {
-    this.schoolService.getUserActivities().subscribe({
+  getLearnersActivities() {
+    this.schoolService.getSchoolLearnersActivities().subscribe({
       next: (res: any) => {
+        this.learnersActivities = res.data;
         console.log(res);        
       },
       error: (e) => console.error(e),

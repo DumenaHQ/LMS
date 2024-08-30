@@ -53,9 +53,14 @@
  // Courses Display List
  .courses_dislist {
   width: 100%;
-  &_password {
+  &_header {
     gap: $m-1;
+    justify-content: space-between;
+    flex-wrap: wrap;
     margin-bottom: $m-2;
+    .default-password {
+      gap: $m-1;
+    }
   }
   table {
     tr {

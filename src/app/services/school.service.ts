@@ -18,18 +18,21 @@ export class SchoolService {
     ) {}
 
   // Get All school learners
-  getSchoolLearners(userId: string, grade: any) {
-    if(grade === null || grade === undefined) {
-      return this.http.get(
-        `${this.baseUrl}schools/${userId}/learners`,
-        this.getHttpOptions('application/json')
-      );
-    } else {
-      return this.http.get(
-        `${this.baseUrl}schools/${userId}/learners?grade=${grade}`,
-        this.getHttpOptions('application/json')
-      );
+  getSchoolLearners(userId: string, params: any) {
+    let url = `${this.baseUrl}schools/${userId}/learners`;
+    const queryParams: string[] = [];
+    
+    if (params.grade) {
+      queryParams.push(`grade=${encodeURIComponent(params.grade)}`);
     }
+    if (params.search) {
+      queryParams.push(`search=${encodeURIComponent(params.search)}`);
+    }
+    if (queryParams.length) {
+      url += `?${queryParams.join('&')}`;
+    }
+
+    return this.http.get(url, this.getHttpOptions('application/json'));
   }
 
   // Get download learners list
@@ -82,6 +85,13 @@ export class SchoolService {
   getUserActivities() {
     return this.http.get(
       `${this.baseUrl}activites`,
+      this.getHttpOptions('application/json')
+    );
+  }
+
+  getSchoolLearnersActivities() {
+    return this.http.get(
+      `${this.baseUrl}activites/school-learners`,
       this.getHttpOptions('application/json')
     );
   }
