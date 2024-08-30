@@ -46,7 +46,7 @@ export class SchoolComponent implements OnInit {
     },
     {
       name: 'Payment',
-      link: '/school/payment',
+      link: '/school/payment/cart',
       icon: 'assets/img/svg/wallet.svg',
       subLinks: [],
     },
