@@ -30,7 +30,7 @@
           <div class="form-field col-2" [ngClass]="{
               'is-invalid': formGroup.controls.fullname.errors && formGroup.controls.fullname.touched
             }">
-            <label for="fullname">Full Name</label>
+            <label for="fullname">Full Name <strong class="label-required">*</strong></label>
             <div class="input-field">
               <input type="text" id="fullname" name="fullname" formControlName="fullname" />
               <i class="bx bx-error-circle icon info-icon"></i>
@@ -41,6 +41,22 @@
               <p class="body-3-regular error-msg">{{ getErrorMessage('fullname', 'Fullname') }}</p>
             </div>
           </div>
+
+          <div class="form-field col-2" [ngClass]="{
+              'is-invalid': formGroup.controls.email.errors && formGroup.controls.email.touched
+            }">
+            <label for="email">Email</label>
+            <div class="input-field">
+              <input type="text" id="email" name="email" formControlName="email" />
+              <i class="bx bx-error-circle icon info-icon"></i>
+            </div>
+
+            <!-- Error -->
+            <div *ngIf="formGroup.controls.email.errors && formGroup.controls.email.touched">
+              <p class="body-3-regular error-msg">{{ getErrorMessage('email', 'Email') }}</p>
+            </div>
+          </div>
+
           <div
             class="form-field" [ngClass]="{
               'is-invalid': formGroup.controls.parent_email.errors && formGroup.controls.parent_email.touched
@@ -62,7 +78,7 @@
           <div class="form-field" [ngClass]="{
               'is-invalid': formGroup.controls.grade.errors && formGroup.controls.grade.touched
             }">
-            <label for="grade">Grade</label>
+            <label for="grade">Grade <strong class="label-required">*</strong></label>
             <div class="input-field">
               <input type="text" id="grade" name="grade" formControlName="grade" />
               <i class="bx bx-error-circle icon info-icon"></i>

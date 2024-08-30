@@ -42,6 +42,7 @@ export class SchoolEnrollLearnersComponent implements OnInit {
   initForm() {
     this.formGroup = this.formBuilder.group({
       fullname: ['', Validators.required],
+      email: ['', Validators.email],
       parent_email: ['', [Validators.email]],
       grade: ['', Validators.required],
     });
@@ -58,6 +59,8 @@ export class SchoolEnrollLearnersComponent implements OnInit {
     let payload = {
       learners: uploadType == 'single' ? [this.formGroup.value] : this.learnersList,
     };
+
+    this.loading = false;
 
     this.authService
       .enrollLearner(payload, `schools/${this.user.id}/learners`)
@@ -106,6 +109,7 @@ export class SchoolEnrollLearnersComponent implements OnInit {
       // let newLearners = learners.shift();
       this.learnersList = learners.map((learner: any) => ({
         fullname: learner['Student Name'],
+        email: learner['Student Email'],
         parent_email: learner['Parent Email'],
         grade: learner['Class/Grade'],
       }));
