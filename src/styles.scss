@@ -1,5 +1,6 @@
 @import 'assets/css/variables.scss';
 @import 'assets/css/mixins.scss';
+@import 'assets/css/grid-cards/grid-cards-1.scss';
 
 *,
 *::before,
@@ -48,6 +49,9 @@ textarea::placeholder {
   font-family: 'Lato', sans-serif;
 }
 .form_error {
+  color: $error80;
+}
+.label-required {
   color: $error80;
 }
 

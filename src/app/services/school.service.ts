@@ -22,10 +22,10 @@ export class SchoolService {
     let url = `${this.baseUrl}schools/${userId}/learners`;
     const queryParams: string[] = [];
     
-    if (params.grade) {
+    if (params?.grade) {
       queryParams.push(`grade=${encodeURIComponent(params.grade)}`);
     }
-    if (params.search) {
+    if (params?.search) {
       queryParams.push(`search=${encodeURIComponent(params.search)}`);
     }
     if (queryParams.length) {
