@@ -79,6 +79,7 @@ export class SchoolPaymentComponent implements OnInit {
   toggleSelectAllLearner(event: any, classroom: any) {
     const classroomId = classroom.id;
 
+  toggleSelectAllLearner(event: any) {
     if (event.target.checked) {
       this.classroomService.getClassroomById(classroomId).subscribe({
         next: (res: any) => {
