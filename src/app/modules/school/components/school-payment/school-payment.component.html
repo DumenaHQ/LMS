@@ -5,7 +5,25 @@
 <section class="cart">
   <div class="cart_body">
     <div class="cart_body_list" style="padding-bottom: 2rem;">
-      <h4 style="margin-bottom: 2rem; font-weight: bold;">Classrooms</h4>
+      <div class="dis-flex" style="justify-content: space-between; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem;">
+        <h4 style="font-weight: bold;">Classrooms</h4>
+
+        <!-- <div class="dis-flex" style="gap: 1rem">
+          <p>Select all Classrooms:</p>
+          <div class="dis-flex" style="gap: 0.5rem;">
+            <input 
+              type="checkbox" 
+              name="all class" 
+              id="all class"
+              class="clickable"
+            >
+            1/2
+          </div>
+        </div> -->
+        <!-- [title]="classroom.learner_count === classroomsSelectedLearners[classroom.id].length ? 'classrooms all learners' : 'Select all classrooms'"
+        [checked]="classroom.learner_count === classroomsSelectedLearners[classroom.id].length"
+        (change)="toggleSelectAllLearner($event, classroom)" -->
+      </div>
 
       <app-loader *ngIf="dataLoading"></app-loader>
 
@@ -19,14 +37,20 @@
 
                   <div class="actions">
                     <input 
+                      *ngIf="!checkboxLoading[classroom.id]"
                       type="checkbox" 
                       [name]="'class' + i" 
                       [id]="'class' + i"
                       [title]="classroom.learner_count === classroomsSelectedLearners[classroom.id].length ? 'Deselect all learners' : 'Select all learners'"
                       [checked]="classroom.learner_count === classroomsSelectedLearners[classroom.id].length"
                       class="clickable"
-                      (change)="toggleSelectAllLearner($event, classroom)"
+                      (change)="toggleSelectAllLearnerForAClass($event, classroom)"
                     >
+                    <i 
+                      *ngIf="checkboxLoading[classroom.id]"
+                      class='bx bx-loader-circle checkbox-icon-loader' 
+                      title="loading learners"
+                    ></i>
                   </div>
                 </div>
                 <div class="icons dis-flex" style="margin-bottom: 0;">
@@ -34,7 +58,7 @@
                     <img src="../../../../../assets/img/svg/profile-2user.svg" alt="image"/>
                     <p class="body-2-regular">{{ classroom.learner_count }} Learners</p>
                   </span>
-                  <span class="grey_btn clickable" (click)="openViewClassroomLearners(classroom)">View Learners</span>
+                  <button class="btn sec_btn" (click)="openViewClassroomLearners(classroom)">View Learners</button>
                 </div>
               </div>
             </div>
