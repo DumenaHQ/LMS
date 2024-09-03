@@ -1,10 +1,10 @@
 import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { ClassroomModel } from 'src/app/modules/classroom/models/classroom.model';
 import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClassroomService } from 'src/app/services/classroom.service';
 import { OrderService } from 'src/app/services/order.service';
+import { SubscriptionService } from 'src/app/services/subscription.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -28,12 +28,13 @@ export class SchoolPaymentComponent implements OnInit {
   classroom: any;
   classroomsSelectedLearners: any = {};
   totalSelectedLearners: any;
+  checkboxLoading: { [key: string]: boolean } = {};
 
   constructor(
     private classroomService: ClassroomService,
     private orderService: OrderService,
+    private subscriptionService: SubscriptionService,
     private authService: AuthService,
-    private router: Router,
     private ngZOne: NgZone,
     private changeDectetorRef: ChangeDetectorRef,
     private appAlertService: AppAlertService,
@@ -76,16 +77,17 @@ export class SchoolPaymentComponent implements OnInit {
     this.closeViewClassroomLearners();
   }
 
-  toggleSelectAllLearner(event: any, classroom: any) {
+  toggleSelectAllLearnerForAClass(event: any, classroom: any) {
     const classroomId = classroom.id;
-
-  toggleSelectAllLearner(event: any) {
+    
     if (event.target.checked) {
+      this.checkboxLoading[classroomId] = true;
       this.classroomService.getClassroomById(classroomId).subscribe({
         next: (res: any) => {
           this.classroomsSelectedLearners[classroomId] = res.data.class.learners.map((learner: any) => ({ learnerId: learner.id }));
           this.appAlertService.showAlert(`All learners for ${classroom.name} selected`, AlertType.Warning);
           this.getLearnersGrandTotal();
+          this.checkboxLoading[classroomId] = false;
         },
         error: (e) => console.error(e),
       });
@@ -109,7 +111,9 @@ export class SchoolPaymentComponent implements OnInit {
   }
 
   makePayment() {
+    this.closeConfirmModal();
     this.loading = true;
+
     let payload = {
       items: Object.values(this.classroomsSelectedLearners)
         .reduce((accumulator: any, learners: any) => {
@@ -121,8 +125,8 @@ export class SchoolPaymentComponent implements OnInit {
             }))
           );
         }, [])
-    };    
-
+    }; 
+    
     this.orderService.addOrder(payload).subscribe({
       next: (res: any) => {
         this.loading = false;
@@ -133,19 +137,39 @@ export class SchoolPaymentComponent implements OnInit {
         this.loading = false;
       },
     });
+    
+    // let payload = {
+    //   "classes": Object.entries(this.classroomsSelectedLearners).map(([class_id, learners]) => ({
+    //     class_id,
+    //     learners: (learners as any[]).map((learner: any) => learner.learnerId)
+    //   }))
+    // }; 
+
+    // // this.subscriptionService.createSchoolSubcription(payload).subscribe({
+    // //   next: (res: any) => {            
+    // //     if(res.status == true) {
+    // //       this.loading = false;
+    // //       this.payWithPaystack(res.data.access_code);
+    // //     }
+    // //   },
+    // //   error: (e) => {
+    // //     console.error(e);
+    // //     this.loading = false;
+    // //   },
+    // // });
   }
 
   // Pay with Paystack
-  payWithPaystack(reference: string, amount: number) {
+  payWithPaystack(amount: number, ref: string) {
     let url = this.baseUrl;
     let zone = this.ngZOne;
-    // @ts-ignore
-    let handler = PaystackPop.setup({
+    let handler = (<any>window).PaystackPop.setup({
       key: this.key,
       email: this.user.email,
       amount: amount * 100,
       currency: 'NGN',
-      ref: reference,
+      ref: ref,
+      // access_code: access_code,
       callback: function (response: any) {
         var reference = response.reference;
         if (response.status === 'success') {
