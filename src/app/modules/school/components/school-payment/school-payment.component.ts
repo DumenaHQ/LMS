@@ -79,8 +79,7 @@ export class SchoolPaymentComponent implements OnInit {
 
   toggleSelectAllLearnerForAClass(event: any, classroom: any) {
     const classroomId = classroom.id;
-
-  toggleSelectAllLearner(event: any) {
+    
     if (event.target.checked) {
       this.checkboxLoading[classroomId] = true;
       this.classroomService.getClassroomById(classroomId).subscribe({
