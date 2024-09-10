@@ -22,6 +22,20 @@ export class ClassroomService {
     );
   }
 
+  getClassroomLearnersByClassroomId(classroomId: string, params: any) {
+    let url = `${this.baseUrl}classes/${classroomId}/learners`;
+    const queryParams: string[] = [];
+    
+    if (params) {
+      queryParams.push(`payment_status=${encodeURIComponent(params)}`);
+    }
+    if (queryParams.length) {
+      url += `?${queryParams.join('&')}`;
+    }
+
+    return this.http.get(url, this.getHttpOptions());
+  }
+
   addClassroom(formData: FormData): Promise<any> {
     const headers = new Headers();
     headers.append('Authorization', 'bearer ' + localStorage.getItem('token'));

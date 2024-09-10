@@ -39,7 +39,7 @@ export class ParentSignupComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       resident_state: ['', [Validators.required]],
       phone: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern(/^\d+$/)]],
-      password: ['', [Validators.required, Validators.minLength(6), this.formErrorService.alphanumericSymbolPasswordValidator()]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
