@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { QuizService } from 'src/app/services/quiz.service';
 
 @Component({
@@ -17,15 +18,18 @@ export class DisplayCourseQuizComponent implements OnInit {
   responses: { question_id: string, selected_ans: string }[] = [];
   isSubmitQuiz: boolean = false;
   loading: boolean = false;
+  user: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private quizzesService: QuizService,
     private appAlertService: AppAlertService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
+    this.user = this.authService.getUser().user;
     this.currentCourseParams = this.activatedRoute.snapshot.params;
     this.getQuizByQuizId(this.currentCourseParams.quizId);
   }
@@ -52,21 +56,39 @@ export class DisplayCourseQuizComponent implements OnInit {
     this.currentQuestionIndex--;
   }
 
-  selectAnswer(questionId: string, selectedAnswer: string) {
-    // Check if the response for this question already exists
-    const index = this.responses.findIndex(response => response.question_id === questionId);
-
-    if (index !== -1) {
-      // If the response already exists and it's the same as the selected answer, remove it
-      if (this.responses[index].selected_ans === selectedAnswer) {
-        this.responses.splice(index, 1);
-      } else {
-        // If the response exists but it's a different answer, update the selected answer
-        this.responses[index].selected_ans = selectedAnswer;
+  getOptions(question: any): { label: string, value: string }[] {
+    if (!question) {
+      return [];
+    }
+    const options: { label: string; value: any; }[] = [];
+    const optionLabels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+    optionLabels.forEach(label => {
+      const optionKey = `opt${label}`;
+      if (question[optionKey]) {
+        options.push({ label, value: question[optionKey] });
       }
-    } else {
-      // If the response doesn't exist, add a new response
-      this.responses.push({ question_id: questionId, selected_ans: selectedAnswer });
+    });
+  
+    return options;
+  }
+
+  selectAnswer(questionId: string, selectedAnswer: string) {
+    if(this.user.role === 'learner') {
+      // Check if the response for this question already exists
+      const index = this.responses.findIndex(response => response.question_id === questionId);
+  
+      if (index !== -1) {
+        // If the response already exists and it's the same as the selected answer, remove it
+        if (this.responses[index].selected_ans === selectedAnswer) {
+          this.responses.splice(index, 1);
+        } else {
+          // If the response exists but it's a different answer, update the selected answer
+          this.responses[index].selected_ans = selectedAnswer;
+        }
+      } else {
+        // If the response doesn't exist, add a new response
+        this.responses.push({ question_id: questionId, selected_ans: selectedAnswer });
+      }
     }
   }
 

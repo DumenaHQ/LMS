@@ -23,14 +23,15 @@ export class PaymentClassroomLearnersComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getClassroomById();
+    this.getClassroomLearners();
   }
 
-  getClassroomById() {
+  getClassroomLearners() {
     this.dataLoading = true;
-    this.classroomService.getClassroomById(this.classroom.id).subscribe({
+    let paymentStatus = 'unpaid';
+    this.classroomService.getClassroomLearnersByClassroomId(this.classroom.id, paymentStatus).subscribe({
       next: (res: any) => {
-        this.learners = res.data.class.learners;
+        this.learners = res.data.learners;
       },
       error: (e) => console.error(e),
       complete: () => {
