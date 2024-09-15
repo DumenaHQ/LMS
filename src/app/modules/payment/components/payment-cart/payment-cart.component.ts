@@ -14,7 +14,6 @@ export class PaymentCartComponent implements OnInit {
 
   activeTab: Tabs = 'active';
   baseUrl: string = environment.baseUrl;
-  key = environment.paystackKey;
   user: any;
   grandTotal: number = 0;
   isVoucher: boolean = false;
@@ -74,41 +73,41 @@ export class PaymentCartComponent implements OnInit {
     let url = this.baseUrl;
     let zone = this.ngZOne;
     // @ts-ignore
-    let handler = PaystackPop.setup({
-      key: this.key,
-      email: this.user.email,
-      amount: this.grandTotal * 100,
-      currency: 'NGN',
-      ref: this.reference,
-      callback: function (response: any) {
-        var reference = response.reference;
-        if (response.status === 'success') {
-          fetch(url + 'payments/verify', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `bearer ${localStorage.getItem('token')}`,
-            },
-            body: JSON.stringify({ reference }),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              console.log({ data });
-              if (data.status == true) {
-                zone.run(() => {
-                  this.getActiveOrder();
-                  this.closeConfirmModal();
-                });
-              }
-            });
-        }
-      },
-      onClose: () => {
-        this.appAlertService.showAlert('Transaction was not completed', AlertType.Error);
-        this.changeDectetorRef.detectChanges();
-      },
-    });
-    handler.openIframe();
+    // let handler = PaystackPop.setup({
+    //   key: this.key,
+    //   email: this.user.email,
+    //   amount: this.grandTotal * 100,
+    //   currency: 'NGN',
+    //   ref: this.reference,
+    //   callback: function (response: any) {
+    //     var reference = response.reference;
+    //     if (response.status === 'success') {
+    //       fetch(url + 'payments/verify', {
+    //         method: 'POST',
+    //         headers: {
+    //           'Content-Type': 'application/json',
+    //           Authorization: `bearer ${localStorage.getItem('token')}`,
+    //         },
+    //         body: JSON.stringify({ reference }),
+    //       })
+    //         .then((res) => res.json())
+    //         .then((data) => {
+    //           console.log({ data });
+    //           if (data.status == true) {
+    //             zone.run(() => {
+    //               this.getActiveOrder();
+    //               this.closeConfirmModal();
+    //             });
+    //           }
+    //         });
+    //     }
+    //   },
+    //   onClose: () => {
+    //     this.appAlertService.showAlert('Transaction was not completed', AlertType.Error);
+    //     this.changeDectetorRef.detectChanges();
+    //   },
+    // });
+    // handler.openIframe();
   }
 
   // Close Confirm Delete Modal

@@ -1,11 +1,10 @@
 import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
-import { ClassroomModel } from 'src/app/modules/classroom/models/classroom.model';
 import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClassroomService } from 'src/app/services/classroom.service';
-import { OrderService } from 'src/app/services/order.service';
 import { SubscriptionService } from 'src/app/services/subscription.service';
 import { environment } from 'src/environments/environment';
+import { PaymentService } from 'src/app/services/payment.service';
 
 @Component({
   selector: 'app-school-payment',
@@ -14,30 +13,28 @@ import { environment } from 'src/environments/environment';
 })
 export class SchoolPaymentComponent implements OnInit {
   baseUrl: string = environment.baseUrl;
-  key = environment.paystackKey;
   user: any;
   grandTotal: number = 0;
   planAmount: number = 15000;
   isVoucher: boolean = false;
-  classrooms?: any[];
+  classrooms: any;
   dataLoading: boolean;
   confirmModal: boolean = false;
   confirmMessage: string;
   loading: boolean;
-  isClassroomLearners: boolean = false;
+  viewClassroomLearners: boolean = false;
   classroom: any;
-  classroomsSelectedLearners: any = {};
+  classroomsSelectedLearners: any;
   totalSelectedLearners: any;
-  checkboxLoading: { [key: string]: boolean } = {};
 
   constructor(
     private classroomService: ClassroomService,
-    private orderService: OrderService,
     private subscriptionService: SubscriptionService,
     private authService: AuthService,
     private ngZOne: NgZone,
     private changeDectetorRef: ChangeDetectorRef,
     private appAlertService: AppAlertService,
+    private paymentService: PaymentService
   ) {}
 
   ngOnInit(): void {
@@ -49,10 +46,9 @@ export class SchoolPaymentComponent implements OnInit {
     this.dataLoading = true;
     this.classroomService.getClassrooms().subscribe({
       next: (res: any) => {
-        this.classrooms = (res.data.classes || []);
-        this.classrooms?.forEach((classroom: any) => {
-          this.classroomsSelectedLearners[classroom.id] = [];
-        });        
+        this.classrooms = res.data.classes; 
+        this.createSelectAllClassrooms();
+        this.getLearnersGrandTotal();
       },
       error: (e) => console.error(e),
       complete: () => {
@@ -63,44 +59,97 @@ export class SchoolPaymentComponent implements OnInit {
 
   openViewClassroomLearners(classroom: any) {
     this.classroom = classroom;
-    this.isClassroomLearners = true;
+    this.viewClassroomLearners = true;
   }
   
   closeViewClassroomLearners() {
-    this.isClassroomLearners = false;
+    this.viewClassroomLearners = false;
   }
   
   getSelectedClassroomLearners(event: any) {
     this.classroomsSelectedLearners = event;  
-  
     this.getLearnersGrandTotal();
     this.closeViewClassroomLearners();
   }
 
-  toggleSelectAllLearnerForAClass(event: any, classroom: any) {
-    const classroomId = classroom.id;
+  isClassroomSelected(classroom: any): boolean {
+    return this.classroomsSelectedLearners?.classes.some((selected: any) => selected.class_id === classroom.id);
+  }
 
+  toggleSelectClass(event: any, classroom: any) {
     if (event.target.checked) {
-      this.checkboxLoading[classroomId] = true;
-      this.classroomService.getClassroomById(classroomId).subscribe({
-        next: (res: any) => {
-          this.classroomsSelectedLearners[classroomId] = res.data.class.learners.map((learner: any) => ({ learnerId: learner.id }));
-          this.appAlertService.showAlert(`All learners for ${classroom.name} selected`, AlertType.Warning);
-          this.getLearnersGrandTotal();
-          this.checkboxLoading[classroomId] = false;
-        },
-        error: (e) => console.error(e),
-      });
+      this.classroomsSelectedLearners?.classes.push(this.createClassObject(classroom));
+      this.appAlertService.showAlert('Classroom selected', AlertType.Warning);
     } else {
-      this.classroomsSelectedLearners[classroomId] = [];
-      this.appAlertService.showAlert(`All learners for ${classroom.name} removed`, AlertType.Warning);
-      this.getLearnersGrandTotal();
+      this.classroomsSelectedLearners = {
+        classes: this.classroomsSelectedLearners?.classes.filter((selected: any) => selected.class_id !== classroom.id)
+      };
+      this.appAlertService.showAlert('Classroom removed', AlertType.Warning);
+    }
+    this.getLearnersGrandTotal();
+  }
+
+  toggleSelectAllClass(event: any) {
+    if (event.target.checked) {
+      this.createSelectAllClassrooms();
+      this.appAlertService.showAlert('All classrooms selected', AlertType.Warning);
+    } else {
+      this.classroomsSelectedLearners = { classes: [] };
+      this.appAlertService.showAlert('All classrooms removed', AlertType.Warning);
+    }
+    this.getLearnersGrandTotal();    
+  }
+
+  createClassObject(classroom: any) {
+    return { 
+      class_id: classroom.id,
+      allLearners: true,
+      learners: [],
+      learner_count: classroom.learner_count
     }
   }
 
+  createSelectAllClassrooms() {
+    this.classroomsSelectedLearners = {
+      classes: this.classrooms?.map((classroom: any) => (
+        this.createClassObject(classroom)
+      )),
+    }
+  }
+
+  getTotalSelectedLearnersCheck(classroom: any) {
+    let selectedLearners = `0 / ${classroom.learner_count}`;
+    this.classroomsSelectedLearners?.classes.forEach((classroomSelect: any) => {
+      if (classroomSelect.class_id === classroom?.id) {
+        if(classroomSelect.allLearners) {
+          selectedLearners = `${classroom.learner_count} / ${classroom.learner_count}`;
+        } else {
+          selectedLearners = `${classroomSelect.learners.length} / ${classroom.learner_count}`;
+        }
+      }
+    });
+    return selectedLearners;
+  }
+
+  getClassTotalAmount(classroom: any) {
+    let learnersAmount = 0;
+    this.classroomsSelectedLearners?.classes.forEach((classroomSelect: any) => {
+      if (classroomSelect.class_id === classroom?.id) {
+        if(classroomSelect.allLearners) {
+          learnersAmount = classroom.learner_count * this.planAmount;
+        } else {
+          learnersAmount = classroomSelect.learners.length * this.planAmount;
+        }
+      }      
+    });
+    return learnersAmount;
+  }
+
   getLearnersGrandTotal() {
-    this.totalSelectedLearners = Object.values(this.classroomsSelectedLearners)
-    .reduce((sum: any, learners: any) => sum + learners.length, 0);
+    // Use learner_count if allLearners is true, otherwise use learners.length
+    this.totalSelectedLearners = this.classroomsSelectedLearners.classes.reduce((total: any, classroom: any) => {
+      return total + (classroom.allLearners ? classroom.learner_count : classroom.learners.length);
+    }, 0);
     this.grandTotal = this.planAmount * this.totalSelectedLearners;
   }
   
@@ -113,92 +162,34 @@ export class SchoolPaymentComponent implements OnInit {
   makePayment() {
     this.closeConfirmModal();
     this.loading = true;
-
-    let payload = {
-      items: Object.values(this.classroomsSelectedLearners)
-        .reduce((accumulator: any, learners: any) => {
-          return accumulator.concat(
-            learners.map((learner: any) => ({
-              user_id: learner.learnerId,
-              order_type: 'sub',
-              slug: 'standard-plan'
-            }))
-          );
-        }, [])
-    }; 
     
-    this.orderService.addOrder(payload).subscribe({
-      next: (res: any) => {
-        this.loading = false;
-        this.payWithPaystack(res.data.order.reference, res.data.order.total_amount);
+    let payload = {
+      classes: this.classroomsSelectedLearners.classes.map((classroom: any) => {
+        if (classroom.allLearners) {
+          return {
+            class_id: classroom.class_id
+          };
+        } else {
+          return {
+            class_id: classroom.class_id,
+            learners: classroom.learners
+          };
+        }
+      })
+    };
+
+    this.subscriptionService.createSchoolSubcription(payload).subscribe({
+      next: (res: any) => {            
+        if(res.status == true) {
+          this.loading = false;
+          this.paymentService.payWithPaystack(res.data.access_code);
+        }
       },
       error: (e) => {
         console.error(e);
         this.loading = false;
       },
     });
-    
-    // let payload = {
-    //   "classes": Object.entries(this.classroomsSelectedLearners).map(([class_id, learners]) => ({
-    //     class_id,
-    //     learners: (learners as any[]).map((learner: any) => learner.learnerId)
-    //   }))
-    // }; 
-
-    // // this.subscriptionService.createSchoolSubcription(payload).subscribe({
-    // //   next: (res: any) => {            
-    // //     if(res.status == true) {
-    // //       this.loading = false;
-    // //       this.payWithPaystack(res.data.access_code);
-    // //     }
-    // //   },
-    // //   error: (e) => {
-    // //     console.error(e);
-    // //     this.loading = false;
-    // //   },
-    // // });
-  }
-
-  // Pay with Paystack
-  payWithPaystack(amount: number, ref: string) {
-    let url = this.baseUrl;
-    let zone = this.ngZOne;
-    let handler = (<any>window).PaystackPop.setup({
-      key: this.key,
-      email: this.user.email,
-      amount: amount * 100,
-      currency: 'NGN',
-      ref: ref,
-      // access_code: access_code,
-      callback: function (response: any) {
-        var reference = response.reference;
-        if (response.status === 'success') {
-          fetch(url + 'payments/verify', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `bearer ${localStorage.getItem('token')}`,
-            },
-            body: JSON.stringify({ reference }),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              console.log({ data });
-              if (data.status == true) {
-                zone.run(() => {
-                  this.getClassrooms();
-                  this.closeConfirmModal();
-                });
-              }
-            });
-        }
-      },
-      onClose: () => {
-        this.appAlertService.showAlert('Transaction was not completed', AlertType.Error);
-        this.changeDectetorRef.detectChanges();
-      },
-    });
-    handler.openIframe();
   }
 
   // Close Confirm Delete Modal

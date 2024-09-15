@@ -10,7 +10,6 @@ import { AuthService } from './auth.service';
 })
 export class SchoolService {
   baseUrl: string = environment.baseUrl;
-  paystackKey: string = environment.paystackKey;
 
   constructor(
     private http: HttpClient,
