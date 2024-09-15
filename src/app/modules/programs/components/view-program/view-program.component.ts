@@ -86,9 +86,9 @@ export class ViewProgramComponent implements OnInit {
     };
 
     if(this.user.role === 'school') {
-      this.adduserToProgram$ = this.programsService.addSchoolToProgram(payload, this.currentProgramId);
+      this.adduserToProgram$ = this.programsService.addSchoolToProgram(payload, this.currentProgramId.programId);
     } else {
-      this.adduserToProgram$ = this.programsService.addParentToProgram(payload, this.currentProgramId);
+      this.adduserToProgram$ = this.programsService.addParentToProgram(payload, this.currentProgramId.programId);
     }
     this.adduserToProgram$.subscribe({
       next: (res: any) => {
