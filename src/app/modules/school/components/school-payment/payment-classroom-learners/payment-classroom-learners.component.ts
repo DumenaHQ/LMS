@@ -50,19 +50,19 @@ export class PaymentClassroomLearnersComponent implements OnInit {
 
     if (classObject) {
       this.selectedClass = classObject;
-      this.learners.forEach((learner: any) => {
-        if (!this.selectedClass.learners.includes(learner.id)) {
-          this.selectedClass.learners.push(learner.id);
-        }
-        learner.selected = true;
-      });
+      if(this.selectedClass.learners.length === 0) {
+        this.learners.forEach((learner: any) => {
+          if (!this.selectedClass.learners.includes(learner.id)) {
+            this.selectedClass.learners.push(learner.id);
+          }
+        });
+      }   
     }
   }
 
   // Allow selecting/unselecting individual learners
   selectLearner(event: any, learner: any) {
-    learner.selected = event.target.checked;
-    if (learner.selected) {
+    if (event.target.checked) {
       this.addOrCreateClassObject();
       this.selectedClass.learners.push(learner.id);
       this.appAlertService.showAlert('Learner selected', AlertType.Warning);
@@ -81,12 +81,10 @@ export class PaymentClassroomLearnersComponent implements OnInit {
   // Push all learners' IDs into the `classroomsSelectedLearners.classes.learners` array
   toggleSelectAllLearner(event: any) {
     if (event.target.checked) {
-      this.learners.forEach((learner: any) => learner.selected = true);
       this.addOrCreateClassObject();
       this.selectedClass.learners = this.learners.map((learner: any) => learner.id);
       this.appAlertService.showAlert('All learners selected', AlertType.Warning);
     } else {
-      this.learners.forEach((learner: any) => learner.selected = false);
       this.removeClassObject();
       this.appAlertService.showAlert('All learners removed', AlertType.Warning);
     }

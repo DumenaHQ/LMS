@@ -1,9 +1,8 @@
-import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClassroomService } from 'src/app/services/classroom.service';
 import { SubscriptionService } from 'src/app/services/subscription.service';
-import { environment } from 'src/environments/environment';
 import { PaymentService } from 'src/app/services/payment.service';
 
 @Component({
@@ -12,7 +11,6 @@ import { PaymentService } from 'src/app/services/payment.service';
   styleUrls: ['./school-payment.component.scss'],
 })
 export class SchoolPaymentComponent implements OnInit {
-  baseUrl: string = environment.baseUrl;
   user: any;
   grandTotal: number = 0;
   planAmount: number = 15000;
@@ -31,8 +29,6 @@ export class SchoolPaymentComponent implements OnInit {
     private classroomService: ClassroomService,
     private subscriptionService: SubscriptionService,
     private authService: AuthService,
-    private ngZOne: NgZone,
-    private changeDectetorRef: ChangeDetectorRef,
     private appAlertService: AppAlertService,
     private paymentService: PaymentService
   ) {}
