@@ -1,7 +1,7 @@
 @import './variables.scss';
 @import './mixins.scss';
 
-.course-details {
+.mvp {
     @include sect-bg($border-color: transparent);
     padding: 0 0 $m-4 0;
     &_image {

@@ -21,8 +21,7 @@ export class DashboardHeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    let userData = this.authService.getUser();
-    this.user = userData.user;
+    this.user = this.authService.getUser().user;
     this.plans = this.orderService.loadCart();
   }
   

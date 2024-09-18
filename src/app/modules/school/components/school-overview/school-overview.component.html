@@ -41,32 +41,6 @@
         <div class="chart" id="chart_div" style="width: 100%;"></div>
       </div>
     </div> -->
-
-    <div class="ap-sch">
-      <div class="ap-sch_title">
-        <h5>Learner's Activities Logs</h5>
-      </div>
-      <div class="ap-sch_body">
-        <div style="overflow-x: auto">
-          <table>
-            <tr class="table-header">
-              <th>Name</th>
-              <th>Activity</th>
-              <th>Date/Time Stamp</th>
-            </tr>
-            <tr class="table-body" *ngFor="let i of learnersActivities">
-              <td>{{ i.user.fullname }}</td>
-              <td>{{ i.activity.activityType }}</td>
-              <td>{{ i.activity.createdAt | date: "medium" }}</td>
-            </tr>
-
-            <tr *ngIf="learnersActivities?.length === 0">
-              <td colspan="3" style="text-align: center">No data available</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    </div>
   </main>
   <!-- <aside class="messages">
     <div class="messages_title">

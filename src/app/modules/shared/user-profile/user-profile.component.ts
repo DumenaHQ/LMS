@@ -40,6 +40,7 @@ export class UserProfileComponent implements OnInit {
       contactName: [this.user.fullname, Validators.required],
       contactEmail: [this.user.email, Validators.required],
       phone: [this.user.phone, Validators.required],
+      nickname: [this.user.nickname],
       state: [this.user.resident_state, Validators.required],
       address: [this.user.address, Validators.required],
       grade: [this.user.grade],
@@ -52,13 +53,16 @@ export class UserProfileComponent implements OnInit {
     const { value } = this.formGroup;
 
     let payload: any = {
-      fullname: this.user.role === 'school' ? value.contactName : value.userName,
       phone: value.phone,
       resident_state: value.state,
     };
 
     if (this.user.role === 'school') {
       payload.school = value.userName;
+    }
+
+    if (this.user.role === 'learner') {
+      payload.nickname = value.nickname;
     }
 
     this.authService.updateUser(payload).subscribe({

@@ -14,6 +14,7 @@ import { ViewCourseQuizReportComponent } from './components/view-classroom/view-
 import { AddClassroomComponent } from './components/add-classroom/add-classroom.component';
 import { EditClassroomComponent } from './components/edit-classroom/edit-classroom.component';
 import { ClassroomRouterModule } from './classroom.routing.module';
+import { ClassroomLearnersActivityComponent } from './components/view-classroom/classroom-learners-activity/classroom-learners-activity.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { ClassroomRouterModule } from './classroom.routing.module';
     AddClassroomLearnerComponent,
     ViewCourseQuizReportComponent,
     AddClassroomComponent,
-    EditClassroomComponent
+    EditClassroomComponent,
+    ClassroomLearnersActivityComponent
   ],
   imports: [
     CommonModule,

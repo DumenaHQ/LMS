@@ -5,7 +5,7 @@ import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-aler
 import { ClassroomModel, Term } from '../../models/classroom.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { QueryActiveTabService } from 'src/app/services/utils/query-active-tab.service';
-type Tabs = 'courses' | 'learners' | 'discussions';
+type Tabs = 'courses' | 'learners' | 'discussions' | 'activity';
 
 @Component({
   selector: 'app-view-classroom',
