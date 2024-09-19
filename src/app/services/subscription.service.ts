@@ -21,6 +21,13 @@ export class SubscriptionService {
     );
   }
 
+  getClassSubscription() {
+    return this.http.get(
+      `${this.baseUrl}subscriptions/slug/class-sub`,
+      this.getHttpOptions('application/json') 
+    );
+  }
+
   // Get HttpOptions
   getHttpOptions(contentType: string) {
     const httpOptions = {

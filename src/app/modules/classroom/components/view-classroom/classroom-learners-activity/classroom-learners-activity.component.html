@@ -1,0 +1,18 @@
+<div class="table-wrapper">
+    <table class="">
+      <tr class="table-header">
+        <th>Name</th>
+        <th>Activity</th>
+        <th>Date/Time Stamp</th>
+      </tr>
+      <tr class="table-body" *ngFor="let i of learnersActivities">
+        <td>{{ i.user.fullname }}</td>
+        <td>{{ i.activity.activityType }}</td>
+        <td>{{ i.activity.createdAt | date: "medium" }}</td>
+      </tr>
+
+      <tr *ngIf="learnersActivities?.length === 0">
+        <td colspan="3" style="text-align: center">No data available</td>
+      </tr>
+    </table>
+</div>

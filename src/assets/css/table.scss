@@ -1,0 +1,50 @@
+@import './variables.scss';
+
+.table-wrapper {
+    overflow-x: auto;
+    table {
+        border-spacing: 0;
+        width: 100%;
+        min-width: max-content;
+        border: 1px solid $divider-color;
+        border-radius: $border-radius2 $border-radius2 0px 0px;
+        td, th {
+          padding: $m-2;
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 17px;
+          letter-spacing: 0.01em;
+          text-align: left;
+        }
+        tr {
+          &.table-header {
+            background-color: $primary80;
+            color: $white-color;
+            border-radius: $border-radius2 $border-radius2 0px 0px;
+            th:last-child {
+              border-radius: 0 $border-radius2 0px 0px;
+            }
+            th:first-child {
+              border-radius: $border-radius2 0 0px 0px;
+            }
+          }
+          &.table-body {
+            td {
+              &.status {
+                button {
+                  width: 100%;
+                  max-width: 150px;
+                  padding: 0.3rem;
+                  font-size: 14px;
+                }
+              }
+            }
+            &:not(:last-child) {
+              td {
+                border-bottom: 1px solid $divider-color;
+              }
+            }
+          }
+        } 
+    }
+}

@@ -19,12 +19,12 @@
     <form [formGroup]="formGroup">
       <div class="form-control">
         <label for="userName">{{ user.role === 'school' ? 'School Name' : 'Full Name'}}</label>
-        <div class="form-control_field" [class.data-disabled]="!isEdit">
+        <div class="form-control_field data-disabled">
           <input
             type="text"
             name="userName"
             formControlName="userName"
-            [readonly]="!isEdit"
+            readonly
           />
         </div>
       </div>
@@ -47,6 +47,17 @@
             name="grade"
             formControlName="grade"
             readonly
+          />
+        </div>
+      </div>
+      <div class="form-control" *ngIf="user.role === 'learner'">
+        <label for="grade">Nickname</label>
+        <div class="form-control_field" [class.data-disabled]="!isEdit">
+          <input
+            type="text"
+            name="nickname"
+            formControlName="nickname"
+            [readonly]="!isEdit"
           />
         </div>
       </div>

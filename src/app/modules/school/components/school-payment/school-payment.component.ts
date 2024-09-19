@@ -13,7 +13,7 @@ import { PaymentService } from 'src/app/services/payment.service';
 export class SchoolPaymentComponent implements OnInit {
   user: any;
   grandTotal: number = 0;
-  planAmount: number = 15000;
+  planAmount: number;
   isVoucher: boolean = false;
   classrooms: any;
   dataLoading: boolean;
@@ -36,6 +36,7 @@ export class SchoolPaymentComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.authService.getUser().user;
     this.getClassrooms();
+    this.getClassroomSubscription();
   }
 
   getClassrooms() {
@@ -45,6 +46,18 @@ export class SchoolPaymentComponent implements OnInit {
         this.classrooms = res.data.classes; 
         this.createSelectAllClassrooms();
         this.getLearnersGrandTotal();
+      },
+      error: (e) => console.error(e),
+      complete: () => {
+        this.dataLoading = false;
+      },
+    });
+  }
+
+  getClassroomSubscription() {
+    this.subscriptionService.getClassSubscription().subscribe({
+      next: (res: any) => {
+        this.planAmount = res.data.subscription.amount;
       },
       error: (e) => console.error(e),
       complete: () => {

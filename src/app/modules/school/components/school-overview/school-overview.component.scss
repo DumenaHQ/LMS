@@ -104,23 +104,4 @@
     @include sect-bg-title;
   }
   font-size: 14px;
-  &_body {
-    table {
-      tr {
-        td.status {
-          span {
-            padding: 0 0.3rem;
-            select {
-              border: none;
-              outline: none;
-              padding: 0.3rem 0;
-              width: 100%;
-              background-color: transparent;
-              color: inherit;
-            }
-          }
-        }
-      }
-    }
-  }
 }
