@@ -88,13 +88,6 @@ export class SchoolService {
     );
   }
 
-  getSchoolLearnersActivities() {
-    return this.http.get(
-      `${this.baseUrl}activites/school-learners`,
-      this.getHttpOptions('application/json')
-    );
-  }
-
   // Get HttpOptions
   getHttpOptions(contentType: string) {
     const httpOptions = {

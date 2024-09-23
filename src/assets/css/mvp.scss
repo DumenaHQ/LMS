@@ -1,3 +1,4 @@
+//--- Module View Page ---//
 @import './variables.scss';
 @import './mixins.scss';
 
@@ -134,14 +135,6 @@
         .table-container {
           padding: $m-4;
           width: 100%;
-          table {
-              tr {
-                  &.table-header {
-                    background: linear-gradient(0deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), #2D2B6D;
-                    color: $text-color1;
-                  }
-              }
-          }
         }
       }
     }

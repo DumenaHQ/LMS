@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ClassroomModel } from '../../../models/classroom.model';
 import { Router } from '@angular/router';
+import { ActivityService } from 'src/app/services/activity.service';
 
 @Component({
   selector: 'app-grid-display-classrooms',
@@ -18,13 +19,20 @@ export class GridDisplayClassroomsComponent implements OnInit {
   activeIndex: number | null = null;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private activityService: ActivityService
   ) {}
 
   ngOnInit(): void {}
 
   // View program
   viewClassroom(classroomId?: string, activeTab?: string) {
+    if(this.user.role === 'learner') {
+      this.activityService.recordUserActivity('entered_class').subscribe({
+        next: (res: any) => { },
+        error: (e) => console.error(e),
+      });
+    }
     this.router.navigate([`/${this.user.role}/classrooms/${classroomId}/view-classroom`], {
       queryParams: { activeTab: activeTab },
     });
