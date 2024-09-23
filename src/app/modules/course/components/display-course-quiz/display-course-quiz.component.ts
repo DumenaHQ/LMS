@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ActivityService } from 'src/app/services/activity.service';
 import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { QuizService } from 'src/app/services/quiz.service';
@@ -26,6 +27,7 @@ export class DisplayCourseQuizComponent implements OnInit {
     private appAlertService: AppAlertService,
     private router: Router,
     private authService: AuthService,
+    private activityService: ActivityService
   ) { }
 
   ngOnInit(): void {
@@ -130,6 +132,12 @@ export class DisplayCourseQuizComponent implements OnInit {
   }
 
   goBackToCourse() {
+    if(this.user.role === 'learner') {
+      this.activityService.recordUserActivity('stopped_quiz').subscribe({
+        next: (res: any) => { },
+        error: (e) => console.error(e),
+      });
+    }
     this.router.navigate([`learner/classrooms/courses/${this.currentCourseParams.courseId}/lessons`]);
   }
 

@@ -136,10 +136,10 @@
           width: 100%;
           table {
               tr {
-                  &.table-header {
-                    background: linear-gradient(0deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), #2D2B6D;
-                    color: $text-color1;
-                  }
+                  // &.table-header {
+                  //   background: linear-gradient(0deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), #2D2B6D;
+                  //   color: $text-color1;
+                  // }
               }
           }
         }

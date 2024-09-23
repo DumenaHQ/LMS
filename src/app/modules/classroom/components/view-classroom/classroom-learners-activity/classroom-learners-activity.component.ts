@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SchoolService } from 'src/app/services/school.service';
+import { ActivityService } from 'src/app/services/activity.service';
 
 @Component({
   selector: 'app-classroom-learners-activity',
@@ -9,9 +9,10 @@ import { SchoolService } from 'src/app/services/school.service';
 export class ClassroomLearnersActivityComponent implements OnInit {
 
   learnersActivities: any;
+  dataLoading: boolean;
 
   constructor(
-    private schoolService: SchoolService,
+    private activityService: ActivityService,
   ) { }
 
   ngOnInit(): void {
@@ -19,11 +20,15 @@ export class ClassroomLearnersActivityComponent implements OnInit {
   }
 
   getLearnersActivities() {
-    this.schoolService.getSchoolLearnersActivities().subscribe({
+    this.activityService.getSchoolLearnersActivities().subscribe({
       next: (res: any) => {
-        this.learnersActivities = res.data;     
+        this.learnersActivities = res.data; 
+        this.dataLoading = false;
       },
-      error: (e) => console.error(e),
+      error: (e) => {
+        console.error(e)
+        this.dataLoading = false;
+      },
     });
   }
 

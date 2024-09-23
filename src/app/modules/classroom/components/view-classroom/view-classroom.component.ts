@@ -5,6 +5,7 @@ import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-aler
 import { ClassroomModel, Term } from '../../models/classroom.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { QueryActiveTabService } from 'src/app/services/utils/query-active-tab.service';
+import { ActivityService } from 'src/app/services/activity.service';
 type Tabs = 'courses' | 'learners' | 'discussions' | 'activity';
 
 @Component({
@@ -38,6 +39,7 @@ export class ViewClassroomComponent implements OnInit {
     private changeDectetorRef: ChangeDetectorRef,
     private appAlertService: AppAlertService,
     private queryActiveTabService: QueryActiveTabService,
+    private activityService: ActivityService
   ) {}
 
   ngOnInit(): void {
@@ -164,6 +166,12 @@ export class ViewClassroomComponent implements OnInit {
   }
 
   goToViewAllClassrooms() {
+    if(this.user.role === 'learner') {
+      this.activityService.recordUserActivity('exited_class').subscribe({
+        next: (res: any) => { },
+        error: (e) => console.error(e),
+      });
+    }
     this.router.navigate([`/${this.user.role}/classrooms`]);
   }
 

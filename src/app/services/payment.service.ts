@@ -12,7 +12,7 @@ export class PaymentService {
 
   constructor(
     private http: HttpClient,
-    private ngZOne: NgZone,
+    private ngZone: NgZone,
     private appAlertService: AppAlertService,
   ) {}
 
@@ -43,39 +43,33 @@ export class PaymentService {
 
   payWithPaystack(access_code: string) {
     let url = this.baseUrl;
-    let zone = this.ngZOne;
+    let zone = this.ngZone;
+
     const popup = new PaystackPop();
-    let handler = popup.resumeTransaction(access_code)({
-      access_code: access_code,
-      callback: function (response: any) {
-        var reference = response.reference;
-        if (response.status === 'success') {
-          fetch(url + 'payments/verify', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `bearer ${localStorage.getItem('token')}`,
-            },
-            body: JSON.stringify({ reference }),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              console.log({ data });
-              if (data.status == true) {
-                zone.run(() => {
-                  this.getClassrooms();
-                  this.closeConfirmModal();
-                });
-              }
-            });
-        }
-      },
-      onClose: () => {
-        this.appAlertService.showAlert('Transaction was not completed', AlertType.Error);
-      },
-    });
-    handler.openIframe();
+    popup.resumeTransaction(access_code);
   }
+
+
+  // onSuccess: (response: any) => {
+  //   var reference = response.reference;
+  //   if (response.status === 'success') {
+  //     fetch(url + 'payments/verify', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Authorization: `bearer ${localStorage.getItem('token')}`,
+  //       },
+  //       body: JSON.stringify({ reference }),
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         console.log({ data });
+  //       });
+  //   }
+  // },
+  // onCancel: () => {   
+  //   this.appAlertService.showAlert('Transaction was not completed', AlertType.Error);
+  // },
 
   // Get HttpOptions
   getHttpOptions() {

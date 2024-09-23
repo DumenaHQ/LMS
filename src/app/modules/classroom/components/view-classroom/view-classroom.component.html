@@ -153,7 +153,7 @@
           style="overflow-x: auto"
           *ngIf="!courseQuizResult"
         >
-          <ng-container *ngIf="classroom?.courses?.length > 0">
+          <div class="table-wrapper" *ngIf="classroom?.courses?.length > 0">
             <table>
               <tr class="table-header">
                 <th>Title</th>
@@ -176,7 +176,7 @@
                 </td>
               </tr>
             </table>
-          </ng-container>
+          </div>
 
           <div *ngIf="classroom?.courses?.length === 0" class="course-empty">
             <img src="../../../../../assets/img/Illustration.svg" alt="">
@@ -203,7 +203,7 @@
 
       <!-- Learners -->
       <ng-container *ngIf="activeTab === 'learners'">
-        <div class="table-container" style="overflow-x: auto">
+        <div class="table-container">
           <div *ngIf="classroom?.learners?.length != 0 && user.role ==='school'" style="padding: 1%">
             <button
               type="button"
@@ -214,7 +214,7 @@
             </button>
           </div>
 
-          <ng-container *ngIf="classroom?.learners?.length > 0">
+          <div class="table-wrapper" *ngIf="classroom?.learners?.length > 0">
             <table>
               <tr class="table-header">
                 <th>Full Name</th>
@@ -232,7 +232,7 @@
                 <td>{{ learner.grade || "-" }}</td>
               </tr>
             </table>
-          </ng-container>
+          </div>
 
           <div *ngIf="classroom?.learners?.length === 0" class="course-empty">
             <img src="../../../../../assets/img/Illustration.svg" alt="">
@@ -250,14 +250,14 @@
       </ng-container>
 
       <!-- Discussions -->
-      <ng-container *ngIf="activeTab === 'discussions'">
-        <app-display-questions [courses]="classroom?.courses" [classroomId]="currentClassroomId.classroomId"></app-display-questions>
-      </ng-container>
+      <app-display-questions
+        *ngIf="activeTab === 'discussions'" 
+        [courses]="classroom?.courses" 
+        [classroomId]="currentClassroomId.classroomId"
+      ></app-display-questions>
 
       <!-- Activities -->
-      <ng-container *ngIf="activeTab === 'activity'">
-        <app-classroom-learners-activity></app-classroom-learners-activity>
-      </ng-container>
+      <app-classroom-learners-activity *ngIf="activeTab === 'activity'"></app-classroom-learners-activity>
     </div>
   </div>
 </section>

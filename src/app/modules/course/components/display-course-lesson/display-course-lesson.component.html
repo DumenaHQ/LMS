@@ -67,8 +67,13 @@
                     style="display: flex; align-items: center; gap: 2rem; margin-bottom: 1rem;" 
                     *ngFor="let readingLinks of modules[currentModuleIndex]?.further_reading_links"
                   >
-                    <h5>{{ readingLinks.caption }}</h5>
-                    <p>{{ readingLinks.url }}</p>
+                    <h5>{{ readingLinks.caption }}:</h5>
+                    <a 
+                      [href]="readingLinks.url" 
+                      target="_blank" 
+                      class="hover-2" 
+                      (click)="recordActivity('clicked_link')"
+                    >{{ readingLinks.url }}</a>
                   </li>
                 </ul>
                 <p *ngIf="modules[currentModuleIndex]?.further_reading_links?.length === 0">None</p>
