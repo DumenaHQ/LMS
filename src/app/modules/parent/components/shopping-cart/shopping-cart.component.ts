@@ -15,7 +15,6 @@ type Tabs = 'active' | 'all';
 export class ShoppingCartComponent implements OnInit {
   activeTab: Tabs = 'active';
   baseUrl: string = environment.baseUrl;
-  key = environment.paystackKey;
   user: any;
   orders: any;
   order: any;
@@ -109,7 +108,7 @@ export class ShoppingCartComponent implements OnInit {
     // let amount = this.grandTotal;
     // @ts-ignore
     let handler = PaystackPop.setup({
-      key: this.key,
+      // key: this.key,
       email: this.user.email,
       amount: this.grandTotal * 100,
       currency: 'NGN',

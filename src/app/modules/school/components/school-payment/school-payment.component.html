@@ -8,21 +8,21 @@
       <div class="dis-flex" style="justify-content: space-between; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem;">
         <h4 style="font-weight: bold;">Classrooms</h4>
 
-        <!-- <div class="dis-flex" style="gap: 1rem">
+        <div class="dis-flex" style="gap: 1rem">
           <p>Select all Classrooms:</p>
-          <div class="dis-flex" style="gap: 0.5rem;">
+          <div class="dis-flex" style="gap: 0.5rem;" *ngIf="classrooms">
             <input 
               type="checkbox" 
               name="all class" 
               id="all class"
               class="clickable"
+              [title]="classrooms.length === classroomsSelectedLearners?.classes?.length ? 'Deselect all classrooms' : 'Select all classrooms'"
+              [checked]="classrooms.length === classroomsSelectedLearners?.classes?.length"
+              (change)="toggleSelectAllClass($event)"
             >
-            1/2
+              {{ classroomsSelectedLearners?.classes?.length }} / {{ classrooms.length }}
           </div>
-        </div> -->
-        <!-- [title]="classroom.learner_count === classroomsSelectedLearners[classroom.id].length ? 'classrooms all learners' : 'Select all classrooms'"
-        [checked]="classroom.learner_count === classroomsSelectedLearners[classroom.id].length"
-        (change)="toggleSelectAllLearner($event, classroom)" -->
+        </div>
       </div>
 
       <app-loader *ngIf="dataLoading"></app-loader>
@@ -36,21 +36,16 @@
                   <h5 class="clickable" [title]="classroom.name">{{ classroom.name  }}</h5>
 
                   <div class="actions">
-                    <input 
-                      *ngIf="!checkboxLoading[classroom.id]"
+                    <input
                       type="checkbox" 
                       [name]="'class' + i" 
                       [id]="'class' + i"
-                      [title]="classroom.learner_count === classroomsSelectedLearners[classroom.id].length ? 'Deselect all learners' : 'Select all learners'"
-                      [checked]="classroom.learner_count === classroomsSelectedLearners[classroom.id].length"
+                      [title]="isClassroomSelected(classroom) ? 'Deselect classroom' : 'Select classroom'"
+                      [checked]="isClassroomSelected(classroom)"
                       class="clickable"
-                      (change)="toggleSelectAllLearnerForAClass($event, classroom)"
+                      (change)="toggleSelectClass($event, classroom)"
                     >
-                    <i 
-                      *ngIf="checkboxLoading[classroom.id]"
-                      class='bx bx-loader-circle checkbox-icon-loader' 
-                      title="loading learners"
-                    ></i>
+                      <!-- [title]="classroom.learner_count === classroomsSelectedLearners[classroom.id].length ? 'Deselect classroom' : 'Select classroom'" -->
                   </div>
                 </div>
                 <div class="icons dis-flex" style="margin-bottom: 0;">
@@ -67,12 +62,12 @@
                 <div class="card_item_footer_rates_item">
                   <p class="body-3-regular title">Learner's selected</p>
                   <p class="body-3-medium value">
-                    {{ classroomsSelectedLearners[classroom.id]?.length }} / {{ classroom.learner_count }}
+                    {{ getTotalSelectedLearnersCheck(classroom) }}
                   </p>
                 </div>
                 <div class="card_item_footer_rates_item">
                   <p class="body-3-regular title">Total amount</p>
-                  <p class="body-3-medium value">₦{{ (classroomsSelectedLearners[classroom.id]?.length * planAmount) | number }}</p>
+                  <p class="body-3-medium value">₦{{ getClassTotalAmount(classroom) | number }}</p>
                 </div>
               </div>
             </div>
@@ -85,8 +80,8 @@
       <div class="cart_body_checkout_header">
         <p class="body-1-bold" style="margin-bottom: 2rem;">Payment details</p>
         <div class="sub-plan dis-flex">
-          <p class="body-2-regular">Subscription plan: <span class="sub-plan_value">Basic</span></p>
-          <p class="body-2-bold">₦15,000/per learner</p>
+          <p class="body-2-regular">Subscription plan: </p>
+          <p class="body-2-bold">₦{{ planAmount | number }}/per learner</p>
         </div>
         <div>
           <div class="sub-total dis-flex">
@@ -146,7 +141,7 @@
 ></app-confirm-delete>
 
 <app-payment-classroom-learners
-  *ngIf="isClassroomLearners"
+  *ngIf="viewClassroomLearners"
   [classroom]="classroom"
   [classroomsSelectedLearners]="classroomsSelectedLearners"
   (learnersModal)="getSelectedClassroomLearners($event)"

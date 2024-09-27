@@ -43,7 +43,7 @@ export class SchoolSignupComponent implements OnInit {
       schoolState: ['', [Validators.required]],
       contactPersonName: ['', [Validators.required]],
       contactPersonNumber: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern(/^\d+$/)]],
-      password: ['', [Validators.required, Validators.minLength(6), this.formErrorService.alphanumericSymbolPasswordValidator()]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 

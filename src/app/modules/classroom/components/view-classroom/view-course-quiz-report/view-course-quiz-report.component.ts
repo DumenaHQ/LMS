@@ -17,7 +17,8 @@ export class ViewCourseQuizReportComponent implements OnInit {
   @Output() courseQuizResult = new EventEmitter<any>();
   quizResults$: Observable<any>;
   dataLoading: boolean;
-  errorMessage: boolean = false;
+  showErrorMessage: boolean = false;
+  errorMessage: string;
   formGroup: FormGroup;
   modules: any;
   lessons: any;
@@ -57,36 +58,48 @@ export class ViewCourseQuizReportComponent implements OnInit {
     }
   }
 
-  getQuizResults(quiz_id: string) {
-    if(quiz_id === undefined) {
-      this.errorMessage = true;
+  getQuizResults(quiz_id: string): void {
+    if (!quiz_id) {
+      this.displayError('No quiz available for this lesson');
+      return;
+    }
+  
+    this.resetErrorState();
+    this.dataLoading = true;
+  
+    const quizResultsObservable = this.user.role === 'learner'
+      ? this.quizService.getLearnerQuizResult(quiz_id, this.user.id)
+      : this.classroomService.getQuizResultsByQuizId(this.classroomId, quiz_id);
+  
+    this.quizResults$ = quizResultsObservable;
+    
+    quizResultsObservable.subscribe({
+      next: (res: any) => {
+        this.dataLoading = false;
+      },
+      error: (e) => {
+        this.handleQuizError(e);
+      },
+    });
+  }
+  
+  displayError(message: string): void {
+    this.showErrorMessage = true;
+    this.errorMessage = message;
+    this.dataLoading = false;
+  }
+  
+  resetErrorState(): void {
+    this.showErrorMessage = false;
+    this.errorMessage = '';
+  }
+  
+  handleQuizError(e: any): void {
+    console.error(e);
+    if (e.error?.message === `This Learner hasn't taken the quiz yet`) {
+      this.displayError(`You've not taken the quiz yet`);
     } else {
-      this.errorMessage = false;
-      this.dataLoading = true;
-      if(this.user.role === 'learner') {
-        this.quizResults$ = this.quizService.getLearnerQuizResult(quiz_id, this.user.id);
-        this.quizResults$.subscribe({
-          next: (res: any) => { },
-          error: (e) => {
-            console.error(e);        
-            if(e.error.message = `This Learner hasn't taken the quiz yet`) {
-              this.errorMessage = true;
-            }
-          },
-          complete: () => {
-            this.dataLoading = false;
-          },
-        })
-      } else {
-        this.quizResults$ = this.classroomService.getQuizResultsByQuizId(this.classroomId, quiz_id);
-        this.quizResults$.subscribe({
-          next: (res: any) => { },
-          error: (e) => console.error(e),
-          complete: () => {
-            this.dataLoading = false;
-          },
-        })
-      }
+      this.dataLoading = false;
     }
   }
 

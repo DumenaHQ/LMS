@@ -4,7 +4,7 @@
     <i class="bx bx-chevron-right icon" style="transform: rotate(180deg);"></i>
     <p class="ds-head_title clickable" (click)="goBackToCourse()">Go back to Course</p>
   </div>
-  <button class="btn prim_btn" (click)="openConfirmSubmitModal()">Submit</button>
+  <button class="btn prim_btn" (click)="openConfirmSubmitModal()" *ngIf="user.role === 'learner'">Submit</button>
 </section>
 
 <div class="course-details_body">
@@ -38,80 +38,36 @@
             </p>
           </div>
           <ul>
-            <li class="dis-flex clickable" *ngIf="quiz?.questions[currentQuestionIndex]?.optA"
-              (click)="selectAnswer(quiz?.questions[currentQuestionIndex]?.id, 'A')">
-              <p>A.</p>
-              <div class="option_item_body dis-flex">
-                <span>{{ quiz?.questions[currentQuestionIndex]?.optA }}</span>
-                <span class="option_item_body_marked dis-flex"
-                  [class.selected]="isOptionSelected('A', quiz?.questions[currentQuestionIndex]?.id)">{{
-                  isOptionSelected('A', quiz?.questions[currentQuestionIndex]?.id) ? 'Marked' : 'Mark as correct'
-                  }}</span>
-              </div>
-            </li>
-            <li class="dis-flex clickable" *ngIf="quiz?.questions[currentQuestionIndex]?.optB"
-              (click)="selectAnswer(quiz?.questions[currentQuestionIndex]?.id, 'B')">
-              <p>B.</p>
-              <div class="option_item_body dis-flex">
-                <span>{{ quiz?.questions[currentQuestionIndex]?.optB }}</span>
-                <span class="option_item_body_marked dis-flex"
-                  [class.selected]="isOptionSelected('B', quiz?.questions[currentQuestionIndex]?.id)">{{
-                  isOptionSelected('B', quiz?.questions[currentQuestionIndex]?.id) ? 'Marked' : 'Mark as correct'
-                  }}</span>
-              </div>
-            </li>
-            <li class="dis-flex clickable" *ngIf="quiz?.questions[currentQuestionIndex]?.optC"
-              (click)="selectAnswer(quiz?.questions[currentQuestionIndex]?.id, 'C')">
-              <p>C.</p>
-              <div class="option_item_body dis-flex">
-                <span>{{ quiz?.questions[currentQuestionIndex]?.optC }}</span>
-                <span class="option_item_body_marked dis-flex"
-                  [class.selected]="isOptionSelected('C', quiz?.questions[currentQuestionIndex]?.id)">{{
-                  isOptionSelected('C', quiz?.questions[currentQuestionIndex]?.id) ? 'Marked' : 'Mark as correct'
-                  }}</span>
-              </div>
-            </li>
-            <li class="dis-flex clickable" *ngIf="quiz?.questions[currentQuestionIndex]?.optD"
-              (click)="selectAnswer(quiz?.questions[currentQuestionIndex]?.id, 'D')">
-              <p>D.</p>
-              <div class="option_item_body dis-flex">
-                <span>{{ quiz?.questions[currentQuestionIndex]?.optD }}</span>
-                <span class="option_item_body_marked dis-flex"
-                  [class.selected]="isOptionSelected('D', quiz?.questions[currentQuestionIndex]?.id)">{{
-                  isOptionSelected('D', quiz?.questions[currentQuestionIndex]?.id) ? 'Marked' : 'Mark as correct'
-                  }}</span>
-              </div>
-            </li>
-            <li class="dis-flex clickable" *ngIf="quiz?.questions[currentQuestionIndex]?.optE"
-              (click)="selectAnswer(quiz?.questions[currentQuestionIndex]?.id, 'E')">
-              <p>E.</p>
-              <div class="option_item_body dis-flex">
-                <span>{{ quiz?.questions[currentQuestionIndex]?.optE }}</span>
-                <span class="option_item_body_marked dis-flex"
-                  [class.selected]="isOptionSelected('E', quiz?.questions[currentQuestionIndex]?.id)">{{
-                  isOptionSelected('E', quiz?.questions[currentQuestionIndex]?.id) ? 'Marked' : 'Mark as correct'
-                  }}</span>
-              </div>
-            </li>
-            <li class="dis-flex clickable" *ngIf="quiz?.questions[currentQuestionIndex]?.optF"
-              (click)="selectAnswer(quiz?.questions[currentQuestionIndex]?.id, 'F')">
-              <p>F.</p>
-              <div class="option_item_body dis-flex">
-                <span>{{ quiz?.questions[currentQuestionIndex]?.optE }}</span>
-                <span class="option_item_body_marked dis-flex"
-                  [class.selected]="isOptionSelected('F', quiz?.questions[currentQuestionIndex]?.id)">{{
-                  isOptionSelected('F', quiz?.questions[currentQuestionIndex]?.id) ? 'Marked' : 'Mark as correct'
-                  }}</span>
-              </div>
+            <li 
+              *ngFor="let option of getOptions(quiz?.questions[currentQuestionIndex]); let i = index"
+              class="option clickable" 
+              (click)="selectAnswer(quiz?.questions[currentQuestionIndex]?.id, option.label)"
+            >
+                <p class="option-label">{{ option.label }}.</p>
+                <div class="option-value dis-flex">
+                    <span class="option-value_content">
+                      {{ option.value }}
+                    </span>
+                    <input 
+                      type="radio" 
+                      [name]="i + option.label" 
+                      [id]="i + option.label"
+                      [checked]="isOptionSelected(option.label, quiz?.questions[currentQuestionIndex]?.id)"
+                      [disabled]="user.role !== 'learner'"
+                    >
+                </div>
             </li>
           </ul>
         </div>
 
         <div class="main-footer dis-flex">
-          <button class="btn grey_btn" [disabled]="currentQuestionIndex === 0"
-            (click)="previousQuestion()">Previous</button>
-          <button class="btn grey_btn" [disabled]="currentQuestionIndex === quiz?.questions.length - 1"
-            (click)="nextQuestion()">Next</button>
+          <div class="dis-flex" style="gap: 1rem;">
+            <button class="btn grey_btn" [disabled]="currentQuestionIndex === 0"
+              (click)="previousQuestion()">Previous</button>
+            <button class="btn grey_btn" [disabled]="currentQuestionIndex === quiz?.questions.length - 1"
+              (click)="nextQuestion()">Next</button>
+          </div>
+          <button class="btn prim_btn" (click)="openConfirmSubmitModal()" *ngIf="user.role === 'learner'">Submit</button>
         </div>
       </main>
     </div>

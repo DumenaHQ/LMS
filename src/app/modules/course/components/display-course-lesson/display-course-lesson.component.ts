@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ActivityService } from 'src/app/services/activity.service';
 import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CoursesService } from 'src/app/services/courses.service';
@@ -27,57 +28,66 @@ export class DisplayCourseLessonComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private appAlertService: AppAlertService,
+    private activityService: ActivityService
   ) { }
 
 
   ngOnInit(): void {
     this.currentCourseParams = this.activatedRoute.snapshot.params;
-    this.getModuleAndLessonIndex();
+    this.getCourse();
     this.user = this.authService.getUser().user;
   }
   
   getCourse() {
     this.courseService
     .getCourse(this.currentCourseParams.courseId)
-    .subscribe((res: any) => {
+    .subscribe((res: any) => { 
       this.course = res.data.course;
       this.modules = this.course.modules;
-      this.lessonVideoUrl = this.course?.modules[this.currentModuleIndex]?.lessons[this.currentLessonIndex]?.lesson_video;
+      this.getModuleAndLessonIndex();
     });
+  }
+
+  setLessonVideoUrl() {
+    this.lessonVideoUrl = this.course?.modules[this.currentModuleIndex]?.lessons[this.currentLessonIndex]?.lesson_video;
+    this.recordActivity('started_lesson');
   }
   
   getModuleAndLessonIndex() {
     this.activatedRoute.queryParams.subscribe((params) => {
       this.currentModuleIndex = params['moduleIndex'] ? parseInt(params['moduleIndex'], 10) : 0;
       this.currentLessonIndex = params['lessonIndex'] ? parseInt(params['lessonIndex'], 10) : 0;
-
       this.activeIndex = this.currentModuleIndex;
-      this.getCourse();
     });
+    this.setLessonVideoUrl();
   }
 
   getPreviousModuleAndLesson(moduleIndex: number, lessonIndex: number, lessonQuizId: any, type: string) {
-    let previousModuleId, previousLessonId;
-    if (lessonIndex > 0) {
-      // Same module, previous lesson
-      previousModuleId = this.modules[moduleIndex].id;
-      previousLessonId = this.modules[moduleIndex].lessons[lessonIndex - 1].id;
-    } else if (moduleIndex > 0) {
-      // Previous module, last lesson
-      const previousModule = this.modules[moduleIndex - 1];
-      previousModuleId = previousModule.id;
-      previousLessonId = previousModule.lessons[previousModule.lessons.length - 1].id;
-    } else {
-      console.log('No previous lesson.');
-      if(type === 'lesson') {
-        this.watchLesson(moduleIndex, lessonIndex);
+    if(this.user.role === 'learner') {
+      let previousModuleId, previousLessonId;
+      if (lessonIndex > 0) {
+        // Same module, previous lesson
+        previousModuleId = this.modules[moduleIndex].id;
+        previousLessonId = this.modules[moduleIndex].lessons[lessonIndex - 1].id;
+      } else if (moduleIndex > 0) {
+        // Previous module, last lesson
+        const previousModule = this.modules[moduleIndex - 1];
+        previousModuleId = previousModule.id;
+        previousLessonId = previousModule.lessons[previousModule.lessons.length - 1].id;
       } else {
-        this.viewQuiz(lessonQuizId);
+        console.log('No previous lesson.');
+        if(type === 'lesson') {
+          this.watchLesson(moduleIndex, lessonIndex);
+        } else {
+          this.viewQuiz(lessonQuizId);
+        }
+        return;
       }
-      return;
+  
+      this.canViewNextLessonOrQuiz(moduleIndex, lessonIndex, previousModuleId, previousLessonId, lessonQuizId, type);
+    } else {
+      this.watchLesson(moduleIndex, lessonIndex);
     }
-
-    this.canViewNextLessonOrQuiz(moduleIndex, lessonIndex, previousModuleId, previousLessonId, lessonQuizId, type);
   }
 
   canViewNextLessonOrQuiz(moduleIndex: any, lessonIndex: any, moduleId: any, lessonId: any, lessonQuizId: any, type: string) {
@@ -116,6 +126,7 @@ export class DisplayCourseLessonComponent implements OnInit {
   }
   
   viewQuiz(lessonQuizId: any) {
+    this.recordActivity('started_quiz');
     this.router.navigate([`${this.user.role}/classrooms/courses/${this.currentCourseParams.courseId}/lessons/quiz/${lessonQuizId}`]);
   }
   
@@ -128,6 +139,15 @@ export class DisplayCourseLessonComponent implements OnInit {
       this.activeIndex = null;
     } else {
       this.activeIndex = index;
+    }
+  }
+
+  recordActivity(activityType: string) {
+    if(this.user.role === 'learner') {
+      this.activityService.recordUserActivity(activityType).subscribe({
+        next: (res: any) => { },
+        error: (e) => console.error(e),
+      });
     }
   }
 

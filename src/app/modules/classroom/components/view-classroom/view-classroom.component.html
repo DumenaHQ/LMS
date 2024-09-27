@@ -1,281 +1,294 @@
 <section class="ds-head dis-flex">
-    <h2 class="ds-head_title clickable" (click)="goToViewAllClassrooms()">
-      Classrooms
-    </h2>
-    <i class="bx bx-chevron-right icon"></i>
-    <p class="clickable" [title]="classroom?.name">
-      {{ classroom?.name | truncate }}
-    </p>
-  </section>
+  <h2 class="ds-head_title clickable" (click)="goToViewAllClassrooms()">
+    Classrooms
+  </h2>
+  <i class="bx bx-chevron-right icon"></i>
+  <p class="clickable" [title]="classroom?.name">
+    {{ classroom?.name | truncate }}
+  </p>
+</section>
   
-  <section class="course-details">
-    <div class="course-details_image" [style.backgroundImage]="classroom?.header_photo ? 'url(' + classroom?.header_photo + ')' : 'url(assets/img/program-thumbnail.svg)'">
-    </div>
-    <div class="course-details_header">
-      <div class="course-details_header_top" style="align-items: center">
-        <div class="left">
-          <h2>{{ classroom?.name }}</h2>
-          <div class="dis-flex left_bottom">
-            <p
-              *ngIf="classroom"
-              [className]="classroom.active_term ? 'success_btn' : 'grey_btn'"
-            >
-              {{
-                (classroom.active_term ? classroom.active_term.title : "On Break")
-                  | uppercase
-              }}
-            </p>
-  
-            <div class="icons dis-flex">
-              <span class="dis-flex" *ngIf="classroom?.active_term">
-                <!-- <img src="../../../assets/img/svg/calendar-2.svg" alt="" /> -->
-                <div class="">
-                  <p class="body-2-regular">
-                    Starts:
-                    {{ classroom!.active_term?.start_date | date : "mediumDate" }}
-                  </p>
-  
-                  <p>
-                    Ends:
-                    {{ classroom!.active_term?.end_date | date : "mediumDate" }}
-                  </p>
-                </div></span
-              >
-  
-              <!-- <span class="dis-flex"
-                ><img src="../../../assets/img/svg/medal.svg" alt="" />
-  
-                <p class="body-2-regular">3 Sections</p></span
-              > -->
-            </div>
-          </div>
-        </div>
-        <div class="right dis-flex items-center">
-          <button 
-            class="btn" 
-            style="padding: 10px; display: flex; align-items: center" 
-            (click)="editClassroom()" 
-            *ngIf="user.role === 'school'"
+<section class="mvp">
+  <div class="mvp_image" [style.backgroundImage]="classroom?.header_photo ? 'url(' + classroom?.header_photo + ')' : 'url(assets/img/program-thumbnail.svg)'">
+  </div>
+  <div class="mvp_header">
+    <div class="mvp_header_top" style="align-items: center">
+      <div class="left">
+        <h2>{{ classroom?.name }}</h2>
+        <div class="dis-flex left_bottom">
+          <p
+            *ngIf="classroom"
+            [className]="classroom.active_term ? 'success_btn' : 'grey_btn'"
           >
-            <img src="../../../assets/img/svg/setting-grey.svg" alt="" />
-            <span class="" style="margin-left: 4px;">
-              Edit Classroom
-            </span>
-          </button>
-        </div>
-      </div>
-      <div class="course-details_header_bottom">
-        <div class="students dis-flex">
-          <p class="body-2-bold title">
-            Total
-            {{ (classroom?.learner_count || 0) > 1 ? "Learners:" : "Learner:" }}
+            {{
+              (classroom.active_term ? classroom.active_term.title : "On Break")
+                | uppercase
+            }}
           </p>
-          <div class="students_value dis-flex">
-            <p class="body-2-medium text-primary-color">({{ classroom?.learner_count }})</p>
-            <ul class="students_list dis-flex">
-              <li>
-                <img
-                  src="../../../../../assets/img/children-avatar/child-avatar-1.png"
-                  alt=""
-                />
-              </li>
-              <li>
-                <img
-                  src="../../../../../assets/img/children-avatar/child-avatar-2.png"
-                  alt=""
-                />
-              </li>
-              <li>
-                <img
-                  src="../../../../../assets/img/children-avatar/child-avatar-3.png"
-                  alt=""
-                />
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="completion dis-flex" *ngIf="classroom?.teacher && user.role !== 'instructor'">
-          <p class="body-2-bold title">Instructor:</p>
-          <div class="name dis-flex">
-            <p class="body-2-medium text-primary-color">
-              {{ classroom?.teacher?.fullname }}
-            </p>
-            <i 
-              *ngIf="user.role === 'school'"
-              class='bx bx-message-square-x icon clickable' 
-              title="Remove" 
-              (click)="openConfirmModal(classroom?.teacher?.fullname)"
-            ></i>
+
+          <div class="icons dis-flex">
+            <span class="dis-flex" *ngIf="classroom?.active_term">
+              <!-- <img src="../../../assets/img/svg/calendar-2.svg" alt="" /> -->
+              <div class="">
+                <p class="body-2-regular">
+                  Starts:
+                  {{ classroom!.active_term?.start_date | date : "mediumDate" }}
+                </p>
+
+                <p>
+                  Ends:
+                  {{ classroom!.active_term?.end_date | date : "mediumDate" }}
+                </p>
+              </div></span
+            >
+
+            <!-- <span class="dis-flex"
+              ><img src="../../../assets/img/svg/medal.svg" alt="" />
+
+              <p class="body-2-regular">3 Sections</p></span
+            > -->
           </div>
         </div>
       </div>
+      <div class="right dis-flex items-center">
+        <button 
+          class="btn" 
+          style="padding: 10px; display: flex; align-items: center" 
+          (click)="editClassroom()" 
+          *ngIf="user.role === 'school'"
+        >
+          <img src="../../../assets/img/svg/setting-grey.svg" alt="" />
+          <span class="" style="margin-left: 4px;">
+            Edit Classroom
+          </span>
+        </button>
+      </div>
     </div>
-    <div class="course-details_body">
-      <div class="course-details_body_header">
-        <ul class="dis-flex">
-          <li
-            class="body-2-medium active"
-            [class.active]="activeTab === 'courses'"
-            (click)="setActiveTab('courses')"
-          >
-            Courses
-          </li>
-          <li
-            class="body-2-medium"
-            [class.active]="activeTab === 'learners'"
-            (click)="setActiveTab('learners')"
-          >
-            Learners
-          </li>
-          <li
-            class="body-2-medium"
-            [class.active]="activeTab === 'discussions'"
+    <div class="mvp_header_bottom">
+      <div class="students dis-flex">
+        <p class="body-2-bold title">
+          Total
+          {{ (classroom?.learner_count || 0) > 1 ? "Learners:" : "Learner:" }}
+        </p>
+        <div class="students_value dis-flex">
+          <p class="body-2-medium text-primary-color">({{ classroom?.learner_count }})</p>
+          <ul class="students_list dis-flex">
+            <li>
+              <img
+                src="../../../../../assets/img/children-avatar/child-avatar-1.png"
+                alt=""
+              />
+            </li>
+            <li>
+              <img
+                src="../../../../../assets/img/children-avatar/child-avatar-2.png"
+                alt=""
+              />
+            </li>
+            <li>
+              <img
+                src="../../../../../assets/img/children-avatar/child-avatar-3.png"
+                alt=""
+              />
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="completion dis-flex" *ngIf="classroom?.teacher && user.role !== 'instructor'">
+        <p class="body-2-bold title">Instructor:</p>
+        <div class="name dis-flex">
+          <p class="body-2-medium text-primary-color">
+            {{ classroom?.teacher?.fullname }}
+          </p>
+          <i 
             *ngIf="user.role === 'school'"
-            (click)="setActiveTab('discussions')"
-          >
-            Discussions
-          </li>
-        </ul>
-      </div>
-      <div class="course-details_body_content">
-        <!-- Courses -->
-        <ng-container *ngIf="activeTab === 'courses'">
-          <div
-            class="table-container"
-            style="overflow-x: auto"
-            *ngIf="!courseQuizResult"
-          >
-            <ng-container *ngIf="classroom?.courses?.length > 0">
-              <table>
-                <tr class="table-header">
-                  <th>Title</th>
-                  <th>Number of lesson(s)</th>
-                  <th>Quadrant</th>
-                  <th>Duration</th>
-                  <th>Action</th>
-                </tr>
-                <tr
-                  class="table-body"
-                  *ngFor="let course of classroom?.courses"
-                >
-                  <td>{{ course?.title || "-" }}</td>
-                  <td>{{ course?.lesson_count || "-" }}</td>
-                  <td>{{ course?.course_quadrant || "-" }}</td>
-                  <td>{{ course?.duration || "-" }}</td>
-                  <td>
-                    <button class="btn sec_btn" style="margin-right: 2rem;" (click)="watchCourse(course?.id)">Watch</button>
-                    <button class="btn sec_btn" (click)="openViewCourseQuizResult(course)">Quiz Result</button>
-                  </td>
-                </tr>
-              </table>
-            </ng-container>
-  
-            <div *ngIf="classroom?.courses?.length === 0" class="course-empty">
-              <img src="../../../../../assets/img/Illustration.svg" alt="">
-              <p style="text-align: center">No Course available</p>
-              <button
-                type="button"
-                class="btn sec_btn"
-                (click)="openAddCourseToClassroomModal()"
-                *ngIf="!classroom?.template && user.role === 'school'"
-              >
-                Add Course
-              </button>
-            </div>
-          </div>
-  
-          <app-view-course-quiz-report
-            *ngIf="courseQuizResult"
-            [classroomId]="currentClassroomId.classroomId"
-            [course]="course"
-            [user]="user"
-            (courseQuizResult)="closeViewCourseQuizResult()"
-          ></app-view-course-quiz-report>
-        </ng-container>
-  
-        <!-- Learners -->
-        <ng-container *ngIf="activeTab === 'learners'">
-          <div class="table-container" style="overflow-x: auto">
-            <div *ngIf="classroom?.learners?.length != 0 && user.role ==='school'" style="padding: 1%">
-              <button
-                type="button"
-                class="btn sec_btn"
-                (click)="openAddLearnerToClassroomModal()"
-              >
-                Add Learner
-              </button>
-            </div>
-  
-            <ng-container *ngIf="classroom?.learners?.length > 0">
-              <table>
-                <tr class="table-header">
-                  <th>Full Name</th>
-                  <th *ngIf="user?.role !== 'learner'">User Name</th>
-                  <th>Email</th>
-                  <th>Grade</th>
-                </tr>
-                <tr
-                  class="table-body"
-                  *ngFor="let learner of classroom?.learners"
-                >
-                  <td>{{ learner.fullname || "-" }}</td>
-                  <td *ngIf="user?.role !== 'learner'">{{ learner.username || "-" }}</td>
-                  <td>{{ learner.email || "-" }}</td>
-                  <td>{{ learner.grade || "-" }}</td>
-                </tr>
-              </table>
-            </ng-container>
-  
-            <div *ngIf="classroom?.learners?.length === 0" class="course-empty">
-              <img src="../../../../../assets/img/Illustration.svg" alt="">
-              <p style="text-align: center">No Learner available</p>
-              <button
-                type="button"
-                class="btn sec_btn"
-                (click)="openAddLearnerToClassroomModal()"
-                *ngIf=" user.role === 'school'"
-              >
-                Add Learner
-              </button>
-            </div>
-          </div>
-        </ng-container>
-  
-        <!-- Discussions -->
-        <ng-container *ngIf="activeTab === 'discussions'">
-          <app-display-questions [courses]="classroom?.courses" [classroomId]="currentClassroomId.classroomId"></app-display-questions>
-        </ng-container>
+            class='bx bx-message-square-x icon clickable' 
+            title="Remove" 
+            (click)="openConfirmModal(classroom?.teacher?.fullname)"
+          ></i>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
+  <div class="mvp_body">
+    <div class="mvp_body_header">
+      <ul class="dis-flex">
+        <li
+          class="body-2-medium active"
+          [class.active]="activeTab === 'courses'"
+          (click)="setActiveTab('courses')"
+        >
+          Courses
+        </li>
+        <li
+          class="body-2-medium"
+          [class.active]="activeTab === 'learners'"
+          (click)="setActiveTab('learners')"
+        >
+          Learners
+        </li>
+        <li
+          class="body-2-medium"
+          [class.active]="activeTab === 'discussions'"
+          *ngIf="user.role === 'school'"
+          (click)="setActiveTab('discussions')"
+        >
+          Discussions
+        </li>
+        <li
+          class="body-2-medium"
+          [class.active]="activeTab === 'activity'"
+          *ngIf="user.role === 'school'"
+          (click)="setActiveTab('activity')"
+        >
+          Activity
+        </li>
+      </ul>
+    </div>
+    <div class="mvp_body_content">
+      <!-- Courses -->
+      <ng-container *ngIf="activeTab === 'courses'">
+        <div
+          class="table-container"
+          style="overflow-x: auto"
+          *ngIf="!courseQuizResult"
+        >
+          <div class="table-wrapper" *ngIf="classroom?.courses?.length > 0">
+            <table>
+              <tr class="table-header">
+                <th>Title</th>
+                <th>Number of lesson(s)</th>
+                <th>Quadrant</th>
+                <th>Duration</th>
+                <th>Action</th>
+              </tr>
+              <tr
+                class="table-body"
+                *ngFor="let course of classroom?.courses"
+              >
+                <td>{{ course?.title || "-" }}</td>
+                <td>{{ course?.lesson_count || "-" }}</td>
+                <td>{{ course?.course_quadrant || "-" }}</td>
+                <td>{{ course?.duration || "-" }}</td>
+                <td>
+                  <button class="btn sec_btn" style="margin-right: 2rem;" (click)="watchCourse(course?.id)">Watch</button>
+                  <button class="btn sec_btn" (click)="openViewCourseQuizResult(course)">Quiz Result</button>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <div *ngIf="classroom?.courses?.length === 0" class="course-empty">
+            <img src="../../../../../assets/img/Illustration.svg" alt="">
+            <p style="text-align: center">No Course available</p>
+            <button
+              type="button"
+              class="btn sec_btn"
+              (click)="openAddCourseToClassroomModal()"
+              *ngIf="!classroom?.template && user.role === 'school'"
+            >
+              Add Course
+            </button>
+          </div>
+        </div>
+
+        <app-view-course-quiz-report
+          *ngIf="courseQuizResult"
+          [classroomId]="currentClassroomId.classroomId"
+          [course]="course"
+          [user]="user"
+          (courseQuizResult)="closeViewCourseQuizResult()"
+        ></app-view-course-quiz-report>
+      </ng-container>
+
+      <!-- Learners -->
+      <ng-container *ngIf="activeTab === 'learners'">
+        <div class="table-container">
+          <div *ngIf="classroom?.learners?.length != 0 && user.role ==='school'" style="padding: 1%">
+            <button
+              type="button"
+              class="btn sec_btn"
+              (click)="openAddLearnerToClassroomModal()"
+            >
+              Add Learner
+            </button>
+          </div>
+
+          <div class="table-wrapper" *ngIf="classroom?.learners?.length > 0">
+            <table>
+              <tr class="table-header">
+                <th>Full Name</th>
+                <th *ngIf="user?.role !== 'learner'">User Name</th>
+                <th>Email</th>
+                <th>Grade</th>
+              </tr>
+              <tr
+                class="table-body"
+                *ngFor="let learner of classroom?.learners"
+              >
+                <td>{{ learner.fullname || "-" }}</td>
+                <td *ngIf="user?.role !== 'learner'">{{ learner.username || "-" }}</td>
+                <td>{{ learner.email || "-" }}</td>
+                <td>{{ learner.grade || "-" }}</td>
+              </tr>
+            </table>
+          </div>
+
+          <div *ngIf="classroom?.learners?.length === 0" class="course-empty">
+            <img src="../../../../../assets/img/Illustration.svg" alt="">
+            <p style="text-align: center">No Learner available</p>
+            <button
+              type="button"
+              class="btn sec_btn"
+              (click)="openAddLearnerToClassroomModal()"
+              *ngIf=" user.role === 'school'"
+            >
+              Add Learner
+            </button>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Discussions -->
+      <app-display-questions
+        *ngIf="activeTab === 'discussions'" 
+        [courses]="classroom?.courses" 
+        [classroomId]="currentClassroomId.classroomId"
+      ></app-display-questions>
+
+      <!-- Activities -->
+      <app-classroom-learners-activity *ngIf="activeTab === 'activity'"></app-classroom-learners-activity>
+    </div>
+  </div>
+</section>
+
+<app-add-classroom-course
+  *ngIf="addCourseToClassroom"
+  (addCourseToClassroomModal)="closeAddCourseToClassroomModal()"
+  [classroomId]="currentClassroomId.classroomId"
+  (getClassroom)="getClassrooms()"
+></app-add-classroom-course>
+
+<app-add-classroom-learner
+  *ngIf="addLearnerToClassroom"
+  [classroomId]="currentClassroomId.classroomId"
+  (addLearnerToClassroomModal)="closeAddLearnerToClassroomModal()"
+  (getClassroom)="getClassrooms()"
+></app-add-classroom-learner>
   
-  <app-add-classroom-course
-    *ngIf="addCourseToClassroom"
-    (addCourseToClassroomModal)="closeAddCourseToClassroomModal()"
-    [classroomId]="currentClassroomId.classroomId"
-    (getClassroom)="getClassrooms()"
-  ></app-add-classroom-course>
-  
-  <app-add-classroom-learner
-    *ngIf="addLearnerToClassroom"
-    [classroomId]="currentClassroomId.classroomId"
-    (addLearnerToClassroomModal)="closeAddLearnerToClassroomModal()"
-    (getClassroom)="getClassrooms()"
-  ></app-add-classroom-learner>
-    
-  <app-confirm-delete 
-    *ngIf="confirmModal" 
-    (confrimModal)="closeConfirmModal()" 
-    [confirmMessage]="confirmMessage" 
-    [confirmUrl]="confirmUrl" 
-    [confirmUrl]="'patch'"
-    (reloadData)="getClassrooms()"
-  ></app-confirm-delete>
-  
-  <app-confirm-session-date
-    [loading]="updatingClassDate"
-    [classroom]="classroom"
-    *ngIf="this.classroom?.active_term?.defaultDateChanged === false && user.role === 'school'"
-    (confirmSessionDateAction)="confirmSessionDates($event)"
-  ></app-confirm-session-date>
+<app-confirm-delete 
+  *ngIf="confirmModal" 
+  (confrimModal)="closeConfirmModal()" 
+  [confirmMessage]="confirmMessage" 
+  [confirmUrl]="confirmUrl" 
+  [confirmUrl]="'patch'"
+  (reloadData)="getClassrooms()"
+></app-confirm-delete>
+
+<app-confirm-session-date
+  [loading]="updatingClassDate"
+  [classroom]="classroom"
+  *ngIf="this.classroom?.active_term?.defaultDateChanged === false && user.role === 'school'"
+  (confirmSessionDateAction)="confirmSessionDates($event)"
+></app-confirm-session-date>
   

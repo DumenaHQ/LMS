@@ -1442,6 +1442,11 @@
     read-package-json-fast "^2.0.3"
     which "^2.0.2"
 
+"@paystack/inline-js@^2.20.3":
+  version "2.20.3"
+  resolved "https://registry.yarnpkg.com/@paystack/inline-js/-/inline-js-2.20.3.tgz#fab9bae9c4d5d14c2f11d02938bad3cbbe2ec4c5"
+  integrity sha512-kQn+x7WLkLUiExMvt+Favw94wCkdXh7z3BemG3vwiDZ8fBXHsr7r/eXnb15j2sS8Fqf2Vh9waSAwXZcB4iPuKA==
+
 "@schematics/angular@14.2.13":
   version "14.2.13"
   resolved "https://registry.npmjs.org/@schematics/angular/-/angular-14.2.13.tgz"

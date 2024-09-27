@@ -69,40 +69,24 @@
                     h2 {
                         color: $primary80;
                     }
-                    p {
-                        border: 1px solid $inner-border;
-                        border-radius: $border-radius1;
-                        padding: $m-2;
-                    }
                 }
                 ul {
                     margin-top: $m-6;
                     padding: 0 $m-4;
-                    li {
+                    .option {
                         width: 100%;
+                        display: flex;
+                        gap: $m-2;
                         &:not(:last-child) {
                             margin-bottom: $m-2;
                         }
-                        p {
-                            flex-basis: 5%;
-                        }
-                        .option_item_body {
-                            flex-basis: 95%;
+                        &-value {
+                            width: 100%;
                             gap: $m-2;
                             justify-content: space-between;
-                            border: 1px solid $inner-border;
-                            border-radius: $border-radius1;
-                            padding-left: $m-2;
-                            height: 35px;
-                            &_marked {
-                                height: 35px;
-                                border-left: 1px solid $inner-border;
-                                color: $secondary80;
-                                padding: 0 $m-2;
-                                border-radius: 0 $border-radius1 $border-radius1 0;
-                                &.selected {
-                                    background-color: $secondary40;
-                                }
+                            align-items: stretch;
+                            &_content {
+                                font-size: 16px;
                             }
                         }
                     }
@@ -111,6 +95,7 @@
             .main-footer {
                 gap: $m-2;
                 justify-content: space-between;
+                flex-wrap: wrap;
                 border-top: 1px solid $inner-border;
                 padding: $m-4;
                 .grey_btn {
