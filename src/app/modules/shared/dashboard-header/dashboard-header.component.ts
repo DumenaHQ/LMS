@@ -29,6 +29,19 @@ export class DashboardHeaderComponent implements OnInit {
   openMenu() {
     this.hamClick.emit();
   }
+
+  getUserDisplayname(): string {
+    let displayName;
+    if(this.user.role === 'school') {
+      displayName = this.user.school;
+    } else if(this.user.role === 'learner') {
+      this.user.nickName
+    } else {
+      displayName = this.user.fullname;
+    }
+
+    return displayName;
+  }
   
   goToProfile() {
     const userName = this.user.role === 'school' ? this.user.school : this.user.fullname;
