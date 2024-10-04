@@ -13,7 +13,7 @@ import { PaymentService } from 'src/app/services/payment.service';
 export class SchoolPaymentComponent implements OnInit {
   user: any;
   grandTotal: number = 0;
-  planAmount: number;
+  subAmount: number = 0;
   isVoucher: boolean = false;
   classrooms: any;
   dataLoading: boolean;
@@ -36,7 +36,7 @@ export class SchoolPaymentComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.authService.getUser().user;
     this.getClassrooms();
-    this.getClassroomSubscription();
+    // this.getClassroomSubscription();
   }
 
   getClassrooms() {
@@ -54,17 +54,17 @@ export class SchoolPaymentComponent implements OnInit {
     });
   }
 
-  getClassroomSubscription() {
-    this.subscriptionService.getClassSubscription().subscribe({
-      next: (res: any) => {
-        this.planAmount = res.data.subscription.amount;
-      },
-      error: (e) => console.error(e),
-      complete: () => {
-        this.dataLoading = false;
-      },
-    });
-  }
+  // getClassroomSubscription() {
+  //   this.subscriptionService.getClassSubscription().subscribe({
+  //     next: (res: any) => {
+  //       this.subAmount = res.data.subscription.amount;
+  //     },
+  //     error: (e) => console.error(e),
+  //     complete: () => {
+  //       this.dataLoading = false;
+  //     },
+  //   });
+  // }
 
   openViewClassroomLearners(classroom: any) {
     this.classroom = classroom;
@@ -145,9 +145,9 @@ export class SchoolPaymentComponent implements OnInit {
     this.classroomsSelectedLearners?.classes.forEach((classroomSelect: any) => {
       if (classroomSelect.class_id === classroom?.id) {
         if(classroomSelect.allLearners) {
-          learnersAmount = classroom.learner_count * this.planAmount;
+          learnersAmount = classroom.learner_count * this.subAmount;
         } else {
-          learnersAmount = classroomSelect.learners.length * this.planAmount;
+          learnersAmount = classroomSelect.learners.length * this.subAmount;
         }
       }      
     });
@@ -159,7 +159,23 @@ export class SchoolPaymentComponent implements OnInit {
     this.totalSelectedLearners = this.classroomsSelectedLearners.classes.reduce((total: any, classroom: any) => {
       return total + (classroom.allLearners ? classroom.learner_count : classroom.learners.length);
     }, 0);
-    this.grandTotal = this.planAmount * this.totalSelectedLearners;
+    this.grandTotal = this.calculateClassSubAmount(this.totalSelectedLearners) * this.totalSelectedLearners;
+  }
+
+  calculateClassSubAmount(numOfLearners: number) {
+    if (numOfLearners < 101)
+      this.subAmount = 10000;
+    else if (numOfLearners > 100 && numOfLearners < 201)
+      this.subAmount = 9500;
+    else if (numOfLearners > 200 && numOfLearners < 301)
+      this.subAmount = 9000;
+    else if (numOfLearners > 300 && numOfLearners < 401)
+      this.subAmount = 8500;
+    else if (numOfLearners > 400 && numOfLearners < 501)
+      this.subAmount = 8000
+    else 
+      this.subAmount = 7500;
+    return this.subAmount;
   }
   
   openConfirmModal() {

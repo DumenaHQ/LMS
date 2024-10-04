@@ -55,7 +55,7 @@
       /> 
       <span class="profile_details">
         <h5>
-          {{ (user?.role === 'school' ? user.school : user.fullname) | titlecase }}
+          {{ getUserDisplayname() | titlecase }}
         </h5>
         <p>{{ user?.role | titlecase }}</p>
       </span>
