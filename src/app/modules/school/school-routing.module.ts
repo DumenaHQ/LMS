@@ -5,6 +5,7 @@ import { SchoolOverviewComponent } from './components/school-overview/school-ove
 import { SchoolPaymentComponent } from './components/school-payment/school-payment.component';
 import { SchoolStudentsComponent } from './components/school-students/school-students.component';
 import { SchoolComponent } from './school.component';
+import { PaymentConfirmationComponent } from './components/school-payment/payment-confirmation/payment-confirmation.component';
 
 const routes: Routes = [
   {
@@ -72,6 +73,14 @@ const routes: Routes = [
         component: SchoolPaymentComponent,
         data: {
           title: 'Payment',
+          description: 'Description Meta Tag Content',
+        },
+      },
+      {
+        path: 'payment/confirm-payment',
+        component: PaymentConfirmationComponent,
+        data: {
+          title: 'Confirm Payment',
           description: 'Description Meta Tag Content',
         },
       },
