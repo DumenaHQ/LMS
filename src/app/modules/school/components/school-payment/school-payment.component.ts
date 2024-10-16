@@ -36,7 +36,6 @@ export class SchoolPaymentComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.authService.getUser().user;
     this.getClassrooms();
-    // this.getClassroomSubscription();
   }
 
   getClassrooms() {
@@ -53,18 +52,6 @@ export class SchoolPaymentComponent implements OnInit {
       },
     });
   }
-
-  // getClassroomSubscription() {
-  //   this.subscriptionService.getClassSubscription().subscribe({
-  //     next: (res: any) => {
-  //       this.subAmount = res.data.subscription.amount;
-  //     },
-  //     error: (e) => console.error(e),
-  //     complete: () => {
-  //       this.dataLoading = false;
-  //     },
-  //   });
-  // }
 
   openViewClassroomLearners(classroom: any) {
     this.classroom = classroom;
@@ -120,10 +107,10 @@ export class SchoolPaymentComponent implements OnInit {
 
   createSelectAllClassrooms() {
     this.classroomsSelectedLearners = {
-      classes: this.classrooms?.map((classroom: any) => (
-        this.createClassObject(classroom)
-      )),
-    }
+      classes: this.classrooms
+        ?.filter((classroom: any) => classroom.sub_status !== 'full') // Only select classroom that haven't been fully paid for
+        .map((classroom: any) => this.createClassObject(classroom)),
+    };
   }
 
   getTotalSelectedLearnersCheck(classroom: any) {

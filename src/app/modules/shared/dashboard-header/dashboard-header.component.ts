@@ -30,12 +30,12 @@ export class DashboardHeaderComponent implements OnInit {
     this.hamClick.emit();
   }
 
-  getUserDisplayname(): string {
+  getUserDisplayName(): string {
     let displayName;
     if(this.user.role === 'school') {
       displayName = this.user.school;
     } else if(this.user.role === 'learner') {
-      this.user.nickName
+      displayName = this.user.nickName ? this.user.nickName : this.user.fullname;
     } else {
       displayName = this.user.fullname;
     }
