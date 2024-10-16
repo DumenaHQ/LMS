@@ -34,6 +34,12 @@ export class SchoolService {
     return this.http.get(url, this.getHttpOptions('application/json'));
   }
 
+  getSchoolSettings() {
+    return this.http.get(`${this.baseUrl}schools/settings`, 
+      this.getHttpOptions('application/json')
+    );
+  }
+
   // Get download learners list
   // getDownloadLearnersList(userId: string) {
   //   return this.http.get(

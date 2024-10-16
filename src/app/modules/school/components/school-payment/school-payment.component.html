@@ -45,7 +45,6 @@
                       class="clickable"
                       (change)="toggleSelectClass($event, classroom)"
                     >
-                      <!-- [title]="classroom.learner_count === classroomsSelectedLearners[classroom.id].length ? 'Deselect classroom' : 'Select classroom'" -->
                   </div>
                 </div>
                 <div class="icons dis-flex" style="margin-bottom: 0;">
@@ -70,6 +69,10 @@
                   <p class="body-3-medium value">₦{{ getClassTotalAmount(classroom) | number }}</p>
                 </div>
               </div>
+            </div>
+
+            <div class="card_item_disabled" *ngIf="classroom.sub_status === 'full'">
+              <h3>Paid</h3>
             </div>
           </div>
         </div>

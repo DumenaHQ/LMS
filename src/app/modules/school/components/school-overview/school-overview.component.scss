@@ -62,6 +62,17 @@
       }
     }
   }
+  aside {
+    flex-basis: 30%;
+    .term {
+      @include sect-bg($border-color: transparent);
+      .success_btn,
+      .grey_btn {
+        font-size: 16px;
+        padding: 0.5rem;
+      }
+    }
+  }
   .messages {
     flex-basis: 30%;
     @include sect-bg($border-color: transparent);
