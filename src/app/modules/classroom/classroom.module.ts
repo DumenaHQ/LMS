@@ -7,7 +7,6 @@ import { GridDisplayClassroomsComponent } from './components/display-classrooms/
 import { BlankDisplayClassroomComponent } from './components/display-classrooms/blank-display-classroom/blank-display-classroom.component';
 import { ViewClassroomComponent } from './components/view-classroom/view-classroom.component';
 import { SharedModule } from '../shared/shared.module';
-import { ConfirmSessionDateComponent } from './components/view-classroom/confirm-session-date/confirm-session-date.component';
 import { AddClassroomCourseComponent } from './components/add-classroom-course/add-classroom-course.component';
 import { AddClassroomLearnerComponent } from './components/add-classroom-learner/add-classroom-learner.component';
 import { ViewCourseQuizReportComponent } from './components/view-classroom/view-course-quiz-report/view-course-quiz-report.component';
@@ -23,7 +22,6 @@ import { ClassroomLearnersActivityComponent } from './components/view-classroom/
     GridDisplayClassroomsComponent,
     BlankDisplayClassroomComponent,
     ViewClassroomComponent,
-    ConfirmSessionDateComponent,
     AddClassroomCourseComponent,
     AddClassroomLearnerComponent,
     ViewCourseQuizReportComponent,
