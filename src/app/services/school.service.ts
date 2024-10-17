@@ -40,6 +40,14 @@ export class SchoolService {
     );
   }
 
+  updateSchoolSettings(data: any) {
+    return this.http.put(
+      `${this.baseUrl}schools/settings`,
+      data,
+      this.getHttpOptions('application/json') 
+    );
+  }
+
   // Get download learners list
   // getDownloadLearnersList(userId: string) {
   //   return this.http.get(

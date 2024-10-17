@@ -77,8 +77,14 @@
   </aside>
 </section>
 
-<!-- Modal onboard -->
 <app-school-onboard
   *ngIf="user?.isUserOnboarded === false"
-  (isOnboarding)="closeOnboardModal()"
+  [schoolSettings]="schoolSettings"
+  (onboardEvent)="closeOnboardModal()"
 ></app-school-onboard>
+
+<app-school-confirm-session-date 
+  *ngIf="this.schoolSettings?.active_term?.defaultDateChanged === false"
+  [schoolSettings]="schoolSettings"
+  (closeModalEvent)="getSchoolSettings()"
+></app-school-confirm-session-date>

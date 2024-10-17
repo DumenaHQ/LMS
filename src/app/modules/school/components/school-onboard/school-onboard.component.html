@@ -1,25 +1,41 @@
-<!-- Modal -->
 <div class="modal">
-    <div class="modal_area">
-      <!-- Intro -->
-      <div class="intro modal_area_content">
-        <img
-          src="../../../../../assets/img/undraw_begin_chat_re_v0lw 2.svg"
-          alt=""
-          class="intro_image"
-        />
-        <div class="modal-details">
-          <h2 class="text-primary-color">Welcome to DumenaLMS!</h2>
-          <p>
-            Create a <b>Classroom</b> and get all set up for an amazing
-            experience.
-          </p>
-        </div>
-        <div class="modal-btns dis-flex">
-          <button class="btn prim_btn" (click)="closeOnboardModal()">
-            Add Classroom
-          </button>
-        </div>
+  <div class="modal_area">
+    <div class="intro modal_area_content">
+      <img
+        src="../../../../../assets/img/undraw_begin_chat_re_v0lw 2.svg"
+        alt=""
+        class="intro_image"
+      />
+      <div class="modal-details">
+        <h2 class="text-primary-color">Welcome to DumenaLMS!</h2>
+        <p>
+          Start by confirming the active <b>Term</b> date, and also
+          create a <b>Classroom</b> and get all set up for an amazing
+          experience.
+        </p>
+      </div>
+      <div class="modal-btns dis-flex">
+        <button 
+          class="btn prim_btn" 
+          *ngIf="onBoardSect === 1"
+          (click)="openConfirmSessionDate()"
+        >
+          Confirm Term Dates
+        </button>
+        <button 
+          class="btn prim_btn" 
+          *ngIf="onBoardSect === 2" 
+          (click)="goToClassroomsPage()"
+        >
+          Add Classroom
+        </button>
       </div>
     </div>
   </div>
+</div>
+
+<app-school-confirm-session-date 
+  *ngIf="this.isConfirmSessionDate === true"
+  [schoolSettings]="schoolSettings"
+  (closeModalEvent)="closeConfirmSessionDate()"
+></app-school-confirm-session-date>

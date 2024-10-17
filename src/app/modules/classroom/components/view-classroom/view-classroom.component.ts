@@ -21,7 +21,6 @@ export class ViewClassroomComponent implements OnInit {
   dataLoading: boolean = true;
   addCourseToClassroom: boolean = false;
   addLearnerToClassroom: boolean = false;
-  updatingClassDate: boolean = false;
   activeSession?: Term;
   teacherName: any;
   courseQuizResult: boolean = false;
@@ -52,59 +51,6 @@ export class ViewClassroomComponent implements OnInit {
       }
     });
     this.getClassrooms();
-  }
-
-  confirmSessionDates(defaultSessionConfirmed: any) {
-    if (defaultSessionConfirmed.confrimType === 'withoutEdit') {
-      if (!this.classroom?.active_term?.start_date || !this.classroom?.active_term.end_date) {
-        this.appAlertService.showAlert(
-          'Something went wrong.\nPlease contact admin.',
-          AlertType.Error,
-        );
-        
-        return;
-      }
-      this.confirmDefaultSessionDates(this.classroom?.active_term?.start_date, this.classroom?.active_term.end_date);
-    } else {
-      this.confirmDefaultSessionDates(defaultSessionConfirmed.value.active_term_start_date, defaultSessionConfirmed.value.active_term_end_date);
-    }
-  }
-
-  confirmDefaultSessionDates(startDate: any, endDate: any) {
-    this.updatingClassDate = true;
-
-    const start = startDate && new Date(startDate);
-    const end = endDate && new Date(endDate);
-
-    var formData: any = new FormData();
-    formData.append('active_term_start_date', new Date(start).toISOString());
-    formData.append('active_term_end_date', new Date(end).toISOString());
-
-    this.classroomService
-      .editClassroom(formData, this.currentClassroomId.classroomId)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.status) {
-          this.appAlertService.showAlert(data.message, AlertType.Success);
-          this.getClassrooms();
-          this.updatingClassDate = false;
-        } else {
-          throw data;
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        this.appAlertService.showAlert(
-          error.error.message
-            ? error.error.message
-            : error.message
-            ? error.error.message || error.error.error.errors[0].message
-            : error.message,
-          AlertType.Error
-        );
-
-        this.updatingClassDate = false;
-      });
   }
 
   // Get classrooms
