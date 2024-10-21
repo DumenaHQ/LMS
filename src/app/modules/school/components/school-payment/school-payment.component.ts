@@ -40,7 +40,7 @@ export class SchoolPaymentComponent implements OnInit {
 
   getClassrooms() {
     this.dataLoading = true;
-    let classroomStatus = 'active_class';
+    let classroomStatus = 'active_term';
     this.classroomService.getClassrooms(classroomStatus).subscribe({
       next: (res: any) => {
         this.classrooms = res.data.classes; 
