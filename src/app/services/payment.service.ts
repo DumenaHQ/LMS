@@ -46,7 +46,11 @@ export class PaymentService {
     let zone = this.ngZone;
 
     const popup = new PaystackPop();
-    popup.resumeTransaction(access_code);
+    popup.resumeTransaction(access_code).then((response: any) => {
+      console.log(response);
+      this.appAlertService.showAlert("Payment successful!", AlertType.Success);   
+    })
+    this.appAlertService.showAlert("Payment successful!", AlertType.Success);   
   }
 
 

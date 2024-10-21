@@ -40,7 +40,8 @@ export class SchoolPaymentComponent implements OnInit {
 
   getClassrooms() {
     this.dataLoading = true;
-    this.classroomService.getClassrooms().subscribe({
+    let classroomStatus = 'active_class';
+    this.classroomService.getClassrooms(classroomStatus).subscribe({
       next: (res: any) => {
         this.classrooms = res.data.classes; 
         this.createSelectAllClassrooms();
@@ -150,16 +151,30 @@ export class SchoolPaymentComponent implements OnInit {
   }
 
   calculateClassSubAmount(numOfLearners: number) {
-    if (numOfLearners < 101)
+    // if (numOfLearners < 101)
+    //   this.subAmount = 10000;
+    // else if (numOfLearners > 100 && numOfLearners < 201)
+    //   this.subAmount = 9500;
+    // else if (numOfLearners > 200 && numOfLearners < 301)
+    //   this.subAmount = 9000;
+    // else if (numOfLearners > 300 && numOfLearners < 401)
+    //   this.subAmount = 8500;
+    // else if (numOfLearners > 400 && numOfLearners < 501)
+    //   this.subAmount = 8000
+    // else 
+    //   this.subAmount = 7500;
+    // return this.subAmount;
+
+    if (numOfLearners < 50)
       this.subAmount = 10000;
+    else if (numOfLearners > 50 && numOfLearners < 101)
+      this.subAmount = 8000;
     else if (numOfLearners > 100 && numOfLearners < 201)
-      this.subAmount = 9500;
-    else if (numOfLearners > 200 && numOfLearners < 301)
-      this.subAmount = 9000;
-    else if (numOfLearners > 300 && numOfLearners < 401)
-      this.subAmount = 8500;
-    else if (numOfLearners > 400 && numOfLearners < 501)
-      this.subAmount = 8000
+      this.subAmount = 7500;
+    else if (numOfLearners > 200 && numOfLearners < 501)
+      this.subAmount = 7000;
+    else if (numOfLearners > 500)
+      this.subAmount = 6000
     else 
       this.subAmount = 7500;
     return this.subAmount;
