@@ -17,6 +17,7 @@ export class SchoolOverviewComponent implements OnInit {
   public greeting: string = ''
   classrooms: any;
   teachers: any;
+  schoolSettings: any;
 
   constructor(
     private authService: AuthService,
@@ -27,15 +28,19 @@ export class SchoolOverviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.greeting = this.authService.getGreeting();
-    this.user = this.authService.getUser().user;
-
+    this.getUserDetails();
     this.getSchoolLearners();
     this.getSchoolClassrooms();
     this.getSchoolTeachers();
+    this.getSchoolSettings();
 
     // Load the Visualization API and the corechart package.
     google.charts.load('current', {'packages':['corechart']});
     this.buildChart()
+  }
+
+  getUserDetails() {
+    this.user = this.authService.getUser().user;
   }
 
   getSchoolLearners() {
@@ -64,6 +69,18 @@ export class SchoolOverviewComponent implements OnInit {
       error: (e) => console.error(e),
     });
   } 
+
+  getSchoolSettings() {
+    this.schoolService.getSchoolSettings().subscribe({
+      next: (res: any) => {
+        this.schoolSettings = res.data.settings;
+      },
+      error: (e) => console.error(e),
+      complete: () => {
+        this.dataLoading = false;
+      },
+    });
+  }
 
   // Build chart
   buildChart() {
@@ -110,11 +127,11 @@ export class SchoolOverviewComponent implements OnInit {
       isUserOnboarded: true,
     }
     
-    // update user profile
     this.authService.updateUser(payload).subscribe((res: any) => {
       if (res.status == true) {
         this.authService.addUserDataToLocalStorage(res.data);
-        this.ngOnInit()
+        this.getUserDetails();
+        this.getSchoolSettings();
       }
     });
   }

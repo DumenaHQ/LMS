@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,7 +8,10 @@ import { Router } from '@angular/router';
 })
 export class SchoolOnboardComponent implements OnInit {
 
-  @Output() isOnboarding: EventEmitter<any> = new EventEmitter();
+  @Input() schoolSettings: any;
+  @Output() onboardEvent: EventEmitter<any> = new EventEmitter();
+  onBoardSect: number = 1;
+  isConfirmSessionDate: boolean = false;
 
   constructor(
     private router: Router
@@ -16,10 +19,22 @@ export class SchoolOnboardComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // close Onboarding modal
-  closeOnboardModal() {
-    this.isOnboarding.emit();
+  goToClassroomsPage() {
+    this.closeModal();
     this.router.navigate(['/school/classrooms']);
+  }
+
+  openConfirmSessionDate() {
+    this.isConfirmSessionDate = true;
+  }
+
+  closeConfirmSessionDate() {
+    this.isConfirmSessionDate = false;
+    this.onBoardSect = 2;
+  }
+  
+  closeModal() {
+    this.onboardEvent.emit();
   }
 
 }

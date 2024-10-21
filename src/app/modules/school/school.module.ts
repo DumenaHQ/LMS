@@ -15,6 +15,7 @@ import { SchoolOnboardComponent } from './components/school-onboard/school-onboa
 import { LearningSupportModule } from '../learning-support/learning-support.module';
 import { PaymentClassroomLearnersComponent } from './components/school-payment/payment-classroom-learners/payment-classroom-learners.component';
 import { PaymentConfirmationComponent } from './components/school-payment/payment-confirmation/payment-confirmation.component';
+import { SchoolConfirmSessionDateComponent } from './components/school-confirm-session-date/school-confirm-session-date.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { PaymentConfirmationComponent } from './components/school-payment/paymen
     SchoolOnboardComponent,
     PaymentClassroomLearnersComponent,
     PaymentConfirmationComponent,
+    SchoolConfirmSessionDateComponent,
   ],
   imports: [
     CommonModule,

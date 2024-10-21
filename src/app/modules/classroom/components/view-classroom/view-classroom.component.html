@@ -284,11 +284,4 @@
   [confirmUrl]="'patch'"
   (reloadData)="getClassrooms()"
 ></app-confirm-delete>
-
-<app-confirm-session-date
-  [loading]="updatingClassDate"
-  [classroom]="classroom"
-  *ngIf="this.classroom?.active_term?.defaultDateChanged === false && user.role === 'school'"
-  (confirmSessionDateAction)="confirmSessionDates($event)"
-></app-confirm-session-date>
   

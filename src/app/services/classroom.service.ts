@@ -11,8 +11,18 @@ export class ClassroomService {
 
   constructor(private http: HttpClient) {}
 
-  getClassrooms() {
-    return this.http.get(`${this.baseUrl}classes`, this.getHttpOptions());
+  getClassrooms(params?: any) {
+    let url = `${this.baseUrl}classes`;
+    const queryParams: string[] = [];
+    
+    if (params) {
+      queryParams.push(`filter=${encodeURIComponent(params)}`);
+    }
+    if (queryParams.length) {
+      url += `?${queryParams.join('&')}`;
+    }
+
+    return this.http.get(url, this.getHttpOptions());
   }
 
   getClassroomById(classroomId: string) {
@@ -22,7 +32,7 @@ export class ClassroomService {
     );
   }
 
-  getClassroomLearnersByClassroomId(classroomId: string, params: any) {
+  getClassroomLearnersByClassroomId(classroomId: string, params?: any) {
     let url = `${this.baseUrl}classes/${classroomId}/learners`;
     const queryParams: string[] = [];
     

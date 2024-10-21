@@ -42,46 +42,49 @@
       </div>
     </div> -->
   </main>
-  <!-- <aside class="messages">
-    <div class="messages_title">
-      <h5>Messages</h5>
-      <p>Recent</p>
+  <aside>
+    <div class="term">
+      <h5>Term Details</h5>
+      <div 
+        class="dis-flex" 
+        style="justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;"
+      >
+        <p
+          [ngClass]="schoolSettings?.active_term ? 'success_btn' : 'grey_btn'"
+        >
+          {{
+            (schoolSettings?.active_term ? schoolSettings?.active_term.title : "On Break") | uppercase
+          }}
+        </p>
+
+        <div class="icons dis-flex">
+          <span class="dis-flex" *ngIf="schoolSettings?.active_term">
+            <div class="">
+              <p class="body-2-regular">
+                <b>Starts:</b>
+                {{ schoolSettings?.active_term?.start_date | date : "mediumDate" }}
+              </p>
+
+              <p>
+                <b>Ends:</b>
+                {{ schoolSettings?.active_term?.end_date | date : "mediumDate" }}
+              </p>
+            </div>
+          </span>
+        </div>
+      </div> 
     </div>
-    <ul class="messages_list">
-      <li class="messages_list_item dis-flex">
-        <img src="../../../../../assets/img/person1.png" alt="" />
-        <div class="messages_list_item_details">
-          <h6 class="name">Charlie Renner</h6>
-          <small class="message">
-            Dolor ullam in non molestias. At aut reiciendis dolor non culpa sint
-            quasi.
-          </small>
-        </div>
-      </li>
-      <li class="messages_list_item dis-flex">
-        <img src="../../../../../assets/img/person2.png" alt="" />
-        <div class="messages_list_item_details">
-          <h6 class="name">Erika Prohaska</h6>
-          <small class="message"
-            >Sint quaerat eum esse sint numquam ea incidunt.</small
-          >
-        </div>
-      </li>
-      <li class="messages_list_item dis-flex">
-        <img src="../../../../../assets/img/person3.png" alt="" />
-        <div class="messages_list_item_details">
-          <h6 class="name">Sophia Hudson</h6>
-          <small class="message"
-            >Laudantium consequatur eum voluptas iusto enim.</small
-          >
-        </div>
-      </li>
-    </ul>
-  </aside> -->
+  </aside>
 </section>
 
-<!-- Modal onboard -->
 <app-school-onboard
   *ngIf="user?.isUserOnboarded === false"
-  (isOnboarding)="closeOnboardModal()"
+  [schoolSettings]="schoolSettings"
+  (onboardEvent)="closeOnboardModal()"
 ></app-school-onboard>
+
+<app-school-confirm-session-date 
+  *ngIf="this.schoolSettings?.active_term?.defaultDateChanged === false"
+  [schoolSettings]="schoolSettings"
+  (closeModalEvent)="getSchoolSettings()"
+></app-school-confirm-session-date>
