@@ -138,48 +138,6 @@
             </div>
           </div>
         </div>
-  
-        <h4 class="" style="margin-top: 14px">Active Term</h4>
-        <div class=""></div>
-        <div class="form_control">
-          <label for="active_term_start_date">Start Date</label>
-          <div class="form_control_field">
-            <div class="">
-              <input
-                type="date"
-                name="active_term_start_date"
-                id="active_term_start_date"
-                formControlName="active_term_start_date"
-                [min]="minDate"
-                [max]="maxDate"
-              />
-            </div>
-  
-            <div class="form_error" *ngIf="formGroup.controls.active_term_start_date.errors && formGroup.controls.active_term_start_date.touched">
-              <p class="body-3-regular error-msg">{{ getErrorMessage('active_term_start_date', 'Start Date') }}</p>
-            </div>
-          </div>
-        </div>
-  
-        <div class="form_control">
-          <label for="active_term_end_date">End Date</label>
-          <div class="form_control_field">
-            <div class="">
-              <input
-                type="date"
-                name="active_term_end_date"
-                id="active_term_end_date"
-                formControlName="active_term_end_date"
-                [min]="minDate"
-                [max]="maxDate"
-              />
-            </div>
-  
-            <div class="form_error" *ngIf="formGroup.controls.active_term_end_date.errors && formGroup.controls.active_term_end_date.touched">
-              <p class="body-3-regular error-msg">{{ getErrorMessage('active_term_end_date', 'End Date') }}</p>
-            </div>
-          </div>
-        </div>
         
       </div>
       <div class="form_btns">
