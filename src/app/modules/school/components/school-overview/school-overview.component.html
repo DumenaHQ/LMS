@@ -44,7 +44,21 @@
   </main>
   <aside>
     <div class="term">
-      <h5>Term Details</h5>
+      <div
+        class="dis-flex" 
+        style="justify-content: space-between; gap: 1rem;"
+      >
+        <h5>Term Details</h5>
+        <button 
+          class="btn grey_btn edit-term_btn" 
+          title="Edit" 
+          style="padding: 0.2rem;" 
+          (click)="openConfirmModal()"
+        >
+          Edit
+          <i class='bx bx-edit-alt edit-term_icon'></i>
+        </button>
+      </div>
       <div 
         class="dis-flex" 
         style="justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;"
@@ -84,7 +98,14 @@
 ></app-school-onboard>
 
 <app-school-confirm-session-date 
-  *ngIf="this.schoolSettings?.active_term?.defaultDateChanged === false"
+  *ngIf="this.schoolSettings?.active_term?.defaultDateChanged === false || editSessionDate"
   [schoolSettings]="schoolSettings"
   (closeModalEvent)="getSchoolSettings()"
 ></app-school-confirm-session-date>
+
+<app-confirm-delete 
+  *ngIf="confirmModal" 
+  [confirmMessage]="confirmMessage"
+  (confrimModal)="closeConfirmModal()" 
+  (confrimDone)="openConfirmSessionDate()"
+></app-confirm-delete>

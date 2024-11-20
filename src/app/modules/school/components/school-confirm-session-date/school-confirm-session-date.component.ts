@@ -32,9 +32,18 @@ export class SchoolConfirmSessionDateComponent implements OnInit {
   // Initialize form
   initForm() {
     this.formGroup = this.formBuilder.group({
-      active_term_start_date: ['', [Validators.required]],
-      active_term_end_date: ['', [Validators.required]],
+      active_term_start_date: [this.formatDateToString(this.schoolSettings?.active_term?.start_date), [Validators.required]],
+      active_term_end_date: [this.formatDateToString(this.schoolSettings?.active_term?.end_date), [Validators.required]],
     });
+  }
+
+  formatDateToString(dateString: string | undefined): string | null {
+    if (!dateString) return null;
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
   changeDatesToggle() {

@@ -76,8 +76,6 @@ export class EditClassroomComponent implements OnInit {
       teacher: ['', [Validators.required]],
       header_photo: [''],
       thumbnail: [''],
-      active_term_start_date: ['', [Validators.required]],
-      active_term_end_date: ['', [Validators.required]],
     });
   }
 
@@ -93,13 +91,7 @@ export class EditClassroomComponent implements OnInit {
             name: this.classroom?.name,
             template: this.classroom?.template?.id,
             description: this.classroom?.description,
-            teacher: this.classroom?.teacher?.id,
-            active_term_start_date: moment(
-              this.classroom?.active_term?.start_date
-            ).format('YYYY-MM-DD'),
-            active_term_end_date: moment(
-              this.classroom?.active_term?.end_date
-            ).format('YYYY-MM-DD'),
+            teacher: this.classroom?.teacher?.id
           });
         },
         error: (e) => {
@@ -158,23 +150,12 @@ export class EditClassroomComponent implements OnInit {
   editClassroom() {
     this.loading = true;
     const { value } = this.formGroup;
-    if (!value.active_term_start_date || !value.active_term_end_date) {
-      return;
-    }
-
-    const startDate = value.active_term_start_date;
-    const endDate = value.active_term_end_date;
-
-    const start = startDate && new Date(startDate);
-    const end = endDate && new Date(endDate);
 
     var formData: any = new FormData();
     formData.append('name', value.name);
     formData.append('description', value.description);
     formData.append('template', value.template);
     formData.append('teacher_id', value.teacher);
-    formData.append('active_term_start_date', new Date(start).toISOString());
-    formData.append('active_term_end_date', new Date(end).toISOString());
     if (this.headerPhotoFile) {
       formData.append('header_photo', this.headerPhotoFile);
     }
