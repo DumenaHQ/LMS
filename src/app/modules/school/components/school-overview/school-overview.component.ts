@@ -18,6 +18,9 @@ export class SchoolOverviewComponent implements OnInit {
   classrooms: any;
   teachers: any;
   schoolSettings: any;
+  editSessionDate: boolean = false;
+  confirmModal: boolean = false;
+  confirmMessage: string = '';
 
   constructor(
     private authService: AuthService,
@@ -74,6 +77,7 @@ export class SchoolOverviewComponent implements OnInit {
     this.schoolService.getSchoolSettings().subscribe({
       next: (res: any) => {
         this.schoolSettings = res.data.settings;
+        this.editSessionDate = false;
       },
       error: (e) => console.error(e),
       complete: () => {
@@ -121,6 +125,11 @@ export class SchoolOverviewComponent implements OnInit {
     google.charts.setOnLoadCallback(callback);
   }
 
+  openConfirmSessionDate() {
+    this.confirmModal = false;
+    this.editSessionDate = true;
+  }
+
   // close Onboarding modal
   closeOnboardModal() {
     let payload = {
@@ -134,6 +143,16 @@ export class SchoolOverviewComponent implements OnInit {
         this.getSchoolSettings();
       }
     });
+  }
+
+  openConfirmModal() {
+    this.confirmModal = true;
+    this.confirmMessage = `Are you sure you want to edit term dates?`;
+  }
+
+  // Close Confirm Delete Modal
+  closeConfirmModal() {
+    this.confirmModal = false;
   }
 
 }
