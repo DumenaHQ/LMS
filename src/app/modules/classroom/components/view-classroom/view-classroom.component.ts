@@ -29,6 +29,7 @@ export class ViewClassroomComponent implements OnInit {
   confirmModal: boolean = false;
   confirmUrl: string;
   confirmMessage: string;
+  isClassroomAccess: boolean = true;
 
   constructor(
     private classroomService: ClassroomService,
@@ -60,6 +61,10 @@ export class ViewClassroomComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           this.classroom = res.data.class;
+          if(res.message === 'You currently do not have an active subscription access to this class') {
+            this.appAlertService.showAlert(res.message, AlertType.Warning);
+            this.isClassroomAccess = false;
+          }
           this.changeDectetorRef.detectChanges();
         },
         error: (e) => console.error(e),

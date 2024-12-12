@@ -115,13 +115,13 @@ export class SchoolPaymentComponent implements OnInit {
   }
 
   getTotalSelectedLearnersCheck(classroom: any) {
-    let selectedLearners = `0 / ${classroom.learner_count}`;
+    let selectedLearners = `0 / ${classroom.unpaid_learner_count}`;
     this.classroomsSelectedLearners?.classes.forEach((classroomSelect: any) => {
       if (classroomSelect.class_id === classroom?.id) {
         if(classroomSelect.allLearners) {
-          selectedLearners = `${classroom.learner_count} / ${classroom.learner_count}`;
+          selectedLearners = `${classroom.unpaid_learner_count} / ${classroom.unpaid_learner_count}`;
         } else {
-          selectedLearners = `${classroomSelect.learners.length} / ${classroom.learner_count}`;
+          selectedLearners = `${classroomSelect.learners.length} / ${classroom.unpaid_learner_count}`;
         }
       }
     });
@@ -133,7 +133,7 @@ export class SchoolPaymentComponent implements OnInit {
     this.classroomsSelectedLearners?.classes.forEach((classroomSelect: any) => {
       if (classroomSelect.class_id === classroom?.id) {
         if(classroomSelect.allLearners) {
-          learnersAmount = classroom.learner_count * this.subAmount;
+          learnersAmount = classroom.unpaid_learner_count * this.subAmount;
         } else {
           learnersAmount = classroomSelect.learners.length * this.subAmount;
         }
