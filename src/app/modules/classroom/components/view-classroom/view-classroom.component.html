@@ -130,7 +130,6 @@
         <li
           class="body-2-medium"
           [class.active]="activeTab === 'discussions'"
-          *ngIf="user.role === 'school'"
           (click)="setActiveTab('discussions')"
         >
           Discussions
@@ -180,7 +179,9 @@
 
           <div *ngIf="classroom?.courses?.length === 0" class="course-empty">
             <img src="../../../../../assets/img/Illustration.svg" alt="">
-            <p style="text-align: center">No Course available</p>
+            <p style="text-align: center">
+              {{ user.role !== 'learner' && isClassroomAccess ? 'No Course available' : 'You currently do not have an active subscription access to this class' }}
+            </p>
             <button
               type="button"
               class="btn sec_btn"
@@ -221,6 +222,7 @@
                 <th *ngIf="user?.role !== 'learner'">User Name</th>
                 <th>Email</th>
                 <th>Grade</th>
+                <th>Payment Status</th>
               </tr>
               <tr
                 class="table-body"
@@ -230,6 +232,7 @@
                 <td *ngIf="user?.role !== 'learner'">{{ learner.username || "-" }}</td>
                 <td>{{ learner.email || "-" }}</td>
                 <td>{{ learner.grade || "-" }}</td>
+                <td [className]="learner.paid ? 'text-success' : 'text-danger'">{{ learner.paid ? "Paid" : "Unpaid" }}</td>
               </tr>
             </table>
           </div>
