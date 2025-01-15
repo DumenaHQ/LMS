@@ -94,6 +94,12 @@ textarea::placeholder {
 .text-primary-color {
   color: $primary80;
 }
+.text-success {
+  color: $success100;
+}
+.text-danger {
+  color: $error80;
+}
 .hover-1 {
   transition: all 0.2s ease-in;
   cursor: pointer;
