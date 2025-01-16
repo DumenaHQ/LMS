@@ -222,7 +222,7 @@
                 <th *ngIf="user?.role !== 'learner'">User Name</th>
                 <th>Email</th>
                 <th>Grade</th>
-                <th>Payment Status</th>
+                <th *ngIf="user?.role !== 'learner'">Payment Status</th>
               </tr>
               <tr
                 class="table-body"
@@ -232,7 +232,12 @@
                 <td *ngIf="user?.role !== 'learner'">{{ learner.username || "-" }}</td>
                 <td>{{ learner.email || "-" }}</td>
                 <td>{{ learner.grade || "-" }}</td>
-                <td [className]="learner.paid ? 'text-success' : 'text-danger'">{{ learner.paid ? "Paid" : "Unpaid" }}</td>
+                <td 
+                  *ngIf="user?.role !== 'learner'" 
+                  [className]="learner.paid ? 'text-success' : 'text-danger'"
+                >
+                  {{ learner.paid ? "Paid" : "Pending" }}
+                </td>
               </tr>
             </table>
           </div>
