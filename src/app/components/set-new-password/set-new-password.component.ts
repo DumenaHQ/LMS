@@ -33,7 +33,7 @@ export class SetNewPasswordComponent implements OnInit {
 
     // User form
     this.formGroup = this.formBuilder.group({
-      password: ['', [Validators.required, Validators.minLength(6), this.formErrorService.alphanumericSymbolPasswordValidator()]],
+      password: ['', [Validators.required]],
     });
   }
 
