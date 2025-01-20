@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClassroomService } from 'src/app/services/classroom.service';
 import { ClassTemplateDetailModel } from './interfaces/class-template.model';
+import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 
 @Component({
   selector: 'app-details-display-admin-class-template',
@@ -15,20 +16,26 @@ export class DetailsDisplayAdminClassTemplateComponent implements OnInit {
   classroomTemplate!: ClassTemplateDetailModel;
   dataLoading: boolean = true;
   addCourseToClass: boolean = false;
+  confirmModal: boolean = false;
+  confirmMessage: string;
+  classTemplateCourse: any;
 
   constructor(
     // private programsService: ProgramsService,
     private classroomService: ClassroomService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private appAlertService: AppAlertService,
     private changeDectetorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     // Get Current Program
     this.currentClassId = this.activatedRoute.snapshot.params;
-
-    // Get programs
+    this.getClassroomTemplateById();
+  }
+  
+  getClassroomTemplateById() {
     this.classroomService
       .getClassroomTemplateById(this.currentClassId.classTemplateId)
       .subscribe({
@@ -62,5 +69,38 @@ export class DetailsDisplayAdminClassTemplateComponent implements OnInit {
   tabChange(ids: any) {
     this.contentId = ids;
   }
+
+  openConfirmModal(course: any) {
+    this.confirmModal = true;
+    this.confirmMessage = `Are you sure you want to remove ${course.title}?`;
+    this.classTemplateCourse = course;
+  }
+
+  removeCourse() {
+    this.classroomService
+    .removeCourseFromClassroomTemplate(this.currentClassId.classTemplateId, this.classTemplateCourse.id)
+    .subscribe({
+      next: (res: any) => {
+        this.getClassroomTemplateById();
+        this.closeConfirmModal();
+        this.appAlertService.showAlert(res.message, AlertType.Success);
+      },
+      error: (error: any) => {
+        console.log(error);
+        this.appAlertService.showAlert(
+          error.error.error.code == 400
+          ? (error.error.error.errors[0].message)
+          : (error.error.message),
+          AlertType.Error
+        );
+      }
+    });
+  }
+
+  // Close Confirm Delete Modal
+  closeConfirmModal() {
+    this.confirmModal = false;
+  }
+
 }
 

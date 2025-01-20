@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ActivityService } from 'src/app/services/activity.service';
 import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { ClassroomService } from 'src/app/services/classroom.service';
 import { CoursesService } from 'src/app/services/courses.service';
 
 @Component({
@@ -13,7 +14,7 @@ import { CoursesService } from 'src/app/services/courses.service';
 export class DisplayCourseLessonComponent implements OnInit {
 
   @ViewChild('videoPlayer') videoPlayer: ElementRef;
-  currentCourseParams: any;
+  activateParams: any;
   course?: any;
   modules?: any;
   currentModuleIndex: number;
@@ -25,6 +26,7 @@ export class DisplayCourseLessonComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private courseService: CoursesService,
+    private classroomService: ClassroomService,
     private authService: AuthService,
     private router: Router,
     private appAlertService: AppAlertService,
@@ -33,15 +35,15 @@ export class DisplayCourseLessonComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.currentCourseParams = this.activatedRoute.snapshot.params;
+    this.activateParams = this.activatedRoute.snapshot.params;
     this.getCourse();
     this.user = this.authService.getUser().user;
   }
   
   getCourse() {
-    this.courseService
-    .getCourse(this.currentCourseParams.courseId)
-    .subscribe((res: any) => { 
+    this.classroomService
+    .getClassroomCoursesById(this.activateParams.classroomId, this.activateParams.courseId)
+    .subscribe((res: any) => {
       this.course = res.data.course;
       this.modules = this.course.modules;
       this.getModuleAndLessonIndex();
@@ -92,7 +94,7 @@ export class DisplayCourseLessonComponent implements OnInit {
 
   canViewNextLessonOrQuiz(moduleIndex: any, lessonIndex: any, moduleId: any, lessonId: any, lessonQuizId: any, type: string) {
     this.courseService
-    .checkIfLessonIsReady(this.currentCourseParams.courseId, moduleId, lessonId)
+    .checkIfLessonIsReady(this.activateParams.courseId, moduleId, lessonId)
     .subscribe((res: any) => {
       if(res.data.canTakeNextLesson === true) {
         if(type === 'lesson') {
@@ -127,11 +129,11 @@ export class DisplayCourseLessonComponent implements OnInit {
   
   viewQuiz(lessonQuizId: any) {
     this.recordActivity('started_quiz');
-    this.router.navigate([`${this.user.role}/classrooms/courses/${this.currentCourseParams.courseId}/lessons/quiz/${lessonQuizId}`]);
+    this.router.navigate([`${this.user.role}/classrooms/${this.activateParams.classroomId}/courses/${this.activateParams.courseId}/lessons/quiz/${lessonQuizId}`]);
   }
   
   goBackToCourseInfo() { 
-    this.router.navigate([`/${this.user.role}/classrooms/courses/${this.currentCourseParams.courseId}`]);
+    this.router.navigate([`/${this.user.role}/classrooms/${this.activateParams.classroomId}/courses/${this.activateParams.courseId}`]);
   }
 
   toggleAccordion(index: number) {

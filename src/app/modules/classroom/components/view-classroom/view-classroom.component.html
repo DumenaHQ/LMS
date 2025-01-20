@@ -195,7 +195,7 @@
 
         <app-view-course-quiz-report
           *ngIf="courseQuizResult"
-          [classroomId]="currentClassroomId.classroomId"
+          [classroomId]="activateParams.classroomId"
           [course]="course"
           [user]="user"
           (courseQuizResult)="closeViewCourseQuizResult()"
@@ -261,7 +261,7 @@
       <app-display-questions
         *ngIf="activeTab === 'discussions'" 
         [courses]="classroom?.courses" 
-        [classroomId]="currentClassroomId.classroomId"
+        [classroomId]="activateParams.classroomId"
       ></app-display-questions>
 
       <!-- Activities -->
@@ -273,13 +273,13 @@
 <app-add-classroom-course
   *ngIf="addCourseToClassroom"
   (addCourseToClassroomModal)="closeAddCourseToClassroomModal()"
-  [classroomId]="currentClassroomId.classroomId"
+  [classroomId]="activateParams.classroomId"
   (getClassroom)="getClassrooms()"
 ></app-add-classroom-course>
 
 <app-add-classroom-learner
   *ngIf="addLearnerToClassroom"
-  [classroomId]="currentClassroomId.classroomId"
+  [classroomId]="activateParams.classroomId"
   (addLearnerToClassroomModal)="closeAddLearnerToClassroomModal()"
   (getClassroom)="getClassrooms()"
 ></app-add-classroom-learner>

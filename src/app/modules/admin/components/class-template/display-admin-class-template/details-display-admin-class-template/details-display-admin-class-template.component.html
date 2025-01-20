@@ -150,6 +150,7 @@
                 <th>Number of lesson(s)</th>
                 <th>Quadrant</th>
                 <th>Duration</th>
+                <th></th>
               </tr>
               <ng-container>
                 <tr
@@ -160,6 +161,14 @@
                   <td>{{ course?.lesson_count }}</td>
                   <td>{{ course?.course_quadrant }}</td>
                   <td>{{ course?.duration }}</td>
+                  <td>
+                    <i
+                      class='bx bx-x icon clickable' 
+                      style="color: #e92c2c; font-size: 26px;"
+                      title="Remove"
+                      (click)="openConfirmModal(course)"
+                    ></i>
+                  </td>
                 </tr>
               </ng-container>
               <ng-template>
@@ -251,6 +260,13 @@
   (addCourseToProgramModal)="closeAddCourseToClassModal()"
   [classId]="currentClassId.classTemplateId"
 ></app-add-course-modal>
+
+<app-confirm-delete 
+  *ngIf="confirmModal" 
+  (confrimModal)="closeConfirmModal()" 
+  [confirmMessage]="confirmMessage"
+  (confrimDone)="removeCourse()"
+></app-confirm-delete>
 
 <!-- <ng-container *ngIf="contentId === 'content'">
     <aside>

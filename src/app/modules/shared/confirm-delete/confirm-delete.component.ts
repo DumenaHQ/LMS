@@ -27,8 +27,8 @@ export class ConfirmDeleteComponent implements OnInit {
   }
 
   confirmAction() {
+    this.loading = true;
     if(this.confirmUrl) {
-      this.loading = true;
       this.authService
         .confirmItem(this.confirmUrl, this.confirmMethod).subscribe({
           next:(res: any) => {

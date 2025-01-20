@@ -46,6 +46,13 @@ export class ClassroomService {
     return this.http.get(url, this.getHttpOptions());
   }
 
+  getClassroomCoursesById(classroomId: string, courseId: string) {
+    return this.http.get(
+      `${this.baseUrl}classes/${classroomId}/courses/${courseId}`,
+      this.getHttpOptions()
+    );
+  }
+
   addClassroom(formData: FormData): Promise<any> {
     const headers = new Headers();
     headers.append('Authorization', 'bearer ' + localStorage.getItem('token'));
@@ -130,6 +137,13 @@ export class ClassroomService {
     return this.http.patch(
       `${this.baseUrl}classes/templates/${templateId}/courses`,
       data,
+      this.getHttpOptions()
+    );
+  }
+
+  removeCourseFromClassroomTemplate(templateId: any, courseId: any) {
+    return this.http.patch(
+      `${this.baseUrl}classes/templates/${templateId}/courses/${courseId}/remove`,
       this.getHttpOptions()
     );
   }
