@@ -16,7 +16,7 @@ type Tabs = 'courses' | 'learners' | 'discussions' | 'activity';
 export class ViewClassroomComponent implements OnInit {
 
   activeTab: Tabs = 'courses';
-  currentClassroomId: any;
+  activateParams: any;
   classroom?: ClassroomModel;
   dataLoading: boolean = true;
   addCourseToClassroom: boolean = false;
@@ -43,7 +43,7 @@ export class ViewClassroomComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.currentClassroomId = this.activatedRoute.snapshot.params;
+    this.activateParams = this.activatedRoute.snapshot.params;
     this.user = this.authService.getUser().user;
 
     this.activatedRoute.queryParams.subscribe((params) => {
@@ -57,7 +57,7 @@ export class ViewClassroomComponent implements OnInit {
   // Get classrooms
   getClassrooms() {
     this.classroomService
-      .getClassroomById(this.currentClassroomId.classroomId)
+      .getClassroomById(this.activateParams.classroomId)
       .subscribe({
         next: (res: any) => {
           this.classroom = res.data.class;
@@ -95,7 +95,7 @@ export class ViewClassroomComponent implements OnInit {
   openConfirmModal(teacherName: any) {
     this.confirmModal = true;
     this.confirmMessage = `Are you sure you want to remove ${teacherName}?`;
-    this.confirmUrl = `classes/${this.currentClassroomId.classroomId}/teacher/remove`;
+    this.confirmUrl = `classes/${this.activateParams.classroomId}/teacher/remove`;
   }
 
   // Close Confirm Delete Modal
@@ -106,13 +106,13 @@ export class ViewClassroomComponent implements OnInit {
   // Edit classroom
   editClassroom() {
     this.router.navigate([
-      `/${this.user.role}/classrooms/${this.currentClassroomId.classroomId}/edit-classroom`,
+      `/${this.user.role}/classrooms/${this.activateParams.classroomId}/edit-classroom`,
     ]);
   }
 
   watchCourse(courseId: string) {    
     this.router.navigate([
-      `/${this.user.role}/classrooms/courses/${courseId}`,
+      `/${this.user.role}/classrooms/${this.activateParams.classroomId}/courses/${courseId}`,
     ]);
   }
 

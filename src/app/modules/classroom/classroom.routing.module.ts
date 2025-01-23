@@ -39,7 +39,7 @@ const routes: Routes = [
     },
   },
   {
-    path: 'courses',
+    path: ':classroomId/courses',
     loadChildren: () => import('../../modules/course/course.module').then((m) => m.CourseModule),
     data: {
       title: 'Courses',
