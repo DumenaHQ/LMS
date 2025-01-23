@@ -10,7 +10,7 @@ import { CoursesService } from 'src/app/services/courses.service';
 })
 export class DisplayCourseInfoComponent implements OnInit {
 
-  currentCourse: any;
+  activeParams: any;
   course: any;
   user: any;
 
@@ -23,9 +23,9 @@ export class DisplayCourseInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.autService.getUser().user;
-    this.currentCourse = this.activatedRoute.snapshot.params;
+    this.activeParams = this.activatedRoute.snapshot.params;
     this.coursesService
-      .getCourse(this.currentCourse.courseId)
+      .getCourse(this.activeParams.courseId)
       .subscribe((res: any) => {
         this.course = res.data.course;
       });
@@ -33,7 +33,7 @@ export class DisplayCourseInfoComponent implements OnInit {
 
   startCourse(moduleIndex: number) {
     this.router.navigate([
-      `/${this.user.role}/classrooms/courses/${this.currentCourse.courseId}/lessons`,
+      `/${this.user.role}/classrooms/${this.activeParams.classroomId}/courses/${this.activeParams.courseId}/lessons`,
     ], { queryParams: { moduleIndex: moduleIndex } });
   }
 

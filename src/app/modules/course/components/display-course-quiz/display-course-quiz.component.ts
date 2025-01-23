@@ -12,7 +12,7 @@ import { QuizService } from 'src/app/services/quiz.service';
 })
 export class DisplayCourseQuizComponent implements OnInit {
 
-  currentCourseParams: any;
+  activeParams: any;
   course: any;
   quiz: any;
   currentQuestionIndex: number = 0;
@@ -32,8 +32,8 @@ export class DisplayCourseQuizComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authService.getUser().user;
-    this.currentCourseParams = this.activatedRoute.snapshot.params;
-    this.getQuizByQuizId(this.currentCourseParams.quizId);
+    this.activeParams = this.activatedRoute.snapshot.params;
+    this.getQuizByQuizId(this.activeParams.quizId);
   }
 
   // Get quiz by quiz Id
@@ -109,7 +109,7 @@ export class DisplayCourseQuizComponent implements OnInit {
   submitQuiz() {
     this.loading = true; 
 
-    this.quizzesService.submitQuiz(this.currentCourseParams.quizId, this.responses).subscribe(
+    this.quizzesService.submitQuiz(this.activeParams.quizId, this.responses).subscribe(
       (res: any) => {
         if (res.status === true) {
           this.appAlertService.showAlert(res.message, AlertType.Success);
@@ -138,7 +138,7 @@ export class DisplayCourseQuizComponent implements OnInit {
         error: (e) => console.error(e),
       });
     }
-    this.router.navigate([`learner/classrooms/courses/${this.currentCourseParams.courseId}/lessons`]);
+    this.router.navigate([`learner/classrooms/${this.activeParams.classroomId}/courses/${this.activeParams.courseId}/lessons`]);
   }
 
 }
