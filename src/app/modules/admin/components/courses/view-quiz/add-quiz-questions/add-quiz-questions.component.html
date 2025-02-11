@@ -3,12 +3,14 @@
     <h5 class="text-primary-color">Go back</h5>
 </div>
 
-<form [formGroup]="formGroup">
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
     <div formArrayName="questions" class="form_container">
       <div *ngFor="let questionGroup of questions.controls; let i = index" [formGroupName]="i">
         <div class="form_control_question">
           <div class="form_control_question_header dis-flex">
-            <label style="margin-bottom: 0;">Question {{ i + 1 }}</label>
+            <label style="margin-bottom: 0;">
+              Question {{ quizQuestionCount ? (quizQuestionCount + i + 1) : i + 1 }}
+            </label>
             <div class="dis-flex form_control_question_header_right dis-flex">
               <!-- <div class="form_control_field">
                 <select formControlName="selectionType" [id]="'selectionType' + ' ' + i" name="selectionType">
@@ -55,14 +57,14 @@
                           [for]="'correctAnswer' + '-' + i + '-' + j"
                           class="clickable correct-check dis-flex" 
                           (click)="setCorrectAnswer(i, getAlphabetLabel(j))" 
-                          title="Click to set as correct answer"
+                          title="Set as correct answer"
                         >
                           <input type="radio" name="correctAnswer" [id]="'correctAnswer' + '-' + i + '-' + j">
                         </label>
                         <span 
                           class="clickable remove-option dis-flex" 
                           (click)="removeOption(questionGroup, j)"
-                          title="Click to remove option"
+                          title="Remove option"
                         >
                           <img src="../../../../../../assets/img/svg/fi_check.svg" class="icon" alt="cancel">
                         </span>
@@ -87,15 +89,14 @@
     </div>
   
     <div class="form_btns dis-flex">
-      <ng-container *ngIf="!loading">
-        <button class="btn sec_btn" (click)="addNewQuestion()">Add Question</button>
-        <button class="btn prim_btn" (click)="onSubmit()" [disabled]="formGroup.invalid">Submit</button>
-      </ng-container>
+      <button type="button" class="btn sec_btn" (click)="addNewQuestion()" *ngIf="!loading">Add Question</button>
       <button
+        type="submit"
         class="btn prim_btn"
-        [disabled]="loading"
-        *ngIf="loading"
-      >Processing...</button> 
+        [disabled]="formGroup.invalid || loading"
+      >
+        {{ loading ? "Processing..." : "Submit" }}
+      </button>
     </div>
 </form>
     

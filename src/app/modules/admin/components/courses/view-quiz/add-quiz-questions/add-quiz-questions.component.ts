@@ -11,7 +11,9 @@ import { FormErrorMessageService } from 'src/app/services/utils/form-error-messa
 })
 export class AddQuizQuestionsComponent implements OnInit {
 
+
   @Input() quizId: any;
+  @Input() quizQuestionCount: number;
   @Output() addQuizQuestionModal = new EventEmitter<any>();
   formGroup: FormGroup;
   loading: boolean = false;
