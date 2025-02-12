@@ -41,19 +41,27 @@
         }
         .right {
             gap: $m-2;
-            .status-btn.settings {
-            padding: $m-1 0.7rem;
-            img {
-                width: 16px;
-                height: 16px;
-                vertical-align: middle;
-                transition: all 0.2s;
-            }
-            &:hover {
-                img {
-                transform: rotate(360deg);
+            .delete_btn {
+                background-color: $error80;
+                color: $white-color;
+                transition: all 0.3s ease-in;
+                &:hover {
+                    background-color: #e9404081;
                 }
             }
+            .status-btn.settings {
+                padding: $m-1 0.7rem;
+                img {
+                    width: 16px;
+                    height: 16px;
+                    vertical-align: middle;
+                    transition: all 0.2s;
+                }
+                &:hover {
+                    img {
+                    transform: rotate(360deg);
+                    }
+                }
             }
         }
     }
@@ -97,6 +105,7 @@
         height: 3.5rem;
         border-bottom: 1px solid $divider-color;
         overflow: hidden;
+        justify-content: space-between;
         ul {
             // gap: $m-4;
             // flex-wrap: wrap;
@@ -143,6 +152,11 @@
             width: 100%;
             padding: $m-4;
             .header {
+                &_title {
+                    gap: 1rem;
+                    justify-content: space-between;
+                    margin-bottom: 1.5rem;
+                }
                 h5 {
                     color: $primary20;
                 }
@@ -190,6 +204,16 @@
                             }
                         }
                     }
+                }
+            }
+            .main-footer {
+                width: 100%;
+                gap: $m-2;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                padding: $m-4;
+                .grey_btn {
+                    color: $text-color2;
                 }
             }
         }

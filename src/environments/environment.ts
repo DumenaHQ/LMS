@@ -4,7 +4,8 @@
 
 export const environment = {
     production: false,
-    baseUrl: 'https://dev.dumena.com/'
+    // baseUrl: 'https://dev.dumena.com/'
+    baseUrl: 'http://52.91.5.88:3000/'
 };
 
 /*

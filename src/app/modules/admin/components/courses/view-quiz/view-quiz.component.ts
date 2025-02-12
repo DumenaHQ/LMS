@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { QuizService } from 'src/app/services/quiz.service';
 
 @Component({
@@ -10,37 +11,42 @@ import { QuizService } from 'src/app/services/quiz.service';
 export class ViewQuizComponent implements OnInit {
 
   quiz: any;
-  currentQuizParmas: any;
+  activeParams: any;
   questionIndex: number = 0;
-  isAddQuizQuestions: boolean = false;
+  isAddQuizQuestion: boolean = false;
+  isEditQuizQuestion: boolean = false;
+  quizQuestion: any;
+  confirmModal: boolean = false;
+  confirmMessage: string;
   
   constructor(
     private activatedRoute: ActivatedRoute,
     private quizService: QuizService,
+    private appAlertService: AppAlertService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.currentQuizParmas = this.activatedRoute.snapshot.params;
+    this.activeParams = this.activatedRoute.snapshot.params;
     this.getQuizByQuizId();
   }
   
   getQuizByQuizId() {
-    this.quizService.getquizByQuizId(this.currentQuizParmas.quizId).subscribe({
+    this.quizService.getquizByQuizId(this.activeParams.quizId).subscribe({
       next: (res: any) => {
         this.quiz = res.data.quiz;
-        console.log(this.quiz);
       },
       error: (e: any) => console.error(e)
     });
   }
 
   toggleAddQuizQuestions() {
-    this.isAddQuizQuestions = !this.isAddQuizQuestions;
+    this.isAddQuizQuestion = !this.isAddQuizQuestion;
   }
 
   closeAndRefresh() {
-    this.isAddQuizQuestions = false;
+    this.isAddQuizQuestion = false;
+    this.isEditQuizQuestion = false;
     this.getQuizByQuizId();
   }
 
@@ -60,8 +66,48 @@ export class ViewQuizComponent implements OnInit {
     return options;
   }
 
+  editQuestion(question: any) {
+    this.quizQuestion = question;
+    this.isEditQuizQuestion = true;
+  }
+
+  // removeQuestion(question: any) {
+  //   console.log(question);
+    
+  // }
+
   navigatePage() {
-    this.router.navigate([`admin/courses/${this.currentQuizParmas.courseId}/details`]);
+    this.router.navigate([`admin/courses/${this.activeParams.courseId}/details`]);
+  }
+
+  openConfirmModal() {
+    this.confirmModal = true;
+    this.confirmMessage = `Are you sure you want to delete this quiz?`;
+  }
+
+  deleteQuiz() {
+    this.quizService
+      .deleteQuiz(this.activeParams.quizId)
+      .subscribe({
+        next: (res: any) => {
+          this.appAlertService.showAlert(res.message, AlertType.Success);
+          this.navigatePage();
+        },
+        error: (error: any) => {
+          console.log(error);
+          this.appAlertService.showAlert(
+            error.error.error.code == 400
+            ? (error.error.error.errors[0].message)
+            : (error.error.message),
+            AlertType.Error
+          );
+        }
+      });
+  }
+  
+  // Close Confirm Delete Modal
+  closeConfirmModal() {
+    this.confirmModal = false;
   }
 
 }

@@ -1,0 +1,125 @@
+<div
+  class="dis-flex clickable"
+  style="gap: 1rem; padding: 2rem 0 0 2rem"
+  (click)="closeAddQuizQuestions()"
+>
+  <img
+    src="../../../../../../../assets/img/svg/arrow-left.svg"
+    style="width: 20px"
+    alt="arrow right"
+  />
+  <h5 class="text-primary-color">Go back</h5>
+</div>
+
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <div class="form_container">
+    <div>
+      <div class="form_control_question">
+        <div class="form_control_question_header dis-flex">
+          <label style="margin-bottom: 0"
+            >Edit Question {{ quizQuestionIndex + 1 }}</label
+          >
+        </div>
+        <div class="form_control_field">
+          <textarea
+            name="question"
+            id="question"
+            cols="30"
+            rows="3"
+            placeholder="State your question"
+            spellcheck="true"
+            formControlName="question"
+          ></textarea>
+        </div>
+        <div
+          class="form_error"
+          *ngIf="
+            formGroup.controls['question'].invalid &&
+            formGroup.controls['question'].touched
+          "
+        >
+          <p class="body-3-regular error-msg">
+            {{ getErrorMessage("question", "Question") }}
+          </p>
+        </div>
+      </div>
+
+      <div formArrayName="options" class="options_container">
+        <div>
+          <label>Options</label>
+          <div class="options_container_body">
+            <div
+              class="form_control dis-flex"
+              *ngFor="let option of options.controls; let i = index"
+              [formGroupName]="i"
+            >
+              <label>{{ getAlphabetLabel(i) }}.</label>
+              <div style="width: 100%">
+                <div
+                  class="form_control_field option"
+                  [class.checked]="isCorrectAnswer(getAlphabetLabel(i))"
+                >
+                  <input
+                    formControlName="value"
+                    placeholder="Enter option text"
+                  />
+                  <label
+                    [for]="'correctAnswer-' + i"
+                    class="clickable correct-check dis-flex"
+                    (click)="setCorrectAnswer(getAlphabetLabel(i))"
+                    title="Set as correct answer"
+                  >
+                    <input
+                      type="radio"
+                      name="correctAnswer"
+                      [id]="'correctAnswer' + '-' + quizQuestionIndex + '-' + i"
+                      [checked]="isCorrectAnswer(getAlphabetLabel(i))"
+                    />
+                  </label>
+                  <span
+                    class="clickable remove-option dis-flex"
+                    (click)="removeOption(i)"
+                    title="Click to remove option"
+                  >
+                    <img
+                      src="../../../../../../assets/img/svg/fi_check.svg"
+                      class="icon"
+                      alt="cancel"
+                    />
+                  </span>
+                </div>
+                <div
+                      class="form_error"
+                      *ngIf="
+                          options.at(i).get('value')?.invalid &&
+                          options.at(i).get('value')?.touched
+                      "
+                      >
+                      <p class="body-3-regular error-msg">
+                          {{
+                          getErrorMessage('value', "Option", i)
+                          }}
+                      </p>
+                      </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="add-option dis-flex clickable" (click)="addOption()">
+        <img src="../../../../../../assets/img/svg/add.svg" alt="" />
+        Add Option
+      </span>
+    </div>
+  </div>
+
+  <div class="form_btns dis-flex" style="justify-content: flex-end">
+    <button
+      type="submit"
+      class="btn prim_btn"
+      [disabled]="formGroup.invalid || loading"
+    >
+      {{ loading ? "Processing..." : "Save changes" }}
+    </button>
+  </div>
+</form>
