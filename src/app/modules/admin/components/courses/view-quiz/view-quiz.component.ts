@@ -82,12 +82,19 @@ export class ViewQuizComponent implements OnInit {
 
   openConfirmModal() {
     this.confirmModal = true;
-    this.confirmMessage = `Are you sure you want to delete this quiz?`;
+    this.confirmMessage = `Are you sure you want to remove quiz from ${this.activeParams.lessonName}?`;
   }
 
-  deleteQuiz() {
+  removeQuiz() {
+    let data = {
+      course_id: this.activeParams.courseId,
+      module_id: this.activeParams.moduleId,
+      lesson_id: this.activeParams.lessonId,
+      quiz_level: 'lesson'
+    }
+
     this.quizService
-      .deleteQuiz(this.activeParams.quizId)
+      .removeQuizFromLesson(this.activeParams.quizId, data)
       .subscribe({
         next: (res: any) => {
           this.appAlertService.showAlert(res.message, AlertType.Success);

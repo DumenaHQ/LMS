@@ -140,7 +140,17 @@
                               <div>
                                 <Button
                                   class="btn sec_btn" 
-                                  (click)="lesson?.quiz_id ? goToQuizPage(lesson?.quiz_id) : openAddQuizToCourse(course?.modules[currentModuleIndex].id, lesson.id)"
+                                  (click)="
+                                    lesson?.quiz_id ?
+                                     viewLessonQuiz(
+                                      course?.modules[currentModuleIndex].title, 
+                                      course?.modules[currentModuleIndex].id, 
+                                      lesson.title, 
+                                      lesson.id, 
+                                      lesson?.quiz_id
+                                    ) : 
+                                     openAddQuizToCourse(course?.modules[currentModuleIndex].id, lesson.id)
+                                  "
                                 >
                                   {{ lesson?.quiz_id ? 'View Quiz' : 'Add Quiz' }}
                                 </Button>

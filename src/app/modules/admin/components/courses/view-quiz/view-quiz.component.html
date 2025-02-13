@@ -1,8 +1,8 @@
 <section class="ds-head dis-flex">
     <h2 class="ds-head_title clickable" (click)="navigatePage()">Back to Course</h2>
     <i class="bx bx-chevron-right icon"></i>
-    <p class="clickable" [title]="quiz?.title">
-      {{ quiz?.title | truncate: 40 }}
+    <p class="clickable" [title]="activeParams.lessonName">
+      {{ activeParams.lessonName | truncate: 40 }}
     </p>
 </section>
   
@@ -149,6 +149,6 @@
   *ngIf="confirmModal" 
   (confrimModal)="closeConfirmModal()" 
   [confirmMessage]="confirmMessage"
-  (confrimDone)="deleteQuiz()"
+  (confrimDone)="removeQuiz()"
 ></app-confirm-delete>
   

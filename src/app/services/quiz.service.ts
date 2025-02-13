@@ -75,6 +75,14 @@ export class QuizService {
     );
   }
 
+  removeQuizFromLesson(quizId: string, data: any) {
+    return this.http.patch(
+      `${this.baseUrl}quizzes/${quizId}/remove`,
+      data,
+      this.getHttpOptions()
+    );
+  }
+
   deleteQuiz(quizId: string) {
     return this.http.delete(
       `${this.baseUrl}quizzes/${quizId}`,
