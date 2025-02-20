@@ -3,7 +3,7 @@
     Classrooms
   </h2>
   <i class="bx bx-chevron-right icon"></i>
-  <p class="clickable" [title]="classroom?.name">
+  <p [title]="classroom?.name">
     {{ classroom?.name | truncate }}
   </p>
 </section>
@@ -170,7 +170,7 @@
                 <td>{{ course?.course_quadrant || "-" }}</td>
                 <td>{{ course?.duration || "-" }}</td>
                 <td>
-                  <button class="btn sec_btn" style="margin-right: 2rem;" (click)="watchCourse(course?.id)">Watch</button>
+                  <button class="btn sec_btn" style="margin-right: 2rem;" (click)="watchCourse(course)">Watch</button>
                   <button class="btn sec_btn" (click)="openViewCourseQuizResult(course)">Quiz Result</button>
                 </td>
               </tr>
