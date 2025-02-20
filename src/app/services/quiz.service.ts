@@ -57,11 +57,35 @@ export class QuizService {
     );
   }
 
+  // Update questions to quiz
+  updateQuestionsToQuiz(quizId: string, questionId: string, data: any) {
+    return this.http.put(
+      `${this.baseUrl}quizzes/${quizId}/questions/${questionId}`,
+      data,
+      this.getHttpOptions()
+    );
+  }
+
   // Add quiz to course
   addQuizToCourse(quizId: string, data: any) {
     return this.http.put(
       `${this.baseUrl}quizzes/${quizId}/attach`,
       data,
+      this.getHttpOptions()
+    );
+  }
+
+  removeQuizFromLesson(quizId: string, data: any) {
+    return this.http.patch(
+      `${this.baseUrl}quizzes/${quizId}/remove`,
+      data,
+      this.getHttpOptions()
+    );
+  }
+
+  deleteQuiz(quizId: string) {
+    return this.http.delete(
+      `${this.baseUrl}quizzes/${quizId}`,
       this.getHttpOptions()
     );
   }

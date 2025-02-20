@@ -96,8 +96,8 @@ export class CourseDetailsComponent implements OnInit {
     this.router.navigate([`/admin/courses/${this.currentCourseParams.courseId}/modules`]);
   }
 
-  goToQuizPage(quizId: string) {
-    this.router.navigate([`/admin/courses/${this.currentCourseParams.courseId}/quiz/${quizId}/details`]);
+  viewLessonQuiz(moduleName: string, moduleId: string, lessonName: string, lessonId: string, quizId: string) {
+    this.router.navigate([`/admin/courses/${this.currentCourseParams.courseId}/${moduleName}/${moduleId}/${lessonName}/${lessonId}/quiz/${quizId}/details`]);
   }
 
 }

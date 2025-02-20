@@ -83,8 +83,8 @@ export class AddClassroomCourseComponent implements OnInit {
         next: (res: any) => {
           if (res.status === true) {
             this.appAlertService.showAlert(res.message, AlertType.Success);
-            this.closeAddCourseToClassroomModal();
             this.getClassroom.emit();
+            this.closeAddCourseToClassroomModal();
           }
         },
         error: (error) => {

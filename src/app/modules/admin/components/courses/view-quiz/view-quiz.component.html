@@ -1,8 +1,8 @@
 <section class="ds-head dis-flex">
     <h2 class="ds-head_title clickable" (click)="navigatePage()">Back to Course</h2>
     <i class="bx bx-chevron-right icon"></i>
-    <p class="clickable" [title]="quiz?.title">
-      {{ quiz?.title | truncate: 40 }}
+    <p class="clickable" [title]="activeParams.lessonName">
+      {{ activeParams.lessonName | truncate: 40 }}
     </p>
 </section>
   
@@ -12,7 +12,6 @@
         <div class="left">
             <h2>{{ quiz?.title }}</h2>
             <div class="dis-flex left_bottom">
-            <!-- <button class="success_btn">Published</button> -->
             <div class="icons dis-flex">
                 <span class="dis-flex"
                 ><img src="../../../../../../../assets/img/svg/calendar-2.svg" alt="" />
@@ -22,7 +21,7 @@
             </div>
         </div>
         <div class="right dis-flex">
-            <button class="grey_btn">Edit</button>
+            <button class="btn delete_btn" (click)="openConfirmModal()">Delete</button>
         </div>
         </div>
         <div class="course-details_header_bottom">
@@ -54,12 +53,18 @@
         </div>
     </div>
     <div class="course-details_body">
-        <div class="course-details_body_header">
-        <ul class="dis-flex">
-            <li class="body-2-medium active">Quizzes</li>
-        </ul>
+        <div class="course-details_body_header dis-flex">
+            <ul class="dis-flex">
+                <li class="body-2-medium active">Quizzes</li>
+            </ul>
+
+            <button 
+                *ngIf="isAddQuizQuestion === false && isEditQuizQuestion === false && quiz?.questions.length > 0"
+                class="btn prim_btn" 
+                (click)="toggleAddQuizQuestions()"
+            >Add More Questions</button>
         </div>
-        <ng-container *ngIf="isAddQuizQuestions === false">
+        <ng-container *ngIf="isAddQuizQuestion === false && isEditQuizQuestion === false">
             <div class="course-details_body_content" *ngIf="quiz?.questions.length > 0">
                 <aside>
                     <ul>
@@ -69,9 +74,24 @@
                     </ul>
                 </aside>
                 <main>
-                    <button class="btn prim_btn" style="margin-bottom: 1rem;" (click)="toggleAddQuizQuestions()">Add More Questions</button>
                     <div class="header">
-                        <h5 class="body-2-medium ds-sect-header">Question</h5>
+                        <div class="header_title dis-flex">
+                            <h5 class="body-2-medium">Question</h5>
+                            
+                            <button 
+                                class="btn grey_btn edit-term_btn" 
+                                title="Edit Question" 
+                                style="padding: 0.2rem;"
+                                (click)="editQuestion(quiz?.questions[questionIndex])"
+                            >
+                                Edit
+                                <i class='bx bx-edit-alt edit-term_icon'></i>
+                            </button>
+
+                            <!-- <span class="clickable remove-question dis-flex" (click)="removeQuestion(quiz?.questions[questionIndex].question)">
+                                <img src="../../../../../../assets/img/svg/fi_check.svg" class="icon" alt="cancel">
+                            </span> -->
+                        </div>
                         <p class="question">
                         {{ quiz?.questions[questionIndex].question }}
                         </p>
@@ -83,22 +103,6 @@
                                 <span class="option-value_content">
                                     {{ option.value }}
                                 </span>
-                                <!-- <input 
-                                    *ngIf="option.value.length < 200"
-                                    class="option-value_content" 
-                                    type="text" [id]="i" 
-                                    [value]="option.value" 
-                                    readonly
-                                > -->
-                                <!-- <textarea 
-                                    *ngIf="option.value.length >= 200"
-                                    class="option-value_content" 
-                                    name="option" 
-                                    [id]="i" 
-                                    [value]="option.value" 
-                                    readonly
-                                    [class.extended]="option.value.length >= 200"
-                                ></textarea> -->
                                 <span 
                                     *ngIf="quiz?.questions[questionIndex].answer === option.label"
                                     class="option-value_marked dis-flex" 
@@ -106,6 +110,13 @@
                             </div>
                         </li>
                     </ul>
+
+                    <div class="main-footer dis-flex">
+                        <button class="btn grey_btn" [disabled]="questionIndex === 0"
+                          (click)="questionIndex = questionIndex - 1">Previous</button>
+                        <button class="btn grey_btn" [disabled]="questionIndex === quiz?.questions.length - 1"
+                          (click)="questionIndex = questionIndex + 1">Next</button>
+                    </div>
                 </main>
             </div>
             <ng-container *ngIf="quiz?.questions.length === 0">
@@ -116,11 +127,28 @@
             </ng-container>
         </ng-container>
 
+        
         <app-add-quiz-questions 
-            *ngIf="isAddQuizQuestions === true" 
-            [quizId]="currentQuizParmas.quizId"
+            *ngIf="isAddQuizQuestion === true" 
+            [quizId]="activeParams.quizId"
+            [quizQuestionCount]="quiz?.questions.length"
             (addQuizQuestionModal)="closeAndRefresh()"
-        ></app-add-quiz-questions>     
+        ></app-add-quiz-questions>  
+
+        <app-edit-quiz-question 
+            *ngIf="isEditQuizQuestion === true" 
+            [quizId]="activeParams.quizId"
+            [quizQuestion]="quizQuestion"
+            [quizQuestionIndex]="questionIndex"
+            (editQuizQuestionModal)="closeAndRefresh()"
+        ></app-edit-quiz-question>
     </div>
 </section>
+
+<app-confirm-delete 
+  *ngIf="confirmModal" 
+  (confrimModal)="closeConfirmModal()" 
+  [confirmMessage]="confirmMessage"
+  (confrimDone)="removeQuiz()"
+></app-confirm-delete>
   
