@@ -138,7 +138,7 @@ export class DisplayCourseQuizComponent implements OnInit {
         error: (e) => console.error(e),
       });
     }
-    this.router.navigate([`learner/classrooms/${this.activeParams.classroomId}/courses/${this.activeParams.courseId}/lessons`]);
+    this.router.navigate([`learner/classrooms/${this.activeParams.classroomId}/${this.activeParams.classroomName}/courses/${this.activeParams.courseId}/lessons`]);
   }
 
 }

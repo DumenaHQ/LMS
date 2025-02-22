@@ -1,7 +1,7 @@
 <section class="ds-head dis-flex">
-    <h2 class="ds-head_title">Course</h2>
+    <h2 class="ds-head_title clickable" (click)="goBack()">{{ activeParams.classroomName | truncate }}</h2>
     <i class="bx bx-chevron-right icon"></i>
-    <p class="clickable">
+    <p>
       {{ course?.title | truncate }}
     </p>
 </section>

@@ -14,7 +14,7 @@ import { CoursesService } from 'src/app/services/courses.service';
 export class DisplayCourseLessonComponent implements OnInit {
 
   @ViewChild('videoPlayer') videoPlayer: ElementRef;
-  activateParams: any;
+  activeParams: any;
   course?: any;
   modules?: any;
   currentModuleIndex: number;
@@ -35,14 +35,14 @@ export class DisplayCourseLessonComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.activateParams = this.activatedRoute.snapshot.params;
+    this.activeParams = this.activatedRoute.snapshot.params;
     this.getCourse();
     this.user = this.authService.getUser().user;
   }
   
   getCourse() {
     this.classroomService
-    .getClassroomCoursesById(this.activateParams.classroomId, this.activateParams.courseId)
+    .getClassroomCoursesById(this.activeParams.classroomId, this.activeParams.courseId)
     .subscribe((res: any) => {
       this.course = res.data.course;
       this.modules = this.course.modules;
@@ -94,7 +94,7 @@ export class DisplayCourseLessonComponent implements OnInit {
 
   canViewNextLessonOrQuiz(moduleIndex: any, lessonIndex: any, moduleId: any, lessonId: any, lessonQuizId: any, type: string) {
     this.courseService
-    .checkIfLessonIsReady(this.activateParams.courseId, moduleId, lessonId)
+    .checkIfLessonIsReady(this.activeParams.courseId, moduleId, lessonId)
     .subscribe((res: any) => {
       if(res.data.canTakeNextLesson === true) {
         if(type === 'lesson') {
@@ -127,13 +127,17 @@ export class DisplayCourseLessonComponent implements OnInit {
     return checkCurrentLesson;
   }
   
-  viewQuiz(lessonQuizId: any) {
+  viewQuiz(lessonQuizId: string) {
     this.recordActivity('started_quiz');
-    this.router.navigate([`${this.user.role}/classrooms/${this.activateParams.classroomId}/courses/${this.activateParams.courseId}/lessons/quiz/${lessonQuizId}`]);
+    this.router.navigate([`${this.user.role}/classrooms/${this.activeParams.classroomId}/${this.activeParams.classroomName}/courses/${this.activeParams.courseId}/lessons/quiz/${lessonQuizId}`]);
   }
   
-  goBackToCourseInfo() { 
-    this.router.navigate([`/${this.user.role}/classrooms/${this.activateParams.classroomId}/courses/${this.activateParams.courseId}`]);
+  goBack(type: number) { 
+    if(type === 1) {
+      this.router.navigate([`/${this.user.role}/classrooms/${this.activeParams.classroomId}/view-classroom`]);
+    } else {
+      this.router.navigate([`/${this.user.role}/classrooms/${this.activeParams.classroomId}/${this.activeParams.classroomName}/courses/${this.activeParams.courseId}`]);
+    }
   }
 
   toggleAccordion(index: number) {

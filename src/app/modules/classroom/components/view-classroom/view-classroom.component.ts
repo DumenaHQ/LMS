@@ -110,9 +110,9 @@ export class ViewClassroomComponent implements OnInit {
     ]);
   }
 
-  watchCourse(courseId: string) {    
+  watchCourse(course: any) {    
     this.router.navigate([
-      `/${this.user.role}/classrooms/${this.activateParams.classroomId}/courses/${courseId}`,
+      `/${this.user.role}/classrooms/${this.activateParams.classroomId}/${this.classroom?.name}/courses/${course.id}`,
     ]);
   }
 
