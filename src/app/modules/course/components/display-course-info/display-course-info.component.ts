@@ -33,15 +33,17 @@ export class DisplayCourseInfoComponent implements OnInit {
 
   startCourse(moduleIndex: number) {
     this.router.navigate([
-      `/${this.user.role}/classrooms/${this.activeParams.classroomId}/${this.activeParams.classroomName}/courses/${this.activeParams.courseId}/lessons`,
+      `/${this.user.role}/${this.getRoutConfigPath()}/${this.activeParams.typeId}/${this.activeParams.typeName}/courses/${this.activeParams.courseId}/lessons`,
     ], { queryParams: { moduleIndex: moduleIndex } });
   }
 
   goBack() {
-  // const segments = this.activatedRoute.snapshot.pathFromRoot
-  //   .map(route => route.routeConfig?.path)
-  //   .filter(path => path !== undefined);
-    this.router.navigate([`/${this.user.role}/classrooms/${this.activeParams.classroomId}/view-classroom`]);
+    this.router.navigate([`/${this.user.role}/${this.getRoutConfigPath()}/${this.activeParams.typeId}/view-classroom`]);
+  }
+
+  getRoutConfigPath() {
+    const routhConfigPath = this.activatedRoute.snapshot.pathFromRoot[3].routeConfig?.path;
+    return routhConfigPath;
   }
 
 }

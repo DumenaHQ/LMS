@@ -15,7 +15,7 @@ type Tabs = 'courses' | 'learners' | 'schools' | 'discussions';
 export class ViewProgramComponent implements OnInit {
 
   activeTab: Tabs = 'courses';
-  currentProgramId: any;
+  activateParams: any;
   program?: any;
   dataLoading: boolean = true;
   addCourseToProgram: boolean = false;
@@ -39,7 +39,7 @@ export class ViewProgramComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.currentProgramId = this.activatedRoute.snapshot.params;
+    this.activateParams = this.activatedRoute.snapshot.params;
     this.user = this.authService.getUser().user;
 
     this.activatedRoute.queryParams.subscribe((params) => {
@@ -53,7 +53,7 @@ export class ViewProgramComponent implements OnInit {
   // Get programs
   getPrograms() {
     this.programsService
-      .getProgramsById(this.currentProgramId.programId)
+      .getProgramsById(this.activateParams.programId)
       .subscribe({
         next: (res: any) => {
           this.program = res.data.program;
@@ -86,9 +86,9 @@ export class ViewProgramComponent implements OnInit {
     };
 
     if(this.user.role === 'school') {
-      this.adduserToProgram$ = this.programsService.addSchoolToProgram(payload, this.currentProgramId.programId);
+      this.adduserToProgram$ = this.programsService.addSchoolToProgram(payload, this.activateParams.programId);
     } else {
-      this.adduserToProgram$ = this.programsService.addParentToProgram(payload, this.currentProgramId.programId);
+      this.adduserToProgram$ = this.programsService.addParentToProgram(payload, this.activateParams.programId);
     }
     this.adduserToProgram$.subscribe({
       next: (res: any) => {
@@ -134,16 +134,16 @@ export class ViewProgramComponent implements OnInit {
     this.addLearnerToProgram = false;
   }
 
-  watchCourse(courseId: string) {    
+  watchCourse(course: any) {
     this.router.navigate([
-      `/${this.user.role}/programs/courses/${courseId}`,
+      `/${this.user.role}/programs/${this.activateParams.programId}/${this.program?.name}/courses/${course.id}`,
     ]);
   }
 
   // Edit program
   editProgram() {
     this.router.navigate([
-      `/${this.user.role}/programs/${this.currentProgramId.programId}/edit-program`,
+      `/${this.user.role}/programs/${this.activateParams.programId}/edit-program`,
     ]);
   }
 

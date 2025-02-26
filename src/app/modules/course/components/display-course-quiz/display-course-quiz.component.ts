@@ -41,7 +41,6 @@ export class DisplayCourseQuizComponent implements OnInit {
     this.quizzesService
       .getquizByQuizId(quizId)
       .subscribe((res: any) => {
-        console.log(res);
         this.quiz = res.data.quiz;
       });
   }
@@ -138,7 +137,12 @@ export class DisplayCourseQuizComponent implements OnInit {
         error: (e) => console.error(e),
       });
     }
-    this.router.navigate([`learner/classrooms/${this.activeParams.classroomId}/${this.activeParams.classroomName}/courses/${this.activeParams.courseId}/lessons`]);
+    this.router.navigate([`/${this.user.role}/${this.getRoutConfigPath()}/${this.activeParams.typeId}/${this.activeParams.typeName}/courses/${this.activeParams.courseId}/lessons`]);
+  }
+
+  getRoutConfigPath() {
+    const routhConfigPath = this.activatedRoute.snapshot.pathFromRoot[3].routeConfig?.path;
+    return routhConfigPath;
   }
 
 }
