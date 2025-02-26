@@ -41,14 +41,28 @@ export class DisplayCourseLessonComponent implements OnInit {
   }
   
   getCourse() {
-    this.classroomService
-    .getClassroomCoursesById(this.activeParams.classroomId, this.activeParams.courseId)
-    .subscribe((res: any) => {
-      this.course = res.data.course;
-      this.modules = this.course.modules;
-      this.getModuleAndLessonIndex();
-    });
+    const routhConfigPath = this.activatedRoute.snapshot.pathFromRoot[3].routeConfig?.path;
+    if(routhConfigPath === 'classrooms') {
+      this.classroomService
+      .getClassroomCoursesById(this.activeParams.typeId, this.activeParams.courseId)
+      .subscribe((res: any) => {
+        this.setCourseModules(res);
+      });
+    } else {
+      this.courseService
+      .getCourse(this.activeParams.courseId)
+      .subscribe((res: any) => {
+        this.setCourseModules(res);
+      });
+    }
   }
+
+  setCourseModules(res: any) {
+    this.course = res.data.course;
+    this.modules = this.course.modules;
+    this.getModuleAndLessonIndex();
+  }
+
 
   setLessonVideoUrl() {
     this.lessonVideoUrl = this.course?.modules[this.currentModuleIndex]?.lessons[this.currentLessonIndex]?.lesson_video;
@@ -88,7 +102,11 @@ export class DisplayCourseLessonComponent implements OnInit {
   
       this.canViewNextLessonOrQuiz(moduleIndex, lessonIndex, previousModuleId, previousLessonId, lessonQuizId, type);
     } else {
-      this.watchLesson(moduleIndex, lessonIndex);
+      if(type === 'lesson') {
+        this.watchLesson(moduleIndex, lessonIndex);
+      } else {
+        this.viewQuiz(lessonQuizId);
+      }
     }
   }
 
@@ -129,15 +147,20 @@ export class DisplayCourseLessonComponent implements OnInit {
   
   viewQuiz(lessonQuizId: string) {
     this.recordActivity('started_quiz');
-    this.router.navigate([`${this.user.role}/classrooms/${this.activeParams.classroomId}/${this.activeParams.classroomName}/courses/${this.activeParams.courseId}/lessons/quiz/${lessonQuizId}`]);
+    this.router.navigate([`${this.user.role}/${this.getRoutConfigPath()}/${this.activeParams.typeId}/${this.activeParams.typeName}/courses/${this.activeParams.courseId}/lessons/quiz/${lessonQuizId}`]);
   }
   
   goBack(type: number) { 
     if(type === 1) {
-      this.router.navigate([`/${this.user.role}/classrooms/${this.activeParams.classroomId}/view-classroom`]);
+      this.router.navigate([`/${this.user.role}/${this.getRoutConfigPath()}/${this.activeParams.typeId}/view-classroom`]);
     } else {
-      this.router.navigate([`/${this.user.role}/classrooms/${this.activeParams.classroomId}/${this.activeParams.classroomName}/courses/${this.activeParams.courseId}`]);
+      this.router.navigate([`/${this.user.role}/${this.getRoutConfigPath()}/${this.activeParams.typeId}/${this.activeParams.typeName}/courses/${this.activeParams.courseId}`]);
     }
+  }
+
+  getRoutConfigPath() {
+    const routhConfigPath = this.activatedRoute.snapshot.pathFromRoot[3].routeConfig?.path;
+    return routhConfigPath;
   }
 
   toggleAccordion(index: number) {

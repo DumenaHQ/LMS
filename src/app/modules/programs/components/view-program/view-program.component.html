@@ -180,7 +180,7 @@
                     <td>{{ course?.course_quadrant || "-" }}</td>
                     <td>{{ course?.duration || "-" }}</td>
                     <td>
-                      <button class="btn sec_btn" style="margin-right: 2rem;" (click)="watchCourse(course?.id)">Watch</button>
+                      <button class="btn sec_btn" style="margin-right: 2rem;" (click)="watchCourse(course)">Watch</button>
                     </td>
                   </tr>
                 </ng-container>
@@ -276,7 +276,7 @@
 
         <!-- Disscussions -->
         <ng-container *ngIf="activeTab === 'discussions'">
-          <app-display-questions [courses]="program?.courses" [programId]="currentProgramId.programId"></app-display-questions>
+          <app-display-questions [courses]="program?.courses" [programId]="activateParams.programId"></app-display-questions>
         </ng-container>
       </div>
     </div>
@@ -285,13 +285,13 @@
   <app-add-program-courses
     *ngIf="addCourseToProgram"
     (addCourseToProgramModal)="closeAddCourseToProgramModal()"
-    [programId]="currentProgramId.programId"
+    [programId]="activateParams.programId"
     (getProgram)="getPrograms()"
   ></app-add-program-courses>
   
   <app-add-program-learners
     *ngIf="addLearnerToProgram"
-    [programId]="currentProgramId.programId"
+    [programId]="activateParams.programId"
     (addLearnerToProgramModal)="closeAddLearnerToProgramModal()"
     (getProgram)="getPrograms()"
   ></app-add-program-learners>

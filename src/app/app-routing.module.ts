@@ -95,15 +95,21 @@ const routes: Routes = [
     loadChildren: () =>
       import('./modules/instructor/instructor.module').then((m: any) => m.InstructorModule),
   },
-  { path: '', redirectTo: '/', pathMatch: 'full' },
   {
-    path: '**',
-    component: PageNotFoundComponent,
-    data: {
-      title: 'Not Found',
-      description: 'Description Meta Tag Content',
-    },
+    path: 'error',
+    children: [
+      {
+        path: '404',
+        component: PageNotFoundComponent,
+        data: {
+          title: 'Not Found',
+          description: 'Description Meta Tag Content',
+        },
+      },
+    ],
   },
+  { path: '', redirectTo: '/', pathMatch: 'full' },
+  { path: '**', redirectTo: 'error/404',  pathMatch: 'full' },
 ];
 
 @NgModule({
