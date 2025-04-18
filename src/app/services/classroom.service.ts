@@ -141,6 +141,14 @@ export class ClassroomService {
     );
   }
 
+  addCourseToClassroomTemplateTerms(data: any, templateId: any) {
+    return this.http.patch(
+      `${this.baseUrl}classes/templates/${templateId}/term-courses`,
+      data,
+      this.getHttpOptions()
+    );
+  }
+
   removeCourseFromClassroomTemplate(templateId: any, courseId: any) {
     return this.http.patch(
       `${this.baseUrl}classes/templates/${templateId}/courses/${courseId}/remove`,

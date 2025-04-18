@@ -5,6 +5,7 @@ import { PricingComponent } from './components/pricing/pricing.component';
 import { RoboticsChampComponent } from './components/robotics-champ/robotics-champ.component';
 import { SummerschoolComponent } from './components/summerschool/summerschool.component';
 import { DefaultComponent } from './default.component';
+import { AboutUsComponent } from './components/about-us/about-us.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,14 @@ const routes: Routes = [
         component: HomeComponent,
         data: {
           title: 'Dumena Education',
+          description: 'Description Meta Tag Content',
+        },
+      },
+      {
+        path: 'about-us',
+        component: AboutUsComponent,
+        data: {
+          title: 'About Us',
           description: 'Description Meta Tag Content',
         },
       },
