@@ -1,82 +1,83 @@
-<!-- Alert message -->
-<app-alert-popup
-  *ngIf="isAlert"
-  [alertMessage]="alertMessage"
-  [alertColor]="alertColor"
-></app-alert-popup>
-
 <div class="modal">
-  <div class="modal_area remove-padd">
+  <div class="modal_area">
     <span class="modal_area_close" (click)="closeAddCourseToProgramModal()">
       <i class="bx bx-x icon clickable"></i>
     </span>
 
     <div class="enroll auth_content">
       <h4
-        class="text-primary-color enroll_title add-padd"
+        class="text-primary-color enroll_title"
+        style="padding: 0 1rem;"
       >
-        Add Course(s) to this program
+        Add Course(s) to this template
       </h4>
       <form
         class="enroll_form auth_content_form"
       >
 
         <!-- Single enrollment starts *ngIf="billingId == 'single'" -->
-        <div class="col-2">
-          <div class="table-container" >
-            <div class="table-container_header dis-flex">
-              <div class="input_field dis-flex">
-                <img
-                  src="../../../../../../assets/img/svg/Search.svg"
-                  alt="image"
-                />
-                <input type="text" placeholder="Search by Title" name="search" [(ngModel)]="courseName"
-                (input)="search()" />
+        <div class="col-2" style="margin-top: 2rem;">
+          <form>
+            <div class="form_control_container">
+              <div class="form_control" style="padding: 0 1rem;">
+                <label for="term">Terms</label>
+                <div class="form_control_field">
+                  <select name="term" id="term" [(ngModel)]="selectedTerm" (change)="handleSelectChange($event)">
+                    <option value="1st term" selected>First term</option>
+                    <option value="2nd term">Second term</option>
+                    <option value="3rd term">Third term</option>
+                  </select>
+                </div>
+
+                <p style="margin-top: .5rem; color: #949494;">**Switch between terms to add courses to different terms</p>
               </div>
 
-              <!-- <div class="grouping dis-flex">
-                <div class="filter s-f">
-                  <div class="captions-regular dis-flex">
-                    <span class="title">Filter:</span>
-                    <span class="dropdown-btn dis-flex clickable"
-                      >Grade <i class="bx bx-chevron-down"></i
-                    ></span>
+              <div class="table-container">
+                <div class="table-container_header form_control dis-flex" style="justify-content: space-between; gap: 1.5rem;">
+                  <label for="courses" style="margin-bottom: 0;">Courses</label>
+                  <div class="input_field dis-flex">
+                    <img
+                      src="../../../../../../assets/img/svg/Search.svg"
+                      alt="image"
+                    />
+                    <input type="text" placeholder="Search by Title" name="search" [(ngModel)]="courseName"
+                    (input)="search()" />
                   </div>
                 </div>
-                <div class="sort s-f">
-                  <div class="captions-regular dis-flex">
-                    <span class="title">Sort:</span>
-                    <span class="dropdown-btn dis-flex clickable"
-                      >Name <i class="bx bx-chevron-down"></i
-                    ></span>
-                  </div>
+                <div style="overflow: auto; max-height: 300px;">
+                  <app-loader *ngIf="dataLoading"></app-loader>
+                  <table *ngIf="courses?.length > 0">
+                    <tr class="table-header">
+                      <th>Title</th>
+                      <th>Number of lesson</th>
+                      <th class="dis-flex actions">
+                        <!-- Mark all <input type="checkbox" name="" id="" /> -->
+                      </th>
+                    </tr>
+                    <tr class="table-body" *ngFor="let course of courses">
+                      <td>{{ course.title }}</td>
+                      <td>{{ course.lesson_count }}</td>
+                      <td>
+                        <input 
+                          type="checkbox"
+                          name="course"
+                          [id]="course.id"
+                          (change)="selectCourse($event, course)"
+                          [checked]="isCourseChecked(course.id)" 
+                        />
+                      </td>
+                    </tr>
+                  </table>
+                  <ng-container *ngIf="courses?.length === 0">
+                    <p style="text-align: center">No Course!</p>
+                  </ng-container>
                 </div>
-              </div> -->
+              </div>
             </div>
-            <div style="overflow: auto; max-height: 300px;">
-              <app-loader *ngIf="dataLoading"></app-loader>
-              <table *ngIf="courses?.length > 0">
-                <tr class="table-header">
-                  <th>Title</th>
-                  <th>Number of lesson</th>
-                  <th class="dis-flex actions">
-                    <!-- Mark all <input type="checkbox" name="" id="" /> -->
-                  </th>
-                </tr>
-                <tr class="table-body" *ngFor="let course of courses">
-                  <td>{{ course.title }}</td>
-                  <td>{{ course.lesson_count }}</td>
-                  <td><input type="checkbox" name="course" [id]="course.id" (change)="selectCourse($event, course)" /></td>
-                </tr>
-              </table>
-              <ng-container *ngIf="courses?.length === 0">
-                <p style="text-align: center">No Course!</p>
-              </ng-container>
-            </div>
-          </div>
+          </form>
 
           <!-- Submit Button -->
-          <div class="form-btns dis-flex">
+          <div class="form-btns dis-flex" style="padding: 1rem; gap: 1rem;">
             <span
               class="grey_btn clickable"
               (click)="closeAddCourseToProgramModal()"

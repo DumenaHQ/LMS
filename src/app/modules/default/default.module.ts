@@ -10,6 +10,7 @@ import { FaqComponent } from './components/faq/faq.component';
 import { NewsletterComponent } from './components/newsletter/newsletter.component';
 import { SummerschoolComponent } from './components/summerschool/summerschool.component';
 import { RoboticsChampComponent } from './components/robotics-champ/robotics-champ.component';
+import { AboutUsComponent } from './components/about-us/about-us.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { RoboticsChampComponent } from './components/robotics-champ/robotics-cha
     NewsletterComponent,
     SummerschoolComponent,
     RoboticsChampComponent,
+    AboutUsComponent,
   ],
   imports: [CommonModule, DefaultRoutingModule, SharedModule],
 })

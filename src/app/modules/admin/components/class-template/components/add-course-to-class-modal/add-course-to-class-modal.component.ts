@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AlertType, AppAlertService } from 'src/app/services/app-alerts/app-alert.service';
 import { ClassroomService } from 'src/app/services/classroom.service';
 import { CoursesService } from 'src/app/services/courses.service';
 
@@ -11,27 +12,24 @@ export class AddCourseModalToClassComponent implements OnInit {
 
   @Input() classId: string;
   @Output() addCourseToProgramModal: EventEmitter<any> = new EventEmitter();
-  isAlert: boolean = false;
-  alertMessage: string;
-  alertColor: string;
   loading: boolean = false;
-  selectedCourses: any[] = [];
+  selectedTermCourses: any[] = [];
   courses: any;
   dataLoading: boolean = true;
   courseName: string;
+  selectedTerm: string = '1st term';
 
 
   constructor(
     private classroomService: ClassroomService,
     private coursesService: CoursesService,
-    private changeDectetorRef: ChangeDetectorRef
+    private appAlertService: AppAlertService,
   ) { }
 
   ngOnInit(): void {
     this.coursesService.getAllCourses().subscribe({
       next: (res: any) => {
         this.courses = res.data.courses;
-        console.log(this.courses);
       },
       error: (e) => console.error(e),
       complete: () => {
@@ -51,74 +49,81 @@ export class AddCourseModalToClassComponent implements OnInit {
     }
   }
 
-  // Select students (School)
-  selectCourse(event: any, course: any) {
-
-    // If doesn't exist add new student
-    if(event.target.checked === false) {
-      this.selectedCourses.forEach((element: any, index: any) => {
-          if(element.username === course.username) {
-            this.selectedCourses.splice(index, 1)
-          }
-          return this.selectedCourses
-        });
-      }
-      else {
-        this.selectedCourses.push(course.id);
-      }
-      
+  handleSelectChange(event: any) {
+    this.selectedTerm = event.target.value;    
   }
 
-  // Add learners to program (select and single enrollment)
+  selectCourse(event: any, course: any) {
+    const term = this.selectedTerm;
+    // Find existing term object
+    const termObj = this.selectedTermCourses.find((t: any) => t.term === term);
+    if (event.target.checked === false) {
+      if (termObj) {
+        // Remove the course ID from the term's courses array
+        termObj.courses = termObj.courses.filter((id: any) => id !== course.id);
+        // Remove the term object if no courses are left
+        if (termObj.courses.length === 0) {
+          this.selectedTermCourses = this.selectedTermCourses.filter((t: any) => t.term !== term);
+        }
+      }
+    } else {
+      if (termObj) {
+        // Avoid duplicates
+        if (!termObj.courses.includes(course.id)) {
+          termObj.courses.push(course.id);
+        }
+      } else {
+        // Term doesn't exist yet — create new entry
+        this.selectedTermCourses.push({
+          term: term,
+          courses: [course.id]
+        });
+      }
+    }
+  }
+
+  isCourseChecked(courseId: string): boolean {
+    const termObj = this.selectedTermCourses.find((t: any) => t.term === this.selectedTerm);
+    return termObj ? termObj.courses.includes(courseId) : false;
+  }
+  
+
   addCourseToProgram() {
-    // Set loading to true
     this.loading = true;
 
     let payload = {
-      courses: this.selectedCourses,
+      term_courses: this.selectedTermCourses,
     };
-
+    
     this.classroomService
-      .addCourseToClassroom(payload, this.classId)
+      .addCourseToClassroomTemplateTerms(payload, this.classId)
       .subscribe({
         next: (res: any) => {
           if (res.status === true) {
-            this.showAlertPopup(res.message, 'success');
-            // close modal
+            this.appAlertService.showAlert(res.message, AlertType.Success);
             setTimeout(() => {
-              this.closeAddCourseToProgramModal()
-
-              window.location.reload()
-              // this.changeDectetorRef.detectChanges();
+              this.closeAddCourseToProgramModal();
+              window.location.reload();
             }, 3000);
           }
         },
-        error: (e) => {
-          console.error(e)
-          this.showAlertPopup(e.error.message, 'error');
-
-          this.loading = false
+        error: (error) => {
+          console.error(error)
+          this.appAlertService.showAlert(
+            error.error.message
+              ? error.error.message
+              : error.message
+              ? error.error.message || error.error.error.errors[0].message
+              : error.message,
+            AlertType.Error
+          );
+          this.loading = false;
         },
       });
   }
 
-  // Close Add Modal
   closeAddCourseToProgramModal() {
     this.addCourseToProgramModal.emit();
-  }
-
-  // Show alert
-  showAlertPopup(message: string, color: string) {
-    // Set message
-    this.alertMessage = message;
-    // Set color
-    this.alertColor = color;
-    // Show Alert
-    this.isAlert = true;
-    // Hide Alert
-    setTimeout(() => {
-      this.isAlert = false;
-    }, 3000);
   }
 
 }
